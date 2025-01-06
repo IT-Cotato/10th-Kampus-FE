@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("src/assets/fonts/Pretendard-Regular.woff2") format("font-woff2");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("src/assets/fonts/Pretendard-Bold.woff2") format("font-woff2");
+  font-weight: bold;
+}
+
+:root {
+  --purple-5: #faf9ff;
+  --purple-10: #f2f0ff;
+  --purple-20: #dfd6fd;
+  --purple-30: #aa93ef;
+  --purple-40: #7c63c8;
+  --purple-50: #5e44ac;
+  --purple-60: #543d98;
+  --purple-70: #4f3d87;
+  --purple-80: #3c2e67;
+  --purple-90: #221a3b;
+
+  --primary-red: #eb003b;
+  --primary-yellow: #ffb724;
+  --primary-green: #008a1e;
+  --primary-blue: #2768ff;
+
+  --neutral-5: #f6f6f6;
+  --neutral-10: #f2f2f2;
+  --neutral-20: #e4e4e4;
+  --neutral-30: #d8d8d8;
+  --neutral-40: #c6c6c6;
+  --neutral-50: #8e8e8e;
+  --neutral-60: #727272;
+  --neutral-70: #555555;
+  --neutral-80: #353535;
+  --neutral-90: #0b0b0b;
+
+  --font-pretendard: "Pretendard";
+
+  /* 포커스 제거 */
+  input:focus,
+  textarea:focus {
+    outline: none;
+  }
+
+  /* input type='search'의 기본 css 제거 */
+  input::-ms-clear,
+  input::-ms-reveal {
+    opacity: 0;
+  }
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button,
+  input::-webkit-search-results-button,
+  input::-webkit-search-results-decoration {
+    opacity: 0;
+  }
+}
+
+html,
+body {
+  @apply m-0 p-0 font-pretendard text-base text-neutral-700;
+}
