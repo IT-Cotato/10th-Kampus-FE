@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
+import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,12 +10,6 @@ export default defineConfig({
     port: 3000,
   },
   resolve: {
-    alias: [
-      { find: '@', replacement: resolve(__dirname, 'src') },
-      {
-        find: '@components',
-        replacement: resolve(__dirname, 'src/components'),
-      },
-    ],
+    alias: [{ find: '@', replacement: '/src' }], 
   },
 });
