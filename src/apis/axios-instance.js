@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://dummyjson.com';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const token = localStorage.getItem('token');
 
 const axiosInstance = (url, params, options) => {
