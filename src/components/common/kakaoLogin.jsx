@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect } from "react";
-import { parseTokenFromUrl } from "@/utils/kakaoUtils";
+import { parseTokenFromUrl } from "@/utils/authUtils";
 import { getHealth } from "@/apis/auth/login.api";
 import kakaoLoginImg from '@/assets/imgs/loginKakao.png';
 const KakaoLogin = () => {
