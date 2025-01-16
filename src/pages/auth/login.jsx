@@ -1,4 +1,4 @@
-import KakaoLogin from '@/components/common/kakaoLogin';
+import { KakaoLogin } from '@/components/common/kakaoLogin';
 import { GoogleLogin } from '@/components/common/googleLogin';
 export const Login = () => {
   return (

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { parseTokenFromUrl } from "@/utils/authUtils";
 import { getHealth } from "@/apis/auth/login.api";
 import kakaoLoginImg from '@/assets/imgs/loginKakao.png';
-const KakaoLogin = () => {
+export const KakaoLogin = () => {
     const kakaoKey = import.meta.env.VITE_KAKAO_JS_KEY;
     const redirectUri = import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
@@ -26,7 +26,6 @@ const KakaoLogin = () => {
         })
     }
     return (
-        <img src={kakaoLoginImg} alt="kakaoLogin" onClick={handleKakaoAuthorize} style={{ cursor: "pointer" }} />
+        <img src={kakaoLoginImg} alt="Kakao Login" onClick={handleKakaoAuthorize} className="w-4/5 mx-auto mt-6 cursor-pointer" />
     );
 };
-export default KakaoLogin;
