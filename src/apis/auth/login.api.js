@@ -6,12 +6,9 @@ export const postLogin = async () => {
   return data;
 };
 
-export const getHealth = async () => {
-  await authApi.get('/v1/api/auth/health')
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.error(error);
-    })
-}
+export const getHealth = async (token) =>
+  await authApi.get('/api/v1/api/auth/health', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
