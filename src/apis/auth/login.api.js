@@ -7,7 +7,7 @@ export const postLogin = async () => {
 };
 
 export const getHealth = async (token) =>
-  await authApi.get('/api/v1/api/auth/health', {
+  await authApi.get('/v1/api/auth/health', {
     headers: {
       Authorization: `Bearer ${token}`
     }
