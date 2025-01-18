@@ -7,11 +7,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Window 생성 및 ViewController 설정
-                window = UIWindow(frame: UIScreen.main.bounds)
-                let viewController = ViewController() // 위에서 생성한 ViewController 사용
-                window?.rootViewController = viewController
-                window?.makeKeyAndVisible()
+        // Window 생성 및 ViewController 설정 - 구글 웹뷰 설정하면 안돌아가서 뺐습니다
+//                window = UIWindow(frame: UIScreen.main.bounds)
+//                let viewController = ViewController() // 위에서 생성한 ViewController 사용
+//                window?.rootViewController = viewController
+//                window?.makeKeyAndVisible()
                 return true
     }
 
