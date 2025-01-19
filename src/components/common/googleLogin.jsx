@@ -1,30 +1,41 @@
 // @ts-nocheck
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import googleLoginImg from '@/assets/imgs/loginGoogle.svg';
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import axios from "axios";
+
+const ANDROID_CLIENT_ID = import.meta.env.VITE_GOOGLE_ANDROID_CLIENT_ID;
+
+export const initializeGoogleAuth = () => {
+    GoogleAuth.initialize({
+        clientId: `${ANDROID_CLIENT_ID}`,
+        scopes: ['email'],
+        grantOfflineAccess: true,
+    });
+};
 
 export const GoogleLogin = () => {
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const redirectUri = import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+  const [user, setUser] = useState(null);
 
-  function handleGoogleLogin() {
-    const client = google.accounts.oauth2.initCodeClient({
-      client_id: googleClientId,
-      scope: 'https://www.googleapis.com/auth/userinfo.email', // 원하는 권한 범위
-      ux_mode: 'popup', // 팝업 방식으로 인증
-      callback: (response) => {
-        if (response.code) {
-          const authCode = response.code;
-          console.log('Authorization Code:', authCode);
-
-          const redirectUrl = `${redirectUri}?code=${authCode}`;
-          window.location.href = redirectUrl;
+    useEffect(() => {
+        if (Capacitor.isNativePlatform()) {
+            initializeGoogleAuth();
         }
-      },
-    });
+        GoogleAuth.initialize();
+    }, []);
 
-    client.requestCode();
-  }
+    const handleGoogleLogin = async () => {
+        try {
+          const userData = await GoogleAuth.signIn();
+          setUser(userData);
+          console.log(userData);
+          alert('google login success');
+        } catch(error){
+          alert('google login failed', error);
+        }
+    };
+
   return (
     <img
       src={googleLoginImg}
