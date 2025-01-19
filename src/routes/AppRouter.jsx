@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, NotFound } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 
 const AppRouter = createBrowserRouter([
@@ -39,6 +39,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Signup />,
+      },
+      {
+        path: path.signup.terms,
+        element: <Terms />,
       },
       {
         path: path.signup.profile,
