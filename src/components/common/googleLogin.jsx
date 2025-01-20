@@ -8,33 +8,33 @@ import axios from "axios";
 const ANDROID_CLIENT_ID = import.meta.env.VITE_GOOGLE_ANDROID_CLIENT_ID;
 
 export const initializeGoogleAuth = () => {
-    GoogleAuth.initialize({
-        clientId: `${ANDROID_CLIENT_ID}`,
-        scopes: ['email'],
-        grantOfflineAccess: true,
-    });
+  GoogleAuth.initialize({
+    clientId: `${ANDROID_CLIENT_ID}`,
+    scopes: ['email'],
+    grantOfflineAccess: true,
+  });
 };
 
 export const GoogleLogin = () => {
   const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        if (Capacitor.isNativePlatform()) {
-            initializeGoogleAuth();
-        }
-        GoogleAuth.initialize();
-    }, []);
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      initializeGoogleAuth();
+    }
+    GoogleAuth.initialize();
+  }, []);
 
-    const handleGoogleLogin = async () => {
-        try {
-          const userData = await GoogleAuth.signIn();
-          setUser(userData);
-          console.log(userData);
-          alert('google login success');
-        } catch(error){
-          alert('google login failed', error);
-        }
-    };
+  const handleGoogleLogin = async () => {
+    try {
+      const userData = await GoogleAuth.signIn();
+      setUser(userData);
+      console.log(userData);
+      alert('google login success');
+    } catch (error) {
+      alert('google login failed', error);
+    }
+  };
 
   return (
     <img
