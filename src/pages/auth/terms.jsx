@@ -68,21 +68,23 @@ export const Terms = () => {
                 <div className='text-neutral-base'>
                     To complete your subscription, you must agree to the Terms and Conditions
                 </div>
-                <button onClick={handleClickAgreeWithAll} className={`w-[100%] h-[55px] text-subTitle bg-white rounded-[10px] ${isAllAgreed ? "border-primary-30 border-2" : "shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]"} flex flex-row justify-center items-center space-x-[20px] mt-[51px] mb-[38px]`}>
+                <button onClick={handleClickAgreeWithAll} className={`w-[100%] h-[55px] text-subTitle bg-white rounded-[10px] ${isAllAgreed ? "border-primary-30 border-2" : "shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]"} flex flex-row justify-center items-center space-x-3 mt-[51px] mb-[38px]`}>
                     <div className='w-[30px] h-[30px] border-neutral-border-40 border-[1px] rounded-[5px] flex justify-center items-center'>
                         { isAllAgreed ? <Check className='text-primary-base' /> : "" }
                     </div>
                     <div>Agree with all</div>
                 </button>
-                <div className='space-y-[52px] mb-[50px]'>
+                <div className='flex flex-col h-[270px] justify-between'>
                     <Term onClick={() => handleClickAgree('term1')} isChecked={terms.term1} required={true}>Personal Information collection and Usage Agreement</Term>
                     <Term onClick={() => handleClickAgree('term2')} isChecked={terms.term2} required={true}>Consent to the Privacy Policy</Term>
                     <Term onClick={() => handleClickAgree('term3')} isChecked={terms.term3} required={true}>Terms of Use of Service</Term>
                     <Term onClick={() => handleClickAgree('term4')} isChecked={terms.term4} required={false}>Consent to Marketing Communications</Term>
                 </div>
-                <Button onClick={handleSignInButtonClick} disabled={!isSignInActive}>
-                    Sign Up
-                </Button>
+                <div className='mt-[50px] mb-5'>
+                    <Button onClick={handleSignInButtonClick} disabled={!isSignInActive}>
+                        Sign Up
+                    </Button>
+                </div>
             </div>
         </div>
     );
