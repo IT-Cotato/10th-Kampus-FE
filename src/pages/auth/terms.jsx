@@ -55,7 +55,8 @@ export const Terms = () => {
     }
 
     const handleSignInButtonClick = () => {
-        navigate('/signup/profile', { state: { terms }});
+        const term = terms.term4
+        navigate('/signup/profile', { state: { term }});
     }
 
     return (
