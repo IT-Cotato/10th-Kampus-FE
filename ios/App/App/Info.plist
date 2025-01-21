@@ -6,6 +6,7 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Kampus</string>
+	
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,6 +29,12 @@
 				<string>com.googleusercontent.apps.360021085793-mjjkh6jort49h8ssm6roe8qevo2d0nb1</string>
 			</array>
 		</dict>
+		 <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>kampus</string>
+        </array>
+    </dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

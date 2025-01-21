@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cotato.kampus">
+    <queries>
+        <!-- 카카오톡 앱이 설치되어 있는지 확인 -->
+        <package android:name="com.kakao.talk" />
+    </queries>
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -21,6 +25,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="kampus" android:host="login" />
             </intent-filter>
 
         </activity>

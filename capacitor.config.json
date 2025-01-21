@@ -1,5 +1,22 @@
 {
   "appId": "com.cotato.kampus",
   "appName": "Kampus",
-  "webDir": "dist"
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "clientId": "360021085793-7t4649oluc8ddtecnfmfojb6ho0vp7aj.apps.googleusercontent.com",
+      "iosClientId": "360021085793-mjjkh6jort49h8ssm6roe8qevo2d0nb1.apps.googleusercontent.com",
+      "androidClientId": "360021085793-7t4649oluc8ddtecnfmfojb6ho0vp7aj.apps.googleusercontent.com",
+      "serverClientId": "360021085793-7t4649oluc8ddtecnfmfojb6ho0vp7aj.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    },
+    "KakaoLogin": {
+      "redirectUri": "kampus://login"
+    }
+  }
 }
