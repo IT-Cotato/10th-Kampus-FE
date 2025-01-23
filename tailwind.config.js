@@ -82,6 +82,10 @@ export default {
       boxShadow: {
         base: '1px 4px 10px rgba(0, 0, 0, 0.2)',
       },
+      animation: {
+        'fadeInOutText': 'fadeInOutText 1.6s ease',
+        'fadeInOutModal': 'fadeInOutModal 1.6s ease'
+      },
       keyframes: {
         'bottom-sheet-up': {
           '0%': { transform: 'translateY(100dvh)', opacity: '0' },
@@ -90,6 +94,16 @@ export default {
         'bottom-sheet-down': {
           '0%': { transform: 'translateY(0)', opacity: '1' },
           '100%': { transform: 'translateY(100dvh)', opacity: '0' },
+        },
+        'fadeInOutText': {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+        'fadeInOutModal': {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 0.5 },
+          '100%': { opacity: 0 },
         },
       },
     },
@@ -108,7 +122,7 @@ export default {
         },
         '.animate-bottom-sheet-down': {
           animation: 'bottom-sheet-down 0.2s ease-in-out',
-        },
+        }
       }),
     ),
     require("tailwind-scrollbar-hide"),
