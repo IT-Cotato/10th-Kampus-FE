@@ -1,5 +1,5 @@
 import Check from '@/assets/imgs/check.svg?react';
-import { TermsModal } from './TermsModal';
+import { TermsModal } from '../join/TermsModal';
 
 export const Term = (props) => {
   return (

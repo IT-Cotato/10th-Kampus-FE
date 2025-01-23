@@ -1,6 +1,6 @@
 import { useState } from "react";
 import X from "@/assets/imgs/x.svg";
-import { JoinInButton } from "./JoinInButton";
+import { JoinInButton } from "../common/JoinInButton";
 
 export const TermsModal = (props) => {
     const [isOpen, setIsOpen] = useState(false);
