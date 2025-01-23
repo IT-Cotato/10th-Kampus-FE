@@ -28,7 +28,7 @@ export const TermsModal = (props) => {
             {isOpen && (
             <div className="absolute inset-0 z-10 w-full h-screen" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                 <div className="absolute inset-0 h-screen transition-opacity bg-white" aria-hidden="true"></div>
-                    <div className="relative flex items-center justify-center w-full h-screen px-4 py-6">
+                    <div className="relative flex items-center justify-center w-full h-screen px-4 pt-6 pb-5">
                         <div className="relative text-left px-[22px] py-[36px] rounded-[10px] bg-neutral-bg-10 justify-center flex flex-col max-h-full">
                             <img src={X} onClick={closeModal} className='absolute right-[14px] top-[14px] cursor-pointer' />
                             <span className="text-center text-subTitle text-neutral-title px-[17px]">
@@ -41,7 +41,7 @@ export const TermsModal = (props) => {
                                 </div>
                             </div>
                             <div className="flex">
-                                <JoinInButton onClick={handleClickAgree} disabled={false}>Agree</JoinInButton>
+                                <JoinInButton onClick={handleClickAgree} disabled={false}>I Agree</JoinInButton>
                             </div>
                         </div>
                     </div>
