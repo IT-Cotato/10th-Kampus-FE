@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { JoinInButton as Button } from '../../components/common/JoinInButton';
-import { Term } from '../../components/common/term';
+import { Term } from '../../components/join/term';
 import PreviousButton from '@/assets/imgs/previous.svg';
 import Check from '@/assets/imgs/check.svg?react';
 import detailedTerms from '@/constants/DetailedTerms';
