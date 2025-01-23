@@ -18,7 +18,7 @@ export const Terms = () => {
     const isSignInActive = terms.term1 && terms.term2 && terms.term3;
 
     const handleClickPreviousButton = () => {
-        navigate('/login');
+        navigate(-1);
     }
 
     const handleClickAgreeWithAll = () => {
