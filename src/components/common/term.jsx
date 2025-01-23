@@ -3,7 +3,7 @@ import { TermsModal } from '../join/TermsModal';
 
 export const Term = (props) => {
   return (
-    <div className="w-full h-[38px] text-neutral-base text-base flex justify-center items-center space-x-3">
+    <div className="w-full h-[2.375rem] text-neutral-base text-base flex justify-center items-center space-x-3">
       <div onClick={ props.onClick } className='cursor-pointer'>
         <Check className={ props.isChecked ? "text-primary-base" : "text-neutral-border-40" } />
       </div>

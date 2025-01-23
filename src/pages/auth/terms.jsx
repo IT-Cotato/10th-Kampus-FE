@@ -62,27 +62,27 @@ export const Terms = () => {
 
     return (
         <div className='min-h-full px-4 bg-white'>
-            <div className='w-[100%] h-[49px] mt-[20px] mb-[10px] text-pageTitle text-neutral-title flex justify-center items-center'>
-                <img src={PreviousButton} alt="previous" onClick={handleClickPreviousButton} className='text-pageTitle w-[19px] h-[19px] absolute left-[10px] cursor-pointer' />
+            <div className='w-full h-[3.0625rem] mt-[1.25rem] mb-[.625rem] text-pageTitle text-neutral-title flex justify-center items-center'>
+                <img src={PreviousButton} alt="previous" onClick={handleClickPreviousButton} className='text-pageTitle w-[1.1875rem] h-[1.1875rem] absolute left-[.625rem] cursor-pointer' />
                 Terms and Conditions
             </div>
             <div>
                 <div className='text-neutral-base'>
                     To complete your subscription, you must agree to the Terms and Conditions
                 </div>
-                <button onClick={handleClickAgreeWithAll} className={`w-[100%] h-[55px] text-subTitle bg-white rounded-[10px] ${isAllAgreed ? "border-primary-30 border-2" : "shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]"} flex flex-row justify-center items-center space-x-3 mt-[51px] mb-[38px]`}>
-                    <div className='w-[30px] h-[30px] border-neutral-border-40 border-[1px] rounded-[5px] flex justify-center items-center'>
+                <button onClick={handleClickAgreeWithAll} className={`w-full h-[3.4375rem] text-subTitle bg-white rounded-[.625rem] ${isAllAgreed ? "border-primary-30 border-2" : "shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]"} flex flex-row justify-center items-center space-x-3 mt-[3.1875rem] mb-[2.375rem]`}>
+                    <div className='w-[1.875rem] h-[1.875rem] border-neutral-border-40 border rounded-[.3125rem] flex justify-center items-center'>
                         { isAllAgreed ? <Check className='text-primary-base' /> : "" }
                     </div>
                     <div className='text-neutral-title text-subTitle'>Agree with all</div>
                 </button>
-                <div className='flex flex-col h-[270px] justify-between'>
+                <div className='flex flex-col h-[16.875rem] justify-between'>
                     <Term onClick={() => handleClickAgree('term1')} isChecked={terms.term1} detailedTerm={detailedTerms.term1}>{detailedTerms.term1.title}</Term>
                     <Term onClick={() => handleClickAgree('term2')} isChecked={terms.term2} detailedTerm={detailedTerms.term2}>{detailedTerms.term2.title}</Term>
                     <Term onClick={() => handleClickAgree('term3')} isChecked={terms.term3} detailedTerm={detailedTerms.term3}>{detailedTerms.term3.title}</Term>
                     <Term onClick={() => handleClickAgree('term4')} isChecked={terms.term4} detailedTerm={detailedTerms.term4}>{detailedTerms.term4.title}</Term>
                 </div>
-                <div className='mt-[50px] mb-5'>
+                <div className='mt-[3.125rem] mb-5'>
                     <Button onClick={handleSignInButtonClick} disabled={!isSignInActive}>
                         Sign Up
                     </Button>
