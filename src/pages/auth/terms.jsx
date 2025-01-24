@@ -4,7 +4,7 @@ import { JoinInButton as Button } from '../../components/common/JoinInButton';
 import { Term } from '../../components/join/term';
 import PreviousButton from '@/assets/imgs/previous.svg';
 import Check from '@/assets/imgs/check.svg?react';
-import detailedTerms from '@/constants/DetailedTerms';
+import detailedTerms from '@/constants/detailedTerms';
 
 export const Terms = () => {
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const Terms = () => {
     }
 
     const handleClickAgreeWithAll = () => {
-        if(terms.term1 && terms.term2 && terms.term3 && terms.term4) {
+        if (terms.term1 && terms.term2 && terms.term3 && terms.term4) {
             setTerms({
                 term1: false,
                 term2: false,
@@ -40,7 +40,7 @@ export const Terms = () => {
             setIsAllAgreed(true);
         }
     }
-    
+
     const handleClickAgree = (key) => {
         setTerms((prev) => {
             const newTerms = {
@@ -50,14 +50,14 @@ export const Terms = () => {
 
             const isAllAgreed = Object.values(newTerms).every(term => term === true);
             setIsAllAgreed(isAllAgreed);
-            
+
             return newTerms;
         });
     }
 
     const handleSignInButtonClick = () => {
         const term = terms.term4
-        navigate('/signup/profile', { state: { term }});
+        navigate('/signup/profile', { state: { term } });
     }
 
     return (
@@ -72,7 +72,7 @@ export const Terms = () => {
                 </div>
                 <button onClick={handleClickAgreeWithAll} className={`w-full h-[3.4375rem] text-subTitle bg-white rounded-[.625rem] ${isAllAgreed ? "border-primary-30 border-2" : "shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]"} flex flex-row justify-center items-center space-x-3 mt-[3.1875rem] mb-[2.375rem]`}>
                     <div className='w-[1.875rem] h-[1.875rem] border-neutral-border-40 border rounded-[.3125rem] flex justify-center items-center'>
-                        { isAllAgreed ? <Check className='text-primary-base' /> : "" }
+                        {isAllAgreed ? <Check className='text-primary-base' /> : ""}
                     </div>
                     <div className='text-neutral-title text-subTitle'>Agree with all</div>
                 </button>

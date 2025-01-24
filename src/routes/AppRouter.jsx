@@ -61,6 +61,12 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
+    children: [
+      {
+        path: '',
+        element: <AllBoard />
+      },
+    ]
   },
 ]);
 
