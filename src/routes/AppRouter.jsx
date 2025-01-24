@@ -3,6 +3,10 @@ import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import { AllBoard, LandingPage, Login, NotFound } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
+import { Service } from '@/pages/my/service/service';
+import { Mypage } from '@/pages/my/mypage';
+import { ChatList } from '@/pages/chat/list';
+import { Inquiry } from '@/pages/my/service/inquiry';
 
 const AppRouter = createBrowserRouter([
   {
@@ -51,12 +55,70 @@ const AppRouter = createBrowserRouter([
     ],
   },
   {
-    path: path.board,
+    path: path.home,
     element: (
       <Layout>
         <Outlet />
       </Layout>
     ),
+  },
+  {
+    path: path.board.base,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+  },
+  {
+    path: path.market.base,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+  },
+  {
+    path: path.chatList.base,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <ChatList />,
+      },
+    ],
+  },
+  {
+    path: path.mypage.base,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <Mypage />,
+      },
+      {
+        path: path.mypage.service.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <Service />,
+          },
+          {
+            path: path.mypage.service.inquiry,
+            element: <Inquiry />,
+          },
+        ],
+      },
+    ],
   },
 ]);
 
