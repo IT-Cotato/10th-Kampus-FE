@@ -1,7 +1,6 @@
 import Search from "@/assets/imgs/search.svg?react"
-import Pin from "@/assets/imgs/pin.svg?react"
 import React, { useEffect, useState } from "react";
-
+import { BoardListBox } from "@/components/board/BoardList";
 export const AllBoard = () => {
   const [isUpdate, setIsUpdate] = useState({
     modal: false,
@@ -19,7 +18,7 @@ export const AllBoard = () => {
     ],
     third: [
       { title: "Housing", pin: false, order: 1 },
-      { title: "Part time / job", pin: false, order: 2 },
+      { title: "Part time / Job", pin: false, order: 2 },
       { title: "Language Exchange", pin: false, order: 3 },
       { title: "Festival / Events", pin: false, order: 4 }
     ]
@@ -74,23 +73,23 @@ export const AllBoard = () => {
 
   return (
     <div className="p-4 flex flex-col w-full h-full gap-4 relative">
-      {isUpdate.modal && <div className={`absolute inset-0 z-40 flex justify-center items-center bg-neutral-700  
-        animate-fadeInOutModal`}
+      {isUpdate.modal && <div className="absolute inset-0 z-40 flex justify-center items-center bg-neutral-700  
+        animate-fadeInOutModal"
       />}
-      {isUpdate.modal && <div className={`absolute z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-        rounded-xl px-12 py-4 bg-white animate-fadeInOutText`}
+      {isUpdate.modal && <div className="absolute z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+        rounded-xl px-12 py-4 bg-white animate-fadeInOutText"
       >
-        <p className="truncate">{isUpdate.prev ? 'Unpinned from the board' : 'Pinned to the board'}</p>
+        <p className="truncate text-[#525252]">{isUpdate.prev ? 'Unpinned from the board' : 'Pinned to the board'}</p>
       </div>}
 
-      <div className="text-title font-pretendard text-black">Board</div>
+      <div className="text-title  text-[#0B0B0B]">Board</div>
       <div className="relative w-full ">
         <input
           type="text"
           placeholder="Board, title, text, hashing"
-          className="w-full text-white font-pretendard text-base bg-[#EAEAEA] placeholder-white rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
+          className="w-full text-[#525252]  text-base bg-[#EAEAEA] placeholder-[#8E8E8E] rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
         />
-        <Search className="text-white absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
+        <Search className="text-[#8E8E8E] absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
       </div>
       {Object.entries(listArray).map(([key, value], index) => {
         return (
@@ -106,30 +105,3 @@ export const AllBoard = () => {
     </div>
   )
 };
-const BoardList = ({ data, listKey, index, togglePin }) => {
-  return (
-    <div className="flex gap-4 px-4 py-4 items-center">
-      <Pin className={data.pin ? `w-5 h-5 text-[#525252]` : `w-5 h-5 text-white`}
-        onClick={() => togglePin(listKey, index)}
-      />
-      <p className="font-pretendard text-base text-[#525252]">{data.title}</p>
-    </div>
-  )
-}
-const BoardListBox = ({ list, listKey, togglePin }) => {
-  return (
-    <div className="flex flex-col w-full bg-[#EAEAEA] rounded-lg divide-y divide-white">
-      {list.map((data, index) => {
-        return (
-          <BoardList
-            data={data}
-            key={index}
-            listKey={listKey}
-            index={index}
-            togglePin={togglePin}
-          />
-        )
-      })}
-    </div>
-  )
-}
