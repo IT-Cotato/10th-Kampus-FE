@@ -1,17 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 
 export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, name, placeholder, warn }) => {
     const [isActive, setIsActive] = useState(false);
     const [warning, setWarning] = useState(false);
-    const [hasKeyword, setHasKeyword] = useState(true);
     const dropdownRef = useRef(null);
 
     /** 입력한 값을 포함하는 항목 반환 */
-    const filteredList = list.filter((d) => 
-        keyword === "" ||
-        d.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        d.code.toLowerCase().includes(keyword.toLowerCase())
-    );
+    const filteredList = useMemo(() => {
+        console.log('filtering');
+        return list.filter((d) => 
+            keyword === "" ||
+            d.name.toLowerCase().includes(keyword.toLowerCase()) ||
+            d.code.toLowerCase().includes(keyword.toLowerCase())
+        );
+    }, [list, keyword]);
 
     /** 드롭다운 항목 클릭 시 */
     const handleSelectItem = (value) => {
