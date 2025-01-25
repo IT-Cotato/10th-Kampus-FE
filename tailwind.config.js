@@ -84,6 +84,10 @@ export default {
         base: '1px 4px 10px rgba(0, 0, 0, 0.2)',
         navbar: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
       },
+      animation: {
+        'fadeInOutText': 'fadeInOutText 1.6s ease',
+        'fadeInOutModal': 'fadeInOutModal 1.6s ease'
+      },
       keyframes: {
         bottomSheetUp: {
           from: { transform: 'translateY(30px)', opacity: '0' },
@@ -92,6 +96,16 @@ export default {
         bottomSheetDown: {
           from: { transform: 'translateY(-20px)', opacity: '0' },
           to: { transform: 'translateY(0)', opacity: '1' },
+        },
+        'fadeInOutText': {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+        'fadeInOutModal': {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 0.5 },
+          '100%': { opacity: 0 },
         },
       },
       animation: {
@@ -107,9 +121,10 @@ export default {
           '@apply mx-auto max-w-lg lg:max-w-5xl lg:flex lg:gap-x-10': '',
         },
         '.container': {
-          '@apply max-w-lg mx-auto h-dvh overflow-hidden bg-neutral-50': '',
+          '@apply max-w-lg mx-auto h-dvh overflow-x-hidden overflow-y-auto bg-neutral-50': '',
         },
       }),
     ),
+    require("tailwind-scrollbar-hide"),
   ],
 };

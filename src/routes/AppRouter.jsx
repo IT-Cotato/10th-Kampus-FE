@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, NotFound } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { Service } from '@/pages/my/service/service';
 import { Mypage } from '@/pages/my/mypage';
@@ -45,6 +45,10 @@ const AppRouter = createBrowserRouter([
         element: <Signup />,
       },
       {
+        path: path.signup.terms,
+        element: <Terms />,
+      },
+      {
         path: path.signup.profile,
         element: <Signup />,
       },
@@ -61,6 +65,12 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
+    children: [
+      {
+        path: '',
+        element: <AllBoard />
+      },
+    ]
   },
   {
     path: path.board.base,
