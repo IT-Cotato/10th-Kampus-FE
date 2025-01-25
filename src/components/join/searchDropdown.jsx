@@ -7,7 +7,6 @@ export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, 
 
     /** 입력한 값을 포함하는 항목 반환 */
     const filteredList = useMemo(() => {
-        console.log('filtering');
         return list.filter((d) => 
             keyword === "" ||
             d.name.toLowerCase().includes(keyword.toLowerCase()) ||
