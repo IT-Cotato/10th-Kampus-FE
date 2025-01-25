@@ -94,17 +94,17 @@ export const ProfileSettings = () => {
     }
 
     return (
-        <div className='min-h-full px-4 bg-white'>
+        <div className='h-full px-4'>
             <div className='relative w-full h-[3.0625rem] mt-[1.25rem] mb-[.625rem] text-pageTitle text-neutral-title flex justify-center items-center'>
                 <img src={PreviousButton} alt="previous" onClick={handleClickPreviousButton} className='text-pageTitle w-[1.1875rem] h-[1.1875rem] absolute left-0 cursor-pointer' />
                 Profile Settings
             </div>
-            <div className='flex flex-col w-full space-y-[1.875rem] mt-12'>
+            <div className='flex flex-col w-full space-y-[1.875rem] mt-12 mb-5'>
                 <UserNameInput userName={userName} onChange={handleUserNameChange} invalid={isUserNameFormatInvalid} duplicated={isUserNameDuplicated} />
-                <SearchDropdown keyword={nationality} name="Nationality" placeholder="Select your nationality" onChange={handleNationalityChange} isSelected={setIsNationalitySelected} selected={isNationalitySelected} list={NationalityList} />
-                <SearchDropdown keyword={nativeLanguage} name="Native language" placeholder="Select your native language" onChange={handleNativeLanguageChange} isSelected={setIsNativeLanguageSelected} selected={isNativeLanguageSelected} list={NativeLanguageList} />
+                <SearchDropdown keyword={nationality} name="Nationality" placeholder="Select your nationality" onChange={handleNationalityChange} isSelected={setIsNationalitySelected} selected={isNationalitySelected} list={NationalityList} warn="You have to select your country" />
+                <SearchDropdown keyword={nativeLanguage} name="Native language" placeholder="Select your native language" onChange={handleNativeLanguageChange} isSelected={setIsNativeLanguageSelected} selected={isNativeLanguageSelected} list={NativeLanguageList} warn="You have to select your language" />
             </div>
-            <div className='flex mt-[1.25rem] mb-5'>
+            <div className='flex mt-8 mb-5'>
                 <JoinInButton onClick={handleClickJoinNow} disabled={disabled}>Join Now</JoinInButton>
             </div>
         </div>

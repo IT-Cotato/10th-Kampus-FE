@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 
-export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, name, placeholder }) => {
+export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, name, placeholder, warn }) => {
     const [isActive, setIsActive] = useState(false);
+    const [warning, setWarning] = useState(false);
+    const [hasKeyword, setHasKeyword] = useState(true);
     const dropdownRef = useRef(null);
 
     /** 입력한 값을 포함하는 항목 반환 */
@@ -16,6 +18,7 @@ export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, 
         onChange(value);
         setIsActive(false);
         isSelected(true);
+        setWarning(false);
     }
 
     const handleOnChange = (value) => {
@@ -29,7 +32,7 @@ export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, 
             setIsActive(false);
 
             if (!selected) {
-                handleOnChange("");
+                setWarning(true);
             }
         }
     }
@@ -40,10 +43,10 @@ export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, 
                 { name }
                 <span className='text-primary-red'>*</span>
             </label>
-            <div className="flex flex-col mt-1" onBlur={handleOnBlur} tabIndex={0} ref={dropdownRef}>
+            <div className="relative flex flex-col mt-1" onBlur={handleOnBlur} tabIndex={0} ref={dropdownRef}>
                 <input id={name}
                     type='text'
-                    className={`flex w-full py-1 text-base align-middle border-b ${selected ? 'border-primary-base' : 'border-neutral-base'} placeholder-neutral-border-50`}
+                    className={`flex w-full py-1 text-base align-middle border-b ${!warning ? selected ? 'border-primary-base' : 'border-neutral-base' : 'border-primary-red'} placeholder-neutral-border-50`}
                     placeholder={placeholder}
                     autoComplete='off'
                     onChange={(e) => handleOnChange(e.target.value)}
@@ -51,22 +54,25 @@ export const SearchDropdown = ({ keyword, onChange, isSelected, selected, list, 
                     onFocus={() => setIsActive(true)}
                     aria-expanded={isActive ? "true" : "false"}
                 />
-                
-                {isActive && (
-                    <div className="flex flex-col overflow-auto border max-h-28" tabIndex={-1}>
-                        {filteredList.map(d => (
-                            <div
-                                onClick={() => handleSelectItem(d.name)}
-                                key={d.name}
-                                className="flex px-[.375rem] h-full cursor-pointer hover:bg-neutral-bg-5"
-                            >
-                                <div className="flex py-[.125rem] items-center w-full h-full text-center align-middle border-b">
-                                    {d.name}
+
+                <div className="flex flex-col">
+                    {isActive && (
+                        <div className="z-10 flex flex-col overflow-auto border max-h-28" tabIndex={-1}>
+                            {filteredList.map(d => (
+                                <div
+                                    onClick={() => handleSelectItem(d.name)}
+                                    key={d.name}
+                                    className="flex px-[.375rem] h-full cursor-pointer bg-white hover:bg-neutral-bg-5"
+                                >
+                                    <div className="flex py-[.125rem] items-center w-full h-full text-center align-middle border-b">
+                                        {d.name}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                            ))}
+                        </div>
+                    )}
+                    { warning && <div className='absolute z-0 mt-1 text-small text-primary-red'>{warn}</div> }
+                </div>
             </div>
         </div>
     );
