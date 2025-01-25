@@ -22,7 +22,7 @@ export const UserNameInput = ({ userName, onChange, invalid, duplicated }) => {
                 ref={userNameRef}
             />
             { userName && invalid && <div className='text-small text-primary-red'>The username format is incorrect!</div> }
-            { userName && !invalid && duplicated && <div className='text-small text-primary-red'>Thㄷ user name is already taken!</div> }
+            { userName && !invalid && duplicated && <div className='text-small text-primary-red'>The user name is already taken!</div> }
             <div className='text-neutral-border-50 text-small'>* User name: 5~20 characters consisting of lowercase letters(a-z) and numbers</div>
         </div>
     );
