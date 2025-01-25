@@ -1,17 +1,11 @@
-import home from '@/assets/imgs/navIcon/Home.svg';
-import homeActive from '@/assets/imgs/navIcon/homeActive.svg';
-import board from '@/assets/imgs/navIcon/board.svg';
-import boardActive from '@/assets/imgs/navIcon/boardActive.svg';
-import market from '@/assets/imgs/navIcon/market.svg';
-import marketActive from '@/assets/imgs/navIcon/marketActive.svg';
-import chat from '@/assets/imgs/navIcon/chat.svg';
-import chatActive from '@/assets/imgs/navIcon/chatActive.svg';
-import my from '@/assets/imgs/navIcon/my.svg';
-import myActive from '@/assets/imgs/navIcon/myActive.svg';
+import HomeIcon from '@/assets/imgs/navIcon/Home.svg?react';
+import BoardIcon from '@/assets/imgs/navIcon/board.svg?react';
+import MarketIcon from '@/assets/imgs/navIcon/market.svg?react';
+import ChatIcon from '@/assets/imgs/navIcon/chat.svg?react';
+import MyIcon from '@/assets/imgs/navIcon/my.svg?react';
 import { cn } from '@/utils/cn';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
-import { useEffect } from 'react';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -21,36 +15,31 @@ export const Navbar = () => {
     {
       id: 0,
       path: path.home,
-      icon: home,
-      activeIcon: homeActive,
+      icon: HomeIcon,
       label: 'Home',
     },
     {
       id: 1,
       path: path.board.base,
-      icon: board,
-      activeIcon: boardActive,
+      icon: BoardIcon,
       label: 'Board',
     },
     {
       id: 2,
       path: path.market.base,
-      icon: market,
-      activeIcon: marketActive,
+      icon: MarketIcon,
       label: 'Market',
     },
     {
       id: 3,
       path: path.chatList.base,
-      icon: chat,
-      activeIcon: chatActive,
+      icon: ChatIcon,
       label: 'Chat',
     },
     {
       id: 4,
       path: path.mypage.base,
-      icon: my,
-      activeIcon: myActive,
+      icon: MyIcon,
       label: 'My',
     },
   ];
@@ -59,16 +48,18 @@ export const Navbar = () => {
     <div className="h-[6.4375rem] bg-white rounded-t-2xl shadow-navbar flex flex-row items-center justify-between px-[1.875rem] gap-[1.875rem]">
       {navItems.map((item) => {
         const urlActive = location.pathname.includes(item.path);
+        const IconComponent = item.icon;
         return (
           <div
             key={item.id}
             className="flex flex-col items-center cursor-pointer"
             onClick={() => navigate(item.path)}
           >
-            <img
-              src={urlActive ? item.activeIcon : item.icon}
-              alt={item.label}
-              className="w-[1.875rem] h-[1.875rem]"
+            <IconComponent
+              className={cn('w-[1.875rem] h-[1.875rem]', {
+                'text-neutral-icon': !urlActive,
+                'text-neutral-title': urlActive,
+              })}
             />
             <span
               className={cn('text-small', {
