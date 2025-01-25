@@ -3,6 +3,7 @@ import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
+import { ProfileSettings } from '@/pages/auth/profileSettings';
 
 const AppRouter = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.signup.profile,
-        element: <Signup />,
+        element: <ProfileSettings />,
       },
       {
         path: path.signup.school,
