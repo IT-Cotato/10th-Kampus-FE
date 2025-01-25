@@ -68,7 +68,7 @@ export const ProfileSettings = () => {
 
     /** username 형식 확인 */
     const validateUserNameValue = (value) => {
-        const regex = /^[a-z0-9%^&*_]{5,20}$/;
+        const regex = /^[a-z0-9]{5,20}$/;
         return regex.test(value);
     }
 
