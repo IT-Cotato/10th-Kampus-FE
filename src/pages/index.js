@@ -3,7 +3,7 @@ export { Home } from './home/home';
 export { LandingPage } from './home/landingPage';
 
 export { Login } from './auth/login';
-export { Signup } from './auth/signup';
+
 export { Terms } from './auth/terms';
 
 export { AllBoard } from './board/allboard';
@@ -14,4 +14,4 @@ export { ChatId } from './chat/chatId';
 export { Mypage } from '@/pages/my/mypage';
 export { Service } from './my/service/service';
 export { Inquiry } from '@/pages/my/service/inquiry';
-export { Board } from './board/board'
+export { Board } from './board/board';

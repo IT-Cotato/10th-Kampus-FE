@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
+import { ProfileSettings } from '@/pages/auth/profileSettings';
 import {
   AllBoard,
   LandingPage,
@@ -8,13 +9,13 @@ import {
   Terms,
   NotFound,
   ChatId,
-  Signup,
   ChatList,
   Mypage,
   Service,
   Inquiry,
-  Board
+  Board,
 } from '@/pages';
+import { Signup } from '@/pages/auth/signup';
 
 const AppRouter = createBrowserRouter([
   {
@@ -58,7 +59,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.signup.profile,
-        element: <Signup />,
+        element: <ProfileSettings />,
       },
       {
         path: path.signup.school,
