@@ -38,7 +38,6 @@ export const SearchDropdown = ({
   const handleOnChange = (value) => {
     onChange(value || '');
     setIsSelected(false);
-    console.log('change');
   };
 
   /** 화면 클릭 시 드롭다운 닫힘, 드롭다운 선택 안하고 화면 클릭 시 글씨 삭제 */
