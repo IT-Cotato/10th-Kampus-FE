@@ -1,10 +1,23 @@
 import { Navbar } from '@/components/layout/navbar';
 import { useLocation } from 'react-router-dom';
+import { path } from '@/routes/path';
 
 export const Layout = ({ children }) => {
-  const location = useLocation();
-  const renderNav =
-    !location.pathname.includes('login') && !location.pathname.includes('sign');
+  
+  const renderNav = () => {
+    const location = useLocation();
+    const { pathname } = location;
+  
+    const validPaths = [
+      path.home,
+      path.board.base,
+      path.market.base,
+      path.chatList.base,
+      path.mypage.base,
+    ];
+  
+    return validPaths.includes(pathname);
+  };
 
   return (
     <div className="layout">
