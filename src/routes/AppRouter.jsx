@@ -13,6 +13,7 @@ import {
   Mypage,
   Service,
   Inquiry,
+  Board
 } from '@/pages';
 
 const AppRouter = createBrowserRouter([

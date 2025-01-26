@@ -27,14 +27,9 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.360021085793-mjjkh6jort49h8ssm6roe8qevo2d0nb1</string>
+				<string>kampus</string>
 			</array>
 		</dict>
-		 <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-            <string>kampus</string>
-        </array>
-    </dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

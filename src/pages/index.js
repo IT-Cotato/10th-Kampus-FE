@@ -14,3 +14,4 @@ export { ChatId } from './chat/chatId';
 export { Mypage } from '@/pages/my/mypage';
 export { Service } from './my/service/service';
 export { Inquiry } from '@/pages/my/service/inquiry';
+export { Board } from './board/board'

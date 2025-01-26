@@ -1,6 +1,6 @@
 import Search from "@/assets/imgs/search.svg?react"
 import React, { useEffect, useState } from "react";
-import { BoardListBox } from "@/components/board/BoardList";
+import { BoardListBox } from "@/components/board/BoardListBox";
 export const AllBoard = () => {
   const [isUpdate, setIsUpdate] = useState({
     modal: false,
