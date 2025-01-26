@@ -4,6 +4,8 @@ import PreviousButton from '@/assets/imgs/previous.svg';
 import { JoinInButton } from '@/components/common/JoinInButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import SearchDropdown from '@/components/join/searchDropdown';
+import { Nations as NationalityList } from '@/constants/nations';
+import { Languages as NativeLanguageList } from '@/constants/languages';
 
 export const ProfileSettings = () => {
   const navigate = useNavigate();
@@ -14,53 +16,6 @@ export const ProfileSettings = () => {
   const [isNationalitySelected, setIsNationalitySelected] = useState(false);
   const [nativeLanguage, setNativeLanguage] = useState('');
   const [isNativeLanguageSelected, setIsNativeLanguageSelected] = useState(false);
-
-  // 변경 예정
-  const NationalityList = [
-    { name: 'Korea', code: 'KR' },
-    { name: 'United States', code: 'US' },
-    { name: 'China', code: 'CN' },
-    { name: 'Japan', code: 'JP ' },
-    { name: 'Russia', code: 'RU' },
-    { name: 'Canada', code: 'CA' },
-    { name: 'France', code: 'FRA' },
-  ];
-
-  const NativeLanguageList = [
-    { name: 'Arabic', code: 'AR' },
-    { name: 'Bulgarian', code: 'BG' },
-    { name: 'Czech', code: 'CS' },
-    { name: 'Danish', code: 'DA' },
-    { name: 'German', code: 'DE' },
-    { name: 'Greek', code: 'EL' },
-    { name: 'English (British)', code: 'EN-GB' },
-    { name: 'English (American)', code: 'EN-US' },
-    { name: 'Spanish', code: 'ES' },
-    { name: 'Estonian', code: 'ET' },
-    { name: 'Finnish', code: 'FI' },
-    { name: 'French', code: 'FR' },
-    { name: 'Hungarian', code: 'HU' },
-    { name: 'Indonesian', code: 'ID' },
-    { name: 'Italian', code: 'IT' },
-    { name: 'Japanese', code: 'JA' },
-    { name: 'Korean', code: 'KO' },
-    { name: 'Lithuanian', code: 'LT' },
-    { name: 'Latvian', code: 'LV' },
-    { name: 'Norwegian Bokmål', code: 'NB' },
-    { name: 'Dutch', code: 'NL' },
-    { name: 'Polish', code: 'PL' },
-    { name: 'Portuguese (Brazilian)', code: 'PT-BR' },
-    { name: 'Portuguese', code: 'PT-PT' },
-    { name: 'Romanian', code: 'RO' },
-    { name: 'Russian', code: 'RU' },
-    { name: 'Slovak', code: 'SK' },
-    { name: 'Slovenian', code: 'SL' },
-    { name: 'Swedish', code: 'SV' },
-    { name: 'Turkish', code: 'TR' },
-    { name: 'Ukrainian', code: 'UK' },
-    { name: 'Chinese (simplified)', code: 'ZH-HANS' },
-    { name: 'Chinese (traditional)', code: 'ZH-HANT' },
-  ];
 
   const handleClickPreviousButton = () => {
     navigate(-1);
