@@ -3,6 +3,10 @@
   "appName": "Kampus",
   "webDir": "dist",
   "bundledWebRuntime": false,
+  "server": {
+    "url": "http://localhost:3000/board",
+    "cleartext": true
+  },
   "plugins": {
     "GoogleAuth": {
       "scopes": [
