@@ -85,9 +85,7 @@ export const SearchDropdown = ({
               className="z-10 flex flex-col overflow-auto border max-h-28"
               tabIndex={-1}
             >
-              {filteredList.map((d) => {
-                console.log('map ' + d.name)
-                return (
+              {filteredList.map((d) => (
                 <div
                   onClick={() => handleSelectItem(d.name)}
                   key={d.name}
@@ -97,7 +95,7 @@ export const SearchDropdown = ({
                     {d.name}
                   </div>
                 </div>
-              )})}
+              ))}
             </div>
           )}
           {warning && (
