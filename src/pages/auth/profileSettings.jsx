@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PreviousButton from '@/assets/imgs/previous.svg';
-import { JoinInButton } from '@/components/common/JoinInButton';
+import { JoinInButton } from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import SearchDropdown from '@/components/join/searchDropdown';
 import { Nations as NationalityList } from '@/constants/nations';
