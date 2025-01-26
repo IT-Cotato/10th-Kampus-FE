@@ -1,13 +1,15 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PreviousButton from '@/assets/imgs/previous.svg';
 import { JoinInButton } from '@/components/common/JoinInButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import SearchDropdown from '@/components/join/searchDropdown';
 import { Nations as NationalityList } from '@/constants/nations';
 import { Languages as NativeLanguageList } from '@/constants/languages';
+import axios from 'axios';
 
 export const ProfileSettings = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [isUserNameFormatInvalid, setIsUserNameFormatInvalid] = useState(false);
@@ -16,6 +18,14 @@ export const ProfileSettings = () => {
   const [isNationalitySelected, setIsNationalitySelected] = useState(false);
   const [nativeLanguage, setNativeLanguage] = useState('');
   const [isNativeLanguageSelected, setIsNativeLanguageSelected] = useState(false);
+
+  const term = location.state?.term;
+
+  useEffect(() => {
+    if (term === undefined) {
+      navigate('/signup/terms');
+    }
+  }, [term]);
 
   const handleClickPreviousButton = () => {
     navigate(-1);
@@ -48,8 +58,22 @@ export const ProfileSettings = () => {
     !isNativeLanguageSelected;
 
   const handleClickJoinNow = () => {
-    // 백이랑 연동
-    // navigate('/welcome'); 등
+    // api 수정되면 terms, language도 추가로 보내주기
+    // axios.post('https://kampus.kro.kr/v1/api/auth/signup', {
+    //   "email": "arghstjdy",
+    //   "uniqueId": "aweghsjd",
+    //   "providerId": "awegrh",
+    //   "username": "awrgsth",
+    //   "nickname": userName,
+    //   "nationality": nationality
+    // })
+    // .then(response => {
+    //   console.log('회원가입 성공:', response.data);
+    // })
+    // .catch(error => {
+    //   console.log('회원가입 에러: ', error);
+    // });
+    // navigate('/signup/school', {replace: true}); 등
   };
 
   return (
