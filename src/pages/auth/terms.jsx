@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { JoinInButton as Button } from '../../components/common/JoinInButton';
+import MainButton from '../../components/common/MainButton';
 import { Term } from '../../components/join/term';
 import PreviousButton from '@/assets/imgs/previous.svg';
 import Check from '@/assets/imgs/check.svg?react';
-import detailedTerms from '@/constants/DetailedTerms';
+import detailedTerms from '@/constants/detailedTerms';
 
 export const Terms = () => {
     const navigate = useNavigate();
@@ -61,9 +61,9 @@ export const Terms = () => {
     }
 
     return (
-        <div className='min-h-full px-4 bg-white'>
-            <div className='w-full h-[3.0625rem] mt-[1.25rem] mb-[.625rem] text-pageTitle text-neutral-title flex justify-center items-center'>
-                <img src={PreviousButton} alt="previous" onClick={handleClickPreviousButton} className='text-pageTitle w-[1.1875rem] h-[1.1875rem] absolute left-[.625rem] cursor-pointer' />
+        <div className='h-full px-4'>
+            <div className='relative w-full h-[3.0625rem] mt-[1.25rem] mb-[.625rem] text-pageTitle text-neutral-title flex justify-center items-center'>
+            <img src={PreviousButton} alt="back button" onClick={handleClickPreviousButton} className='text-pageTitle w-[1.1875rem] h-[1.1875rem] absolute left-0 cursor-pointer' />
                 Terms and Conditions
             </div>
             <div>
@@ -76,16 +76,16 @@ export const Terms = () => {
                     </div>
                     <div className='text-neutral-title text-subTitle'>Agree with all</div>
                 </button>
-                <div className='flex flex-col h-[16.875rem] justify-between'>
+                <div className='flex flex-col justify-between h-64'>
                     <Term onClick={() => handleClickAgree('term1')} isChecked={terms.term1} detailedTerm={detailedTerms.term1}>{detailedTerms.term1.title}</Term>
                     <Term onClick={() => handleClickAgree('term2')} isChecked={terms.term2} detailedTerm={detailedTerms.term2}>{detailedTerms.term2.title}</Term>
                     <Term onClick={() => handleClickAgree('term3')} isChecked={terms.term3} detailedTerm={detailedTerms.term3}>{detailedTerms.term3.title}</Term>
                     <Term onClick={() => handleClickAgree('term4')} isChecked={terms.term4} detailedTerm={detailedTerms.term4}>{detailedTerms.term4.title}</Term>
                 </div>
-                <div className='mt-[3.125rem] mb-5'>
-                    <Button onClick={handleSignInButtonClick} disabled={!isSignInActive}>
+                <div className='mb-5 mt-7'>
+                    <MainButton onClick={handleSignInButtonClick} disabled={!isSignInActive}>
                         Sign Up
-                    </Button>
+                    </MainButton>
                 </div>
             </div>
         </div>
