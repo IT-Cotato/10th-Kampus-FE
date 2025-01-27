@@ -13,22 +13,22 @@ export const path = {
   mypage: {
     base: '/my',
     settings: {
-      base: '/my/settings',
-      info: 'info',
-      notification: 'notification',
+      info: '/my/settings/info',
+      verification: '/my/settings/verification',
+      notification: '/my/settings/notification',
     },
     community: {
-      base: '/my/community',
-      scrap: 'scrap',
-      articles: 'articles',
-      secondhand: 'secondhand',
-      guide: 'guide',
+      scrap: '/my/community/scrap',
+      articles: '/my/community/articles',
+      secondhand: '/my/community/secondhand',
+      guide: '/my/community/guide',
     },
     service: {
       base: '/my/service',
       inquiry: 'inquiry',
     },
-    etc_block: 'block',
+    block: '/block',
+    delete: '/leave',
   },
   market: {
     base: '/market',

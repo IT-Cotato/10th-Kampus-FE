@@ -45,21 +45,21 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.settings.info)}
               >
                 My Information
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.settings.verification)}
               >
                 School Verification
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.settings.notification)}
               >
                 Notifications and Information Agreements
               </button>
