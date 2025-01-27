@@ -3,21 +3,18 @@ import { useLocation } from 'react-router-dom';
 import { path } from '@/routes/path';
 
 export const Layout = ({ children }) => {
-  
-  const renderNav = () => {
-    const location = useLocation();
-    const { pathname } = location;
-  
-    const validPaths = [
-      path.home,
-      path.board.base,
-      path.market.base,
-      path.chatList.base,
-      path.mypage.base,
-    ];
-  
-    return validPaths.includes(pathname);
-  };
+  const location = useLocation();
+  const { pathname } = location;
+
+  const validPaths = [
+    path.home,
+    path.board.base,
+    path.market.base,
+    path.chatList.base,
+    path.mypage.base,
+  ];
+
+  const renderNav = validPaths.includes(pathname);
 
   return (
     <div className="layout">
@@ -28,7 +25,7 @@ export const Layout = ({ children }) => {
           className="container relative flex flex-col justify-between"
         >
           <div className="flex w-full h-full">{children}</div>
-          <div className='flex w-full h-[6.4375rem]'></div>
+          <div className="flex w-full h-[6.4375rem]"></div>
           <Navbar />
         </div>
       ) : (
