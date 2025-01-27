@@ -10,10 +10,10 @@ import {
   NotFound,
   ChatId,
   ChatList,
-  Mypage,
   Service,
   Inquiry,
   Board,
+  MyPage,
 } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 
@@ -125,7 +125,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Mypage />,
+        element: <MyPage />,
       },
       {
         path: path.mypage.service.base,
