@@ -4,7 +4,7 @@ import { Layout } from '@/components/layout/layout';
 import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { Service } from '@/pages/my/service/service';
-import { Mypage } from '@/pages/my/mypage';
+import { MyPage } from '@/pages/my/mypage';
 import { ChatList } from '@/pages/chat/list';
 import { Inquiry } from '@/pages/my/service/inquiry';
 
@@ -112,7 +112,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Mypage />,
+        element: <MyPage />,
       },
       {
         path: path.mypage.service.base,
