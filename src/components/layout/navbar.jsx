@@ -45,14 +45,14 @@ export const Navbar = () => {
   ];
 
   return (
-    <div className="h-[6.4375rem] bg-white rounded-t-2xl shadow-navbar flex flex-row items-center justify-between px-[1.875rem] gap-[1.875rem]">
+    <div className="w-full max-w-lg h-[6.4375rem] bg-white rounded-t-2xl shadow-navbar flex flex-row items-center justify-between gap-[1.875rem] px-4 fixed bottom-0 z-50 pb-[36px] pt-2">
       {navItems.map((item) => {
         const urlActive = location.pathname.includes(item.path);
         const IconComponent = item.icon;
         return (
           <div
             key={item.id}
-            className="flex flex-col items-center cursor-pointer"
+            className="flex flex-col items-center justify-between w-full h-full cursor-pointer pt-[.125rem]"
             onClick={() => navigate(item.path)}
           >
             <IconComponent

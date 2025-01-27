@@ -121,7 +121,7 @@ export default {
           '@apply mx-auto max-w-lg lg:max-w-5xl lg:flex lg:gap-x-10': '',
         },
         '.container': {
-          '@apply max-w-lg mx-auto h-dvh overflow-x-hidden overflow-y-auto bg-neutral-50': '',
+          '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-neutral-50': '',
         },
       }),
     ),
