@@ -16,6 +16,9 @@ import {
   MyPage,
 } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
+import { MyInfo } from '@/pages/my/settings/MyInfo';
+import { SchoolVerification } from '@/pages/my/settings/SchoolVerification';
+import { Notification } from '@/pages/my/settings/Notification';
 
 const AppRouter = createBrowserRouter([
   {
@@ -126,6 +129,18 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <MyPage />,
+      },
+      {
+        path: path.mypage.settings.info,
+        element: <MyInfo />,
+      },
+      {
+        path: path.mypage.settings.verification,
+        element: <SchoolVerification />,
+      },
+      {
+        path: path.mypage.settings.notification,
+        element: <Notification />,
       },
       {
         path: path.mypage.service.base,
