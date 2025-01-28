@@ -25,7 +25,7 @@ export const MyPage = () => {
         {/* 마이페이지 메인 버튼 */}
         <div
           className="flex w-full h-full bg-primary-base px-[.75rem] py-[1.625rem] items-center rounded-[.625rem]"
-          onClick={() => handleButtonClick('/')}
+          onClick={() => handleButtonClick(path.mypage.settings.info)}
         >
           <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
             <div className="text-pageTitle">{username}</div>
@@ -71,21 +71,21 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.community.scrap)}
               >
                 Scrap
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.community.articles)}
               >
                 My Articles
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.community.secondhand)}
               >
                 Secondhand
               </button>
@@ -123,7 +123,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.block)}
               >
                 Blocking Management
               </button>
@@ -137,7 +137,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left text-neutral-border-50"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => handleButtonClick(path.mypage.delete)}
               >
                 Delete Account
               </button>

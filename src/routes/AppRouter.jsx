@@ -15,10 +15,11 @@ import {
   Board,
   MyPage,
 } from '@/pages';
+import { MyArticle, BlockingManagement, DeleteAccount, Home } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
-import { MyInfo } from '@/pages/my/settings/MyInfo';
-import { SchoolVerification } from '@/pages/my/settings/SchoolVerification';
-import { Notification } from '@/pages/my/settings/Notification';
+import { MyInfo } from '@/pages/my/settings/myInfo';
+import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
+import { Notification } from '@/pages/my/settings/notification';
 
 const AppRouter = createBrowserRouter([
   {
@@ -141,6 +142,26 @@ const AppRouter = createBrowserRouter([
       {
         path: path.mypage.settings.notification,
         element: <Notification />,
+      },
+      {
+        path: path.mypage.community.articles,
+        element: <MyArticle />,
+      },
+      {
+        path: path.mypage.community.scrap,
+        element: <MyArticle />,
+      },
+      {
+        path: path.mypage.block,
+        element: <BlockingManagement />,
+      },
+      {
+        path: path.mypage.delete,
+        element: <DeleteAccount />,
+      },
+      {
+        path: path.mypage.community.secondhand,
+        element: <Home />,
       },
       {
         path: path.mypage.service.base,
