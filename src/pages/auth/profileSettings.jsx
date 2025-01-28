@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PreviousButton from '@/assets/imgs/previous.svg';
-import { JoinInButton } from '@/components/common/MainButton';
+import MainButton from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import SearchDropdown from '@/components/join/searchDropdown';
 import { Nations as NationalityList } from '@/constants/nations';
@@ -116,9 +116,9 @@ export const ProfileSettings = () => {
         />
       </div>
       <div className="flex mt-8 mb-5">
-        <JoinInButton onClick={handleClickJoinNow} disabled={disabled}>
+        <MainButton onClick={handleClickJoinNow} disabled={disabled}>
           Join Now
-        </JoinInButton>
+        </MainButton>
       </div>
     </div>
   );
