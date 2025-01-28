@@ -84,10 +84,6 @@ export default {
         base: '1px 4px 10px rgba(0, 0, 0, 0.2)',
         navbar: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
       },
-      animation: {
-        'fadeInOutText': 'fadeInOutText 1.6s ease',
-        'fadeInOutModal': 'fadeInOutModal 1.6s ease'
-      },
       keyframes: {
         bottomSheetUp: {
           from: { transform: 'translateY(30px)', opacity: '0' },
@@ -97,12 +93,12 @@ export default {
           from: { transform: 'translateY(-20px)', opacity: '0' },
           to: { transform: 'translateY(0)', opacity: '1' },
         },
-        'fadeInOutText': {
+        fadeInOutText: {
           '0%': { opacity: 0 },
           '50%': { opacity: 1 },
           '100%': { opacity: 0 },
         },
-        'fadeInOutModal': {
+        fadeInOutModal: {
           '0%': { opacity: 0 },
           '50%': { opacity: 0.5 },
           '100%': { opacity: 0 },
@@ -111,6 +107,8 @@ export default {
       animation: {
         bottomSheetUp: 'bottomSheetUp 0.5s ease-in-out',
         bottomSheetDown: 'bottomSheetDown 0.5s ease-in-out',
+        fadeInOutText: 'fadeInOutText 1.6s ease',
+        fadeInOutModal: 'fadeInOutModal 1.6s ease'
       },
     },
   },
