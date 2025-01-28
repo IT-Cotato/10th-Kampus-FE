@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { path } from '@/routes/path';
 import PreviousButton from '@/assets/imgs/previous.svg';
 import MainButton from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
@@ -23,7 +24,7 @@ export const ProfileSettings = () => {
 
   useEffect(() => {
     if (term === undefined) {
-      navigate('/signup/terms');
+      navigate(`${path.signup.base}/${path.signup.terms}`);
     }
   }, [term]);
 
