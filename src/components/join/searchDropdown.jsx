@@ -1,6 +1,6 @@
 import React, { useState, useRef, useMemo } from 'react';
 
-export const SearchDropdown = ({
+const SearchDropdown = ({
   keyword,
   onChange,
   setIsSelected,
