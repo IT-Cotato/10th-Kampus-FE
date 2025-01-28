@@ -77,14 +77,14 @@ export const AllBoard = () => {
 
       {isUpdate.modal &&
         <PinAnimate state={isUpdate.prev} />}
-      <div className="text-title  text-[#0B0B0B]">Board</div>
+      <div className="text-title  text-neutral-title">Board</div>
       <div className="relative w-full ">
         <input
           type="text"
           placeholder="Board, title, text, hashing"
-          className="w-full text-[#525252]  text-base bg-[#EAEAEA] placeholder-[#8E8E8E] rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
+          className="w-full text-[#525252]  text-base bg-[#EAEAEA] placeholder-neutral-border-50 rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
         />
-        <Search className="text-[#8E8E8E] absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
+        <Search className="text-neutral-border-50 absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
       </div>
       {Object.entries(listArray).map(([key, value], index) => {
         return (
