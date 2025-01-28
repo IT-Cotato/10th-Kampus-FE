@@ -6,19 +6,14 @@ export const Layout = ({ children }) => {
   const location = useLocation();
   const { pathname } = location;
 
-  const validPaths = [
-    path.home,
-    path.board.base,
-    path.market.base,
-    path.chatList.base,
-    path.mypage.base,
-  ];
+  const excludedPaths = [path.login, path.signup.base];
 
-  const renderNav = validPaths.includes(pathname);
+  const renderNav = !excludedPaths.some((excludedPaths) =>
+    pathname.startsWith(excludedPaths),
+  );
 
   return (
     <div className="layout">
-      {/* 사용자 정보 존재 시 render 개선 */}
       {renderNav ? (
         <div
           id="modal-root"
