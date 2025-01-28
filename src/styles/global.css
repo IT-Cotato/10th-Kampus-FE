@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("src/assets/fonts/Pretendard-Regular.woff2") format("font-woff2");
+  font-family: 'Pretendard';
+  src: url('src/assets/fonts/Pretendard-Regular.woff2') format('font-woff2');
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("src/assets/fonts/Pretendard-Bold.woff2") format("font-woff2");
+  font-family: 'Pretendard';
+  src: url('src/assets/fonts/Pretendard-Bold.woff2') format('font-woff2');
   font-weight: bold;
 }
 
@@ -34,6 +34,7 @@
   --neutral-5: #f6f6f6;
   --neutral-10: #f2f2f2;
   --neutral-20: #e4e4e4;
+  --neutral-25: #d6d6d6;
   --neutral-30: #d8d8d8;
   --neutral-40: #c6c6c6;
   --neutral-50: #8e8e8e;
@@ -42,7 +43,7 @@
   --neutral-80: #353535;
   --neutral-90: #0b0b0b;
 
-  --font-pretendard: "Pretendard";
+  --font-pretendard: 'Pretendard';
 
   /* 포커스 제거 */
   input:focus,
