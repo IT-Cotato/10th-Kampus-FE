@@ -4,8 +4,8 @@ import PreviousButton from '@/assets/imgs/previous.svg';
 import MainButton from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import SearchDropdown from '@/components/join/searchDropdown';
-import { Nations as NationalityList } from '@/constants/nations';
-import { Languages as NativeLanguageList } from '@/constants/languages';
+import Nations from '@/constants/nations';
+import Languages from '@/constants/languages';
 import axios from 'axios';
 
 export const ProfileSettings = () => {
@@ -101,7 +101,7 @@ export const ProfileSettings = () => {
           onChange={handleNationalityChange}
           setIsSelected={setIsNationalitySelected}
           selected={isNationalitySelected}
-          list={NationalityList}
+          list={Nations}
           warn="You have to select your country"
         />
         <SearchDropdown
@@ -111,7 +111,7 @@ export const ProfileSettings = () => {
           onChange={handleNativeLanguageChange}
           setIsSelected={setIsNativeLanguageSelected}
           selected={isNativeLanguageSelected}
-          list={NativeLanguageList}
+          list={Languages}
           warn="You have to select your language"
         />
       </div>
