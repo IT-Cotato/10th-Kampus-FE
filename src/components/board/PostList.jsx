@@ -15,7 +15,7 @@ export const PostList = ({ data }) => {
             </div>
             <div className="flex justify-between items-center">
                 <div className="flex gap-[0.375rem]">
-                    <div className="flex gap-1 text-[#EB003B] text-small items-center">
+                    <div className="flex gap-1 text-primary-red text-small items-center">
                         <Like />
                         <p>{data.like}</p>
                     </div>
