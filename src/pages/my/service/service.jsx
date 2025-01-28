@@ -13,9 +13,9 @@ export const Service = () => {
     { id: 2, text: 'Notice' },
   ];
   return (
-    <div>
+    <div className="w-full">
       <TitleHeader text="Contact Us" />
-      <div className=" mt-[3.125rem] gap-[0.625rem] flex justify-center mb-[1.875rem]">
+      <div className="mt-[3.125rem] gap-[0.625rem] flex justify-center mb-[1.875rem]">
         {menu.map((item) => (
           <ButtonRound
             key={item.id}

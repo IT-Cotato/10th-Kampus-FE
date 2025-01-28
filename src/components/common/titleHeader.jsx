@@ -10,7 +10,7 @@ export const TitleHeader = ({ text }) => {
       <img
         src={arrowLeft}
         alt="arrowLeft"
-        onClick={() => navigate(path.mypage.base)}
+        onClick={() => navigate('../')}
         className="cursor-pointer w-[1.25rem] h-[1.25rem]"
       />
       <span className="mx-auto text-pageTitle text-neutral-title">{text}</span>
