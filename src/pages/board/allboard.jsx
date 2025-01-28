@@ -1,6 +1,7 @@
 import Search from "@/assets/imgs/search.svg?react"
 import React, { useEffect, useState } from "react";
-import { BoardListBox } from "@/components/board/BoardList";
+import { BoardListBox } from "@/components/board/BoardListBox";
+import { PinAnimate } from "@/components/board/PinAniamte";
 export const AllBoard = () => {
   const [isUpdate, setIsUpdate] = useState({
     modal: false,
@@ -73,23 +74,17 @@ export const AllBoard = () => {
 
   return (
     <div className="p-4 flex flex-col w-full h-full gap-4 relative">
-      {isUpdate.modal && <div className="absolute inset-0 z-40 flex justify-center items-center bg-neutral-700  
-        animate-fadeInOutModal"
-      />}
-      {isUpdate.modal && <div className="absolute z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-        rounded-xl px-12 py-4 bg-white animate-fadeInOutText"
-      >
-        <p className="truncate text-[#525252]">{isUpdate.prev ? 'Unpinned from the board' : 'Pinned to the board'}</p>
-      </div>}
 
-      <div className="text-title  text-[#0B0B0B]">Board</div>
+      {isUpdate.modal &&
+        <PinAnimate state={isUpdate.prev} />}
+      <div className="text-title  text-neutral-title">Board</div>
       <div className="relative w-full ">
         <input
           type="text"
           placeholder="Board, title, text, hashing"
-          className="w-full text-[#525252]  text-base bg-[#EAEAEA] placeholder-[#8E8E8E] rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
+          className="w-full text-[#525252]  text-base bg-[#EAEAEA] placeholder-neutral-border-50 rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
         />
-        <Search className="text-[#8E8E8E] absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
+        <Search className="text-neutral-border-50 absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
       </div>
       {Object.entries(listArray).map(([key, value], index) => {
         return (

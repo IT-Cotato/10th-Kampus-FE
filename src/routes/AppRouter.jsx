@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound, Board } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { Service } from '@/pages/my/service/service';
 import { Mypage } from '@/pages/my/mypage';
@@ -70,6 +70,10 @@ const AppRouter = createBrowserRouter([
         path: '',
         element: <AllBoard />
       },
+      {
+        path: ':boardTitle',  // title에 따라 동적 할당
+        element: <Board />,
+      }
     ]
   },
   {

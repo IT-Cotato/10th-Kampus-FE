@@ -47,37 +47,37 @@ export default {
     extend: {
       colors: {
         primary: {
-          5: 'var(--purple-5)',
-          10: 'var(--purple-10)',
-          20: 'var(--purple-20)',
-          30: 'var(--purple-30)',
-          40: 'var(--purple-40)',
-          base: 'var(--purple-50)',
-          60: 'var(--purple-60)',
-          70: 'var(--purple-70)',
-          80: 'var(--purple-80)',
-          90: 'var(--purple-90)',
-          red: 'var(--primary-red)',
-          yellow: 'var(--primary-yellow)',
-          green: 'var(--primary-green)',
-          blue: 'var(--primary-blue)',
+          5: 'var(--purple-5)', // FAF9FF
+          10: 'var(--purple-10)', // F2F0FF
+          20: 'var(--purple-20)', // DFD6FD
+          30: 'var(--purple-30)', // AA93EF
+          40: 'var(--purple-40)', //7C63C8
+          base: 'var(--purple-50)', // 5E44AC
+          60: 'var(--purple-60)', // 543D98
+          70: 'var(--purple-70)', // 4F3D87
+          80: 'var(--purple-80)', //3C2E67
+          90: 'var(--purple-90)', // 221A3B
+          red: 'var(--primary-red)',  // EB003B
+          yellow: 'var(--primary-yellow)',  // FFB724
+          green: 'var(--primary-green)',  // 008A1E
+          blue: 'var(--primary-blue)',  // 2768FF
         },
         neutral: {
           bg: {
-            5: 'var(--neutral-5)',
-            10: 'var(--neutral-10)',
+            5: 'var(--neutral-5)',  // F8F8F8
+            10: 'var(--neutral-10)',  //F0F0F0
           },
-          disabled: 'var(--neutral-20)',
+          disabled: 'var(--neutral-20)',  //E4E4E4
           icon: 'var(--neutral-25)',
           border: {
-            30: 'var(--neutral-30)',
-            40: 'var(--neutral-40)',
-            50: 'var(--neutral-50)',
+            30: 'var(--neutral-30)',  // D8D8D8
+            40: 'var(--neutral-40)',  // C6C6C6
+            50: 'var(--neutral-50)',  // 8E8E8E
           },
-          base: 'var(--neutral-60)',
-          70: 'var(--neutral-70)',
-          80: 'var(--neutral-80)',
-          title: 'var(--neutral-90)',
+          base: 'var(--neutral-60)',  // 727272
+          70: 'var(--neutral-70)',  // 555555
+          80: 'var(--neutral-80)',  // 353535
+          title: 'var(--neutral-90)', // 0B0B0B
         },
       },
       boxShadow: {
