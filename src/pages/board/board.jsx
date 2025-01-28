@@ -7,6 +7,7 @@ import Pin from '../../assets/imgs/pin.svg?react'
 import { PostList } from "@/components/board/PostList";
 import { PinAnimate } from "@/components/board/PinAniamte";
 import { FilterBox } from "@/components/board/FilterBox";
+import { TipsPostList } from "@/components/board/TipsPostList";
 export const Board = () => {
     const navigate = useNavigate();
     const { boardTitle } = useParams(); // 서버와 통신 시, 파라미터에 따라 데이터 가져오기
@@ -20,7 +21,8 @@ export const Board = () => {
                 comment: 10,
                 time: '1 day ago',
                 image: null,
-                board_type: 'Tips for living in Korea'
+                board_type: 'Tips for living in Korea',
+                scrap: false
             },
             {
                 title: 'Title',
@@ -28,8 +30,9 @@ export const Board = () => {
                 like: 10,
                 comment: 10,
                 time: '1 day ago',
-                image: null,
-                board_type: 'Information'
+                image: 'dummy',
+                board_type: 'Information',
+                scrap: false
             }
         ]
     })
@@ -44,7 +47,11 @@ export const Board = () => {
         // 이 때 백엔드와 사용자의 보드 핀 상태 업데이트 해야 함 
     }
     // 필터를 사용하는 2개 보드 여부 확인하여 아니라면 렌더링을 하지 않아 불필요한 상태관리 비활성화
-    const isActiveCategory_Sort = boardTitle === 'question' || boardTitle === 'information';
+    const isActive = {
+        trending: boardTitle === 'trending',
+        scrap: boardTitle === 'tips-for-living-in-korea',
+        filter: boardTitle === 'question' || boardTitle === 'information'
+    }
 
     return (
         <div className="w-full h-full flex flex-col">
@@ -67,17 +74,20 @@ export const Board = () => {
 
                 </div>
             </div>
-            <div className="flex flex-col px-4 py-5 w-full bg-white gap-[0.875rem]">
+            <div className="flex flex-col px-4 pt-5 w-full bg-white gap-[0.875rem]">
                 <div className="flex w-full justify-center items-center bg-neutral-bg-10 rounded-[0.625rem]
                 text-subTitle font-normal py-3 text-[#6A6A6A] cursor-pointer">
                     Notice
                 </div>
-                {isActiveCategory_Sort &&
+                {isActive.filter &&
                     <FilterBox />}  {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
             </div>
             <div className="flex flex-col flex-1 w-full bg-white px-4 divide-y">
-                <PostList data={boardData.post[0]} />
-                <PostList data={boardData.post[1]} />
+                {boardData.post.map((item, index) => (
+                    isActive.scrap /** 스크랩로 인한 불필요한 상태관리 비활성화를 위해 컴포넌트를 따로 만들었습니다*/
+                        ? <TipsPostList key={index} data={item} />
+                        : <PostList key={index} data={item} isActive={isActive.trending} />
+                ))}
             </div>
         </div>
     )

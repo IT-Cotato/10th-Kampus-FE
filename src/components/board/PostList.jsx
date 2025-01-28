@@ -1,16 +1,21 @@
 import Like from '../../assets/imgs/like.svg?react'
 import Comment from '../../assets/imgs/comment.svg?react'
 import Translate from '../../assets/imgs/translate.svg?react'
-export const PostList = ({ data }) => {
+export const PostList = ({ data, isActive }) => {
     return (
-        <div className="flex flex-col w-full py-4 gap-3">
+        <div className="flex flex-col pt-5 pb-3 gap-3">
+            {isActive &&   /** 인기 게시판 레이아웃 */
+                <div className='py-[0.375rem] w-fit px-[0.625rem] rounded-md bg-primary-10
+                text-small text-neutral-base'>
+                    {data.board_type}
+                </div>}
             <div className="flex justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-neutral-title text-subTitle">{data.title}</h1>
                     <h2 className="text-neutral-base">{data.content}</h2>
                 </div>
-                <div>
-                    <img src={data.image} alt="게시글 이미지" className="w-20 h-20 bg-neutral-bg-10 border-none" />
+                <div className='min-w-20 min-h-20'>
+                    {data.image && <img src={data.image} alt="post image" className="w-20 h-20 bg-neutral-bg-10 border-none" />}
                 </div>
             </div>
             <div className="flex justify-between items-center">
