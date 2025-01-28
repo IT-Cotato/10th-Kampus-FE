@@ -21,14 +21,13 @@ export const path = {
       scrap: '/my/community/scrap',
       articles: '/my/community/articles',
       secondhand: '/my/community/secondhand',
-      guide: '/my/community/guide',
     },
     service: {
       base: '/my/service',
       inquiry: 'inquiry',
     },
-    block: '/block',
-    delete: '/leave',
+    block: 'my/block',
+    delete: 'my/leave',
   },
   market: {
     base: '/market',

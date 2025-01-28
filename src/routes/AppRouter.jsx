@@ -1,13 +1,13 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound, MyArticle, BlockingManagement, DeleteAccount, Home } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { Service } from '@/pages/my/service/service';
 import { MyPage } from '@/pages/my/mypage';
-import { MyInfo } from '@/pages/my/settings/MyInfo';
-import { SchoolVerification } from '@/pages/my/settings/SchoolVerification';
-import { Notification } from '@/pages/my/settings/Notification';
+import { MyInfo } from '@/pages/my/settings/myInfo';
+import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
+import { Notification } from '@/pages/my/settings/notification';
 import { ChatList } from '@/pages/chat/list';
 import { Inquiry } from '@/pages/my/service/inquiry';
 
@@ -128,6 +128,26 @@ const AppRouter = createBrowserRouter([
       {
         path: path.mypage.settings.notification,
         element: <Notification />,
+      },
+      {
+        path: path.mypage.community.articles,
+        element: <MyArticle />,
+      },
+      {
+        path: path.mypage.community.scrap,
+        element: <MyArticle />,
+      },
+      {
+        path: path.mypage.block,
+        element: <BlockingManagement />,
+      },
+      {
+        path: path.mypage.delete,
+        element: <DeleteAccount />,
+      },
+      {
+        path: path.mypage.community.secondhand,
+        element: <Home />,
       },
       {
         path: path.mypage.service.base,
