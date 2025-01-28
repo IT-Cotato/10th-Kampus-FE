@@ -1,5 +1,5 @@
 // 더미 데이터
-export const Nations = [
+const Nations = [
   { name: 'Argentina', code: 'AR' },
   { name: 'Australia', code: 'AU' },
   { name: 'Brazil', code: 'BR' },
