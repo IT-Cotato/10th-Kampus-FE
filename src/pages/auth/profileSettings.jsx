@@ -16,8 +16,8 @@ export const ProfileSettings = () => {
   const [isUserNameDuplicated, setIsUserNameDuplicated] = useState(false);
   const [nationality, setNationality] = useState('');
   const [isNationalitySelected, setIsNationalitySelected] = useState(false);
-  const [nativeLanguage, setNativeLanguage] = useState('');
-  const [isNativeLanguageSelected, setIsNativeLanguageSelected] = useState(false);
+  const [language, setLanguage] = useState('');
+  const [isLanguageSelected, setIsLanguageSelected] = useState(false);
 
   const term = location.state?.term;
 
@@ -47,7 +47,7 @@ export const ProfileSettings = () => {
     isUserNameFormatInvalid ||
     isUserNameDuplicated ||
     !isNationalitySelected ||
-    !isNativeLanguageSelected;
+    !isLanguageSelected;
 
   const handleClickJoinNow = () => {
     // api 수정되면 terms, language도 추가로 보내주기
@@ -97,12 +97,12 @@ export const ProfileSettings = () => {
           warn="You have to select your country"
         />
         <SearchDropdown
-          keyword={nativeLanguage}
-          name="Native language"
-          placeholder="Select your native language"
-          onChange={(value) => setIsNativeLanguageSelected(value)}
-          setIsSelected={setIsNativeLanguageSelected}
-          selected={isNativeLanguageSelected}
+          keyword={language}
+          name="Language"
+          placeholder="Select your language"
+          onChange={(value) => setLanguage(value)}
+          setIsSelected={setIsLanguageSelected}
+          selected={isLanguageSelected}
           list={Languages}
           warn="You have to select your language"
         />
