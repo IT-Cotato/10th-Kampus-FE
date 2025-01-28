@@ -42,14 +42,6 @@ export const ProfileSettings = () => {
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
   };
 
-  const handleNationalityChange = (value) => {
-    setNationality(value);
-  };
-
-  const handleNativeLanguageChange = (value) => {
-    setNativeLanguage(value);
-  };
-
   const disabled =
     !userName ||
     isUserNameFormatInvalid ||
@@ -98,7 +90,7 @@ export const ProfileSettings = () => {
           keyword={nationality}
           name="Nationality"
           placeholder="Select your nationality"
-          onChange={handleNationalityChange}
+          onChange={(value) => setNationality(value)}
           setIsSelected={setIsNationalitySelected}
           selected={isNationalitySelected}
           list={Nations}
@@ -108,7 +100,7 @@ export const ProfileSettings = () => {
           keyword={nativeLanguage}
           name="Native language"
           placeholder="Select your native language"
-          onChange={handleNativeLanguageChange}
+          onChange={(value) => setIsNativeLanguageSelected(value)}
           setIsSelected={setIsNativeLanguageSelected}
           selected={isNativeLanguageSelected}
           list={Languages}
