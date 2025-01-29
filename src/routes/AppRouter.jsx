@@ -1,11 +1,14 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound, Board } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound, Board, MyArticle, BlockingManagement, DeleteAccount, Home, Scrap } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { ProfileSettings } from '@/pages/auth/profileSettings';
 import { Service } from '@/pages/my/service/service';
-import { Mypage } from '@/pages/my/mypage';
+import { MyPage } from '@/pages/my/mypage';
+import { MyInfo } from '@/pages/my/settings/myInfo';
+import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
+import { Notification } from '@/pages/my/settings/notification';
 import { ChatList } from '@/pages/chat/list';
 import { Inquiry } from '@/pages/my/service/inquiry';
 
@@ -117,7 +120,39 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Mypage />,
+        element: <MyPage />,
+      },
+      {
+        path: path.mypage.settings.info,
+        element: <MyInfo />,
+      },
+      {
+        path: path.mypage.settings.verification,
+        element: <SchoolVerification />,
+      },
+      {
+        path: path.mypage.settings.notification,
+        element: <Notification />,
+      },
+      {
+        path: path.mypage.community.articles,
+        element: <MyArticle />,
+      },
+      {
+        path: path.mypage.community.scrap,
+        element: <Scrap />,
+      },
+      {
+        path: path.mypage.block,
+        element: <BlockingManagement />,
+      },
+      {
+        path: path.mypage.delete,
+        element: <DeleteAccount />,
+      },
+      {
+        path: path.mypage.community.secondhand,
+        element: <Home />,
       },
       {
         path: path.mypage.service.base,
