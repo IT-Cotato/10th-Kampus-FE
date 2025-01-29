@@ -26,7 +26,7 @@ export const PostList = ({ data, isActive }) => {
                     </div>
                     <div className="flex gap-1 text-primary-30 text-small items-center">
                         <Comment />
-                        <p>{data.like}</p>
+                        <p>{data.comment}</p>
                     </div>
                     <p className="text-neutral-border-50 text-small">{data.time}</p>
                 </div>
