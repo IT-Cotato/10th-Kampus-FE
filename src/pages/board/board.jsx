@@ -92,8 +92,8 @@ export const Board = () => {
             {scrapAni && <StateChangeAnimate state={selectScrapState} changeToTrueText={'Add to scrap'} changeToFalseText={'Remove from Scrap'} />}
             <div className="w-full py-4 bg-white px-4 flex justify-between items-center border-b-[0.5px] border-[#D8D8D8]">
                 <Prev className="w-5 h-5 cursor-pointer" onClick={() => navigate('../')} />
-                <p className="absolute left-1/2 transform -translate-x-1/2 text-subTitle text-neutral-title font-medium">{boardTitle}</p>
-                <div className="flex gap-6 items-center">
+                <p className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap text-subTitle text-neutral-title font-medium">{boardTitle}</p>
+                <div className="flex gap-2 items-center">
                     <Search className="text-neutral-title w-6 h-6 cursor-pointer" />
                     <div className="text-neutral-title w-5 h-5 cursor-pointer">
                         <Menubar className="w-5 h-5" onClick={() => setOpenPinModal(!openPinModal)} />
