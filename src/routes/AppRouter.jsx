@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound, MyArticle, BlockingManagement, DeleteAccount, Home } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound, MyArticle, BlockingManagement, DeleteAccount, Home, Scrap } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { Service } from '@/pages/my/service/service';
 import { MyPage } from '@/pages/my/mypage';
@@ -135,7 +135,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.mypage.community.scrap,
-        element: <MyArticle />,
+        element: <Scrap />,
       },
       {
         path: path.mypage.block,
