@@ -15,6 +15,7 @@ export { Service } from './my/service/service';
 export { Inquiry } from '@/pages/my/service/inquiry';
 export { Board } from './board/board';
 export { MyPage } from './my/mypage';
+export { Scrap } from './my/community/scrap';
 export { MyArticle } from './my/community/myArticle';
 export { BlockingManagement } from './my/etc/blockingManagement';
 export { DeleteAccount } from './my/etc/deleteAccount';

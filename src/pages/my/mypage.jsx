@@ -52,14 +52,18 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.settings.verification)}
+                onClick={() =>
+                  handleButtonClick(path.mypage.settings.verification)
+                }
               >
                 School Verification
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.settings.notification)}
+                onClick={() =>
+                  handleButtonClick(path.mypage.settings.notification)
+                }
               >
                 Notifications and Information Agreements
               </button>
@@ -78,28 +82,32 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.community.articles)}
+                onClick={() =>
+                  handleButtonClick(path.mypage.community.articles)
+                }
               >
                 My Articles
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.community.secondhand)}
+                onClick={() =>
+                  handleButtonClick(path.mypage.community.secondhand)
+                }
               >
                 Secondhand
               </button>
             </div>
           </div>
           <div className="flex flex-col w-full h-full gap-2">
-            <div className="text-neutral-border-50">Customer Service</div>
+            <div className="text-neutral-border-50">Contact Us</div>
             <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
               <button
                 type="button"
                 className="text-left"
                 onClick={() => handleButtonClick(path.mypage.service.base)}
               >
-                Contact Us
+                FAQ
               </button>
               <button
                 type="button"

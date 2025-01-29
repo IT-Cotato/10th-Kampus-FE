@@ -15,7 +15,13 @@ import {
   Board,
   MyPage,
 } from '@/pages';
-import { MyArticle, BlockingManagement, DeleteAccount, Home } from '@/pages';
+import {
+  MyArticle,
+  BlockingManagement,
+  DeleteAccount,
+  Home,
+  Scrap,
+} from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { MyInfo } from '@/pages/my/settings/myInfo';
 import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
@@ -149,7 +155,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.mypage.community.scrap,
-        element: <MyArticle />,
+        element: <Scrap />,
       },
       {
         path: path.mypage.block,
