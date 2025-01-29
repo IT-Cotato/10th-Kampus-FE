@@ -1,5 +1,4 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
-import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 
 export const TitleHeader = ({ text }) => {
@@ -9,7 +8,7 @@ export const TitleHeader = ({ text }) => {
     <div className="flex flex-row items-center justify-between h-16 p-4 border-b-[.0313rem] border-neutral-border-30">
       <img
         src={arrowLeft}
-        alt="arrowLeft"
+        alt="back button"
         onClick={() => navigate('../')}
         className="cursor-pointer w-[1.25rem] h-[1.25rem]"
       />
