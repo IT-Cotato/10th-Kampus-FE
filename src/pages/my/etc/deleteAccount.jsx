@@ -1,6 +1,6 @@
-import InputRadio from '@/components/common/inputRadio';
-import MainButton from '@/components/common/MainButton';
-import Popup from '@/components/common/popup';
+import { InputRadio } from '@/components/common/inputRadio';
+import { MainButton } from '@/components/common/MainButton';
+import { Popup } from '@/components/common/popup';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { path } from '@/routes/path';
 import { useState } from 'react';

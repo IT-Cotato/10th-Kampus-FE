@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const Popup = (props) => {
+export const Popup = (props) => {
   useEffect(() => {
     // 스크롤 막기
     document.body.style.overflow = 'hidden';
@@ -40,5 +40,3 @@ const Popup = (props) => {
     </div>
   );
 };
-
-export default Popup;

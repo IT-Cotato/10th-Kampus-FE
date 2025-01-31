@@ -1,4 +1,4 @@
-const Toggle = ({ id, checked, onChange }) => {
+export const Toggle = ({ id, checked, onChange }) => {
   return (
     <div className="relative inline-block w-[3.375rem] h-[1.625rem]">
       <input
@@ -15,5 +15,3 @@ const Toggle = ({ id, checked, onChange }) => {
     </div>
   );
 };
-
-export default Toggle;
