@@ -1,6 +1,6 @@
 import React, { useState, useRef, useMemo } from 'react';
 
-const SearchDropdown = ({
+export const SearchDropdown = ({
   keyword,
   onChange,
   setIsSelected,
@@ -107,5 +107,3 @@ const SearchDropdown = ({
     </div>
   );
 };
-
-export default SearchDropdown;

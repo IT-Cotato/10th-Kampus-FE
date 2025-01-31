@@ -1,4 +1,4 @@
-const InputRadio = ({
+export const InputRadio = ({
   item,
   name,
   selected,
@@ -34,5 +34,3 @@ const InputRadio = ({
     </div>
   );
 };
-
-export default InputRadio;
