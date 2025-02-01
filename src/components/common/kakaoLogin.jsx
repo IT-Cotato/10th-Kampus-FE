@@ -28,7 +28,6 @@ export const KakaoLogin = () => {
         if (!window.Kakao.isInitialized()) {
             window.Kakao.init(kakaoKey); // 카카오 JS 키
         }
-        console.log("Kakao Key Load: ", import.meta.env.VITE_KAKAO_JS_KEY);
 
         // 나중에 앱으로 redirect Uri 구현되면 삭제할 코드들 
         const { accessToken, refreshToken } = parseTokenFromUrl();
