@@ -119,7 +119,7 @@ export default {
           '@apply mx-auto max-w-lg lg:max-w-5xl lg:flex lg:gap-x-10': '',
         },
         '.container': {
-          '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white': '',
+          '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh': '',
         },
         '.animate-bottom-sheet-up': {
           animation: 'bottom-sheet-up 0.2s ease-in-out',
