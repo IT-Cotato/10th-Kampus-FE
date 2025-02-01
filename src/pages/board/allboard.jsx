@@ -1,7 +1,7 @@
 import Search from "@/assets/imgs/search.svg?react"
 import React, { useEffect, useState } from "react";
 import { BoardListBox } from "@/components/board/BoardListBox";
-import { PinAnimate } from "@/components/board/PinAniamte";
+import { StateChangeAnimate } from "@/components/common/StateChangeAnimate";
 export const AllBoard = () => {
   const [isUpdate, setIsUpdate] = useState({
     modal: false,
@@ -76,7 +76,8 @@ export const AllBoard = () => {
     <div className="p-4 flex flex-col w-full h-full gap-4 relative">
 
       {isUpdate.modal &&
-        <PinAnimate state={isUpdate.prev} />}
+        <StateChangeAnimate state={isUpdate.prev} changeToTrueText={'Pinned to the board'} changeToFalseText={'Unpinned from the board'} />
+      }
       <div className="text-title  text-neutral-title">Board</div>
       <div className="relative w-full ">
         <input
