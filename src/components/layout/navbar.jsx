@@ -1,4 +1,4 @@
-import HomeIcon from '@/assets/imgs/navIcon/Home.svg?react';
+import HomeIcon from '@/assets/imgs/navIcon/home.svg?react';
 import BoardIcon from '@/assets/imgs/navIcon/board.svg?react';
 import MarketIcon from '@/assets/imgs/navIcon/market.svg?react';
 import ChatIcon from '@/assets/imgs/navIcon/chat.svg?react';
