@@ -91,7 +91,7 @@ export const Board = () => {
             {pinAni && <StateChangeAnimate state={!pinAni} changeToTrueText={'Pinned to the board'} changeToFalseText={'Unpinned from the board'} />}  {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
             {scrapAni && <StateChangeAnimate state={selectScrapState} changeToTrueText={'Add to scrap'} changeToFalseText={'Remove from Scrap'} />}
             <div className="w-full py-4 bg-white px-4 flex justify-between items-center border-b-[0.5px] border-[#D8D8D8]">
-                <Prev className="w-5 h-5 cursor-pointer" onClick={() => navigate('../')} />
+                <Prev className="w-5 h-5 cursor-pointer" onClick={() => navigate('..')} />
                 <p className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap text-subTitle text-neutral-title font-medium">{boardTitle}</p>
                 <div className="flex gap-2 items-center">
                     <Search className="text-neutral-title w-6 h-6 cursor-pointer" />
