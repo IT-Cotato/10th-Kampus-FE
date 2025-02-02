@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound, Board, MyArticle, BlockingManagement, DeleteAccount, Home, Scrap } from '@/pages';
+import { AllBoard, LandingPage, Login, Terms, NotFound, Board, MyArticle, BlockingManagement, DeleteAccount, Home, Scrap, Search } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { ProfileSettings } from '@/pages/auth/profileSettings';
 import { Service } from '@/pages/my/service/service';
@@ -73,6 +73,20 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Home />
+      }
+    ]
+  },
+  {
+    path: path.search,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <Search />
       }
     ]
   },

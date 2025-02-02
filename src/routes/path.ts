@@ -10,6 +10,7 @@ export const path = {
     base: '/board',
   },
   home: '/home',
+  search: '/search',
   mypage: {
     base: '/my',
     settings: {
