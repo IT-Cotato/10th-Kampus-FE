@@ -1,7 +1,20 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound, Board, MyArticle, BlockingManagement, DeleteAccount, Home, Scrap } from '@/pages';
+import {
+  AllBoard,
+  LandingPage,
+  Login,
+  Terms,
+  NotFound,
+  Board,
+  MyArticle,
+  BlockingManagement,
+  DeleteAccount,
+  Home,
+  Scrap,
+  Write,
+} from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { ProfileSettings } from '@/pages/auth/profileSettings';
 import { Service } from '@/pages/my/service/service';
@@ -69,16 +82,6 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
-    children: [
-      {
-        path: '',
-        element: <AllBoard />
-      },
-      {
-        path: ':boardTitle',  // title에 따라 동적 할당
-        element: <Board />,
-      }
-    ]
   },
   {
     path: path.board.base,
@@ -87,6 +90,26 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
+    children: [
+      {
+        path: '',
+        element: <AllBoard />,
+      },
+      {
+        path: path.board.specific.base, // title에 따라 동적 할당
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <Board />,
+          },
+          {
+            path: path.board.specific.write,
+            element: <Write />
+          }
+        ],
+      },
+    ],
   },
   {
     path: path.market.base,

@@ -6,6 +6,7 @@ export { ProfileSettings } from './auth/profileSettings';
 export { AllBoard } from './board/allboard';
 export { Terms } from './auth/terms';
 export { Board } from './board/board'
+export { Write } from './board/write';
 export { MyPage } from './my/mypage';
 export { Scrap } from './my/community/scrap';
 export { MyArticle } from './my/community/myArticle';
