@@ -1,31 +1,29 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { ProfileSettings } from '@/pages/auth/profileSettings';
 import {
-  AllBoard,
   LandingPage,
   Login,
   Terms,
   NotFound,
-  ChatId,
-  ChatList,
-  Service,
-  Inquiry,
   Board,
-  MyPage,
-} from '@/pages';
-import {
   MyArticle,
   BlockingManagement,
   DeleteAccount,
   Home,
   Scrap,
+  MyPage,
 } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
+import { ProfileSettings } from '@/pages/auth/profileSettings';
 import { MyInfo } from '@/pages/my/settings/myInfo';
 import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
 import { Notification } from '@/pages/my/settings/notification';
+import { AllBoard } from '@/pages/board/allboard';
+import { ChatList } from '@/pages/chat/chatList';
+import { ChatId } from '@/pages/chat/chatId';
+import { Service } from '@/pages/my/service/service';
+import { Inquiry } from '@/pages/my/service/inquiry';
 
 const AppRouter = createBrowserRouter([
   {
@@ -87,7 +85,11 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Home />,
+        element: <AllBoard />,
+      },
+      {
+        path: ':boardTitle', // title에 따라 동적 할당
+        element: <Board />,
       },
     ],
   },
@@ -98,16 +100,6 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
-    children: [
-      {
-        path: '',
-        element: <AllBoard />,
-      },
-      {
-        path: ':boardTitle', // title에 따라 동적 할당
-        element: <Board />,
-      },
-    ],
   },
   {
     path: path.market.base,

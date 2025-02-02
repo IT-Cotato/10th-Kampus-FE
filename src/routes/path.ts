@@ -8,6 +8,10 @@ export const path = {
   },
   board: {
     base: '/board',
+    specific: {
+      base: ':boardTitle',
+      write: 'write'
+    }
   },
   home: '/home',
   search: '/search',
