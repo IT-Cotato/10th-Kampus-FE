@@ -3,9 +3,9 @@ import Comment from '../../assets/imgs/comment.svg?react'
 import Translate from '../../assets/imgs/translate.svg?react'
 export const PostList = ({ data, isActive }) => {
     return (
-        <div className="flex flex-col pt-5 pb-3 gap-3">
+        <div className="flex flex-col pt-4 pb-3 gap-3">
             {isActive &&   /** 인기 게시판 레이아웃 */
-                <div className='py-[0.375rem] w-fit px-[0.625rem] rounded-md bg-primary-10
+                <div className='py-[0.3125rem] w-fit px-[0.625rem] rounded-md bg-primary-10
                 text-small text-neutral-base'>
                     {data.board_type}
                 </div>}

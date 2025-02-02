@@ -103,10 +103,17 @@ export default {
           '50%': { opacity: 0.5 },
           '100%': { opacity: 0 },
         },
+        dotSpinner: {
+          "0%, 100%": { transform: "scale(0)", opacity: "0.5" },
+          "50%": { transform: "scale(1)", opacity: "1" },
+        },
       },
       animation: {
         bottomSheetUp: 'bottomSheetUp 0.5s ease-in-out',
         bottomSheetDown: 'bottomSheetDown 0.5s ease-in-out',
+        fadeInOutText: 'fadeInOutText 1.6s ease',
+        fadeInOutModal: 'fadeInOutModal 1.6s ease',
+        dotSpinner: "dotSpinner 0.9s ease-in-out infinite",
       },
     },
   },

@@ -60,7 +60,7 @@ export const AllBoard = () => {
       return updatedList;
     });
     sortList();
-    setTimeout(() => {  // 핀 변경 시, 1초동안 모달 보여주기
+    setTimeout(() => {  // 핀 변경 시, 1.5초동안 모달 보여주기
       setIsUpdate(prevState => ({
         ...prevState,
         modal: false,
@@ -79,14 +79,6 @@ export const AllBoard = () => {
         <StateChangeAnimate state={isUpdate.prev} changeToTrueText={'Pinned to the board'} changeToFalseText={'Unpinned from the board'} />
       }
       <div className="text-title  text-neutral-title">Board</div>
-      <div className="relative w-full ">
-        <input
-          type="text"
-          placeholder="Board, title, text, hashing"
-          className="w-full text-[#525252]  text-base bg-[#EAEAEA] placeholder-neutral-border-50 rounded-[1.25rem] pl-12 pr-4 py-[0.625rem]"
-        />
-        <Search className="text-neutral-border-50 absolute top-1/2 left-4 transform -translate-y-1/2 w-5 h-5 " />
-      </div>
       {Object.entries(listArray).map(([key, value], index) => {
         return (
           <BoardListBox

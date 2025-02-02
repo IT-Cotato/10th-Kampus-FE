@@ -22,3 +22,4 @@ export { DeleteAccount } from './my/etc/deleteAccount';
 export { MyInfo } from './my/settings/myInfo';
 export { Notification } from './my/settings/notification';
 export { SchoolVerification } from './my/settings/schoolVerification';
+export { Search } from './search/Search';

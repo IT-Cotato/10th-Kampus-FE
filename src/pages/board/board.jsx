@@ -108,7 +108,7 @@ export const Board = () => {
 
                 </div>
             </div>
-            <div className="flex flex-col px-4 pt-5 w-full bg-white gap-[0.875rem]">
+            <div className="flex flex-col px-4 pt-5 pb-1 w-full bg-white gap-[0.875rem]">
                 <div className="flex w-full justify-center items-center bg-neutral-bg-10 rounded-[0.625rem]
                 text-subTitle font-normal py-3 text-[#6A6A6A] cursor-pointer">
                     Notice
