@@ -1,4 +1,4 @@
-import X from '@/assets/imgs/x.svg';
+import X from '@/assets/imgs/x.svg?react';
 import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
@@ -34,8 +34,7 @@ export const Write = () => {
     <div className="flex flex-col w-full h-full">
       <div className="grid items-center w-full grid-cols-3 px-4 pt-4 pb-3">
         <button type="button">
-          <img
-            src={X}
+          <X
             className="w-6 h-6 p-1 text-neutral-title"
             onClick={() => navigate('..')}
           />

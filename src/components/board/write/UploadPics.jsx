@@ -1,5 +1,5 @@
 import Camera from '@/assets/imgs/camera.svg';
-import ImgX from '@/assets/imgs/ImgX.svg';
+import ImgX from '@/assets/imgs/ImgX.svg?react';
 import { useState } from 'react';
 
 export const UploadPics = ({ onChange }) => {
@@ -19,29 +19,47 @@ export const UploadPics = ({ onChange }) => {
       alert('이미지 파일만 업로드가 가능합니다.');
     }
 
-    // Promise로 모든 미리보기 URL 생성
-    const newPreviews = await Promise.all(
-      validFiles.map((file) => URL.createObjectURL(file))
-    );
+    try {
+      // Promise로 모든 미리보기 URL 생성
+      const newPreviews = await Promise.all(
+        validFiles.map((file) => {
+          // URL 생성 중 오류 가능성 대비
+          return new Promise((resolve, reject) => {
+            try {
+              resolve(URL.createObjectURL(file));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }),
+      );
 
-    // 모든 파일과 미리보기가 준비된 후 상태 업데이트
-    if (validFiles.length > 0 && newPreviews.length === validFiles.length) {
-      const updatedFiles = [...files, ...validFiles];
-      const updatedPreviews = [...previewImages, ...newPreviews];
+      // 모든 파일과 미리보기가 준비된 후 상태 업데이트
+      if (validFiles.length > 0 && newPreviews.length === validFiles.length) {
+        const updatedFiles = [...files, ...validFiles];
+        const updatedPreviews = [...previewImages, ...newPreviews];
 
-      setFiles(updatedFiles);
-      setPreviewImages(updatedPreviews);
-      onChange(updatedFiles); // 부모 컴포넌트에 전달
+        setFiles(updatedFiles);
+        setPreviewImages(updatedPreviews);
+        onChange(updatedFiles); // 부모 컴포넌트에 전달
+      }
+    } catch (error) {
+      alert('파일 처리 중 오류가 발생했습니다.');
+      return null;
     }
   };
 
   const removeImage = (index) => {
+    const urlToRevoke = previewImages[index];
+
     const updatedFiles = files.filter((_, i) => i !== index);
     const updatedPreviews = previewImages.filter((_, i) => i !== index);
 
     setFiles(updatedFiles);
     setPreviewImages(updatedPreviews);
     onChange(updatedFiles); // 부모 컴포넌트에 전달
+
+    URL.revokeObjectURL(urlToRevoke); // URL 해제
   };
 
   return (
@@ -75,7 +93,7 @@ export const UploadPics = ({ onChange }) => {
               onClick={() => removeImage(index)}
               className="absolute top-0 right-0 z-10 translate-x-1/2 -translate-y-1/2"
             >
-              <img src={ImgX} alt="" className="w-[1.125rem] h-[1.125rem]" />
+              <ImgX className="w-[1.125rem] h-[1.125rem] text-neutral-border-50" />
             </button>
           </div>
         ))}
