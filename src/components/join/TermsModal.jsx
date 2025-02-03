@@ -46,7 +46,7 @@ export const TermsModal = (props) => {
                 src={X}
                 alt="close"
                 onClick={closeModal}
-                className="absolute right-[.875rem] top-[.875rem] cursor-pointer w-[1.125rem] h-[1.125rem]"
+                className="absolute right-[.875rem] top-[.875rem] cursor-pointer w-[1.125rem] h-[1.125rem] text-neutral-title"
               />
               <span className="text-start text-subTitle text-neutral-title px-[1.0625rem]">
                 <span>

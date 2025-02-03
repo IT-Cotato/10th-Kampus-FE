@@ -108,7 +108,7 @@ export default {
         bottomSheetUp: 'bottomSheetUp 0.5s ease-in-out',
         bottomSheetDown: 'bottomSheetDown 0.5s ease-in-out',
         fadeInOutText: 'fadeInOutText 1.6s ease',
-        fadeInOutModal: 'fadeInOutModal 1.6s ease'
+        fadeInOutModal: 'fadeInOutModal 1.6s ease',
       },
     },
   },
