@@ -22,7 +22,7 @@ export const SelectCategory = ({ selectedCategory, setSelectedCategory }) => {
             />
             <label
               htmlFor={category}
-              className="flex items-center px-3 py-[.375rem] border rounded-full cursor-pointer border-neutral-border-30 text-neutral-border-50 border-box peer-checked:border-none peer-checked:bg-primary-30 peer-checked:text-white"
+              className="flex items-center px-3 py-[.375rem] border rounded-full cursor-pointer border-neutral-border-30 text-neutral-border-50 border-box peer-checked:border-primary-30 peer-checked:bg-primary-30 peer-checked:text-white"
             >
               {category}
             </label>
