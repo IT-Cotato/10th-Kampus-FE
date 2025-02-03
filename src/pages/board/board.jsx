@@ -9,7 +9,7 @@ import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
 import kakao from '@/assets/imgs/loginKakao.png'; // 이미지 확인용
-import { WriteButton } from '@/components/board/WriteButton';
+import { WriteButton } from '@/components/board/write/WriteButton';
 
 export const Board = () => {
   const navigate = useNavigate();
