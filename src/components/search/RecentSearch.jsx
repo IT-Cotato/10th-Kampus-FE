@@ -20,7 +20,7 @@ export const RecentSearch = ({ startSearch }) => {
                     {text}
                 </p>
                 {/** 클릭 시, 해당 검색어 기록에서 삭제 하고 서버와 통신 */}
-                <Close className="w-5 h-5 text-neutral-border-50" />
+                <Close className="w-3 h-3 text-neutral-border-50" />
             </div>
         )
     }
@@ -39,7 +39,7 @@ export const RecentSearch = ({ startSearch }) => {
                 </div>
                 :
                 <div className="text-base text-neutral-border-50 pt-4">
-                    There are no recent search.
+                    There are no recent searches.
                 </div>
             }
         </div>
