@@ -2,7 +2,7 @@ import { SearchBar } from "@/components/search/SearchBar"
 import { RecentSearch } from "@/components/search/RecentSearch";
 import { useState } from "react"
 import { PostList } from "@/components/board/PostList";
-import { Loading } from "@/components/common/Loding";
+import { Loading } from "@/components/common/Loading";
 import { StateChangeAnimate } from "@/components/common/StateChangeAnimate";
 export const Search = () => {
     const [isSearch, setIsSearch] = useState(true);
