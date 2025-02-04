@@ -6,9 +6,9 @@ export const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="py-[1.875rem] text-base  border-primary-base border-b-[1px] ">
+    <div className="flex flex-col w-full pb-[1.875rem] border-primary-base border-b">
       <div
-        className="flex items-center justify-between cursor-pointer "
+        className="flex items-center justify-between w-full cursor-pointer "
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <h3 className="text-neutral-title ">{question}</h3>
