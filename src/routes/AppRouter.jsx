@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import {
@@ -18,13 +18,15 @@ import {
 } from '@/pages';
 import { Signup } from '@/pages/auth/signup';
 import { ProfileSettings } from '@/pages/auth/profileSettings';
-import { Service } from '@/pages/my/service/service';
 import { MyPage } from '@/pages/my/mypage';
 import { MyInfo } from '@/pages/my/settings/myInfo';
 import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
 import { Notification } from '@/pages/my/settings/notification';
 import { ChatList } from '@/pages/chat/list';
-import { Inquiry } from '@/pages/my/service/inquiry';
+import { Inquiry } from '@/pages/my/service/inquiry/inquiry';
+import { ContactUs } from '@/components/layout/ContactUs';
+import { FAQ } from '@/pages/my/service/faq';
+import { Notice } from '@/pages/my/service/notice';
 
 const AppRouter = createBrowserRouter([
   {
@@ -86,9 +88,9 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Home />
-      }
-    ]
+        element: <Home />,
+      },
+    ],
   },
   {
     path: path.search,
@@ -100,9 +102,9 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Search />
-      }
-    ]
+        element: <Search />,
+      },
+    ],
   },
   {
     path: path.board.base,
@@ -126,8 +128,8 @@ const AppRouter = createBrowserRouter([
           },
           {
             path: path.board.specific.write,
-            element: <Write />
-          }
+            element: <Write />,
+          },
         ],
       },
     ],
@@ -200,15 +202,27 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.mypage.service.base,
-        element: <Outlet />,
+        element: (
+          <ContactUs>
+            <Outlet />
+          </ContactUs>
+        ),
         children: [
           {
             path: '',
-            element: <Service />,
+            element: <Navigate to={path.mypage.service.faq} replace />,
+          },
+          {
+            path: path.mypage.service.faq,
+            element: <FAQ />,
           },
           {
             path: path.mypage.service.inquiry,
             element: <Inquiry />,
+          },
+          {
+            path: path.mypage.service.notice,
+            element: <Notice />,
           },
         ],
       },

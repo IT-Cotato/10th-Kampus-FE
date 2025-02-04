@@ -19,7 +19,7 @@ export const FAQ = () => {
     },
   ];
   return (
-    <div className="mx-4">
+    <div className="w-full">
       {faqs.map((faq, index) => (
         <FAQItem key={index} question={faq.question} answer={faq.answer} />
       ))}

@@ -105,21 +105,21 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.service.base)}
+                onClick={() => handleButtonClick(`${path.mypage.service.base}/${path.mypage.service.faq}`)}
               >
                 FAQ
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.service.base)}
+                onClick={() => handleButtonClick(`${path.mypage.service.base}/${path.mypage.service.inquiry}`)}
               >
                 1:1 Inquiry
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.service.base)}
+                onClick={() => handleButtonClick(`${path.mypage.service.base}/${path.mypage.service.notice}`)}
               >
                 Notice
               </button>
