@@ -1,26 +1,12 @@
 import { FAQItem } from '@/components/service/faq/faqItem';
+import { faqs } from '@/constants/faqs';
 
 export const FAQ = () => {
-  const faqs = [
-    {
-      question: 'Where can I change user name?',
-      answer:
-        'Lorem ipsum dolor sit amet consectetur. Nisi id placerat tortor orci quis volutpat. Diam adipiscing tempor a lacinia mattis vel ut. Suspendisse mauris at in eget lectus aliquam eget adipiscing nunc. Venenatis dui nibh porta elit tellus dignissim nisl.',
-    },
-    {
-      question: 'Where can I change user name?',
-      answer:
-        'Lorem ipsum dolor sit amet consectetur. Nisi id placerat tortor orci quis volutpat. Diam adipiscing tempor a lacinia mattis vel ut. Suspendisse mauris at in eget lectus aliquam eget adipiscing nunc. Venenatis dui nibh porta elit tellus dignissim nisl.',
-    },
-    {
-      question: 'Where can I change user name?',
-      answer:
-        'Lorem ipsum dolor sit amet consectetur. Nisi id placerat tortor orci quis volutpat. Diam adipiscing tempor a lacinia mattis vel ut. Suspendisse mauris at in eget lectus aliquam eget adipiscing nunc. Venenatis dui nibh porta elit tellus dignissim nisl.',
-    },
-  ];
+  const FAQ = [...faqs];
+
   return (
-    <div className="w-full">
-      {faqs.map((faq, index) => (
+    <div className="flex flex-col w-full gap-[1.875rem]">
+      {FAQ.map((faq, index) => (
         <FAQItem key={index} question={faq.question} answer={faq.answer} />
       ))}
     </div>
