@@ -31,6 +31,8 @@ export const path = {
       base: '/my/contactUs',
       faq: 'faq',
       inquiry: 'inquiry',
+      inquiryDetails: ':inquiryId',
+      writeInquiry: 'write',
       notice: 'notice',
     },
     block: 'my/block',

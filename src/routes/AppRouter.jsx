@@ -24,6 +24,11 @@ import { ChatList } from '@/pages/chat/chatList';
 import { ChatId } from '@/pages/chat/chatId';
 import { Service } from '@/pages/my/service/service';
 import { Inquiry } from '@/pages/my/service/inquiry';
+import { InquiryDetail } from '@/pages/my/service/inquiry/inquiryDetail';
+import { ContactUs } from '@/components/layout/ContactUs';
+import { FAQ } from '@/pages/my/service/faq';
+import { Notice } from '@/pages/my/service/notice';
+import { WriteInquiry } from '@/pages/my/service/inquiry/writeInquiry';
 
 const AppRouter = createBrowserRouter([
   {
@@ -182,6 +187,20 @@ const AppRouter = createBrowserRouter([
           {
             path: path.mypage.service.inquiry,
             element: <Inquiry />,
+          },
+        ],
+      },
+      {
+        path: path.mypage.service.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: `${path.mypage.service.inquiry}/${path.mypage.service.inquiryDetails}`,
+            element: <InquiryDetail />,
+          },
+          {
+            path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
+            element: <WriteInquiry />,
           },
         ],
       },

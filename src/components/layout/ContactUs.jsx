@@ -16,9 +16,9 @@ export const ContactUs = ({ children }) => {
   ];
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full">
       <TitleHeader text="Contact Us" />
-      <div className="flex flex-col w-full h-full px-4 pt-12 pb-3">
+      <div className="flex flex-col w-full px-4 pt-12 pb-3">
         <div className="gap-[0.625rem] flex justify-center">
           {menu.map((item) => (
             <ButtonRound
@@ -32,7 +32,7 @@ export const ContactUs = ({ children }) => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col w-full h-full p-4">{children}</div>
+      <div className="flex flex-col flex-1 w-full p-4">{children}</div>
     </div>
   );
 };
