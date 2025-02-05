@@ -3,8 +3,8 @@ import { TranslateButton } from '@/components/common/TranslateButton';
 export const WriteContent = ({
   content,
   setContent,
-  translatedContent,
-  setTranslatedContent,
+  placeholder,
+  ...props
 }) => {
   const handleOnChange = (e) => {
     setContent(e.target.value);
@@ -20,20 +20,22 @@ export const WriteContent = ({
           <textarea
             id="contentInput"
             rows={16}
-            placeholder="Add a content."
+            placeholder={placeholder}
             value={content}
             onChange={handleOnChange}
             className="w-full leading-none resize-none placeholder-neutral-border-50 scrollbar-hide"
             required
           />
-          <TranslateButton
-            translateType="content"
-            value={content}
-            setValue={setTranslatedContent}
-          />
+          {props.translate && (
+            <TranslateButton
+              translateType="content"
+              value={content}
+              setValue={props.setTranslatedContent}
+            />
+          )}
         </div>
       </div>
-      {translatedContent && (
+      {props.translatedContent && (
         <div className="flex flex-col gap-3">
           <label htmlFor="translatedContent" className="text-subTitle">
             Translation of Content
@@ -42,7 +44,7 @@ export const WriteContent = ({
             <textarea
               id="translatedContent"
               rows={16}
-              value={translatedContent}
+              value={props.translatedContent}
               className="w-full leading-none bg-transparent resize-none placeholder-neutral-border-50 scrollbar-hide"
               disabled
             />

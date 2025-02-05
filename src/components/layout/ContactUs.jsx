@@ -27,7 +27,7 @@ export const ContactUs = ({ children }) => {
               text={item.text}
               width="long"
               height="small"
-              onClick={() => navigate(`./${item.path}`)}
+              onClick={() => navigate(`./${item.path}`, { replace: true})}
             />
           ))}
         </div>

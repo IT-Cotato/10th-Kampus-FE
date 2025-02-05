@@ -49,7 +49,7 @@ export const Write = () => {
         </span>
       </div>
       <div className="flex flex-col w-full h-full px-4 py-[1.25rem] gap-[2.5rem]">
-        <WriteTitle title={title} setTitle={setTitle} />
+        <WriteTitle title={title} setTitle={setTitle} placeholder="Please add a title." translate />
         {(boardTitle === 'question' || boardTitle === 'information') && (
           <SelectCategory
             selectedCategory={selectedCategory}
@@ -59,8 +59,10 @@ export const Write = () => {
         <WriteContent
           content={content}
           setContent={setContent}
+          placeholder="Add a content."
           translatedContent={translatedContent}
           setTranslatedContent={setTranslatedContent}
+          translate
         />
         <UploadPics onChange={setUploadedFiles} />
         <MainButton onClick={handleUpload} disabled={disabled}>

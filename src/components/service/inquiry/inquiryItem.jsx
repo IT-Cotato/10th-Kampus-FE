@@ -15,7 +15,7 @@ export const InquiryItem = ({ title, date, pending, inquiryId }) => {
         <span className="inline-block text-neutral-base">{date}</span>
       </div>
       <div
-        className={`inline-block border border-primary-20 px-4 py-1 rounded-[1.25rem] text-base text-neutral-base ${pending === 'Answered' ? 'bg-primary-10' : ''}`}
+        className={`inline-block border border-primary-20 px-3 py-1 rounded-[1.25rem] text-base text-neutral-base ${pending === 'Answered' ? 'bg-primary-10' : ''}`}
       >
         {pending}
       </div>
