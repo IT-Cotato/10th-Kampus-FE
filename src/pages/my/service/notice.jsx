@@ -21,7 +21,7 @@ export const Notice = () => {
   return (
     <div className="flex flex-col w-full">
       {Notice.map((notice) => (
-        <NoticeList key={notice.id} title={notice.title} date={notice.date} />
+        <NoticeList key={notice.id} noticeId={notice.id} title={notice.title} date={notice.date} />
       ))}
     </div>
   );
