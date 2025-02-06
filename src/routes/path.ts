@@ -3,8 +3,10 @@ export const path = {
   signup: {
     base: '/signup',
     terms: 'terms',
+    welcome: 'welcome',
     profile: 'profile',
     school: 'school',
+    verify: 'verify',
   },
   board: {
     base: '/board',

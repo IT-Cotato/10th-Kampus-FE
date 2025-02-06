@@ -66,7 +66,7 @@ export const ProfileSettings = () => {
     // .catch(error => {
     //   console.log('회원가입 에러: ', error);
     // });
-    // navigate('/signup/school', {replace: true}); 등
+    navigate(`../${path.signup.welcome}`);
   };
 
   return (

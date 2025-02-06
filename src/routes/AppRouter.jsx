@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import {
@@ -15,16 +15,17 @@ import {
   Scrap,
   Search,
   Write,
+  SchoolSearch,
 } from '@/pages';
-import { Signup } from '@/pages/auth/signup';
 import { ProfileSettings } from '@/pages/auth/profileSettings';
 import { Service } from '@/pages/my/service/service';
 import { MyPage } from '@/pages/my/mypage';
 import { MyInfo } from '@/pages/my/settings/myInfo';
-import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
+import { SchoolVerification } from '@/pages/auth/schoolVerification';
 import { Notification } from '@/pages/my/settings/notification';
 import { ChatList } from '@/pages/chat/list';
 import { Inquiry } from '@/pages/my/service/inquiry';
+import { Welcome } from '@/pages/auth/welcome';
 
 const AppRouter = createBrowserRouter([
   {
@@ -60,7 +61,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Signup />,
+        element: <Navigate to={path.signup.terms} replace />,
       },
       {
         path: path.signup.terms,
@@ -71,8 +72,16 @@ const AppRouter = createBrowserRouter([
         element: <ProfileSettings />,
       },
       {
+        path: path.signup.welcome,
+        element: <Welcome />,
+      },
+      {
         path: path.signup.school,
-        element: <Signup />,
+        element: <SchoolSearch />,
+      },
+      {
+        path: path.signup.verify,
+        element: <SchoolVerification />,
       },
     ],
   },

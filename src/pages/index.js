@@ -3,6 +3,9 @@ export { Home } from './home/home';
 export { LandingPage } from './home/landingPage';
 export { Login } from './auth/login';
 export { ProfileSettings } from './auth/profileSettings';
+export { Welcome } from './auth/welcome';
+export { SchoolSearch } from './auth/schoolSearch';
+export { SchoolVerification } from './auth/schoolVerification';
 export { AllBoard } from './board/allboard';
 export { Terms } from './auth/terms';
 export { Board } from './board/board'
@@ -14,5 +17,4 @@ export { BlockingManagement } from './my/etc/blockingManagement';
 export { DeleteAccount } from './my/etc/deleteAccount';
 export { MyInfo } from './my/settings/myInfo';
 export { Notification } from './my/settings/notification';
-export { SchoolVerification } from './my/settings/schoolVerification';
 export { Search } from './search/Search';
