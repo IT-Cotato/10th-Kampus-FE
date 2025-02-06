@@ -1,12 +1,19 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
-import { AllBoard, LandingPage, Login, Terms, NotFound } from '@/pages';
-import { Signup } from '@/pages/auth/signup';
-import { Service } from '@/pages/my/service/service';
-import { Mypage } from '@/pages/my/mypage';
-import { ChatList } from '@/pages/chat/list';
-import { Inquiry } from '@/pages/my/service/inquiry';
+import {
+  AllBoard,
+  LandingPage,
+  Login,
+  Terms,
+  NotFound,
+  ChatId,
+  Signup,
+  ChatList,
+  Mypage,
+  Service,
+  Inquiry,
+} from '@/pages';
 
 const AppRouter = createBrowserRouter([
   {
@@ -68,9 +75,9 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <AllBoard />
+        element: <AllBoard />,
       },
-    ]
+    ],
   },
   {
     path: path.board.base,
@@ -99,6 +106,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <ChatList />,
+      },
+      {
+        path: ':id',
+        element: <ChatId />,
       },
     ],
   },

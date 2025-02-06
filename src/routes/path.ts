@@ -35,7 +35,6 @@ export const path = {
     writeId: ':writeId',
   },
   chatList: {
-    base: '/chatList',
-    id: 'id',
+    base: '/chatlist',
   },
 };
