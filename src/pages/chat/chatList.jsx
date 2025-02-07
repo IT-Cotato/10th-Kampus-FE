@@ -9,7 +9,7 @@ export const ChatList = () => {
       name: 'Post 1',
       lastMessage: 'Hello!',
       time: '10:00',
-      cnt: 5,
+      cnt: 10,
       profile: '',
     },
     {
@@ -25,7 +25,7 @@ export const ChatList = () => {
       name: 'Post 3',
       lastMessage: 'See you later!',
       time: '10:10',
-      cnt: 1,
+      cnt: 999,
       profile: '',
     },
     {
@@ -46,10 +46,10 @@ export const ChatList = () => {
 
   return (
     <div
-      className="relative flex flex-col w-full h-full gap-4 p-4"
+      className="relative flex h-full w-full flex-col gap-4 p-4"
       onClick={handleClickOutside}
     >
-      <div className="text-title text-[#0B0B0B]">Chat</div>
+      <div className="text-title text-neutral-title">Chats</div>
       <NoticeBox />
       {dummyData.map((data) => (
         <ListItem

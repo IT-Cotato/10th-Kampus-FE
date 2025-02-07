@@ -8,7 +8,7 @@ export const ArticleInfo = ({ boardName, postName, postId }) => {
       <p className="text-base">{boardName}</p>
       <p className="text-pageTitle text-neutral-title">{postName}</p>
       <button
-        className="h-10 w-full rounded-lg border-[1px] border-neutral-border-30 bg-white text-small"
+        className="w-full h-10 bg-white border rounded-lg border-neutral-border-30 text-small"
         onClick={() => {
           navigate(`${path.board.base}/${postId}`);
         }}

@@ -8,8 +8,8 @@ export { Terms } from './auth/terms';
 
 export { AllBoard } from './board/allboard';
 
-export { ChatList } from './chat/list';
-export { ChatId } from './chat/id';
+export { ChatList } from './chat/chatList';
+export { ChatId } from './chat/chatId';
 
 export { Mypage } from '@/pages/my/mypage';
 export { Service } from './my/service/service';
