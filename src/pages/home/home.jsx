@@ -79,18 +79,6 @@ export const Home = () => {
         },
       ]
   })
-  const CardPost = ({ data }) => {
-    return (
-      <div className="flex flex-col gap-[.625rem]"
-        onClick={() => navigate(`${path.board.base}/tips-for-living-in-korea/${data.postID}`)}>
-        <img src="null" alt="Post Img"
-          className="min-w-[9.5rem] min-h-[9.5rem] aspect-square bg-neutral-bg-10 rounded-lg" />
-        <h1 className="text-subTitle text-neutral-title">
-          {data.title}
-        </h1>
-      </div>
-    )
-  }
 
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
