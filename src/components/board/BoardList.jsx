@@ -9,10 +9,10 @@ export const BoardList = ({ data, listKey, index, togglePin }) => {
     const navURL = generateBoardTitle(data.title);
     return (
         <div className="flex gap-4 px-4 py-4 items-center">
-            <Pin className={cn('w-5 h-5 cursor-pointer', { 'text-[#525252]': data.pin, 'text-[#8E8E8E]': !data.pin })}
+            <Pin className={cn('w-5 h-5 cursor-pointer', { 'text-neutral-80': data.pin, 'text-neutral-icon': !data.pin })}
                 onClick={() => togglePin(listKey, index)}
             />
-            <p className=" text-base text-[#525252] w-full cursor-pointer"
+            <p className=" text-base text-neutral-80 w-full cursor-pointer"
                 onClick={() => navigate(`./${navURL}`)}
             >{data.title}</p>
         </div>

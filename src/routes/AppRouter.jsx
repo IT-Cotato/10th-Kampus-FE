@@ -91,12 +91,8 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <AllBoard />,
-      },
-      {
-        path: ':boardTitle', // title에 따라 동적 할당
-        element: <Board />,
-      },
+        element: <Home />,
+      }
     ],
   },
   {

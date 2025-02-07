@@ -112,7 +112,7 @@ export const Board = () => {
       <div className="flex w-full items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
         <Prev
           className="h-5 w-5 cursor-pointer"
-          onClick={() => navigate('..')}
+          onClick={() => navigate(-1)}
         />
         <p className="absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-subTitle font-medium text-neutral-title">
           {boardTitle}

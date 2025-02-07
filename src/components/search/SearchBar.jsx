@@ -8,7 +8,7 @@ export const SearchBar = ({ value, setValue, isSearch, setIsSearch, startSearch 
     return (
         <div className="flex items-center justify-center w-full gap-4">
             <PreviousIcon className="text-neutral-title w-5 h-5"
-                onClick={() => navigate('..')} />
+                onClick={() => navigate(-1)} />
             <div className="flex flex-1 items-center relative">
                 <input type="text" className="flex flex-1 bg-primary-10 py-[0.6875rem] rounded-[0.625rem] text-base
                 placeholder-neutral-border-50 text-neutral-title pl-[3.375rem]" placeholder="Search"
