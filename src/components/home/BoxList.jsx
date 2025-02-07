@@ -11,3 +11,16 @@ export const BoxList = ({ text }) => {
         </div>
     )
 }
+export const CardPost = ({ data }) => {
+    const navigate = useNavigate();
+    return (
+        <div className="flex flex-col gap-[.625rem]"
+            onClick={() => navigate(`${path.board.base}/tips-for-living-in-korea/${data.postID}`)}>
+            <img src={data.img} alt="Post Img"
+                className="min-w-[9.5rem] min-h-[9.5rem] aspect-square bg-neutral-bg-10 rounded-lg" />
+            <h1 className="text-subTitle text-neutral-title">
+                {data.title}
+            </h1>
+        </div>
+    )
+}

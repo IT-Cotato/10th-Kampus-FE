@@ -5,8 +5,8 @@ import search from "@/assets/imgs/search.svg"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { path } from "@/routes/path";
-import { BoardBox } from "@/components/home/boardbox";
-import { generateBoardTitle } from "@/utils/boardTitleUtils";
+import { BoardBox, CardPostBox } from "@/components/home/boardbox";
+import { BoardHeader } from "@/components/home/BoardHeader";
 export const Home = () => {
   const navigate = useNavigate();
   const [isNotification, setIsNotification] = useState(true);
@@ -60,12 +60,40 @@ export const Home = () => {
         {
           board: "Tips for living in Korea",
           title: "Title",
-          postID: 1
+          postID: 2
+        },
+        {
+          board: "Tips for living in Korea",
+          title: "Title",
+          postID: 3
+        },
+        {
+          board: "Tips for living in Korea",
+          title: "Title",
+          postID: 4
+        },
+        {
+          board: "Tips for living in Korea",
+          title: "Title",
+          postID: 5
         },
       ]
   })
+  const CardPost = ({ data }) => {
+    return (
+      <div className="flex flex-col gap-[.625rem]"
+        onClick={() => navigate(`${path.board.base}/tips-for-living-in-korea/${data.postID}`)}>
+        <img src="null" alt="Post Img"
+          className="min-w-[9.5rem] min-h-[9.5rem] aspect-square bg-neutral-bg-10 rounded-lg" />
+        <h1 className="text-subTitle text-neutral-title">
+          {data.title}
+        </h1>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-1 flex-col px-4 py-3 gap-[.625rem]">
+    <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
       <div className="flex justify-between items-start">
         <img src={kampusLogo} alt="Kampus Logo"
           className="w-[5.5rem] h-20" />
@@ -91,6 +119,7 @@ export const Home = () => {
           <BoardBox data={homeBoard.univ} boardTitle={"My univ"} path={path} />}
         <BoardBox data={homeBoard.favorites} boardTitle={"Favorites"} path={path} />
         <BoardBox data={homeBoard.trending} boardTitle={"Trending"} path={path} />
+        <CardPostBox data={homeBoard.howtoliveinKorea} path={path} />
       </div>
     </div>
   )
