@@ -5,6 +5,7 @@ import { NewMsgCnt } from '@/components/chat/newMsgCnt';
 import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
 import blockIcon from '@/assets/imgs/blockIcon.svg';
 import leaveIcon from '@/assets/imgs/leaveIcon.svg';
+import { touchDrag } from '@/utils/touchDrag';
 
 export const ListItem = ({ data, isSlide, setActiveSlide }) => {
   const [startX, setStartX] = useState(0);
@@ -13,13 +14,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
 
   const handleTouchMove = (e) => {
     const currentX = e.touches[0].clientX;
-    const diffX = startX - currentX;
-
-    if (diffX > 50) {
-      setActiveSlide(data.id);
-    } else if (diffX < -50) {
-      setActiveSlide(null);
-    }
+    touchDrag(startX, currentX, setActiveSlide, data);
   };
 
   return (
@@ -33,7 +28,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
             'transliate-x-0': !isSlide,
           },
         )}
-        onClick={() => navigate(`/chatlist/${data.id}`)}
+        onClick={() => navigate(`./${data.id}`)}
         onTouchStart={(e) => setStartX(e.touches[0].clientX)}
         onTouchMove={handleTouchMove}
         onTouchEnd={() => {
@@ -43,7 +38,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex w-full flex-col justify-between">
+        <div className="flex flex-col justify-between w-full">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.name}
