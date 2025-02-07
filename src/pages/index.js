@@ -10,10 +10,16 @@ export { ChatList } from './chat/chatList';
 export { ChatId } from './chat/chatId';
 
 export { Service } from './my/service/service';
-export { Inquiry } from '@/pages/my/service/inquiry';
 export { Board } from './board/board';
 export { Terms } from './auth/terms';
 export { Write } from './board/write';
+
+export { Inquiry } from './my/service/inquiry/inquiry';
+export { FAQ } from './my/service/faq';
+export { Notice } from './my/service/notice';
+export { InquiryDetail } from '@/pages/my/service/inquiry/inquiryDetail';
+export { WriteInquiry } from '@/pages/my/service/inquiry/writeInquiry';
+
 export { MyPage } from './my/mypage';
 export { Scrap } from './my/community/scrap';
 export { MyArticle } from './my/community/myArticle';
