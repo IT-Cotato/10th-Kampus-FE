@@ -6,11 +6,11 @@ export const InquiryButton = () => {
   const navigate = useNavigate();
   return (
     <button
-      className="flex items-center justify-center px-4 py-1 border-2 rounded-md text-neutral-title border-primary-base"
-      onClick={() => navigate(path.mypage.service.inquiry)}
+      className="flex items-center gap-3 px-4 py-1 border-2 rounded-[.625rem] border-box text-neutral-title border-primary-base"
+      onClick={() => navigate(`./${path.mypage.service.writeInquiry}`)}
     >
-      Go to 1:1 inquiry
-      <img src={arrow} alt="arrow" className="-rotate-90 " />
+      <span className="flex">Go to 1:1 inquiry</span>
+      <img src={arrow} alt="arrow" className="-rotate-90 h-[.375rem]" />
     </button>
   );
 };

@@ -28,8 +28,12 @@ export const path = {
       secondhand: '/my/community/secondhand',
     },
     service: {
-      base: '/my/service',
+      base: '/my/contactUs',
+      faq: 'faq',
       inquiry: 'inquiry',
+      inquiryDetails: ':inquiryId',
+      writeInquiry: 'write',
+      notice: 'notice',
     },
     block: 'my/block',
     delete: 'my/leave',

@@ -1,6 +1,6 @@
 import { TranslateButton } from '@/components/common/TranslateButton';
 
-export const WriteTitle = ({ title, setTitle }) => {
+export const WriteTitle = ({ title, setTitle, placeholder, ...props }) => {
   const handleOnChange = (e) => {
     setTitle(e.target.value);
   };
@@ -14,14 +14,14 @@ export const WriteTitle = ({ title, setTitle }) => {
         <input
           id="writeTitle"
           type="text"
-          placeholder="Please add a title."
+          placeholder={placeholder}
           value={title}
           onChange={handleOnChange}
           autoComplete="off"
           className="w-full leading-none placeholder-neutral-border-50"
           required
         />
-        <TranslateButton translateType="text" value={title} setValue={setTitle}/>
+        {props.translate && <TranslateButton translateType="text" value={title} setValue={setTitle}/>}
       </div>
     </div>
   );
