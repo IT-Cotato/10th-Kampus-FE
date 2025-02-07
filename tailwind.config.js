@@ -57,26 +57,26 @@ export default {
           70: 'var(--purple-70)', // 4F3D87
           80: 'var(--purple-80)', //3C2E67
           90: 'var(--purple-90)', // 221A3B
-          red: 'var(--primary-red)',  // EB003B
-          yellow: 'var(--primary-yellow)',  // FFB724
-          green: 'var(--primary-green)',  // 008A1E
-          blue: 'var(--primary-blue)',  // 2768FF
+          red: 'var(--primary-red)', // EB003B
+          yellow: 'var(--primary-yellow)', // FFB724
+          green: 'var(--primary-green)', // 008A1E
+          blue: 'var(--primary-blue)', // 2768FF
         },
         neutral: {
           bg: {
-            5: 'var(--neutral-5)',  // F8F8F8
-            10: 'var(--neutral-10)',  //F0F0F0
+            5: 'var(--neutral-5)', // F8F8F8
+            10: 'var(--neutral-10)', //F0F0F0
           },
-          disabled: 'var(--neutral-20)',  //E4E4E4
+          disabled: 'var(--neutral-20)', //E4E4E4
           icon: 'var(--neutral-25)',
           border: {
-            30: 'var(--neutral-30)',  // D8D8D8
-            40: 'var(--neutral-40)',  // C6C6C6
-            50: 'var(--neutral-50)',  // 8E8E8E
+            30: 'var(--neutral-30)', // D8D8D8
+            40: 'var(--neutral-40)', // C6C6C6
+            50: 'var(--neutral-50)', // 8E8E8E
           },
-          base: 'var(--neutral-60)',  // 727272
-          70: 'var(--neutral-70)',  // 555555
-          80: 'var(--neutral-80)',  // 353535
+          base: 'var(--neutral-60)', // 727272
+          70: 'var(--neutral-70)', // 555555
+          80: 'var(--neutral-80)', // 353535
           title: 'var(--neutral-90)', // 0B0B0B
         },
       },
@@ -119,7 +119,8 @@ export default {
           '@apply mx-auto max-w-lg lg:max-w-5xl lg:flex lg:gap-x-10': '',
         },
         '.container': {
-          '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh': '',
+          '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh':
+            '',
         },
         '.animate-bottom-sheet-up': {
           animation: 'bottom-sheet-up 0.2s ease-in-out',
@@ -129,6 +130,6 @@ export default {
         },
       }),
     ),
-    require("tailwind-scrollbar-hide"),
+    require('tailwind-scrollbar-hide'),
   ],
 };

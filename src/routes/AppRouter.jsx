@@ -15,20 +15,21 @@ import {
   Scrap,
   Search,
   Write,
+  Signup,
+  ProfileSettings,
+  ChatList,
+  ChatId,
+  MyPage,
+  MyInfo,
+  SchoolVerification,
+  Notification,
+  FAQ,
+  Inquiry,
+  Notice,
+  InquiryDetail,
+  WriteInquiry,
 } from '@/pages';
-import { Signup } from '@/pages/auth/signup';
-import { ProfileSettings } from '@/pages/auth/profileSettings';
-import { MyPage } from '@/pages/my/mypage';
-import { MyInfo } from '@/pages/my/settings/myInfo';
-import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
-import { Notification } from '@/pages/my/settings/notification';
-import { ChatList } from '@/pages/chat/list';
-import { Inquiry } from '@/pages/my/service/inquiry/inquiry';
-import { InquiryDetail } from '@/pages/my/service/inquiry/inquiryDetail';
 import { ContactUs } from '@/components/layout/ContactUs';
-import { FAQ } from '@/pages/my/service/faq';
-import { Notice } from '@/pages/my/service/notice';
-import { WriteInquiry } from '@/pages/my/service/inquiry/writeInquiry';
 
 const AppRouter = createBrowserRouter([
   {
@@ -90,7 +91,11 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Home />,
+        element: <AllBoard />,
+      },
+      {
+        path: ':boardTitle', // title에 따라 동적 할당
+        element: <Board />,
       },
     ],
   },
@@ -155,6 +160,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <ChatList />,
+      },
+      {
+        path: ':id',
+        element: <ChatId />,
       },
     ],
   },
@@ -234,14 +243,14 @@ const AppRouter = createBrowserRouter([
         children: [
           {
             path: `${path.mypage.service.inquiry}/${path.mypage.service.inquiryDetails}`,
-            element: <InquiryDetail />
+            element: <InquiryDetail />,
           },
           {
             path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
-            element: <WriteInquiry />
+            element: <WriteInquiry />,
           },
-        ]
-      }
+        ],
+      },
     ],
   },
 ]);

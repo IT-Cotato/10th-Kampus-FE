@@ -93,7 +93,7 @@ export const Board = () => {
     }
   }, []);
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       {pinAni && (
         <StateChangeAnimate
           state={!pinAni}
@@ -109,47 +109,44 @@ export const Board = () => {
           changeToFalseText={'Remove from Scrap'}
         />
       )}
-      <div className="w-full py-4 bg-white px-4 flex justify-between items-center border-b-[0.5px] border-[#D8D8D8]">
+      <div className="flex w-full items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
         <Prev
-          className="w-5 h-5 cursor-pointer"
+          className="h-5 w-5 cursor-pointer"
           onClick={() => navigate('..')}
         />
-        <p className="absolute font-medium transform -translate-x-1/2 left-1/2 whitespace-nowrap text-subTitle text-neutral-title">
+        <p className="absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-subTitle font-medium text-neutral-title">
           {boardTitle}
         </p>
         <div className="flex items-center gap-2">
-          <Search className="w-6 h-6 cursor-pointer text-neutral-title" />
-          <div className="w-5 h-5 cursor-pointer text-neutral-title">
+          <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
+          <div className="h-5 w-5 cursor-pointer text-neutral-title">
             <Menubar
-              className="w-5 h-5"
+              className="h-5 w-5"
               onClick={() => setOpenPinModal(!openPinModal)}
             />
             {openPinModal && (
               <div
-                className="absolute rounded-[0.625rem] top-12 right-4 flex px-3 py-2 justify-center items-center gap-2 border-[0.5px] border-[#D8D8D8] bg-white shadow-md"
+                className="absolute right-4 top-12 flex items-center justify-center gap-2 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-3 py-2 shadow-md"
                 onClick={() => startPinAni()}
               >
                 <p className="text-base">
                   {!pinAni ? 'Add to Pin' : 'Remove the Pin'}
                 </p>{' '}
                 {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
-                <Pin className="w-[1.125rem] h-[1.125rem]" />
+                <Pin className="h-[1.125rem] w-[1.125rem]" />
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className="flex flex-col px-4 pt-5 pb-1 w-full bg-white gap-[0.875rem]">
-        <div
-          className="flex w-full justify-center items-center bg-neutral-bg-10 rounded-[0.625rem]
-                text-subTitle font-normal py-3 text-[#6A6A6A] cursor-pointer"
-        >
+      <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
+        <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
           Notice
         </div>
         {isActive.filter && <FilterBox />}{' '}
         {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
       </div>
-      <div className="flex flex-col flex-1 w-full px-4 bg-white divide-y">
+      <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
         {boardData.post.map((item, index) =>
           isActive.scrap /** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/ ? (
             <TipsPostList
