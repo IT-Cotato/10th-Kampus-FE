@@ -67,7 +67,7 @@ export default {
             5: 'var(--neutral-5)', // F8F8F8
             10: 'var(--neutral-10)', //F0F0F0
           },
-          disabled: 'var(--neutral-20)',
+          disabled: 'var(--neutral-20)', //E4E4E4
           icon: 'var(--neutral-25)',
           border: {
             30: 'var(--neutral-30)', // D8D8D8

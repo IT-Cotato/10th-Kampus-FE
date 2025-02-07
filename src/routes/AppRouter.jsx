@@ -1,7 +1,8 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import {
+  AllBoard,
   LandingPage,
   Login,
   Terms,
@@ -12,23 +13,23 @@ import {
   DeleteAccount,
   Home,
   Scrap,
+  Search,
+  Write,
+  Signup,
+  ProfileSettings,
+  ChatList,
+  ChatId,
   MyPage,
+  MyInfo,
+  SchoolVerification,
+  Notification,
+  FAQ,
+  Inquiry,
+  Notice,
+  InquiryDetail,
+  WriteInquiry,
 } from '@/pages';
-import { Signup } from '@/pages/auth/signup';
-import { ProfileSettings } from '@/pages/auth/profileSettings';
-import { MyInfo } from '@/pages/my/settings/myInfo';
-import { SchoolVerification } from '@/pages/my/settings/schoolVerification';
-import { Notification } from '@/pages/my/settings/notification';
-import { AllBoard } from '@/pages/board/allboard';
-import { ChatList } from '@/pages/chat/chatList';
-import { ChatId } from '@/pages/chat/chatId';
-import { Service } from '@/pages/my/service/service';
-import { Inquiry } from '@/pages/my/service/inquiry';
-import { InquiryDetail } from '@/pages/my/service/inquiry/inquiryDetail';
 import { ContactUs } from '@/components/layout/ContactUs';
-import { FAQ } from '@/pages/my/service/faq';
-import { Notice } from '@/pages/my/service/notice';
-import { WriteInquiry } from '@/pages/my/service/inquiry/writeInquiry';
 
 const AppRouter = createBrowserRouter([
   {
@@ -99,12 +100,46 @@ const AppRouter = createBrowserRouter([
     ],
   },
   {
+    path: path.search,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <Search />,
+      },
+    ],
+  },
+  {
     path: path.board.base,
     element: (
       <Layout>
         <Outlet />
       </Layout>
     ),
+    children: [
+      {
+        path: '',
+        element: <AllBoard />,
+      },
+      {
+        path: path.board.specific.base, // title에 따라 동적 할당
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <Board />,
+          },
+          {
+            path: path.board.specific.write,
+            element: <Write />,
+          },
+        ],
+      },
+    ],
   },
   {
     path: path.market.base,
@@ -178,15 +213,27 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.mypage.service.base,
-        element: <Outlet />,
+        element: (
+          <ContactUs>
+            <Outlet />
+          </ContactUs>
+        ),
         children: [
           {
             path: '',
-            element: <Service />,
+            element: <Navigate to={path.mypage.service.faq} replace />,
+          },
+          {
+            path: path.mypage.service.faq,
+            element: <FAQ />,
           },
           {
             path: path.mypage.service.inquiry,
             element: <Inquiry />,
+          },
+          {
+            path: path.mypage.service.notice,
+            element: <Notice />,
           },
         ],
       },
