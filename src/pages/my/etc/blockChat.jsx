@@ -29,7 +29,7 @@ export const BlockChat = () => {
     <div className="flex flex-col w-full h-full">
             {count === 0 ? (
               // data.inquiry.length === 0
-              <div className='flex flex-col items-center justify-center w-full h-full gap-[.625rem]'>
+              <div className='flex flex-col items-center justify-center w-full h-full'>
                 <span></span>
               </div>
             ) : (

@@ -17,8 +17,7 @@ export const BlockingManagement = ({ children }) => {
   return (
     <div className="flex flex-col w-full">
       <TitleHeader text="Blocking Management" />
-      <div className="flex flex-col w-full px-4 pt-12 pb-3">
-        <div className="gap-[0.625rem] flex justify-start">
+      <div className="flex flex-row w-full px-4 pt-12 pb-6 gap-[0.625rem] justify-start">
           {menu.map((item) => (
             <ButtonRound
               key={item.id}
@@ -29,7 +28,6 @@ export const BlockingManagement = ({ children }) => {
               onClick={() => navigate(`./${item.path}`, { replace: true })}
             />
           ))}
-        </div>
       </div>
       <div className="flex flex-col flex-1 w-full p-4">{children}</div>
     </div>
