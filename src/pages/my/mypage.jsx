@@ -131,7 +131,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.block)}
+                onClick={() => handleButtonClick(`${path.mypage.block.base}/${path.mypage.block.chat}`)}
               >
                 Blocking Management
               </button>

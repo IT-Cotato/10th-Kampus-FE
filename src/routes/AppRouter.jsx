@@ -9,7 +9,6 @@ import {
   NotFound,
   Board,
   MyArticle,
-  BlockingManagement,
   DeleteAccount,
   Home,
   Scrap,
@@ -28,8 +27,11 @@ import {
   Notice,
   InquiryDetail,
   WriteInquiry,
+  BlockSecondhand,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
+import { BlockingManagement } from '@/components/layout/BlockingManagement';
+import { BlockChat } from '@/pages/my/etc/blockChat';
 
 const AppRouter = createBrowserRouter([
   {
@@ -200,10 +202,6 @@ const AppRouter = createBrowserRouter([
         element: <Scrap />,
       },
       {
-        path: path.mypage.block,
-        element: <BlockingManagement />,
-      },
-      {
         path: path.mypage.delete,
         element: <DeleteAccount />,
       },
@@ -236,6 +234,28 @@ const AppRouter = createBrowserRouter([
             element: <Notice />,
           },
         ],
+      },
+      {
+        path: path.mypage.block.base,
+        element: (
+          <BlockingManagement>
+            <Outlet />
+          </BlockingManagement>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.block.chat} replace />,
+          },
+          {
+            path: path.mypage.block.chat,
+            element: <BlockChat />,
+          },
+          {
+            path: path.mypage.block.secondhand,
+            element: <BlockSecondhand />,
+          },
+        ]
       },
       {
         path: path.mypage.service.base,

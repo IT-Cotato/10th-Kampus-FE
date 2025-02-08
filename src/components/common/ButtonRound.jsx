@@ -10,8 +10,8 @@ export const ButtonRound = ({ theme, text, width, height, ...props }) => {
           'bg-neutral-base': theme === 'base',
           'bg-neutral-border-30': theme === 'disabled',
           'w-full': width === 'long',
-          'w-[7.625rem]': width === 'base',
-          'w-[3.5rem]': width === 'short',
+          'w-fit p-4': width === 'base',
+          'w-fit p-2': width === 'short',
           'py-1': height === 'small',
         },
       )}

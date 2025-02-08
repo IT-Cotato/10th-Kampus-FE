@@ -35,7 +35,11 @@ export const path = {
       writeInquiry: 'write',
       notice: 'notice',
     },
-    block: 'my/block',
+    block: {
+      base: 'my/block',
+      chat: 'chat',
+      secondhand: 'secondhand',
+    },
     delete: 'my/leave',
   },
   market: {

@@ -26,7 +26,8 @@ export { MyPage } from './my/mypage';
 export { Scrap } from './my/community/scrap';
 export { MyArticle } from './my/community/myArticle';
 
-export { BlockingManagement } from './my/etc/blockingManagement';
+export { BlockChat } from './my/etc/blockChat';
+export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
