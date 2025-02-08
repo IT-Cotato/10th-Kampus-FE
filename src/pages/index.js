@@ -18,7 +18,8 @@ export { Search } from './search/Search';
 
 export { Inquiry } from './my/service/inquiry/inquiry';
 export { FAQ } from './my/service/faq';
-export { Notice } from './my/service/notice';
+export { Notice } from './my/service/notice/notice';
+export { NoticeDetail } from './my/service/notice/noticeDetail';
 export { InquiryDetail } from './my/service/inquiry/inquiryDetail';
 export { WriteInquiry } from './my/service/inquiry/writeInquiry';
 

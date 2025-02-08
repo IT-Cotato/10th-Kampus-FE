@@ -9,12 +9,12 @@ export const NoticeList = ({ noticeId, title, date }) => {
       onClick={() => navigate(`./${noticeId}`)}
     >
       <div className="flex flex-col w-full truncate">
-        <span className="flex gap-[.625rem] items-center">
-          <span className="truncate text-subTitle text-neutral-title">
-            {title}
-          </span>
+        <span className="truncate text-subTitle text-neutral-title">
+          {title}
         </span>
-        <span className="inline-block text-neutral-base">{date}</span>
+        <span className="inline-block text-small text-neutral-border-50">
+          {date}
+        </span>
       </div>
     </div>
   );
