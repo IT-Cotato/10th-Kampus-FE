@@ -1,7 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-
 export const ChatBlockedList = ({ title, content, userId, onClick }) => {
-
   return (
     <div className="flex flex-row items-center justify-between w-full gap-3 py-5 border-b border-primary-20">
       <div className="flex flex-col w-full truncate">
