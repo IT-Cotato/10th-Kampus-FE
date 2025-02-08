@@ -34,6 +34,7 @@ export const path = {
       inquiryDetails: ':inquiryId',
       writeInquiry: 'write',
       notice: 'notice',
+      noticeDetails: ':noticeId',
     },
     block: 'my/block',
     delete: 'my/leave',

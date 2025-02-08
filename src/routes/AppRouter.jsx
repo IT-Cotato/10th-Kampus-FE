@@ -28,6 +28,7 @@ import {
   Notice,
   InquiryDetail,
   WriteInquiry,
+  NoticeDetail,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 
@@ -248,6 +249,10 @@ const AppRouter = createBrowserRouter([
           {
             path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
             element: <WriteInquiry />,
+          },
+          {
+            path: `${path.mypage.service.notice}/${path.mypage.service.noticeDetails}`,
+            element: <NoticeDetail />,
           },
         ],
       },
