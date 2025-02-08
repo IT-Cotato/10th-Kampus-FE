@@ -1,4 +1,4 @@
-import { NoticeList } from "@/components/service/notice/noticeList";
+import { NoticeList } from "@/components/service/notice/NoticeList";
 
 export const Notice = () => {
   const Notice = [
