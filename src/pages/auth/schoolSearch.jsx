@@ -1,3 +1,4 @@
+import Prev from '@/assets/imgs/previous.svg?react';
 import University from '@/constants/university';
 import { path } from '@/routes/path';
 import { useState } from 'react';
@@ -14,7 +15,8 @@ export const SchoolSearch = () => {
 
   return (
     <div className="flex flex-col flex-1 gap-10 px-4 py-5">
-      <div className="flex justify-end">
+      <div className="flex items-center justify-between">
+        <Prev className="w-5 h-5 cursor-pointer" onClick={() => navigate(-1)} />
         <SkipButton navigateTo={`../../${path.home}`} />
       </div>
       <div className="flex flex-col gap-5">
@@ -35,7 +37,7 @@ export const SchoolSearch = () => {
         </div>
         <MainButton
           onClick={() =>
-            navigate(`../${path.signup.verify}`, { state: university })
+            navigate(`../${path.signup.verify.base}`, { state: university })
           }
           disabled={!isUniversitySelected}
         >

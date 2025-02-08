@@ -6,7 +6,11 @@ export const path = {
     welcome: 'welcome',
     profile: 'profile',
     school: 'school',
-    verify: 'verify',
+    verify: {
+      base: 'verify',
+      email: 'email',
+      file: 'file',
+    }
   },
   board: {
     base: '/board',

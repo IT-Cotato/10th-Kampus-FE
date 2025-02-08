@@ -26,6 +26,8 @@ import { Notification } from '@/pages/my/settings/notification';
 import { ChatList } from '@/pages/chat/list';
 import { Inquiry } from '@/pages/my/service/inquiry';
 import { Welcome } from '@/pages/auth/welcome';
+import { SchoolEmail } from '@/pages/auth/schoolEmail';
+import { SchoolPhoto } from '@/pages/auth/schoolPhoto';
 
 const AppRouter = createBrowserRouter([
   {
@@ -80,8 +82,22 @@ const AppRouter = createBrowserRouter([
         element: <SchoolSearch />,
       },
       {
-        path: path.signup.verify,
-        element: <SchoolVerification />,
+        path: path.signup.verify.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <SchoolVerification />,
+          },
+          {
+            path: path.signup.verify.email,
+            element: <SchoolEmail />,
+          },
+          {
+            path: path.signup.verify.file,
+            element: <SchoolPhoto />,
+          },
+        ]
       },
     ],
   },
