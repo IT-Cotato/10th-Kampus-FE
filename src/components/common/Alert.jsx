@@ -14,7 +14,7 @@ export const Alert = (props) => {
 
   return (
     <div className="max-w-lg mx-auto min-h-dvh w-full h-full overflow-x-hidden overflow-y-auto bg-[rgba(11,11,11,0.6)] fixed flex z-[100] justify-center items-center align-middle">
-      <dialog className="z-[200] flex flex-col items-center justify-center bg-white border py-[1.875rem] gap-7 mx-4 rounded-[.625rem] px-6">
+      <dialog className="relative z-[200] flex flex-col items-center justify-center bg-white border py-[1.875rem] gap-7 mx-4 rounded-[.625rem] px-6">
         <div className="flex items-center justify-center w-full text-center align-middle text-subTitle">
           {props.title}
         </div>
