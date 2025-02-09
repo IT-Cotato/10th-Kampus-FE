@@ -98,15 +98,15 @@ export const Home = () => {
       {homeBoard.userUnivState &&
         <h1 className="text-neutral-title text-pageTitle">OO University</h1>}
       <div className="flex flex-col gap-[1.625rem]">
-        <div className="flex flex-col items-center w-fit rounded-[.625rem] border-[0.03125rem] border-neutral-border-40 
+        <div className="flex flex-col items-center w-fit rounded-[.625rem] border-[0.03125rem] border-primary-30 
         gap-[.625rem] px-[.875rem] py-8">
           <h1 className="text-subTitle text-neutral-base">Jan 6, 2025</h1>
           <h2 className="text-base text-neutral-title">한국 공휴일 표시</h2>
         </div>
         {homeBoard.userUnivState &&
-          <BoardBox data={homeBoard.univ} boardTitle={"My univ"} path={path} />}
-        <BoardBox data={homeBoard.favorites} boardTitle={"Favorites"} path={path} />
-        <BoardBox data={homeBoard.trending} boardTitle={"Trending"} path={path} />
+          <BoardBox data={homeBoard.univ} boardTitle="My univ" path={path} />}
+        <BoardBox data={homeBoard.favorites} boardTitle="Favorites" path={path} />
+        <BoardBox data={homeBoard.trending} boardTitle="Trending" path={path} />
         <CardPostBox data={homeBoard.howtoliveinKorea} path={path} />
       </div>
     </div>

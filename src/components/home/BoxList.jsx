@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom"
 export const BoxList = ({ text }) => {
     const navigate = useNavigate();
     return (
-        <div className="flex gap-5 items-center cursor-pointer"
+        <div className="flex gap-5 items-center cursor-pointer py-[.625rem]"
             onClick={() => navigate(`${path.board.base}/${generateBoardTitle(text.board)}/${text.postID}`)}>
             <h1 className="text-subTitle text-neutral-title">{text.board}</h1>
-            <h2 className="text-base text-neutral-base">{text.title}</h2>
+            <h2 className="text-base text-neutral-base truncate">{text.title}</h2>
         </div>
     )
 }
@@ -18,7 +18,7 @@ export const CardPost = ({ data }) => {
             onClick={() => navigate(`${path.board.base}/tips-for-living-in-korea/${data.postID}`)}>
             <img src={data.img} alt="Post Img"
                 className="min-w-[9.5rem] min-h-[9.5rem] aspect-square bg-neutral-bg-10 rounded-lg" />
-            <h1 className="text-subTitle text-neutral-title">
+            <h1 className="text-subTitle text-neutral-title truncate">
                 {data.title}
             </h1>
         </div>
