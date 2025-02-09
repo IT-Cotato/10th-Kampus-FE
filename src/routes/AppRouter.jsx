@@ -196,10 +196,6 @@ const AppRouter = createBrowserRouter([
         element: <MyInfo />,
       },
       {
-        path: path.mypage.settings.verification,
-        element: <SchoolVerification />,
-      },
-      {
         path: path.mypage.settings.notification,
         element: <Notification />,
       },

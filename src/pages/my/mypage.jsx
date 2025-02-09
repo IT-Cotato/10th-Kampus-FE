@@ -10,10 +10,6 @@ export const MyPage = () => {
   const username = 'COTATO';
   const university = 'Cotato University';
 
-  const handleButtonClick = (path) => {
-    navigate(path);
-  };
-
   return (
     <div className="flex flex-col w-full h-full p-4 gap-[1.125rem]">
       {/* 알림 영역 */}
@@ -25,7 +21,7 @@ export const MyPage = () => {
         {/* 마이페이지 메인 버튼 */}
         <div
           className="flex w-full h-full bg-primary-base px-[.75rem] py-[1.625rem] items-center rounded-[.625rem]"
-          onClick={() => handleButtonClick(path.mypage.settings.info)}
+          onClick={() => navigate(path.mypage.settings.info)}
         >
           <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
             <div className="text-pageTitle">{username}</div>
@@ -45,7 +41,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.settings.info)}
+                onClick={() => navigate(path.mypage.settings.info)}
               >
                 My Information
               </button>
@@ -53,7 +49,7 @@ export const MyPage = () => {
                 type="button"
                 className="text-left"
                 onClick={() =>
-                  handleButtonClick(path.mypage.settings.verification)
+                  navigate(`../${path.signup.base}/${path.signup.school}`)
                 }
               >
                 School Verification
@@ -61,9 +57,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() =>
-                  handleButtonClick(path.mypage.settings.notification)
-                }
+                onClick={() => navigate(path.mypage.settings.notification)}
               >
                 Notifications and Information Agreements
               </button>
@@ -75,25 +69,21 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.community.scrap)}
+                onClick={() => navigate(path.mypage.community.scrap)}
               >
                 Scrap
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() =>
-                  handleButtonClick(path.mypage.community.articles)
-                }
+                onClick={() => navigate(path.mypage.community.articles)}
               >
                 My Articles
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() =>
-                  handleButtonClick(path.mypage.community.secondhand)
-                }
+                onClick={() => navigate(path.mypage.community.secondhand)}
               >
                 Secondhand
               </button>
@@ -105,21 +95,21 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.service.base)}
+                onClick={() => navigate(path.mypage.service.base)}
               >
                 FAQ
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.service.base)}
+                onClick={() => navigate(path.mypage.service.base)}
               >
                 1:1 Inquiry
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.service.base)}
+                onClick={() => navigate(path.mypage.service.base)}
               >
                 Notice
               </button>
@@ -131,21 +121,21 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.block)}
+                onClick={() => navigate(path.mypage.block)}
               >
                 Blocking Management
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick('/')}
+                onClick={() => navigate('/')}
               >
                 Log Out
               </button>
               <button
                 type="button"
                 className="text-left text-neutral-border-50"
-                onClick={() => handleButtonClick(path.mypage.delete)}
+                onClick={() => navigate(path.mypage.delete)}
               >
                 Delete Account
               </button>
