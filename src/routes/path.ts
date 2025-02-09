@@ -18,14 +18,19 @@ export const path = {
   mypage: {
     base: '/my',
     settings: {
-      info: '/my/settings/info',
-      verification: '/my/settings/verification',
-      notification: '/my/settings/notification',
+      info: 'settings/info',
+      verification: 'settings/verification',
+      notification: 'settings/notification',
     },
     community: {
-      scrap: '/my/community/scrap',
-      articles: '/my/community/articles',
-      secondhand: '/my/community/secondhand',
+      base: 'community',
+      scrap: {
+        base: 'scrap',
+        community: 'community',
+        secondhand: 'secondhand',
+      },
+      articles: 'articles',
+      secondhand: 'secondhand',
     },
     service: {
       base: 'contactUs',
@@ -41,7 +46,7 @@ export const path = {
       chat: 'chat',
       secondhand: 'secondhand',
     },
-    delete: 'my/leave',
+    delete: 'leave',
   },
   market: {
     base: '/market',

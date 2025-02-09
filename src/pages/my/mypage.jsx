@@ -75,7 +75,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(path.mypage.community.scrap)}
+                onClick={() => handleButtonClick(path.mypage.community.scrap.base)}
               >
                 Scrap
               </button>

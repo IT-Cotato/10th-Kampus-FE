@@ -33,6 +33,8 @@ import {
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
 import { BlockChat } from '@/pages/my/etc/blockChat';
+import { SecondhandScrap } from '@/pages/my/community/SecondHandScrap';
+import { CommunityScrap } from '@/pages/my/community/CommunityScrap';
 
 const AppRouter = createBrowserRouter([
   {
@@ -195,10 +197,6 @@ const AppRouter = createBrowserRouter([
         element: <MyArticle />,
       },
       {
-        path: path.mypage.community.scrap,
-        element: <Scrap />,
-      },
-      {
         path: path.mypage.delete,
         element: <DeleteAccount />,
       },
@@ -231,6 +229,28 @@ const AppRouter = createBrowserRouter([
             element: <Notice />,
           },
         ],
+      },
+      {
+        path: path.mypage.community.scrap.base,
+        element: (
+          <Scrap>
+            <Outlet />
+          </Scrap>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.community.scrap.community} replace />,
+          },
+          {
+            path: path.mypage.community.scrap.community,
+            element: <CommunityScrap />,
+          },
+          {
+            path: path.mypage.community.scrap.secondhand,
+            element: <SecondhandScrap />,
+          },
+        ]
       },
       {
         path: path.mypage.block.base,
