@@ -58,13 +58,13 @@ export const Navbar = () => {
             <IconComponent
               className={cn('w-[1.875rem] h-[1.875rem]', {
                 'text-neutral-icon': !urlActive,
-                'text-neutral-title': urlActive,
+                'text-primary-base': urlActive,
               })}
             />
             <span
               className={cn('text-small', {
                 'text-neutral-icon': !urlActive,
-                'text-neutral-title': urlActive,
+                'text-primary-base': urlActive,
               })}
             >
               {item.label}
