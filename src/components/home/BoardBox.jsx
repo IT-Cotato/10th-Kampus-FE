@@ -1,6 +1,6 @@
-import { BoxList } from "./boxList"
+import { BoxList } from "./BoxList"
 import { BoardHeader } from "./BoardHeader"
-import { CardPost } from "./boxList"
+import { CardPost } from "./BoxList"
 export const BoardBox = ({ boardTitle, data, path }) => {
     return (
         <div className="flex flex-col gap-5">

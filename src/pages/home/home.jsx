@@ -5,7 +5,7 @@ import search from "@/assets/imgs/search.svg"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { path } from "@/routes/path";
-import { BoardBox, CardPostBox } from "@/components/home/boardbox";
+import { BoardBox, CardPostBox } from "@/components/home/BoardBox.jsx";
 
 export const Home = () => {
   const navigate = useNavigate();
