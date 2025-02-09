@@ -28,7 +28,7 @@ export const path = {
       secondhand: '/my/community/secondhand',
     },
     service: {
-      base: '/my/contactUs',
+      base: 'contactUs',
       faq: 'faq',
       inquiry: 'inquiry',
       inquiryDetails: ':inquiryId',
@@ -36,7 +36,11 @@ export const path = {
       notice: 'notice',
       noticeDetails: ':noticeId',
     },
-    block: 'my/block',
+    block: {
+      base: 'block',
+      chat: 'chat',
+      secondhand: 'secondhand',
+    },
     delete: 'my/leave',
   },
   market: {
