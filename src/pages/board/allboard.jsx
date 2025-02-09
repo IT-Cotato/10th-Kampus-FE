@@ -15,7 +15,7 @@ export const AllBoard = () => {
       { title: "Trending", pin: false, order: 4 }
     ],
     second: [
-      { title: "Tips for living in Korea", pin: false, order: 1 }
+      { title: "How to live in Korea", pin: false, order: 1 }
     ],
     third: [
       { title: "Housing", pin: false, order: 1 },

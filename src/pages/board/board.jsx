@@ -17,7 +17,7 @@ export const Board = () => {
   const isActive = {
     // 게시글 종류
     trending: boardTitle === 'trending',
-    scrap: boardTitle === 'tips-for-living-in-korea',
+    scrap: boardTitle === 'how-to-live-in-korea',
     filter: boardTitle === 'question' || boardTitle === 'information',
   };
   const [boardData, setBoardData] = useState({

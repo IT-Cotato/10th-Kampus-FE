@@ -12,9 +12,6 @@ export const BoardHeader = ({ title, path }) => {
                     if (generateBoardTitle(title) === '') {
                         navigate(path.board.base)
                     }
-                    else if (generateBoardTitle(title) === "how-to-live-in-korea") {    // 추후 디자인이나 백엔드에서 넘겨주는 형식에 따라 바뀔 예정
-                        navigate(path.board.base + '/tips-for-living-in-korea')
-                    }
                     else {
                         navigate(path.board.base + '/' + generateBoardTitle(title))
                     }
