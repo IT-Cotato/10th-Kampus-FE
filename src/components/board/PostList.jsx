@@ -1,9 +1,12 @@
 import Like from '../../assets/imgs/like.svg?react'
 import Comment from '../../assets/imgs/comment.svg?react'
 import Translate from '../../assets/imgs/translate.svg?react'
+import { useNavigate } from 'react-router-dom'
 export const PostList = ({ data, isActive }) => {
+    const navigate = useNavigate();
     return (
-        <div className="flex flex-col pt-4 pb-3 gap-3">
+        <div className="flex flex-col pt-4 pb-3 gap-3"
+            onClick={() => navigate(`${data.postId}`)}>
             {isActive &&   /** 인기 게시판 레이아웃 */
                 <div className='py-[0.3125rem] w-fit px-[0.625rem] rounded-md bg-primary-10
                 text-small text-neutral-base'>

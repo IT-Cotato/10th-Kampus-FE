@@ -10,7 +10,8 @@ export const path = {
     base: '/board',
     specific: {
       base: ':boardTitle',
-      write: 'write'
+      write: 'write',
+      post: ':postid'
     }
   },
   home: '/home',

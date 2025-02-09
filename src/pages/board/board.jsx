@@ -32,6 +32,7 @@ export const Board = () => {
         image: null,
         board_type: 'Tips for living in Korea',
         scrap: false,
+        postId: 1
       },
       {
         title: 'Title',
@@ -42,6 +43,7 @@ export const Board = () => {
         image: kakao,
         board_type: 'Information',
         scrap: false,
+        postId: 2
       },
     ],
   });

@@ -36,7 +36,7 @@ export const Write = () => {
         <button type="button">
           <X
             className="w-6 h-6 p-1 text-neutral-title"
-            onClick={() => navigate('..')}
+            onClick={() => navigate(-1)}
           />
         </button>
         <span className="flex justify-center text-neutral-title text-pageTitle">

@@ -2,10 +2,13 @@ import Like from '../../assets/imgs/like.svg?react'
 import Comment from '../../assets/imgs/comment.svg?react'
 import Scrap from '../../assets/imgs/scrap.svg?react'
 import ActiveScrap from '../../assets/imgs/activeScrap.svg?react'
+import { useNavigate } from 'react-router-dom'
 
 export const TipsPostList = ({ data, handleScrap, index }) => { // 카드 뉴스 부분 데이터 요청 시, 스크랩 여부도 같이 가져와야 함 
+    const navigate = useNavigate();
     return (
-        <div className='flex justify-between pt-5 pb-3'>
+        <div className='flex justify-between pt-5 pb-3'
+            onClick={() => navigate(`${data.postId}`)}>
             <div className='flex flex-col justify-between'>
                 <p className='text-subTitle text-neutral-title'>{data.title}</p>
                 <div className='flex gap-[0.375rem]'>
