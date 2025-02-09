@@ -36,7 +36,7 @@ export const MyComments = () => {
         // data.inquiry.length === 0
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <img src={Logo} className="w-32" />
-          <span className='text-neutral-border-40'>There's nothing you've scraped! Try saving your interest :)</span>
+          <span className='text-neutral-border-40'>Looks like there’s nothing here. Time to create something amazing!</span>
         </div>
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">
