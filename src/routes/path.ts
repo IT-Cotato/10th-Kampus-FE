@@ -29,7 +29,11 @@ export const path = {
         community: 'community',
         secondhand: 'secondhand',
       },
-      articles: 'articles',
+      article: {
+        base: 'article',
+        articles: 'articles',
+        comments: 'comments',
+      },
       secondhand: 'secondhand',
     },
     service: {

@@ -35,6 +35,8 @@ import { BlockingManagement } from '@/components/layout/BlockingManagement';
 import { BlockChat } from '@/pages/my/etc/blockChat';
 import { SecondhandScrap } from '@/pages/my/community/SecondHandScrap';
 import { CommunityScrap } from '@/pages/my/community/CommunityScrap';
+import { MyComments } from '@/pages/my/community/MyComments';
+import { MyArticles } from '@/pages/my/community/MyArticles';
 
 const AppRouter = createBrowserRouter([
   {
@@ -193,10 +195,6 @@ const AppRouter = createBrowserRouter([
         element: <Notification />,
       },
       {
-        path: path.mypage.community.articles,
-        element: <MyArticle />,
-      },
-      {
         path: path.mypage.delete,
         element: <DeleteAccount />,
       },
@@ -249,6 +247,28 @@ const AppRouter = createBrowserRouter([
           {
             path: path.mypage.community.scrap.secondhand,
             element: <SecondhandScrap />,
+          },
+        ]
+      },
+      {
+        path: path.mypage.community.article.base,
+        element: (
+          <MyArticle>
+            <Outlet />
+          </MyArticle>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.community.article.articles} replace />,
+          },
+          {
+            path: path.mypage.community.article.articles,
+            element: <MyArticles />,
+          },
+          {
+            path: path.mypage.community.article.comments,
+            element: <MyComments />,
           },
         ]
       },

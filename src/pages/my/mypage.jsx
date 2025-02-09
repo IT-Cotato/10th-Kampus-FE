@@ -83,10 +83,10 @@ export const MyPage = () => {
                 type="button"
                 className="text-left"
                 onClick={() =>
-                  handleButtonClick(path.mypage.community.articles)
+                  handleButtonClick(path.mypage.community.article.base)
                 }
               >
-                My Articles
+                My Article
               </button>
               <button
                 type="button"

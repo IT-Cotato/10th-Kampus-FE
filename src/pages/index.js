@@ -25,7 +25,7 @@ export { WriteInquiry } from './my/service/inquiry/writeInquiry';
 
 export { MyPage } from './my/mypage';
 export { Scrap } from '../components/layout/Scrap';
-export { MyArticle } from './my/community/myArticle';
+export { MyArticle } from '../components/layout/MyArticle';
 
 export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
