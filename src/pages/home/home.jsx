@@ -6,9 +6,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { path } from "@/routes/path";
 import { BoardBox, CardPostBox } from "@/components/home/boardbox";
-import { BoardHeader } from "@/components/home/BoardHeader";
+
 export const Home = () => {
   const navigate = useNavigate();
+  const today = new Date().toLocaleDateString("en-US", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }); // "May 5, 2025" 형식 
   const [isNotification, setIsNotification] = useState(true);
   const [homeBoard, setHomeBoard] = useState({  // board + postID로 navigate 만들기
     userUnivState: true,
@@ -98,10 +104,10 @@ export const Home = () => {
       {homeBoard.userUnivState &&
         <h1 className="text-neutral-title text-pageTitle">OO University</h1>}
       <div className="flex flex-col gap-[1.625rem]">
-        <div className="flex flex-col items-center w-fit rounded-[.625rem] border-[0.03125rem] border-primary-30 
+        <div className="flex flex-col w-fit rounded-[.625rem] border-[0.03125rem] border-primary-30 
         gap-[.625rem] px-[.875rem] py-8">
-          <h1 className="text-subTitle text-neutral-base">Jan 6, 2025</h1>
-          <h2 className="text-base text-neutral-title">한국 공휴일 표시</h2>
+          <h1 className="text-subTitle text-neutral-base text-center">{today}</h1>
+          <h2 className="text-base text-primary-red">Holiday-KR</h2>
         </div>
         {homeBoard.userUnivState &&
           <BoardBox data={homeBoard.univ} boardTitle="My univ" path={path} />}
