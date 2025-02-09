@@ -7,22 +7,27 @@ import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
+import { createPortal } from 'react-dom';
+import { Alert } from '@/components/common/Alert';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const university = location.state;
 
-  const handleUpload = () => {
-    
-  }
+  const handleUpload = (file) => {
+    console.log(file);
+    navigate(`../../../${path.home}`)
+  };
 
   useEffect(() => {
     if (university === undefined) {
       navigate(`../${path.signup.school}`);
     }
+    // 이미 인증 되었거나 인증 진행 중인지도 확인 필요
   }, [university]);
 
   return (
@@ -65,15 +70,27 @@ export const SchoolPhoto = () => {
             <span className="flex w-fit px-3 py-[.375rem] rounded-[.625rem] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] gap-3 items-center">
               <img src={ImgIcon} />
               <span>{file.name}</span>
-              <XIcon className="w-[.9375rem] h-[.9375rem] text-neutral-title" onClick={() => setFile(null)} />
+              <XIcon
+                className="w-[.9375rem] h-[.9375rem] text-neutral-title"
+                onClick={() => setFile(null)}
+              />
             </span>
           ) : (
             <span className="text-neutral-border-50">No file selected</span>
           )}
         </div>
-        <MainButton onClick={handleUpload} disabled={!file}>
+        <MainButton onClick={() => setShowModal(true)} disabled={!file}>
           Upload
         </MainButton>
+        {showModal &&
+          createPortal(
+            <Alert
+              title="School verification time may take 3-5 business days"
+              button="Save"
+              onClick={() => handleUpload(file)}
+            />,
+            document.getElementById('modal-root'),
+          )}
       </div>
     </div>
   );
