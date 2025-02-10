@@ -11,7 +11,7 @@ export const path = {
     specific: {
       base: ':boardTitle',
       write: 'write',
-      post: ':postid'
+      post: ':postId'
     }
   },
   home: '/home',

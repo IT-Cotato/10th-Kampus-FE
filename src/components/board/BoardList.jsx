@@ -13,7 +13,7 @@ export const BoardList = ({ data, listKey, index, togglePin }) => {
                 onClick={() => togglePin(listKey, index)}
             />
             <p className=" text-base text-neutral-80 w-full cursor-pointer"
-                onClick={() => navigate(`./${navURL}`)}
+                onClick={() => navigate(`${navURL}`)}
             >{data.title}</p>
         </div>
     )
