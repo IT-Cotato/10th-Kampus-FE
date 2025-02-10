@@ -65,29 +65,31 @@ export const Board = () => {
   }, [boardData.post.map((post) => post.scrap).join()]); // 스크랩이 바뀔 때만
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className='w-full h-full'>
       <PostHeader path={path} />
-      <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-        <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
-          Notice
+      <div className="flex h-full w-full flex-col pt-14">
+        <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
+          <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
+            Notice
+          </div>
+          {isActive.filter && <FilterBox />}{' '}
+          {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
-        {isActive.filter && <FilterBox />}{' '}
-        {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
+        <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+          {boardData.post.map((item, index) =>
+            isActive.scrap /** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/ ? (
+              <TipsPostList
+                key={index}
+                data={item}
+                setBoardData={setBoardData}
+              />
+            ) : (
+              <PostList key={index} data={item} isActive={isActive.trending} />
+            ),
+          )}
+        </div>
+        <WriteButton />
       </div>
-      <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
-        {boardData.post.map((item, index) =>
-          isActive.scrap /** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/ ? (
-            <TipsPostList
-              key={index}
-              data={item}
-              setBoardData={setBoardData}
-            />
-          ) : (
-            <PostList key={index} data={item} isActive={isActive.trending} />
-          ),
-        )}
-      </div>
-      <WriteButton />
     </div>
   );
 };

@@ -8,7 +8,7 @@ export const PostHeader = ({ path }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex w-full items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
+        <div className="fixed flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
             <Prev
                 className="h-5 w-5 cursor-pointer"
                 onClick={() => navigate(-1)}

@@ -16,7 +16,7 @@ export const StateChangeAnimate = ({ state, changeToTrueText, changeToFalseText 
     // 포털이 적용된 컴포넌트 반환
     return ReactDOM.createPortal(
         <>
-            <div className="fixed inset-0 z-40 flex justify-center items-center bg-neutral-80  
+            <div className="fixed inset-0 z-50 flex justify-center items-center bg-neutral-80  
         animate-fadeInOutModal"
             />
             <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 

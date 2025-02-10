@@ -1,11 +1,6 @@
 import { useState, useRef } from "react";
 import { cn } from "@/utils/cn";
-export const ImageSlider = ({ images }) => {
-    const [currentImgIndex, setCurrentImgIndex] = useState(0);
-    const [style, setStyle] = useState({
-        transform: `translateX(-${currentImgIndex}00%)`,
-        transition: `all 0.4s ease-in-out`,
-    });
+export const ImageSlider = ({ images, currentImgIndex, setCurrentImgIndex, style, setStyle }) => {
     const [touch, setTouch] = useState({
         start: 0,
         end: 0,
@@ -27,32 +22,34 @@ export const ImageSlider = ({ images }) => {
                     transition: '0ms',
                 });
             }
-        }
-    };
+        };
+    }
     const touchEnd = (e) => {
         const end = e.changedTouches[0].pageX;
-        if (touch.start > end) {
-            if (currentImgIndex < images.length - 1) {
-                setCurrentImgIndex(prev => prev + 1);
-                setStyle({
-                    transform: `translateX(-${currentImgIndex + 1}00%)`,
-                    transition: `all 0.4s ease-in-out`,
-                });
+        if (Math.abs(end - touch.start) > 10) { // 포커스 이미지 슬라이더 켜기 위해 터치 시, 변경 X
+            if (touch.start > end) {
+                if (currentImgIndex < images.length - 1) {
+                    setCurrentImgIndex(prev => prev + 1);
+                    setStyle({
+                        transform: `translateX(-${currentImgIndex + 1}00%)`,
+                        transition: `all 0.4s ease-in-out`,
+                    });
+                }
+            } else {
+                if (currentImgIndex > 0) {
+                    setCurrentImgIndex(prev => prev - 1);
+                    setStyle({
+                        transform: `translateX(-${currentImgIndex - 1}00%)`,
+                        transition: `all 0.4s ease-in-out`,
+                    });
+                }
             }
-        } else {
-            if (currentImgIndex > 0) {
-                setCurrentImgIndex(prev => prev - 1);
-                setStyle({
-                    transform: `translateX(-${currentImgIndex - 1}00%)`,
-                    transition: `all 0.4s ease-in-out`,
-                });
-            }
-        }
 
-        setTouch({
-            ...touch,
-            end,
-        });
+            setTouch({
+                ...touch,
+                end,
+            });
+        }
     };
 
     return (
@@ -73,13 +70,35 @@ export const ImageSlider = ({ images }) => {
                     ))}
                 </div>
             </div>
-            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
-                {images.map((_, index) => (
-                    <div
-                        key={index}
-                        className={cn("w-2 h-2 rounded-full cursor-pointer", index === currentImgIndex ? "bg-primary-30" : "bg-neutral-disabled")}
-                    />
-                ))}
+            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 flex gap-1 ">
+                {images.length > 1 && (
+                    (() => {
+                        const total = images.length;
+                        const maxDots = 5;
+                        let dotsToDisplay = [];
+
+                        if (total <= maxDots) {
+                            dotsToDisplay = Array.from({ length: total }, (_, i) => i);
+                        } else {
+                            const start = Math.max(0, Math.min(currentImgIndex - 2, total - maxDots));
+                            dotsToDisplay = Array.from({ length: maxDots }, (_, i) => start + i);
+                        }
+
+                        return dotsToDisplay.map((index) => (
+                            <div
+                                key={index}
+                                className={cn(
+                                    "w-2 h-2 rounded-full cursor-pointer flex-shrink-0 transform transition-transform duration-300",
+                                    {
+                                        "bg-primary-30 scale-125": index === currentImgIndex,
+                                        "bg-neutral-disabled scale-75": index !== currentImgIndex && Math.abs(index - currentImgIndex) < 2,
+                                        "bg-neutral-disabled scale-50": index !== currentImgIndex && Math.abs(index - currentImgIndex) >= 2
+                                    }
+                                )}
+                            />
+                        ));
+                    })()
+                )}
             </div>
         </div>
     )
