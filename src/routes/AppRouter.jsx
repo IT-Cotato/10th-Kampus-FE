@@ -29,15 +29,14 @@ import {
   WriteInquiry,
   NoticeDetail,
   BlockSecondhand,
+  SecondhandScrap,
+  CommunityScrap,
+  MyComments,
+  MyArticles
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
 import { BlockChat } from '@/pages/my/etc/blockChat';
-import { SecondhandScrap } from '@/pages/my/community/SecondHandScrap';
-import { CommunityScrap } from '@/pages/my/community/CommunityScrap';
-import { MyComments } from '@/pages/my/community/MyComments';
-import { MyArticles } from '@/pages/my/community/MyArticles';
-
 const AppRouter = createBrowserRouter([
   {
     path: '',
