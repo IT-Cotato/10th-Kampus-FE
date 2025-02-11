@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatList } from '@/apis/chat/getChatList.api';
-import { connectSocket, disconnectSocket } from '@/apis/chat/websocket';
+// import { connectSocket, disconnectSocket } from '@/apis/chat/websocket';
 
 export const ChatList = () => {
   const [activeSlide, setActiveSlide] = useState(null);
@@ -71,13 +71,13 @@ export const ChatList = () => {
     });
   };
 
-  useEffect(() => {
-    connectSocket(accessToken, handleMessageReceived); // 소켓 연결
+  // useEffect(() => {
+  //   connectSocket(accessToken, handleMessageReceived); // 소켓 연결
 
-    return () => {
-      disconnectSocket(); // 컴포넌트 언마운트 시 소켓 연결 종료
-    };
-  }, []);
+  //   return () => {
+  //     disconnectSocket(); // 컴포넌트 언마운트 시 소켓 연결 종료
+  //   };
+  // }, []);
 
   const handleClickOutside = () => {
     setActiveSlide(null);
