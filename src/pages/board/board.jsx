@@ -8,7 +8,6 @@ import { PostList } from '@/components/board/PostList';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
-import kakao from '@/assets/imgs/loginKakao.png'; // 이미지 확인용
 import { WriteButton } from '@/components/board/write/WriteButton';
 
 export const Board = () => {
@@ -39,7 +38,7 @@ export const Board = () => {
         like: 8,
         comment: 4,
         time: '1 day ago',
-        image: kakao,
+        image: null,
         board_type: 'Information',
         scrap: false,
       },
@@ -93,7 +92,7 @@ export const Board = () => {
     }
   }, []);
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex flex-col w-full h-full">
       {pinAni && (
         <StateChangeAnimate
           state={!pinAni}
@@ -111,17 +110,17 @@ export const Board = () => {
       )}
       <div className="flex w-full items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
         <Prev
-          className="h-5 w-5 cursor-pointer"
+          className="w-5 h-5 cursor-pointer"
           onClick={() => navigate(-1)}
         />
-        <p className="absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-subTitle font-medium text-neutral-title">
+        <p className="absolute font-medium transform -translate-x-1/2 left-1/2 whitespace-nowrap text-subTitle text-neutral-title">
           {boardTitle}
         </p>
         <div className="flex items-center gap-2">
-          <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
-          <div className="h-5 w-5 cursor-pointer text-neutral-title">
+          <Search className="w-6 h-6 cursor-pointer text-neutral-title" />
+          <div className="w-5 h-5 cursor-pointer text-neutral-title">
             <Menubar
-              className="h-5 w-5"
+              className="w-5 h-5"
               onClick={() => setOpenPinModal(!openPinModal)}
             />
             {openPinModal && (
@@ -146,7 +145,7 @@ export const Board = () => {
         {isActive.filter && <FilterBox />}{' '}
         {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
       </div>
-      <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+      <div className="flex flex-col flex-1 w-full px-4 bg-white divide-y">
         {boardData.post.map((item, index) =>
           isActive.scrap /** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/ ? (
             <TipsPostList
