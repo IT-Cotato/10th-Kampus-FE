@@ -3,7 +3,7 @@ import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import {
   AllBoard,
-  LandingPage,
+  SplashScreen,
   Login,
   Terms,
   NotFound,
@@ -46,7 +46,7 @@ const AppRouter = createBrowserRouter([
     path: '',
     element: (
       <Layout>
-        <LandingPage isLanding />
+        <SplashScreen />
       </Layout>
     ),
     errorElement: <NotFound />,

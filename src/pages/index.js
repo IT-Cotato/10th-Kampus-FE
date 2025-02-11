@@ -1,6 +1,6 @@
 export { NotFound } from './notFound';
 export { Home } from './home/home';
-export { LandingPage } from './home/landingPage';
+export { SplashScreen } from './SplashScreen';
 
 export { Login } from './auth/login';
 export { Terms } from './auth/terms';
