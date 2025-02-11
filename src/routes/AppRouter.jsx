@@ -33,6 +33,10 @@ import {
   SchoolSearch,
   SchoolEmail,
   SchoolPhoto,
+  SecondhandScrap,
+  CommunityScrap,
+  MyComments,
+  MyArticles
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -212,14 +216,6 @@ const AppRouter = createBrowserRouter([
         element: <Notification />,
       },
       {
-        path: path.mypage.community.articles,
-        element: <MyArticle />,
-      },
-      {
-        path: path.mypage.community.scrap,
-        element: <Scrap />,
-      },
-      {
         path: path.mypage.delete,
         element: <DeleteAccount />,
       },
@@ -252,6 +248,50 @@ const AppRouter = createBrowserRouter([
             element: <Notice />,
           },
         ],
+      },
+      {
+        path: path.mypage.community.scrap.base,
+        element: (
+          <Scrap>
+            <Outlet />
+          </Scrap>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.community.scrap.community} replace />,
+          },
+          {
+            path: path.mypage.community.scrap.community,
+            element: <CommunityScrap />,
+          },
+          {
+            path: path.mypage.community.scrap.secondhand,
+            element: <SecondhandScrap />,
+          },
+        ]
+      },
+      {
+        path: path.mypage.community.article.base,
+        element: (
+          <MyArticle>
+            <Outlet />
+          </MyArticle>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.community.article.articles} replace />,
+          },
+          {
+            path: path.mypage.community.article.articles,
+            element: <MyArticles />,
+          },
+          {
+            path: path.mypage.community.article.comments,
+            element: <MyComments />,
+          },
+        ]
       },
       {
         path: path.mypage.block.base,

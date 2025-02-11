@@ -26,8 +26,12 @@ export { InquiryDetail } from './my/service/inquiry/inquiryDetail';
 export { WriteInquiry } from './my/service/inquiry/writeInquiry';
 
 export { MyPage } from './my/mypage';
-export { Scrap } from './my/community/scrap';
-export { MyArticle } from './my/community/myArticle';
+export { Scrap } from '../components/layout/Scrap';
+export { SecondhandScrap } from './my/community/SecondhandScrap';
+export { CommunityScrap } from './my/community/CommunityScrap';
+export { MyArticle } from '../components/layout/MyArticle';
+export { MyComments } from './my/community/MyComments';
+export { MyArticles } from './my/community/MyArticles';
 
 export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
