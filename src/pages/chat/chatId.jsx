@@ -4,19 +4,42 @@ import { TitleHeader } from '@/components/common/titleHeader';
 import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
+// import { useParams } from 'react-router-dom';
 
 export const ChatId = () => {
   const dummyData = {
-    boardName: 'boardname',
-    postName: 'postname',
-    postID: '1',
+    currentUserId: 1,
+    messages: [
+      {
+        chatRoomId: 1,
+        senderId: 1,
+        content: 'ㅇㅇㅇ',
+        isRead: false,
+        isMine: true,
+      },
+      {
+        chatRoomId: 1,
+        senderId: 2,
+        content: '안녕',
+        isRead: false,
+        isMine: false,
+      },
+      // ...생략,
+    ],
+    hasNext: true,
   };
-
   const [input, setInput] = useState('');
 
-  //message, sender 등 조건은 websoket 연결시 제거할 것
+  // const chatRoomId = useParams();
+  // 초기메시지 GET
+  // const { data, error, isLoading } = useQuery({
+  //   queryKey: [QUERY_KEYS.GET_CHAT_LIST],
+  //   queryFn: () => getChatMessages(chatRoomId, 1),
+  // });
+
   const [messages, setMessages] = useState([]);
 
+  //메시지 전송
   const handleSendMessage = () => {
     if (input.trim()) {
       setMessages((prevMessages) => [
@@ -28,7 +51,7 @@ export const ChatId = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <TitleHeader text={dummyData.postName} />
       <ArticleInfo
         boardName={dummyData.boardName}
@@ -37,7 +60,7 @@ export const ChatId = () => {
       />
       <div className="px-4">
         <NoticeBox />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -58,6 +81,7 @@ export const ChatId = () => {
         input={input}
         setInput={setInput}
         handleSend={handleSendMessage}
+        type={'chat'}
       />
     </div>
   );
