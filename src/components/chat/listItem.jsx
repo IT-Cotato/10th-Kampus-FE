@@ -6,6 +6,7 @@ import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
 import blockIcon from '@/assets/imgs/blockIcon.svg';
 import leaveIcon from '@/assets/imgs/leaveIcon.svg';
 import { touchDrag } from '@/utils/touchDrag';
+import { parseKstDate, utcToKst } from '@/utils/utcToKst';
 
 export const ListItem = ({ data, isSlide, setActiveSlide }) => {
   const [startX, setStartX] = useState(0);
@@ -16,6 +17,8 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
     const currentX = e.touches[0].clientX;
     touchDrag(startX, currentX, setActiveSlide, data);
   };
+  const kst = utcToKst(data.lastChatTime);
+  const time = parseKstDate(kst);
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">
@@ -28,7 +31,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
             'transliate-x-0': !isSlide,
           },
         )}
-        onClick={() => navigate(`./${data.id}`)}
+        onClick={() => navigate(`./${data.id}`, { state: data.postName })}
         onTouchStart={(e) => setStartX(e.touches[0].clientX)}
         onTouchMove={handleTouchMove}
         onTouchEnd={() => {
@@ -38,17 +41,20 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
-              {data.name}
+              {data.postTitle}
             </p>
-            <p className="text-small text-neutral-border-50">{data.time}</p>
+            <p className="text-small text-neutral-border-50">
+              {time.hh}:{time.mm}
+            </p>
           </div>
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-base text-neutral-base">
-              {data.lastMessage}
+              {data.lastChatMessage}
             </p>
+            {/* 메시지 개수 서버 미완성*/}
             {data.cnt > 0 && <NewMsgCnt cnt={data.cnt.toString()} />}
           </div>
         </div>
