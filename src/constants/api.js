@@ -10,10 +10,13 @@ export const API_DOMAINS = {
   USER: '/user',
   MYPAGE: '/mypage',
   PRODUCTS: '/products',
+  CHATLIST: '/chats/chatrooms',
+  CHATMESSAGE: '/chats/:chatroomId/messages',
 };
 
 export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
+  GET_CHAT_LIST: 'chatList',
 };
