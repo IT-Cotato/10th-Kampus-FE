@@ -14,17 +14,17 @@ export const PostList = ({ data, isActive }) => {
           {data.board_type}
         </div>
       )}
-      <div className="flex justify-between">
-        <div className="flex flex-col">
-          <h1 className="text-subTitle text-neutral-title">{data.title}</h1>
-          <h2 className="text-neutral-base">{data.content}</h2>
+      <div className="flex justify-between gap-3">
+        <div className="flex flex-col line-clamp-3">
+          <h1 className="truncate text-subTitle text-neutral-title">{data.title}</h1>
+          <h2 className="line-clamp-2  text-neutral-base">{data.content}</h2>
         </div>
         <div className="min-h-20 min-w-20">
           {data.thumbnailUrl && (
             <img
               src={data.thumbnailUrl}
               alt="post image"
-              className="h-20 w-20 border-none bg-neutral-bg-10"
+              className="h-20 w-20 object-cover"
             />
           )}
         </div>

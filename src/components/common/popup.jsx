@@ -12,9 +12,9 @@ export const Popup = (props) => {
   }, []);
 
   return (
-    <div className="fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center justify-center overflow-y-auto overflow-x-hidden bg-[rgba(11,11,11,0.6)] align-middle">
-      <dialog className="z-[200] mx-4 flex flex-col items-center justify-center gap-[1.875rem] rounded-[.625rem] border bg-white py-[1.875rem]">
-        <div className="flex w-full items-center justify-center text-center align-middle text-subTitle">
+    <div className="max-w-lg mx-auto min-h-dvh w-full h-full overflow-x-hidden overflow-y-auto bg-[rgba(11,11,11,0.6)] fixed flex z-[100] justify-center items-center align-middle">
+      <dialog className="relative z-[200] flex flex-col items-center justify-center bg-white border py-[1.875rem] gap-[1.875rem] mx-4 rounded-[.625rem]">
+        <div className="flex items-center justify-center w-full text-center align-middle text-subTitle">
           {props.title}
         </div>
         <div className="flex w-full items-center justify-center px-10 text-center align-middle text-base text-neutral-base">

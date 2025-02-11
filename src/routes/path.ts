@@ -3,8 +3,14 @@ export const path = {
   signup: {
     base: '/signup',
     terms: 'terms',
+    welcome: 'welcome',
     profile: 'profile',
     school: 'school',
+    verify: {
+      base: 'verify',
+      email: 'email',
+      file: 'file',
+    }
   },
   board: {
     base: '/board',
@@ -19,17 +25,26 @@ export const path = {
   mypage: {
     base: '/my',
     settings: {
-      info: '/my/settings/info',
-      verification: '/my/settings/verification',
-      notification: '/my/settings/notification',
+      info: 'settings/info',
+      verification: 'settings/verification',
+      notification: 'settings/notification',
     },
     community: {
-      scrap: '/my/community/scrap',
-      articles: '/my/community/articles',
-      secondhand: '/my/community/secondhand',
+      base: 'community',
+      scrap: {
+        base: 'scrap',
+        community: 'community',
+        secondhand: 'secondhand',
+      },
+      article: {
+        base: 'article',
+        articles: 'articles',
+        comments: 'comments',
+      },
+      secondhand: 'secondhand',
     },
     service: {
-      base: '/my/contactUs',
+      base: 'contactUs',
       faq: 'faq',
       inquiry: 'inquiry',
       inquiryDetails: ':inquiryId',
@@ -37,8 +52,12 @@ export const path = {
       notice: 'notice',
       noticeDetails: ':noticeId',
     },
-    block: 'my/block',
-    delete: 'my/leave',
+    block: {
+      base: 'block',
+      chat: 'chat',
+      secondhand: 'secondhand',
+    },
+    delete: 'leave',
   },
   market: {
     base: '/market',
