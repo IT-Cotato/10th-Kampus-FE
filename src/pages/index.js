@@ -13,7 +13,7 @@ export { ChatId } from './chat/chatId';
 export { AllBoard } from './board/allboard';
 export { Board } from './board/board';
 export { Write } from './board/write';
-export { Post } from './board/post'
+export { Post } from './board/post';
 
 export { Search } from './search/Search';
 

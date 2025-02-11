@@ -47,7 +47,7 @@ export const Board = () => {
   const sortPostByScrap = (posts) => {
     return [...posts].sort((a, b) => {
       if (b.scrap !== a.scrap) return b.scrap - a.scrap;
-      return b.postId - a.postId  // postID 정렬 추가
+      return b.postId - a.postId; // postID 정렬 추가
     }); // scrap 우선 정렬
     // 여기에 백에서 보내주는 양식 보고 시간 기준 정렬 추가해야함
   };
@@ -56,7 +56,11 @@ export const Board = () => {
     if (isActive.scrap) {
       setBoardData((prev) => {
         const sortedPost = sortPostByScrap(prev.post);
-        if (!sortedPost.every((post, index) => post.scrap === prev.post[index].scrap)) {
+        if (
+          !sortedPost.every(
+            (post, index) => post.scrap === prev.post[index].scrap,
+          )
+        ) {
           return { ...prev, post: sortedPost };
         }
         return prev;
@@ -65,7 +69,7 @@ export const Board = () => {
   }, [boardData.post.map((post) => post.scrap).join()]); // 스크랩이 바뀔 때만
 
   return (
-    <div className='w-full h-full'>
+    <div className="h-full w-full">
       <PostHeader path={path} />
       <div className="flex h-full w-full flex-col pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">

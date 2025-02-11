@@ -24,38 +24,38 @@ export const TermsModal = (props) => {
       <button
         type="button"
         onClick={openModal}
-        className="items-center justify-center cursor-pointer text-small"
+        className="cursor-pointer items-center justify-center text-small"
       >
         view
       </button>
 
       {isOpen && (
         <div
-          className="absolute inset-0 z-10 w-full h-screen"
+          className="absolute inset-0 z-10 h-screen w-full"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
         >
           <div
-            className="absolute inset-0 h-screen transition-opacity bg-white"
+            className="absolute inset-0 h-screen bg-white transition-opacity"
             aria-hidden="true"
           ></div>
-          <div className="relative flex items-center justify-center w-full h-screen px-4 pt-6 pb-5">
-            <div className="relative text-left px-[1.375rem] py-[2.25rem] rounded-[.625rem] bg-neutral-bg-10 justify-center flex flex-col max-h-full">
+          <div className="relative flex h-screen w-full items-center justify-center px-4 pb-5 pt-6">
+            <div className="relative flex max-h-full flex-col justify-center rounded-[.625rem] bg-neutral-bg-10 px-[1.375rem] py-[2.25rem] text-left">
               <img
                 src={X}
                 alt="close"
                 onClick={closeModal}
-                className="absolute right-[.875rem] top-[.875rem] cursor-pointer w-[1.125rem] h-[1.125rem] text-neutral-title"
+                className="absolute right-[.875rem] top-[.875rem] h-[1.125rem] w-[1.125rem] cursor-pointer text-neutral-title"
               />
-              <span className="text-start text-subTitle text-neutral-title px-[1.0625rem]">
+              <span className="px-[1.0625rem] text-start text-subTitle text-neutral-title">
                 <span>
                   {props.detailedTerm.required ? '[Required] ' : '[Optional] '}
                 </span>
                 <span>{props.detailedTerm.title}</span>
               </span>
-              <div className="flex flex-col mb-8 overflow-y-auto scrollbar-hide mt-7">
-                <div className="flex w-full h-full text-base text-left whitespace-pre-line text-neutral-60">
+              <div className="mb-8 mt-7 flex flex-col overflow-y-auto scrollbar-hide">
+                <div className="text-neutral-60 flex h-full w-full whitespace-pre-line text-left text-base">
                   {props.detailedTerm.content}
                 </div>
               </div>

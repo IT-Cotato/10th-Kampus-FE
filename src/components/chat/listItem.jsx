@@ -38,7 +38,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.name}

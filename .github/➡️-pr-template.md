@@ -1,18 +1,19 @@
 ---
-name: "➡️ PR template"
+name: '➡️ PR template'
 about: Describe this issue template's purpose here.
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ## 개요
+
 <!---- 변경 사항 및 관련 이슈에 대해 간단하게 작성해주세요. 어떻게보다 무엇을 왜 수정했는지 설명해주세요. -->
 
 <!---- Resolves: #(Isuue Number) -->
 
 ## PR 유형
+
 어떤 변경 사항이 있나요?
 
 - [ ] 새로운 기능 추가
@@ -28,17 +29,21 @@ assignees: ''
 - [ ] 파일 혹은 폴더 삭제
 
 ## 작업 내용
+
 <!-- 작업 사항에 대한 설명을 적어주세요 -->
 
 ## 스크린샷
+
 <!-- 작업물에 대한 스크린샷을 첨부해주세요 -->
 
 ## 공유사항 to 리뷰어
+
 <!-- 리뷰어가 중점적으로 봐주었으면 좋겠는 부분을 적어주세요 -->
 <!-- 논의할 사항이 있다면 적어주세요 -->
 
 ## PR Checklist
+
 PR이 다음 요구 사항을 충족하는지 확인하세요.
 
-- [ ] 커밋 메시지 컨벤션에 맞게 작성했습니다.  Commit message convention 참고  (Ctrl + 클릭하세요.) 
+- [ ] 커밋 메시지 컨벤션에 맞게 작성했습니다. Commit message convention 참고 (Ctrl + 클릭하세요.)
 - [ ] 변경 사항에 대한 테스트를 했습니다.(버그 수정/기능에 대한 테스트).

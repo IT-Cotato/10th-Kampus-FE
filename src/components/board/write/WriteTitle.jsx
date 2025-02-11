@@ -10,7 +10,7 @@ export const WriteTitle = ({ title, setTitle, placeholder, ...props }) => {
       <label htmlFor="writeTitle" className="text-subTitle">
         Title
       </label>
-      <div className="box-border flex flex-row w-full px-[.875rem] py-[1.125rem] border border-neutral-border-30 rounded-lg gap-[.625rem]">
+      <div className="box-border flex w-full flex-row gap-[.625rem] rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
         <input
           id="writeTitle"
           type="text"
@@ -21,7 +21,13 @@ export const WriteTitle = ({ title, setTitle, placeholder, ...props }) => {
           className="w-full leading-none placeholder-neutral-border-50"
           required
         />
-        {props.translate && <TranslateButton translateType="text" value={title} setValue={setTitle}/>}
+        {props.translate && (
+          <TranslateButton
+            translateType="text"
+            value={title}
+            setValue={setTitle}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { NoticeList } from "@/components/service/notice/NoticeList";
+import { NoticeList } from '@/components/service/notice/NoticeList';
 
 export const Notice = () => {
   const Notice = [
@@ -17,11 +17,16 @@ export const Notice = () => {
       title: '[Event] 이벤트입니다',
       date: '2025.02.05',
     },
-  ]
+  ];
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       {Notice.map((notice) => (
-        <NoticeList key={notice.id} noticeId={notice.id} title={notice.title} date={notice.date} />
+        <NoticeList
+          key={notice.id}
+          noticeId={notice.id}
+          title={notice.title}
+          date={notice.date}
+        />
       ))}
     </div>
   );

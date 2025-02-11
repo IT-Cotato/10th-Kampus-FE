@@ -4,11 +4,11 @@ import { cn } from '@/utils/cn';
 
 export const UserInput = ({ placeholder, input, setInput, handleSend }) => {
   return (
-    <div className="fixed max-w-[512px] bottom-0 flex w-full min-h-[3rem] resize-none items-center justify-end px-4 pt-2 pb-3 bg-white">
+    <div className="fixed bottom-0 flex min-h-[3rem] w-full max-w-[512px] resize-none items-center justify-end bg-white px-4 pb-3 pt-2">
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className=" align-middle h-full w-full rounded-[1.25rem]  bg-neutral-bg-5 px-[.625rem] text-small text-neutral-title"
+        className="h-full w-full rounded-[1.25rem] bg-neutral-bg-5 px-[.625rem] align-middle text-small text-neutral-title"
         placeholder={placeholder}
       />
       <button

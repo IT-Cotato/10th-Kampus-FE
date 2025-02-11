@@ -13,16 +13,18 @@ export const NoticeDetail = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="Notice" />
-      <div className="flex flex-col items-center w-full gap-5 px-4 pt-10 pb-7">
-        <div className="flex flex-col w-full border-b border-primary-20 gap-[.625rem] pb-5">
+      <div className="flex w-full flex-col items-center gap-5 px-4 pb-7 pt-10">
+        <div className="flex w-full flex-col gap-[.625rem] border-b border-primary-20 pb-5">
           <span className="text-subTitle text-neutral-title">
             {Notice.title}
           </span>
-          <span className="inline-block text-neutral-border-50 text-small">{Notice.date}</span>
+          <span className="inline-block text-small text-neutral-border-50">
+            {Notice.date}
+          </span>
         </div>
-        <div className='text-neutral-base'>{Notice.content}</div>
+        <div className="text-neutral-base">{Notice.content}</div>
       </div>
     </div>
   );

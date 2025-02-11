@@ -15,33 +15,33 @@ export const MyPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-4 gap-[1.125rem]">
+    <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
       {/* 알림 영역 */}
-      <div className="flex justify-end w-full h-full">
+      <div className="flex h-full w-full justify-end">
         <img src={notification} alt="notification button" />
       </div>
       {/* 본문 영역 */}
-      <div className="flex flex-col w-full h-full gap-[2.5rem]">
+      <div className="flex h-full w-full flex-col gap-[2.5rem]">
         {/* 마이페이지 메인 버튼 */}
         <div
-          className="flex w-full h-full bg-primary-base px-[.75rem] py-[1.625rem] items-center rounded-[.625rem]"
+          className="flex h-full w-full items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
           onClick={() => handleButtonClick(path.mypage.settings.info)}
         >
-          <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
+          <div className="flex h-full w-full flex-col justify-between gap-1 text-white">
             <div className="text-pageTitle">{username}</div>
             <div className="text-neutral-disabled">
               {university ? university : "What's the name of your school?"}
             </div>
           </div>
           <div className="right-0 h-full">
-            <img src={arrow} alt="" className="w-[1.25rem] h-[1.25rem]" />
+            <img src={arrow} alt="" className="h-[1.25rem] w-[1.25rem]" />
           </div>
         </div>
         {/* 마이페이지 항목들 */}
-        <div className="flex flex-col w-full h-full gap-[1.875rem]">
-          <div className="flex flex-col w-full h-full gap-2">
+        <div className="flex h-full w-full flex-col gap-[1.875rem]">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">Service Settings</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -69,9 +69,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">Community</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -99,35 +99,47 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">Contact Us</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(`${path.mypage.service.base}/${path.mypage.service.faq}`)}
+                onClick={() =>
+                  handleButtonClick(
+                    `${path.mypage.service.base}/${path.mypage.service.faq}`,
+                  )
+                }
               >
                 FAQ
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(`${path.mypage.service.base}/${path.mypage.service.inquiry}`)}
+                onClick={() =>
+                  handleButtonClick(
+                    `${path.mypage.service.base}/${path.mypage.service.inquiry}`,
+                  )
+                }
               >
                 1:1 Inquiry
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => handleButtonClick(`${path.mypage.service.base}/${path.mypage.service.notice}`)}
+                onClick={() =>
+                  handleButtonClick(
+                    `${path.mypage.service.base}/${path.mypage.service.notice}`,
+                  )
+                }
               >
                 Notice
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">etc.</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"

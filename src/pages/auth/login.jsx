@@ -3,7 +3,7 @@ import { GoogleLogin } from '@/components/common/googleLogin';
 import { useEffect, useState } from 'react';
 import { parseTokenFromUrl } from '@/utils/authUtils';
 import { getHealth } from '@/apis/auth/login.api';
-import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin'
+import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/constants/api';
 export const Login = () => {
   const [data, setData] = useState();
@@ -21,34 +21,35 @@ export const Login = () => {
     }*/
     const checkTokens = async () => {
       // SecureStorage에서 토큰 값을 비동기적으로 가져옵니다.
-      const accessToken = await SecureStoragePlugin.get({ key: ACCESS_TOKEN_KEY });
-      const refreshToken = await SecureStoragePlugin.get({ key: REFRESH_TOKEN_KEY });
+      const accessToken = await SecureStoragePlugin.get({
+        key: ACCESS_TOKEN_KEY,
+      });
+      const refreshToken = await SecureStoragePlugin.get({
+        key: REFRESH_TOKEN_KEY,
+      });
 
       // 토큰 값이 null이 아닌 경우에만 작업을 수행합니다.
       if (accessToken !== null || refreshToken !== null) {
         // accessToken을 사용하여 API 호출
         getHealth(accessToken)
-          .then(response => {
-            alert(response.status)
+          .then((response) => {
+            alert(response.status);
             setData({
               status: response.status,
             });
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
           });
       }
     };
     checkTokens();
-  }, [])
+  }, []);
   return (
-    <div className="px-5 mx-auto my-auto">
+    <div className="mx-auto my-auto px-5">
       <KakaoLogin />
       <GoogleLogin />
-      {data && (
-        <p className='w-4/5 mx-auto mt-6'>{data.status}</p>
-      )
-      }
+      {data && <p className="mx-auto mt-6 w-4/5">{data.status}</p>}
     </div>
   );
 };

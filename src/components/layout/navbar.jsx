@@ -45,18 +45,18 @@ export const Navbar = () => {
   ];
 
   return (
-    <div className="w-full max-w-lg h-[6.4375rem] bg-white rounded-t-2xl shadow-navbar flex flex-row items-center justify-between gap-[1.875rem] px-4 fixed bottom-0 z-50 pb-[36px] pt-2">
+    <div className="fixed bottom-0 z-50 flex h-[6.4375rem] w-full max-w-lg flex-row items-center justify-between gap-[1.875rem] rounded-t-2xl bg-white px-4 pb-[36px] pt-2 shadow-navbar">
       {navItems.map((item) => {
         const urlActive = location.pathname.includes(item.path);
         const IconComponent = item.icon;
         return (
           <div
             key={item.id}
-            className="flex flex-col items-center justify-between w-full h-full cursor-pointer pt-[.125rem]"
+            className="flex h-full w-full cursor-pointer flex-col items-center justify-between pt-[.125rem]"
             onClick={() => navigate(item.path)}
           >
             <IconComponent
-              className={cn('w-[1.875rem] h-[1.875rem]', {
+              className={cn('h-[1.875rem] w-[1.875rem]', {
                 'text-neutral-icon': !urlActive,
                 'text-primary-base': urlActive,
               })}

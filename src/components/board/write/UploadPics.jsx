@@ -66,9 +66,9 @@ export const UploadPics = ({ onChange }) => {
     <div className="flex flex-row items-end gap-2">
       <label
         htmlFor="selectImages"
-        className="flex flex-col flex-shrink-0 items-center justify-center w-20 h-20 bg-neutral-border-30 rounded-[.3125rem] mt-[.5625rem]"
+        className="mt-[.5625rem] flex h-20 w-20 flex-shrink-0 flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30"
       >
-        <img src={Camera} alt="" className="w-[2.375rem] h-[2.375rem]" />
+        <img src={Camera} alt="" className="h-[2.375rem] w-[2.375rem]" />
         <span className="text-small text-neutral-border-50">
           {files.length}/10
         </span>
@@ -81,19 +81,19 @@ export const UploadPics = ({ onChange }) => {
         multiple
         onChange={getImageFiles}
       />
-      <div className="grid grid-flow-col gap-[.875rem] overflow-x-scroll scrollbar-hide pr-[.5625rem] pt-[.5625rem]">
+      <div className="grid grid-flow-col gap-[.875rem] overflow-x-scroll pr-[.5625rem] pt-[.5625rem] scrollbar-hide">
         {previewImages.map((src, index) => (
-          <div className="relative w-20 h-20" key={index}>
+          <div className="relative h-20 w-20" key={index}>
             <img
               src={src}
               alt={`Preview ${index + 1}`}
-              className="object-cover w-20 h-20"
+              className="h-20 w-20 object-cover"
             />
             <button
               onClick={() => removeImage(index)}
-              className="absolute top-0 right-0 z-10 translate-x-1/2 -translate-y-1/2"
+              className="absolute right-0 top-0 z-10 -translate-y-1/2 translate-x-1/2"
             >
-              <ImgX className="w-[1.125rem] h-[1.125rem] text-neutral-border-50" />
+              <ImgX className="h-[1.125rem] w-[1.125rem] text-neutral-border-50" />
             </button>
           </div>
         ))}

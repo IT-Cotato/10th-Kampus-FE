@@ -29,7 +29,7 @@ import {
   InquiryDetail,
   WriteInquiry,
   NoticeDetail,
-  Post
+  Post,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 
@@ -94,7 +94,7 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Home />,
-      }
+      },
     ],
   },
   {
@@ -137,8 +137,8 @@ const AppRouter = createBrowserRouter([
           },
           {
             path: path.board.specific.post,
-            element: <Post />
-          }
+            element: <Post />,
+          },
         ],
       },
     ],
