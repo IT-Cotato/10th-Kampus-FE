@@ -27,6 +27,7 @@ import {
   InquiryDetail,
   WriteInquiry,
   NoticeDetail,
+  Post,
   BlockChat,
   BlockSecondhand,
   Welcome,
@@ -124,7 +125,7 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Home />,
-      }
+      },
     ],
   },
   {
@@ -164,6 +165,10 @@ const AppRouter = createBrowserRouter([
           {
             path: path.board.specific.write,
             element: <Write />,
+          },
+          {
+            path: path.board.specific.post,
+            element: <Post />,
           },
         ],
       },

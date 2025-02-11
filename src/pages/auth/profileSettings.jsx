@@ -71,16 +71,16 @@ export const ProfileSettings = () => {
 
   return (
     <div className="h-full px-4">
-      <div className="relative w-full h-[3.0625rem] mt-[1.25rem] mb-[.625rem] text-pageTitle text-neutral-title flex justify-center items-center">
+      <div className="relative mb-[.625rem] mt-[1.25rem] flex h-[3.0625rem] w-full items-center justify-center text-pageTitle text-neutral-title">
         <img
           src={PreviousButton}
           alt="back button"
           onClick={handleClickPreviousButton}
-          className="text-pageTitle w-[1.1875rem] h-[1.1875rem] absolute left-0 cursor-pointer"
+          className="absolute left-0 h-[1.1875rem] w-[1.1875rem] cursor-pointer text-pageTitle"
         />
         Profile Settings
       </div>
-      <div className="flex flex-col w-full space-y-[1.875rem] mt-12 mb-5">
+      <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
         <UserNameInput
           userName={userName}
           onChange={handleUserNameChange}
@@ -108,7 +108,7 @@ export const ProfileSettings = () => {
           warn="You have to select your language"
         />
       </div>
-      <div className="flex mt-8 mb-5">
+      <div className="mb-5 mt-8 flex">
         <MainButton onClick={handleClickJoinNow} disabled={disabled}>
           Join Now
         </MainButton>

@@ -1,8 +1,8 @@
 const detailedTerms = {
-    term1: {
-        title: `Personal information collection and usage agreement`,
-        required: true,
-        content: `Information Collected
+  term1: {
+    title: `Personal information collection and usage agreement`,
+    required: true,
+    content: `Information Collected
             - Name, school verification email address, student ID photo, or other documents verifying school enrollment
             - User-generated posts, photos, and community activity data
 
@@ -17,11 +17,11 @@ const detailedTerms = {
 
             Consent to Collection
             - Users must agree to the collection of personal information before registering for the service. Refusal to provide consent may result in limitations on service usage.`,
-    },
-    term2: {
-        title: `Consent to the Privacy Policy`,
-        required: true,
-        content: `Management and Protection of Personal Information
+  },
+  term2: {
+    title: `Consent to the Privacy Policy`,
+    required: true,
+    content: `Management and Protection of Personal Information
             - Collected personal information is strictly protected and not disclosed to external parties.
             - Security systems are implemented to safeguard user data.
 
@@ -35,11 +35,11 @@ const detailedTerms = {
 
             Necessity of Consent
             - Users who do not agree to the privacy policy may experience limitations in accessing certain services.`,
-    },
-    term3: {
-        title: `Terms of Use of Service`,
-        required: true,
-        content: `Details of Services
+  },
+  term3: {
+    title: `Terms of Use of Service`,
+    required: true,
+    content: `Details of Services
             - Access to the international student community board
             - Posting and trading items through the secondhand trading platform
             - Sharing posts and photos within the community
@@ -60,11 +60,11 @@ const detailedTerms = {
 
             Consent Requirement
             - Users must agree to the terms of service for continued use. Refusal to consent may result in restricted access to services.`,
-    },
-    term4: {
-        title: `Consent to Marketing Communications`,
-        required: false,
-        content: `Purpose of Marketing Communication
+  },
+  term4: {
+    title: `Consent to Marketing Communications`,
+    required: false,
+    content: `Purpose of Marketing Communication
             - Sending promotional information about new features, updates, events, and special offers
             - Providing personalized recommendations and user-targeted advertisements
 
@@ -78,7 +78,7 @@ const detailedTerms = {
 
             No Impact on Service
             - Refusal to provide consent for marketing communications will not affect the user's access to other services.`,
-    },
-}
+  },
+};
 
 export default detailedTerms;

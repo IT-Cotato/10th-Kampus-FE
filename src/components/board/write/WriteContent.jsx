@@ -16,14 +16,14 @@ export const WriteContent = ({
         <label htmlFor="contentInput" className="text-subTitle">
           Content
         </label>
-        <div className="box-border flex flex-row w-full px-[.875rem] py-[1.125rem] border border-neutral-border-30 rounded-lg gap-[.625rem] items-start">
+        <div className="box-border flex w-full flex-row items-start gap-[.625rem] rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
           <textarea
             id="contentInput"
             rows={16}
             placeholder={placeholder}
             value={content}
             onChange={handleOnChange}
-            className="w-full leading-none resize-none placeholder-neutral-border-50 scrollbar-hide"
+            className="w-full resize-none leading-none placeholder-neutral-border-50 scrollbar-hide"
             required
           />
           {props.translate && (
@@ -40,12 +40,12 @@ export const WriteContent = ({
           <label htmlFor="translatedContent" className="text-subTitle">
             Translation of Content
           </label>
-          <div className="box-border flex flex-row w-full px-[.875rem] py-[1.125rem] border border-neutral-border-30 rounded-lg gap-[.625rem] items-start">
+          <div className="box-border flex w-full flex-row items-start gap-[.625rem] rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
             <textarea
               id="translatedContent"
               rows={16}
               value={props.translatedContent}
-              className="w-full leading-none bg-transparent resize-none placeholder-neutral-border-50 scrollbar-hide"
+              className="w-full resize-none bg-transparent leading-none placeholder-neutral-border-50 scrollbar-hide"
               disabled
             />
           </div>

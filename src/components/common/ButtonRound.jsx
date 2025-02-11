@@ -4,7 +4,7 @@ export const ButtonRound = ({ theme, text, width, height, ...props }) => {
   return (
     <button
       className={cn(
-        'text-base rounded-[1.25rem] text-white flex justify-center items-center ',
+        'flex items-center justify-center rounded-[1.25rem] text-base text-white',
         {
           'bg-primary-base': theme === 'primary',
           'bg-neutral-base': theme === 'base',

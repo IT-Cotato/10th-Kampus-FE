@@ -13,7 +13,7 @@ export const MyPage = () => {
   return (
     <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
       {/* 알림 영역 */}
-      <div className="flex justify-end w-full h-full">
+      <div className="flex h-full w-full justify-end">
         <img src={notification} alt="notification button" />
       </div>
       {/* 본문 영역 */}
@@ -23,7 +23,7 @@ export const MyPage = () => {
           className="flex h-full w-full items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
           onClick={() => navigate(path.mypage.settings.info)}
         >
-          <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
+          <div className="flex h-full w-full flex-col justify-between gap-1 text-white">
             <div className="text-pageTitle">{username}</div>
             <div className="text-neutral-disabled">
               {university ? university : "What's the name of your school?"}
@@ -37,7 +37,7 @@ export const MyPage = () => {
         <div className="flex h-full w-full flex-col gap-[1.875rem]">
           <div className="flex flex-col w-full h-full gap-2">
             <div className="text-neutral-border-50">Service Settings</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -63,9 +63,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">Community</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -89,9 +89,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">Contact Us</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -127,9 +127,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-2">
             <div className="text-neutral-border-50">etc.</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-2 border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"

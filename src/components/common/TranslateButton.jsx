@@ -26,7 +26,7 @@ export const TranslateButton = ({ translateType, value, setValue }) => {
 
   return (
     <button type="button" onClick={translate}>
-      <img src={TranslateImg} alt="" className="w-[1.375rem] h-[1.375rem]" />
+      <img src={TranslateImg} alt="" className="h-[1.375rem] w-[1.375rem]" />
     </button>
   );
 };

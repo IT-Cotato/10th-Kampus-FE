@@ -16,13 +16,13 @@ export const SelectCategory = ({ selectedCategory, setSelectedCategory }) => {
               type="radio"
               name="category"
               id={category}
-              className="hidden peer"
+              className="peer hidden"
               onChange={handleOnChange}
               checked={selectedCategory === category}
             />
             <label
               htmlFor={category}
-              className="flex items-center px-3 py-[.375rem] border rounded-full cursor-pointer border-neutral-border-30 text-neutral-border-50 border-box peer-checked:border-primary-30 peer-checked:bg-primary-30 peer-checked:text-white"
+              className="border-box flex cursor-pointer items-center rounded-full border border-neutral-border-30 px-3 py-[.375rem] text-neutral-border-50 peer-checked:border-primary-30 peer-checked:bg-primary-30 peer-checked:text-white"
             >
               {category}
             </label>

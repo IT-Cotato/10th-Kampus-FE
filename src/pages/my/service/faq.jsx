@@ -5,7 +5,7 @@ export const FAQ = () => {
   const FAQ = [...faqs];
 
   return (
-    <div className="flex flex-col w-full gap-[1.875rem]">
+    <div className="flex w-full flex-col gap-[1.875rem]">
       {FAQ.map((faq, index) => (
         <FAQItem key={index} question={faq.question} answer={faq.answer} />
       ))}

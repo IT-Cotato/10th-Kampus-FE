@@ -17,6 +17,7 @@ export { ChatId } from './chat/chatId';
 export { AllBoard } from './board/allboard';
 export { Board } from './board/board';
 export { Write } from './board/write';
+export { Post } from './board/post';
 
 export { Inquiry } from './my/service/inquiry/inquiry';
 export { FAQ } from './my/service/faq';

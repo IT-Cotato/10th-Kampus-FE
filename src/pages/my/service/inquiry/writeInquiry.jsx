@@ -21,16 +21,24 @@ export const WriteInquiry = () => {
     if (uploadedFiles) {
       console.log(uploadedFiles);
     }
-    
+
     navigate(-1);
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="1:1 Inquiry" />
-      <div className="flex flex-col w-full h-full px-4 py-[1.25rem] gap-[2.5rem]">
-        <WriteTitle title={title} setTitle={setTitle} placeholder="Write your inquiry title." />
-        <WriteContent content={content} setContent={setContent} placeholder="Please write the content in English." />
+      <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
+        <WriteTitle
+          title={title}
+          setTitle={setTitle}
+          placeholder="Write your inquiry title."
+        />
+        <WriteContent
+          content={content}
+          setContent={setContent}
+          placeholder="Please write the content in English."
+        />
         <UploadPics onChange={setUploadedFiles} />
         <MainButton onClick={handleSubmit} disabled={disabled}>
           Upload

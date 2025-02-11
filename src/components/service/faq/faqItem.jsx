@@ -6,12 +6,12 @@ export const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col w-full pb-[1.875rem] border-primary-base border-b">
+    <div className="flex w-full flex-col border-b border-primary-base pb-[1.875rem]">
       <div
-        className="flex items-center justify-between w-full cursor-pointer "
+        className="flex w-full cursor-pointer items-center justify-between"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <h3 className="text-neutral-title ">{question}</h3>
+        <h3 className="text-neutral-title">{question}</h3>
         <img
           src={arrow}
           alt="arrow"
@@ -19,7 +19,7 @@ export const FAQItem = ({ question, answer }) => {
         />
       </div>
       {isOpen && (
-        <p className="mt-5 text-neutral-base animate-bottomSheetDown">
+        <p className="mt-5 animate-bottomSheetDown text-neutral-base">
           {answer}
         </p>
       )}
