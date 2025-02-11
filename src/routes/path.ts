@@ -3,8 +3,14 @@ export const path = {
   signup: {
     base: '/signup',
     terms: 'terms',
+    welcome: 'welcome',
     profile: 'profile',
     school: 'school',
+    verify: {
+      base: 'verify',
+      email: 'email',
+      file: 'file',
+    }
   },
   board: {
     base: '/board',

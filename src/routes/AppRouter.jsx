@@ -14,7 +14,6 @@ import {
   Scrap,
   Search,
   Write,
-  Signup,
   ProfileSettings,
   ChatList,
   ChatId,
@@ -28,11 +27,15 @@ import {
   InquiryDetail,
   WriteInquiry,
   NoticeDetail,
+  BlockChat,
   BlockSecondhand,
+  Welcome,
+  SchoolSearch,
+  SchoolEmail,
+  SchoolPhoto,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
-import { BlockChat } from '@/pages/my/etc/blockChat';
 
 const AppRouter = createBrowserRouter([
   {
@@ -68,7 +71,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Signup />,
+        element: <Navigate to={path.signup.terms} replace />,
       },
       {
         path: path.signup.terms,
@@ -79,8 +82,30 @@ const AppRouter = createBrowserRouter([
         element: <ProfileSettings />,
       },
       {
+        path: path.signup.welcome,
+        element: <Welcome />,
+      },
+      {
         path: path.signup.school,
-        element: <Signup />,
+        element: <SchoolSearch />,
+      },
+      {
+        path: path.signup.verify.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <SchoolVerification />,
+          },
+          {
+            path: path.signup.verify.email,
+            element: <SchoolEmail />,
+          },
+          {
+            path: path.signup.verify.file,
+            element: <SchoolPhoto />,
+          },
+        ]
       },
     ],
   },
@@ -181,10 +206,6 @@ const AppRouter = createBrowserRouter([
       {
         path: path.mypage.settings.info,
         element: <MyInfo />,
-      },
-      {
-        path: path.mypage.settings.verification,
-        element: <SchoolVerification />,
       },
       {
         path: path.mypage.settings.notification,
