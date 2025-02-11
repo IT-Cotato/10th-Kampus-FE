@@ -1,4 +1,4 @@
-import Logo from '@/assets/imgs/disabledLogo.svg';
+import Logo from '@/assets/imgs/kampusLogoDisabled.svg';
 import { PostList } from "@/components/board/PostList";
 import { useState } from 'react';
 
