@@ -1,4 +1,4 @@
-import kampusLogo from "@/assets/imgs/kampusLogo.svg"
+import Logo from "@/assets/imgs/kampusLogo.svg?react"
 import notifiaction from "@/assets/imgs/notification.svg"
 import notification_true from "@/assets/imgs/notification_true.svg"
 import search from "@/assets/imgs/search.svg"
@@ -88,9 +88,8 @@ export const Home = () => {
 
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
-      <div className="flex justify-between items-start">
-        <img src={kampusLogo} alt="Kampus Logo"
-          className="w-[5.5rem] h-20" />
+      <div className="flex items-start justify-between">
+        <Logo className="w-[5.5rem] text-primary-base" />
         <div className="flex gap-[0.875rem]">
           <img src={isNotification ? notification_true : notifiaction} alt="notification button"
             className="w-5 h-6" />
@@ -106,7 +105,7 @@ export const Home = () => {
       <div className="flex flex-col gap-[1.625rem]">
         <div className="flex flex-col w-fit rounded-[.625rem] border-[0.03125rem] border-primary-30 
         gap-[.625rem] px-[.875rem] py-8">
-          <h1 className="text-subTitle text-neutral-base text-center">{today}</h1>
+          <h1 className="text-center text-subTitle text-neutral-base">{today}</h1>
           <h2 className="text-base text-primary-red">Holiday-KR</h2>
         </div>
         {homeBoard.userUnivState &&
