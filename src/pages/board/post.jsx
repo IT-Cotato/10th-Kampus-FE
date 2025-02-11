@@ -33,9 +33,8 @@ export const Post = () => {
     board_type: 'Tips for living in Korea',
     scrap: false,
     isLike: true,
-    postPhoroUrls: [bg1, bg2, bg3, bg4, bg1, bg2, bg3, bg4, bg1, bg2],
+    postPhoroUrls: [bg1, bg2, bg4, bg1, bg2, bg3, bg4, bg1, bg2],
   });
-
   return (
     <div>
       {imageFocus && (
@@ -66,11 +65,11 @@ export const Post = () => {
               setBoardData={setBoardData}
             />
           </div>
-          <div className="flex flex-col gap-1 whitespace-pre-line break-words py-5">
+          <article className="flex flex-col gap-1 whitespace-pre-line break-words py-5">
             <h1 className="text-pageTitle text-neutral-title">
               The Fragile Line Between Life and Death
             </h1>
-            <h2 className="text-base text-neutral-base">
+            <p className="text-base text-neutral-base">
               Life is a fleeting moment, a delicate balance between existence
               and oblivion. We spend our days chasing dreams, forging
               relationships, and seeking meaning, yet the certainty of death
@@ -79,8 +78,8 @@ export const Post = () => {
               live, but how deeply we experience the moments given to us. In the
               end, life is not measured by time alone, but by the love we share,
               the kindness we show, and the memories we leave behind.
-            </h2>
-          </div>
+            </p>
+          </article>
           {boardData.postPhoroUrls.length !== 0 && (
             <div className="pb-3" onClick={() => setImageFocus(true)}>
               <ImageSlider
@@ -131,7 +130,7 @@ export const Post = () => {
         placeholder="Write a comment."
         input={input}
         setInput={setInput}
-        handleSend={() => {}}
+        handleSend={() => { }}
       />
     </div>
   );

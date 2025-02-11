@@ -80,8 +80,9 @@ export const Board = () => {
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
         <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+          {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
           {boardData.post.map((item, index) =>
-            isActive.scrap /** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/ ? (
+            isActive.scrap ? (
               <TipsPostList
                 key={index}
                 data={item}

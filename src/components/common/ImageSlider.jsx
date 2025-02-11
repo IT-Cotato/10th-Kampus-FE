@@ -70,13 +70,15 @@ export const ImageSlider = ({
       onTouchEnd={touchEnd}
     >
       <div className="w-full overflow-hidden rounded-md">
-        <div ref={flexRef} className="flex" style={style}>
+        <div ref={flexRef} className="flex w-full" style={style}>
           {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              className="aspect-square w-full object-cover"
-            />
+            <div key={index} className="flex-none w-full aspect-square">
+              <img
+                src={image}
+                className="inset-0 h-full w-full object-cover"
+              />
+            </div>
+
           ))}
         </div>
       </div>

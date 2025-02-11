@@ -69,29 +69,36 @@ export const FocusImageSlider = ({
     });
   };
   return (
-    <div className="fixed z-50 flex h-full w-full max-w-[512px] flex-col items-center bg-black">
-      <div className="mt-5 flex items-center justify-center text-subTitle text-white">
-        <h1>
-          {currentImgIndex + 1}/{images.length}
-        </h1>
-        <button
-          className="absolute left-5"
-          onClick={() => setImageFocus(false)}
+    <div className="fixed z-50 flex h-full w-full max-w-[512px]  bg-black">
+      <div className='relative w-full h-full flex flex-col justify-center'>
+        <div className="absolute w-full top-5 flex items-center justify-center text-subTitle text-white">
+          <h1>
+            {currentImgIndex + 1}/{images.length}
+          </h1>
+          <button
+            className="absolute left-5 text-white"
+            onClick={() => setImageFocus(false)}
+          >
+            <Close className="h-5 w-5" />
+          </button>
+        </div>
+        <div
+          className="relative"
+          onTouchStart={touchStart}
+          onTouchMove={touchMove}
+          onTouchEnd={touchEnd}
         >
-          <Close className="h-5 w-5" />
-        </button>
-      </div>
-      <div
-        className="relative my-20"
-        onTouchStart={touchStart}
-        onTouchMove={touchMove}
-        onTouchEnd={touchEnd}
-      >
-        <div className="max-h-[60vh] w-full overflow-hidden">
-          <div ref={flexRef} className="flex" style={style}>
-            {images.map((image, index) => (
-              <img key={index} src={image} className="w-full object-contain" />
-            ))}
+          <div className="max-h-[60vh] w-full overflow-hidden">
+            <div ref={flexRef} className="flex" style={style}>
+              {images.map((image, index) => (
+                <div key={index} className="flex-none w-full aspect-square">
+                  <img
+                    src={image}
+                    className="inset-0 h-full w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
