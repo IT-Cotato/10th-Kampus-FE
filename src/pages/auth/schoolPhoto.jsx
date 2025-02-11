@@ -67,7 +67,7 @@ export const SchoolPhoto = () => {
             disabled={file}
           />
           {file ? (
-            <span className="flex w-fit px-3 py-[.375rem] rounded-[.625rem] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] gap-3 items-center">
+            <span className="flex w-fit px-3 py-[.375rem] rounded-[.625rem] shadow-navbar gap-3 items-center">
               <img src={ImgIcon} />
               <span>{file.name}</span>
               <XIcon
