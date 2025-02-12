@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import kakaoLoginImg from '@/assets/imgs/loginKakao.png';
+import KakaoLogo from '@/assets/imgs/kakaoLogo.svg';
 import { parseTokenFromUrl } from '@/utils/authUtils';
 import { App } from '@capacitor/app';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
@@ -53,11 +53,15 @@ export const KakaoLogin = () => {
     });
   };
   return (
-    <img
-      src={kakaoLoginImg}
-      alt="Kakao Login"
+    <button
+      type="button"
       onClick={handleKakaoAuthorize}
-      className="mx-auto mt-6 w-4/5 cursor-pointer"
-    />
+      className="flex h-[52px] w-full items-center justify-center gap-[16px] rounded-[12px] bg-[#FEE500] px-[12px] text-center align-middle shadow-navbar"
+    >
+      <img src={KakaoLogo} className="h-[20px] w-[20px]" />
+      <span className="text-[16px] leading-[20px] text-[#191919] font-roboto">
+        Start with Kakao
+      </span>
+    </button>
   );
 };

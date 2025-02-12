@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React, { useEffect, useState } from 'react';
-import googleLoginImg from '@/assets/imgs/loginGoogle.svg';
+import GoogleLogo from '@/assets/imgs/GoogleLogo.svg';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import axios from 'axios';
 
@@ -37,11 +37,10 @@ export const GoogleLogin = () => {
   };
 
   return (
-    <img
-      src={googleLoginImg}
-      alt="Google Login"
+    <button
+      type="button"
       onClick={handleGoogleLogin}
-      className="mx-auto mt-6 w-4/5 cursor-pointer"
+      className="w-4/5 mx-auto mt-6 cursor-pointer"
     />
   );
 };

@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { PostList } from '@/components/board/PostList';
-import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
 import { path } from '@/routes/path';
-import kakao from '@/assets/imgs/loginKakao.png'; // 이미지 확인용
 import { WriteButton } from '@/components/board/write/WriteButton';
 
 export const Board = () => {
@@ -35,10 +33,10 @@ export const Board = () => {
         id: 1,
         title: 'Title',
         content: 'content',
-        likes: 8,
-        comments: 4,
-        createdTime: '1 day ago',
-        thumbnailUrl: kakao,
+        like: 8,
+        comment: 4,
+        time: '1 day ago',
+        image: null,
         board_type: 'Information',
         scrap: true,
       },
@@ -69,9 +67,9 @@ export const Board = () => {
   }, [boardData.post.map((post) => post.scrap).join()]); // 스크랩이 바뀔 때만
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full h-full">
       <PostHeader path={path} />
-      <div className="flex h-full w-full flex-col pt-14">
+      <div className="flex flex-col w-full h-full pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
           <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
             Notice
@@ -79,7 +77,7 @@ export const Board = () => {
           {isActive.filter && <FilterBox />}{' '}
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
-        <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+        <div className="flex flex-col flex-1 w-full px-4 bg-white divide-y">
           {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
           {boardData.post.map((item, index) =>
             isActive.scrap ? (

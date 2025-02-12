@@ -1,3 +1,4 @@
+import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { KakaoLogin } from '@/components/common/kakaoLogin';
 import { GoogleLogin } from '@/components/common/googleLogin';
 import { useEffect, useState } from 'react';
@@ -46,10 +47,15 @@ export const Login = () => {
     checkTokens();
   }, []);
   return (
-    <div className="mx-auto my-auto px-5">
-      <KakaoLogin />
-      <GoogleLogin />
-      {data && <p className="mx-auto mt-6 w-4/5">{data.status}</p>}
+    <div className="flex items-center flex-1">
+      <div className="flex flex-col items-center justify-center w-full gap-6 px-8 -translate-y-12">
+        <Logo className="w-40 text-primary-base" />
+        <div className="flex flex-col w-full gap-4">
+          <KakaoLogin />
+          <GoogleLogin />
+        </div>
+      </div>
+      {data && <p className="w-4/5 mx-auto mt-6">{data.status}</p>}
     </div>
   );
 };

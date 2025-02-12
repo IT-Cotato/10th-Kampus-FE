@@ -6,6 +6,7 @@ export default {
   theme: {
     fontFamily: {
       pretendard: ['var(--font-pretendard)', 'sans-serif'],
+      roboto: ['var(--font-roboto)', 'sans-serif'],
     },
     fontSize: {
       title: [

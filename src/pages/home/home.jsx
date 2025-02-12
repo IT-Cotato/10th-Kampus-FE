@@ -1,11 +1,11 @@
-import kampusLogo from '@/assets/imgs/kampusLogo.svg';
-import notifiaction from '@/assets/imgs/notification.svg';
-import notification_true from '@/assets/imgs/notification_true.svg';
-import search from '@/assets/imgs/search.svg';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
-import { BoardBox, CardPostBox } from '@/components/home/BoardBox.jsx';
+import Logo from "@/assets/imgs/kampusLogo.svg?react"
+import notifiaction from "@/assets/imgs/notification.svg"
+import notification_true from "@/assets/imgs/notification_true.svg"
+import search from "@/assets/imgs/search.svg"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { path } from "@/routes/path";
+import { BoardBox, CardPostBox } from "@/components/home/BoardBox.jsx";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -85,20 +85,20 @@ export const Home = () => {
   });
 
   return (
-    <div className="flex w-full flex-col gap-[.625rem] px-4 py-3">
+    <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
       <div className="flex items-start justify-between">
-        <img src={kampusLogo} alt="Kampus Logo" className="h-20 w-[5.5rem]" />
+        <Logo className="w-[5.5rem] text-primary-base" />
         <div className="flex gap-[0.875rem]">
           <img
             src={isNotification ? notification_true : notifiaction}
             alt="notification button"
-            className="h-6 w-5"
+            className="w-5 h-6"
           />
           <button
             className="cursor-pointer"
             onClick={() => navigate(path.search)}
           >
-            <img src={search} alt="search button" className="h-6 w-6" />
+            <img src={search} alt="search button" className="w-6 h-6" />
           </button>
         </div>
       </div>
