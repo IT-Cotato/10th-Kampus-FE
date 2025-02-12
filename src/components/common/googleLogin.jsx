@@ -38,9 +38,12 @@ export const GoogleLogin = () => {
 
   return (
     <button
-      type="button"
-      onClick={handleGoogleLogin}
-      className="w-4/5 mx-auto mt-6 cursor-pointer"
-    />
+      type="button" className="flex h-[52px] w-full items-center justify-center gap-[16px] rounded-[12px] bg-white px-[12px] text-center align-middle shadow-navbar"
+    >
+      <img src={GoogleLogo} className="h-[20px] w-[20px]" />
+      <span className="text-[16px] leading-[20px] text-black font-roboto">
+        Sign in with Google
+      </span>
+    </button>
   );
 };
