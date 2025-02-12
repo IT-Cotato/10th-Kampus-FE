@@ -1,12 +1,12 @@
 import axios from 'axios';
-
+import { ACCESS_TOKEN_KEY } from '../constants/api';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-// const token = localStorage.getItem('token');
 
 const axiosInstance = (url, params, options) => {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
   const instance = axios.create({
-    // baseURL: url, 로컬 사용으로 배포시, 사용 예정
-    // headers: { Authorization: `Bearer ${token}` },
+    baseURL: url,
+    headers: { Authorization: `Bearer ${accessToken}` },
     params: params,
     //그 외
     ...options,
