@@ -1,3 +1,4 @@
+import { DisabledInput } from '@/components/common/DisabledInput';
 import { MainButton } from '@/components/common/MainButton';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { TitleHeader } from '@/components/common/titleHeader';
@@ -44,7 +45,7 @@ export const MyInfo = () => {
 
   useEffect(() => {
     const userData = {
-      school: '',
+      school: '홍익대학교',
       username: 'cotato',
       language: 'French',
       nationality: 'France',
@@ -59,20 +60,7 @@ export const MyInfo = () => {
       <div className="flex flex-col w-full h-full px-4">
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
           {info.school ? (
-            <div className="flex flex-col">
-              <label htmlFor="school" className="text-neutral-base">
-                School
-              </label>
-              <div className="relative flex flex-col mt-1">
-                <input
-                  id="school"
-                  type="text"
-                  className="flex w-full py-1 align-middle bg-transparent border-b border-neutral-base text-neutral-base"
-                  defaultValue={info.school}
-                  disabled
-                />
-              </div>
-            </div>
+            <DisabledInput name="School" defaultValue={info.school} />
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
@@ -107,20 +95,7 @@ export const MyInfo = () => {
               label={false}
             />
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="nationality" className="text-neutral-base">
-              Nationality
-            </label>
-            <div className="relative flex flex-col mt-1">
-              <input
-                id="nationality"
-                type="text"
-                className="flex w-full py-1 align-middle bg-transparent border-b border-neutral-base text-neutral-base"
-                defaultValue={info.nationality}
-                disabled
-              />
-            </div>
-          </div>
+          <DisabledInput name="Nationality" defaultValue={info.nationality} />
         </div>
         <div className="flex mt-8 mb-5">
           <MainButton onClick={() => console.log(info)} disabled={disabled}>
