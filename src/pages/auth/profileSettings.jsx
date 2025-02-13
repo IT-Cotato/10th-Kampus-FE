@@ -59,10 +59,10 @@ export const ProfileSettings = () => {
       personalInfoAgreement: true,
       privacyPolicyAgreement: true,
       termsOfServiceAgreement: true,
-      marketingAgreement: term
-    }
-    return signupData
-  }
+      marketingAgreement: term,
+    };
+    return signupData;
+  };
   const handleClickJoinNow = async () => {
     // api 수정되면 terms, language도 추가로 보내주기
     // axios.post('https://kampus.kro.kr/v1/api/auth/signup', {
@@ -83,9 +83,8 @@ export const ProfileSettings = () => {
     if (success) {
       // 우선은 userId를 쓰는 곳이 없어서 저장안해뒀는데 필요하면 추가시키겠습니다!
       navigate(`${path.signup.base}/${path.signup.welcome}`);
-    }
-    else {
-      alert("Something wrong. Please try again.")
+    } else {
+      alert('Something wrong. Please try again.');
     }
   };
 
@@ -106,6 +105,7 @@ export const ProfileSettings = () => {
           onChange={handleUserNameChange}
           invalid={isUserNameFormatInvalid}
           duplicated={isUserNameDuplicated}
+          label={true}
         />
         <SearchDropdown
           keyword={nationality}
@@ -128,7 +128,7 @@ export const ProfileSettings = () => {
           warn="You have to select your language"
         />
       </div>
-      <div className="mb-5 mt-8 flex">
+      <div className="flex mt-8 mb-5">
         <MainButton onClick={handleClickJoinNow} disabled={disabled}>
           Join Now
         </MainButton>
