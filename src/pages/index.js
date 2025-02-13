@@ -12,7 +12,7 @@ export { SchoolEmail } from './auth/schoolEmail';
 export { SchoolPhoto } from './auth/schoolPhoto';
 
 export { ChatList } from './chat/chatList';
-export { ChatId } from './chat/chatId';
+export { ChatRoom } from './chat/chatRoom';
 
 export { AllBoard } from './board/allboard';
 export { Board } from './board/board';

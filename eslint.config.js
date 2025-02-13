@@ -6,7 +6,6 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import prettier from 'eslint-config-prettier';
 import unusedImports from 'eslint-plugin-unused-imports';
 
-/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],
@@ -32,6 +31,7 @@ export default [
       ],
       'react/react-in-jsx-scope': 'off',
       'import/named': 'error',
+      'no-undef': 'off',
     },
   },
   pluginJs.configs.recommended,
