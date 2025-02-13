@@ -44,7 +44,7 @@ export const MyInfo = () => {
 
   useEffect(() => {
     const userData = {
-      school: '홍익대학교',
+      school: '',
       username: 'cotato',
       language: 'French',
       nationality: 'France',
@@ -76,7 +76,7 @@ export const MyInfo = () => {
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
-                Verify your school affiliation to access the school board!
+                Verify your school to access the school board!
               </span>
               <MainWhiteButton>Search your school</MainWhiteButton>
             </div>
