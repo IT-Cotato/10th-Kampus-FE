@@ -1,7 +1,11 @@
 export const MainButton = (props) => {
-    return (
-      <button onClick={props.onClick} disabled={props.disabled} className={`w-full h-[3.6875rem] ${props.disabled ? "bg-neutral-disabled cursor-default" : "bg-primary-base cursor-pointer"} text-white rounded-[.625rem]`}>
-        {props.children}
-      </button>
-    );
-}
+  return (
+    <button
+      onClick={props.onClick}
+      disabled={props.disabled}
+      className={`h-[3.6875rem] w-full ${props.disabled ? 'cursor-default bg-neutral-disabled' : 'cursor-pointer bg-primary-base'} rounded-[.625rem] text-white`}
+    >
+      {props.children}
+    </button>
+  );
+};

@@ -55,13 +55,13 @@ export const SearchDropdown = ({
     <div className="flex flex-col">
       <label
         htmlFor={name}
-        className="text-base pointer-events-none text-neutral-base"
+        className="pointer-events-none text-base text-neutral-base"
       >
         {name}
         <span className="text-primary-red">*</span>
       </label>
       <div
-        className="relative flex flex-col mt-1"
+        className="relative mt-1 flex flex-col"
         onBlur={handleOnBlur}
         tabIndex={0}
         ref={dropdownRef}
@@ -69,7 +69,7 @@ export const SearchDropdown = ({
         <input
           id={name}
           type="text"
-          className={`flex w-full py-1 text-base align-middle border-b ${!warning ? (selected ? 'border-primary-base' : 'border-neutral-base') : 'border-primary-red'} placeholder-neutral-border-50`}
+          className={`flex w-full border-b py-1 align-middle text-base ${!warning ? (selected ? 'border-primary-base' : 'border-neutral-base') : 'border-primary-red'} placeholder-neutral-border-50`}
           placeholder={placeholder}
           autoComplete="off"
           onChange={(e) => handleOnChange(e.target.value)}
@@ -81,16 +81,16 @@ export const SearchDropdown = ({
         <div className="flex flex-col">
           {isActive && (
             <div
-              className="z-10 flex flex-col overflow-auto border max-h-28"
+              className="z-10 flex max-h-28 flex-col overflow-auto border"
               tabIndex={-1}
             >
               {filteredList.map((d) => (
                 <div
                   onClick={() => handleSelectItem(d.name)}
                   key={d.name}
-                  className="flex px-[.375rem] h-full cursor-pointer bg-white hover:bg-neutral-bg-5"
+                  className="flex h-full cursor-pointer bg-white px-[.375rem] hover:bg-neutral-bg-5"
                 >
-                  <div className="flex py-[.125rem] items-center w-full h-full text-center align-middle border-b">
+                  <div className="flex h-full w-full items-center border-b py-[.125rem] text-center align-middle">
                     {d.name}
                   </div>
                 </div>

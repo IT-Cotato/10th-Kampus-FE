@@ -64,12 +64,12 @@ export const Terms = () => {
 
   return (
     <div className="h-full px-4">
-      <div className="relative w-full h-[3.0625rem] mt-[1.25rem] mb-[.625rem] text-pageTitle text-neutral-title flex justify-center items-center">
+      <div className="relative mb-[.625rem] mt-[1.25rem] flex h-[3.0625rem] w-full items-center justify-center text-pageTitle text-neutral-title">
         <img
           src={PreviousButton}
           alt="back button"
           onClick={handleClickPreviousButton}
-          className="text-pageTitle w-[1.1875rem] h-[1.1875rem] absolute left-0 cursor-pointer"
+          className="absolute left-0 h-[1.1875rem] w-[1.1875rem] cursor-pointer text-pageTitle"
         />
         Terms and Conditions
       </div>
@@ -80,14 +80,14 @@ export const Terms = () => {
         </div>
         <button
           onClick={handleClickAgreeWithAll}
-          className={`w-full h-[3.4375rem] text-subTitle bg-white rounded-[.625rem] ${isAllAgreed ? 'border-primary-30 border-2' : 'shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]'} flex flex-row justify-center items-center space-x-3 mt-[3.1875rem] mb-[2.375rem]`}
+          className={`h-[3.4375rem] w-full rounded-[.625rem] bg-white text-subTitle ${isAllAgreed ? 'border-2 border-primary-30' : 'shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]'} mb-[2.375rem] mt-[3.1875rem] flex flex-row items-center justify-center space-x-3`}
         >
-          <div className="w-[1.875rem] h-[1.875rem] border-neutral-border-40 border rounded-[.3125rem] flex justify-center items-center">
+          <div className="flex h-[1.875rem] w-[1.875rem] items-center justify-center rounded-[.3125rem] border border-neutral-border-40">
             {isAllAgreed ? <Check className="text-primary-base" /> : ''}
           </div>
-          <div className="text-neutral-title text-subTitle">Agree with all</div>
+          <div className="text-subTitle text-neutral-title">Agree with all</div>
         </button>
-        <div className="flex flex-col justify-between h-64">
+        <div className="flex h-64 flex-col justify-between">
           <Term
             onClick={() => handleClickAgree('term1')}
             isChecked={terms.term1}

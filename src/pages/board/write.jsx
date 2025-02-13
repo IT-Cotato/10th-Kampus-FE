@@ -31,15 +31,15 @@ export const Write = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className="grid items-center w-full grid-cols-3 px-4 pt-4 pb-3">
+    <div className="flex h-full w-full flex-col">
+      <div className="grid w-full grid-cols-3 items-center px-4 pb-3 pt-4">
         <button type="button">
           <X
-            className="w-6 h-6 p-1 text-neutral-title"
-            onClick={() => navigate('..')}
+            className="h-6 w-6 p-1 text-neutral-title"
+            onClick={() => navigate(-1)}
           />
         </button>
-        <span className="flex justify-center text-neutral-title text-pageTitle">
+        <span className="flex justify-center text-pageTitle text-neutral-title">
           Write
         </span>
         <span className="flex items-center justify-end gap-2 text-neutral-border-50">
@@ -48,8 +48,13 @@ export const Write = () => {
           <button type="button">00</button>
         </span>
       </div>
-      <div className="flex flex-col w-full h-full px-4 py-[1.25rem] gap-[2.5rem]">
-        <WriteTitle title={title} setTitle={setTitle} placeholder="Please add a title." translate />
+      <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
+        <WriteTitle
+          title={title}
+          setTitle={setTitle}
+          placeholder="Please add a title."
+          translate
+        />
         {(boardTitle === 'question' || boardTitle === 'information') && (
           <SelectCategory
             selectedCategory={selectedCategory}

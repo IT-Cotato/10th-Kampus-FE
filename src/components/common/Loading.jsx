@@ -9,7 +9,7 @@ export const Loading = () => {
       loop
       autoplay
       speed={1.5}
-      className="w-32 h-32"
+      className="h-32 w-32"
     />
   );
 };

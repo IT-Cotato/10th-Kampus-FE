@@ -26,16 +26,16 @@ export const Inquiry = () => {
   let count = 1;
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       {count === 0 ? (
         // data.inquiry.length === 0
-        <div className='flex flex-col items-center justify-center w-full h-full gap-[.625rem]'>
+        <div className="flex h-full w-full flex-col items-center justify-center gap-[.625rem]">
           <span>There is no history of inquiry.</span>
           <InquiryButton />
         </div>
       ) : (
-        <div className='flex flex-col w-full'>
-          <div className="flex justify-center pt-5 pb-7">
+        <div className="flex w-full flex-col">
+          <div className="flex justify-center pb-7 pt-5">
             <InquiryButton />
           </div>
           {list.map((item, index) => (

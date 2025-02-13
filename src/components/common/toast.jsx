@@ -12,7 +12,7 @@ const Toast = () => {
         // draggable // 드래그 가능
         theme="light"
         limit={1} // 알람 개수 제한
-        className={`flex items-center w-max`}
+        className={`flex w-max items-center`}
       />
     </>
   );

@@ -35,15 +35,15 @@ export const DeleteAccount = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="Delete Account"></TitleHeader>
-      <div className="flex flex-col w-full h-full px-4 py-[1.875rem]">
+      <div className="flex h-full w-full flex-col px-4 py-[1.875rem]">
         <div className="text-subTitle">Why are you leaving Kampus?</div>
-        <div className="text-neutral-base mt-[1.875rem]">
+        <div className="mt-[1.875rem] text-neutral-base">
           We’re sorry to see you go! We’d love to know why you want to delete
           your account, so we can improve the app and support our community.
         </div>
-        <div className="flex flex-col text-subTitle mb-[1.875rem]">
+        <div className="mb-[1.875rem] flex flex-col text-subTitle">
           {Reasons.map((item) => (
             <InputRadio
               item={item}

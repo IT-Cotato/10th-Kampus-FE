@@ -51,7 +51,7 @@ export const ChatRoom = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <TitleHeader text={dummyData.postName} />
       <ArticleInfo
         boardName={dummyData.boardName}
@@ -60,7 +60,7 @@ export const ChatRoom = () => {
       />
       <div className="px-4">
         <NoticeBox />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           {messages.map((message) => (
             <div
               key={message.id}

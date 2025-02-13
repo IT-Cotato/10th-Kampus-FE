@@ -16,10 +16,10 @@ export const ContactUs = ({ children }) => {
   ];
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <TitleHeader text="Contact Us" />
-      <div className="flex flex-col w-full px-4 pt-12 pb-3">
-        <div className="gap-[0.625rem] flex justify-center">
+      <div className="flex w-full flex-col px-4 pb-3 pt-12">
+        <div className="flex justify-center gap-[0.625rem]">
           {menu.map((item) => (
             <ButtonRound
               key={item.id}
@@ -27,12 +27,12 @@ export const ContactUs = ({ children }) => {
               text={item.text}
               width="long"
               height="small"
-              onClick={() => navigate(`./${item.path}`, { replace: true})}
+              onClick={() => navigate(`./${item.path}`, { replace: true })}
             />
           ))}
         </div>
       </div>
-      <div className="flex flex-col flex-1 w-full p-4">{children}</div>
+      <div className="flex w-full flex-1 flex-col p-4">{children}</div>
     </div>
   );
 };

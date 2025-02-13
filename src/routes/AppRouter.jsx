@@ -3,19 +3,17 @@ import { path } from './path';
 import { Layout } from '@/components/layout/layout';
 import {
   AllBoard,
-  LandingPage,
+  SplashScreen,
   Login,
   Terms,
   NotFound,
   Board,
   MyArticle,
-  BlockingManagement,
   DeleteAccount,
   Home,
   Scrap,
   Search,
   Write,
-  Signup,
   ProfileSettings,
   ChatList,
   ChatRoom,
@@ -28,15 +26,28 @@ import {
   Notice,
   InquiryDetail,
   WriteInquiry,
+  NoticeDetail,
+  Post,
+  BlockChat,
+  BlockSecondhand,
+  Welcome,
+  SchoolSearch,
+  SchoolEmail,
+  SchoolPhoto,
+  SecondhandScrap,
+  CommunityScrap,
+  MyComments,
+  MyArticles
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
+import { BlockingManagement } from '@/components/layout/BlockingManagement';
 
 const AppRouter = createBrowserRouter([
   {
     path: '',
     element: (
       <Layout>
-        <LandingPage isLanding />
+        <SplashScreen />
       </Layout>
     ),
     errorElement: <NotFound />,
@@ -65,7 +76,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Signup />,
+        element: <Navigate to={path.signup.terms} replace />,
       },
       {
         path: path.signup.terms,
@@ -76,8 +87,30 @@ const AppRouter = createBrowserRouter([
         element: <ProfileSettings />,
       },
       {
+        path: path.signup.welcome,
+        element: <Welcome />,
+      },
+      {
         path: path.signup.school,
-        element: <Signup />,
+        element: <SchoolSearch />,
+      },
+      {
+        path: path.signup.verify.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <SchoolVerification />,
+          },
+          {
+            path: path.signup.verify.email,
+            element: <SchoolEmail />,
+          },
+          {
+            path: path.signup.verify.file,
+            element: <SchoolPhoto />,
+          },
+        ]
       },
     ],
   },
@@ -91,11 +124,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <AllBoard />,
-      },
-      {
-        path: ':boardTitle', // title에 따라 동적 할당
-        element: <Board />,
+        element: <Home />,
       },
     ],
   },
@@ -136,6 +165,10 @@ const AppRouter = createBrowserRouter([
           {
             path: path.board.specific.write,
             element: <Write />,
+          },
+          {
+            path: path.board.specific.post,
+            element: <Post />,
           },
         ],
       },
@@ -184,24 +217,8 @@ const AppRouter = createBrowserRouter([
         element: <MyInfo />,
       },
       {
-        path: path.mypage.settings.verification,
-        element: <SchoolVerification />,
-      },
-      {
         path: path.mypage.settings.notification,
         element: <Notification />,
-      },
-      {
-        path: path.mypage.community.articles,
-        element: <MyArticle />,
-      },
-      {
-        path: path.mypage.community.scrap,
-        element: <Scrap />,
-      },
-      {
-        path: path.mypage.block,
-        element: <BlockingManagement />,
       },
       {
         path: path.mypage.delete,
@@ -238,6 +255,72 @@ const AppRouter = createBrowserRouter([
         ],
       },
       {
+        path: path.mypage.community.scrap.base,
+        element: (
+          <Scrap>
+            <Outlet />
+          </Scrap>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.community.scrap.community} replace />,
+          },
+          {
+            path: path.mypage.community.scrap.community,
+            element: <CommunityScrap />,
+          },
+          {
+            path: path.mypage.community.scrap.secondhand,
+            element: <SecondhandScrap />,
+          },
+        ]
+      },
+      {
+        path: path.mypage.community.article.base,
+        element: (
+          <MyArticle>
+            <Outlet />
+          </MyArticle>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.community.article.articles} replace />,
+          },
+          {
+            path: path.mypage.community.article.articles,
+            element: <MyArticles />,
+          },
+          {
+            path: path.mypage.community.article.comments,
+            element: <MyComments />,
+          },
+        ]
+      },
+      {
+        path: path.mypage.block.base,
+        element: (
+          <BlockingManagement>
+            <Outlet />
+          </BlockingManagement>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to={path.mypage.block.chat} replace />,
+          },
+          {
+            path: path.mypage.block.chat,
+            element: <BlockChat />,
+          },
+          {
+            path: path.mypage.block.secondhand,
+            element: <BlockSecondhand />,
+          },
+        ]
+      },
+      {
         path: path.mypage.service.base,
         element: <Outlet />,
         children: [
@@ -248,6 +331,10 @@ const AppRouter = createBrowserRouter([
           {
             path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
             element: <WriteInquiry />,
+          },
+          {
+            path: `${path.mypage.service.notice}/${path.mypage.service.noticeDetails}`,
+            element: <NoticeDetail />,
           },
         ],
       },
