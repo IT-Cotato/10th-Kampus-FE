@@ -9,6 +9,7 @@ export const SearchDropdown = ({
   name,
   placeholder,
   warn,
+  label,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [warning, setWarning] = useState(false);
@@ -53,15 +54,17 @@ export const SearchDropdown = ({
 
   return (
     <div className="flex flex-col">
-      <label
-        htmlFor={name}
-        className="pointer-events-none text-base text-neutral-base"
-      >
-        {name}
-        <span className="text-primary-red">*</span>
-      </label>
+      {label && (
+        <label
+          htmlFor={name}
+          className="text-base pointer-events-none text-neutral-base"
+        >
+          {name}
+          <span className="text-primary-red">*</span>
+        </label>
+      )}
       <div
-        className="relative mt-1 flex flex-col"
+        className="relative flex flex-col mt-1"
         onBlur={handleOnBlur}
         tabIndex={0}
         ref={dropdownRef}
@@ -81,7 +84,7 @@ export const SearchDropdown = ({
         <div className="flex flex-col">
           {isActive && (
             <div
-              className="z-10 flex max-h-28 flex-col overflow-auto border"
+              className="z-10 flex flex-col overflow-auto border max-h-28"
               tabIndex={-1}
             >
               {filteredList.map((d) => (

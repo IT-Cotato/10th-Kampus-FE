@@ -1,7 +1,7 @@
 import { MainButton } from '@/components/common/MainButton';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { TitleHeader } from '@/components/common/titleHeader';
-import { SearchDropdownWithNoLabel } from '@/components/join/searchDropdownWithNoLabel';
+import { SearchDropdown } from '@/components/join/searchDropdown';
 import { UserNameInput } from '@/components/join/usernameInput';
 import Languages from '@/constants/languages';
 import { useEffect, useState } from 'react';
@@ -76,7 +76,7 @@ export const MyInfo = () => {
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
-                What's the name of your school?
+                Verify your school affiliation to access the school board!
               </span>
               <MainWhiteButton>Search your school</MainWhiteButton>
             </div>
@@ -93,7 +93,7 @@ export const MyInfo = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-primary-base">Language</span>
-            <SearchDropdownWithNoLabel
+            <SearchDropdown
               keyword={info.language}
               name="Language"
               placeholder="Select your nationality"
@@ -104,6 +104,7 @@ export const MyInfo = () => {
               selected={isLanguageSelected}
               list={Languages}
               warn="You have to select your language"
+              label={false}
             />
           </div>
           <div className="flex flex-col">
