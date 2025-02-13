@@ -92,7 +92,7 @@ export const ChatList = () => {
       <NoticeBox />
       {data.chatRoomPreviewList.map((data) => (
         <ListItem
-          key={data.id}
+          key={data.chatroomId}
           data={data}
           isSlide={activeSlide === data.id}
           setActiveSlide={setActiveSlide}
