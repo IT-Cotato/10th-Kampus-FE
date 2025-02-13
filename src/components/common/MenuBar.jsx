@@ -22,9 +22,9 @@ export const BoardMenuBar = () => {
   };
 
   return (
-    <div className="h-5 w-5 cursor-pointer text-neutral-title">
+    <div className="w-5 h-5 cursor-pointer text-neutral-title">
       <button onClick={() => setOpenPinModal(!openPinModal)}>
-        <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
+        <img src={menubar} alt="Menu Bar" className="w-5 h-5" />
       </button>
       {openPinModal &&
         !postId && ( // 게시글 리스트 부분
@@ -34,9 +34,9 @@ export const BoardMenuBar = () => {
           >
             <p className="text-base">
               {!pinAni ? 'Add to Bookmark' : 'Remove the Bookmark'}
-            </p>{' '}
+            </p>
             {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
-            <img src={pin} className="h-5 w-5 -rotate-90" />
+            <img src={pin} className="w-5 h-5 -rotate-90" />
           </div>
         )}
       {openPinModal &&
@@ -48,28 +48,28 @@ export const BoardMenuBar = () => {
               onClick={() => console.log('Chat')}
             >
               <p>Send a message</p>
-              <img src={chat} alt="Start a Chat" className="h-4 w-4" />
+              <img src={chat} alt="Start a Chat" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
               onClick={() => console.log('Copy')}
             >
               <p>Copy URL</p>
-              <img src={link} alt="Copy URL" className="h-4 w-4" />
+              <img src={link} alt="Copy URL" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
               onClick={() => console.log('Report')}
             >
               <p>Report</p>
-              <img src={report} alt="Report" className="h-4 w-4" />
+              <img src={report} alt="Report" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
               onClick={() => console.log('Block')}
             >
               <p>Block</p>
-              <img src={block} alt="Block" className="h-4 w-4" />
+              <img src={block} alt="Block" className="w-4 h-4" />
             </div>
           </div>
         )}
@@ -82,7 +82,7 @@ export const BoardMenuBar = () => {
               onClick={() => console.log('Copy')}
             >
               <p className="text-neutral-title">Copy URL</p>
-              <img src={link} alt="Copy URL" className="h-4 w-4" />
+              <img src={link} alt="Copy URL" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
@@ -103,7 +103,7 @@ export const BoardMenuBar = () => {
           changeToTrueText="Pinned to the board"
           changeToFalseText="Unpinned from the board"
         />
-      )}{' '}
+      )}
       {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
     </div>
   );
