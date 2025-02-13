@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import KakaoLogo from '@/assets/imgs/kakaoLogo.svg';
+import KakaoLogo from '@/assets/imgs/KakaoLogo.svg';
 import { parseTokenFromUrl } from '@/utils/authUtils';
 import { App } from '@capacitor/app';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
