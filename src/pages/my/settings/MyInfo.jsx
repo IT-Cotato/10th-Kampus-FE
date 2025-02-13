@@ -1,13 +1,19 @@
+// @ts-nocheck
+
 import { DisabledInput } from '@/components/common/DisabledInput';
 import { MainButton } from '@/components/common/MainButton';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
+import { Popup } from '@/components/common/popup';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { UserNameInput } from '@/components/join/usernameInput';
 import Languages from '@/constants/languages';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const MyInfo = () => {
+  const navigate = useNavigate();
   const [info, setInfo] = useState({
     school: '',
     username: '',
@@ -25,6 +31,7 @@ export const MyInfo = () => {
   const [isUserNameFormatInvalid, setIsUserNameFormatInvalid] = useState(false);
   const [isUserNameDuplicated, setIsUserNameDuplicated] = useState(false);
   const [isLanguageSelected, setIsLanguageSelected] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;
@@ -34,6 +41,19 @@ export const MyInfo = () => {
   const handleUserNameChange = (value) => {
     setInfo((prev) => ({ ...prev, username: value }));
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
+  };
+
+  const handleClickSave = () => {
+    // 백 연동 후 마이페이지로 이동
+    navigate(-1);
+  };
+
+  const handleBackClick = () => {
+    if(!disabled) {
+      setShowModal(true);
+    } else {
+      navigate(-1);
+    }
   };
 
   const disabled =
@@ -56,7 +76,7 @@ export const MyInfo = () => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <TitleHeader text="My Information" />
+      <TitleHeader text="My Information" onClick={handleBackClick} />
       <div className="flex flex-col w-full h-full px-4">
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
           {info.school ? (
@@ -98,9 +118,21 @@ export const MyInfo = () => {
           <DisabledInput name="Nationality" defaultValue={info.nationality} />
         </div>
         <div className="flex mt-8 mb-5">
-          <MainButton onClick={() => console.log(info)} disabled={disabled}>
+          <MainButton onClick={handleClickSave} disabled={disabled}>
             Save
           </MainButton>
+          {showModal &&
+            createPortal(
+              <Popup
+                title="Do you want to save the changes?"
+                text="If you cancel this, the changes will not be saved."
+                onClickLeft={() => setShowModal(false)}
+                leftButton="Cancel"
+                onClickRight={handleClickSave}
+                rightButton="Save"
+              />,
+              document.getElementById('modal-root'),
+            )}
         </div>
       </div>
     </div>
