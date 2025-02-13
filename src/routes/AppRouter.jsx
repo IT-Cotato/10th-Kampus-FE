@@ -37,7 +37,8 @@ import {
   SecondhandScrap,
   CommunityScrap,
   MyComments,
-  MyArticles
+  MyArticles,
+  ChatReport,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -110,7 +111,7 @@ const AppRouter = createBrowserRouter([
             path: path.signup.verify.file,
             element: <SchoolPhoto />,
           },
-        ]
+        ],
       },
     ],
   },
@@ -195,8 +196,12 @@ const AppRouter = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ':id',
+        path: path.chatList.chatRoom,
         element: <ChatRoom />,
+      },
+      {
+        path: `${path.chatList.chatRoom}/${path.chatList.report}`,
+        element: <ChatReport />,
       },
     ],
   },
@@ -264,7 +269,9 @@ const AppRouter = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <Navigate to={path.mypage.community.scrap.community} replace />,
+            element: (
+              <Navigate to={path.mypage.community.scrap.community} replace />
+            ),
           },
           {
             path: path.mypage.community.scrap.community,
@@ -274,7 +281,7 @@ const AppRouter = createBrowserRouter([
             path: path.mypage.community.scrap.secondhand,
             element: <SecondhandScrap />,
           },
-        ]
+        ],
       },
       {
         path: path.mypage.community.article.base,
@@ -286,7 +293,9 @@ const AppRouter = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <Navigate to={path.mypage.community.article.articles} replace />,
+            element: (
+              <Navigate to={path.mypage.community.article.articles} replace />
+            ),
           },
           {
             path: path.mypage.community.article.articles,
@@ -296,7 +305,7 @@ const AppRouter = createBrowserRouter([
             path: path.mypage.community.article.comments,
             element: <MyComments />,
           },
-        ]
+        ],
       },
       {
         path: path.mypage.block.base,
@@ -318,7 +327,7 @@ const AppRouter = createBrowserRouter([
             path: path.mypage.block.secondhand,
             element: <BlockSecondhand />,
           },
-        ]
+        ],
       },
       {
         path: path.mypage.service.base,

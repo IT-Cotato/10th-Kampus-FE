@@ -10,7 +10,7 @@ export const path = {
       base: 'verify',
       email: 'email',
       file: 'file',
-    }
+    },
   },
   board: {
     base: '/board',
@@ -65,5 +65,7 @@ export const path = {
   },
   chatList: {
     base: '/chatlist',
+    chatRoom: ':roomId',
+    report: 'report',
   },
 };
