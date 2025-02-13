@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 export const UserNameInput = (
-  { userName, onChange, invalid, duplicated, label }
+  { userName, onChange, invalid, duplicated, label = true }
 ) => {
   const userNameRef = useRef(null);
 

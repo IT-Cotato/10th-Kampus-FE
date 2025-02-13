@@ -126,7 +126,7 @@ export const MyInfo = () => {
               <Popup
                 title="Do you want to save the changes?"
                 text="If you cancel this, the changes will not be saved."
-                onClickLeft={() => setShowModal(false)}
+                onClickLeft={() => navigate(-1)}
                 leftButton="Cancel"
                 onClickRight={handleClickSave}
                 rightButton="Save"

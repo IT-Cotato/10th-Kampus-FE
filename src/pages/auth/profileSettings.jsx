@@ -105,7 +105,6 @@ export const ProfileSettings = () => {
           onChange={handleUserNameChange}
           invalid={isUserNameFormatInvalid}
           duplicated={isUserNameDuplicated}
-          label={true}
         />
         <SearchDropdown
           keyword={nationality}
@@ -116,7 +115,6 @@ export const ProfileSettings = () => {
           selected={isNationalitySelected}
           list={Nations}
           warn="You have to select your country"
-          label={true}
         />
         <SearchDropdown
           keyword={language}
@@ -127,7 +125,6 @@ export const ProfileSettings = () => {
           selected={isLanguageSelected}
           list={Languages}
           warn="You have to select your language"
-          label={true}
         />
       </div>
       <div className="flex mt-8 mb-5">

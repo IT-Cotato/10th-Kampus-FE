@@ -9,7 +9,7 @@ export const SearchDropdown = ({
   name,
   placeholder,
   warn,
-  label,
+  label = true,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [warning, setWarning] = useState(false);

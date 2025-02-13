@@ -1,13 +1,13 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
 import { useNavigate } from 'react-router-dom';
 
-export const TitleHeader = (props) => {
+export const TitleHeader = ({text, onClick = null}) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    if (props.onClick) {
+    if (onClick) {
       // onClick 함수가 전달되었으면 호출
-      props.onClick();
+      onClick();
     } else {
       navigate(-1);
     }
@@ -21,7 +21,7 @@ export const TitleHeader = (props) => {
         onClick={handleBackClick}
         className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
-      <span className="mx-auto text-pageTitle text-neutral-title">{props.text}</span>
+      <span className="mx-auto text-pageTitle text-neutral-title">{text}</span>
       <div className="h-[1.25rem] w-[1.25rem]" />
     </div>
   );
