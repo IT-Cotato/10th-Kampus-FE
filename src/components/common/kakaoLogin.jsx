@@ -37,13 +37,13 @@ export const KakaoLogin = () => {
     }
 
     // 나중에 앱으로 redirect Uri 구현되면 삭제할 코드들
-    const { accessToken, refreshToken } = parseTokenFromUrl();
+    /*const { accessToken, refreshToken } = parseTokenFromUrl();
     if (accessToken && refreshToken) {
       const appUrl = ` kampus://login?accessToken=${accessToken}&refreshToken=${refreshToken}`;
       if (!window.Capacitor.isNativePlatform()) {
         window.location.href = appUrl;
       }
-    }
+    }*/
   }, []);
 
   const handleKakaoAuthorize = () => {
