@@ -18,7 +18,7 @@ import {
   Signup,
   ProfileSettings,
   ChatList,
-  ChatId,
+  ChatRoom,
   MyPage,
   MyInfo,
   SchoolVerification,
@@ -163,7 +163,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: ':id',
-        element: <ChatId />,
+        element: <ChatRoom />,
       },
     ],
   },

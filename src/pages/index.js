@@ -8,7 +8,7 @@ export { Terms } from './auth/terms';
 export { ProfileSettings } from './auth/profileSettings';
 
 export { ChatList } from './chat/chatList';
-export { ChatId } from './chat/chatId';
+export { ChatRoom } from './chat/chatRoom';
 
 export { AllBoard } from './board/allboard';
 export { Board } from './board/board';

@@ -6,7 +6,7 @@ import { cn } from '@/utils/cn';
 import { useState } from 'react';
 // import { useParams } from 'react-router-dom';
 
-export const ChatId = () => {
+export const ChatRoom = () => {
   const dummyData = {
     currentUserId: 1,
     messages: [
@@ -51,7 +51,7 @@ export const ChatId = () => {
   };
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full h-full">
       <TitleHeader text={dummyData.postName} />
       <ArticleInfo
         boardName={dummyData.boardName}
@@ -60,7 +60,7 @@ export const ChatId = () => {
       />
       <div className="px-4">
         <NoticeBox />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col flex-1">
           {messages.map((message) => (
             <div
               key={message.id}
