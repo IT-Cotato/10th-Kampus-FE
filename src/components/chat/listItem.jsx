@@ -28,7 +28,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
           'flex h-full w-full justify-between gap-[1.25rem] transition-transform duration-300',
           {
             '-translate-x-[110px]': isSlide,
-            'transliate-x-0': !isSlide,
+            'translate-x-0': !isSlide,
           },
         )}
         onClick={() =>
@@ -45,7 +45,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.postTitle}
