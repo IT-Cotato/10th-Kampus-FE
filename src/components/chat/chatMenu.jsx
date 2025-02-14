@@ -4,18 +4,23 @@ import muteIcon from '@/assets/imgs/muteIcon.svg';
 import deleteIcon from '@/assets/imgs/delete.svg';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
+import { useState } from 'react';
+import {
+  startAnimation,
+  StateChangeAnimate,
+} from '@/components/common/StateChangeAnimate';
 
 export const ChatMenu = ({
   setIsOpenMenu,
   setIsBlockModal,
-  setIsMuteModal,
   setIsLeaveModal,
 }) => {
   const navigate = useNavigate();
+  const [isMuteModal, setIsMuteModal] = useState(false);
 
   const handleMuteClick = () => {
     setIsOpenMenu(false);
-    setIsMuteModal(true);
+    startAnimation(setIsMuteModal);
     // 알림 안받기 기능 추가 예정
   };
 
@@ -40,7 +45,7 @@ export const ChatMenu = ({
       </div>
       <div
         className="flex items-center justify-between"
-        onClick={handleMuteClick}
+        onClick={() => handleMuteClick()}
       >
         <p>Mute</p>
         <img src={muteIcon} alt="mute" />
@@ -55,6 +60,13 @@ export const ChatMenu = ({
         <p className="text-primary-red">Leave chat</p>
         <img src={deleteIcon} alt="delete" />
       </div>
+      {isMuteModal && (
+        <StateChangeAnimate
+          state={isMuteModal}
+          changeToTrueText="Successfully muted"
+          changeToFalseText="Successfully alram"
+        />
+      )}
     </div>
   );
 };

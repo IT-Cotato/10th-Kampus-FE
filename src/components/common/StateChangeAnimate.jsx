@@ -6,7 +6,7 @@ export const StateChangeAnimate = ({
   changeToFalseText,
 }) => {
   // 포털을 사용해 렌더링할 대상 DOM 요소 선택
-  const portalRoot = document.getElementById('portal-root');
+  const portalRoot = document.getElementById('modal-root');
 
   useEffect(() => {
     // 스크롤 막기
