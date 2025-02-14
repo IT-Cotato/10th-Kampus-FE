@@ -3,7 +3,6 @@ import menubar from '@/assets/imgs/menubar.svg';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { BlockModal } from '@/components/chat/blockModal';
-import { MuteModal } from '@/components/chat/muteModal';
 import { LeaveModal } from '@/components/chat/leaveModal';
 import { ChatMenu } from '@/components/chat/chatMenu';
 
@@ -11,14 +10,7 @@ export const RoomHeader = ({ text }) => {
   const navigate = useNavigate();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isBlockModal, setIsBlockModal] = useState(false);
-  const [isMuteModal, setIsMuteModal] = useState(false);
   const [isLeaveModal, setIsLeaveModal] = useState(false);
-
-  const handleMuteClick = () => {
-    setIsOpenMenu(false);
-    setIsMuteModal(true);
-    // 알림 안받기 기능 추가 예정
-  };
 
   return (
     <div className="flex h-16 flex-row items-center justify-between border-b-[.0313rem] border-neutral-border-30 p-4">
@@ -36,7 +28,6 @@ export const RoomHeader = ({ text }) => {
         <ChatMenu
           setIsOpenMenu={setIsOpenMenu}
           setIsBlockModal={setIsBlockModal}
-          setIsMuteModal={setIsMuteModal}
           setIsLeaveModal={setIsLeaveModal}
         />
       )}
@@ -44,8 +35,11 @@ export const RoomHeader = ({ text }) => {
         isOpen={isBlockModal}
         onClose={() => setIsBlockModal(false)}
       />
-      <MuteModal isOpen={isMuteModal} onClose={() => setIsMuteModal(false)} />
-      <LeaveModal isOpen={isLeaveModal} onClose={() => setIsMuteModal(false)} />
+
+      <LeaveModal
+        isOpen={isLeaveModal}
+        onClose={() => setIsLeaveModal(false)}
+      />
     </div>
   );
 };
