@@ -66,4 +66,15 @@ export const path = {
   chatList: {
     base: '/chatlist',
   },
+  admin: {
+    base: '/admin',
+    login: 'login',
+    dashboard: 'dashboard',
+    userManagement: 'userManagement',
+    signupManagement: 'signupManagement',
+    boardManagement: 'boardManagement',
+    cardnews: 'cardnews',
+    reportMangement: 'reportMangement',
+    statistics: 'statistics',
+  }
 };
