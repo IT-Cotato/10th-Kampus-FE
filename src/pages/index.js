@@ -44,6 +44,7 @@ export { Search } from './search/Search';
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
 export { BoardManagement } from './admin/BoardManagement';
+export { CardnewsList } from './admin/CardnewsList';
 export { CreateCardnews } from './admin/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
