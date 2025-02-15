@@ -124,7 +124,7 @@ export default {
             '',
         },
         '.admin-layout': {
-          '@apply flex overflow-auto min-h-dvh bg-primary-5 scrollbar-hide':
+          '@apply flex overflow-auto min-h-dvh bg-primary-10 scrollbar-hide':
           '',
         },
         '.animate-bottom-sheet-up': {
