@@ -23,7 +23,7 @@ export const Admin = ({ children }) => {
   ];
 
   return (
-    <div className="flex min-h-dvh w-full min-w-[64rem]">
+    <div className="flex min-h-dvh w-full min-w-[64rem] bg-primary-5">
       <span className="absolute flex flex-row items-center gap-2 left-2 top-2">
         <button
           className="w-10 h-10 bg-white bg-cover rounded-lg"
@@ -35,7 +35,7 @@ export const Admin = ({ children }) => {
         )}
       </span>
       {showMenu && (
-        <div className="flex flex-row justify-center text-center align-middle w-72">
+        <div className="flex flex-row justify-center text-center align-middle w-72 max-h-[800px] bg-white rounded-br-3xl">
           <div className="flex flex-col justify-center text-start">
             {menu.map((item) => (
               <button
@@ -61,7 +61,9 @@ export const Admin = ({ children }) => {
             ㅇㅇㅇ님
           </span>
         </div>
-        <div className="flex flex-col flex-1 w-full bg-primary-5">
+        <div className={cn("flex flex-col flex-1 w-full ml-0", {
+          'ml-14': !showMenu
+        })}>
           {children}
         </div>
       </div>
