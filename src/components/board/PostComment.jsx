@@ -6,7 +6,7 @@ import Translate from "@/assets/imgs/translate.svg?react"
 import { formatTime } from "@/utils/formatTime"
 import { useRef, useState } from "react"
 import { cn } from "@/utils/cn"
-export const PostComment = ({ data, focusedComment, setFocusedComment }) => {
+export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment }) => {
     /*{
     "commentId": 9007199254740991,
     "commentStatus": "NORMAL",
@@ -23,6 +23,7 @@ export const PostComment = ({ data, focusedComment, setFocusedComment }) => {
             block: "start"
         })
         setFocusedComment(commentId)
+        setInputFocus(true)
     }
 
     return (
@@ -59,7 +60,8 @@ export const PostComment = ({ data, focusedComment, setFocusedComment }) => {
                 </p>
                 <div className="flex justify-between">
                     <div className="text-neutral-border-50"
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.stopPropagation();
                             handleComment(commentRef, data.commentId)
                         }}>
                         Reply
@@ -105,7 +107,8 @@ const ReplyComment = ({ data, focusedComment, handleComment }) => {
             </p>
             <div className="flex justify-between">
                 <div className="text-neutral-border-50"
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.stopPropagation()
                         handleComment(commentRef, data.commentId)
                     }}>
                     Reply

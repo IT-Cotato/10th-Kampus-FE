@@ -14,6 +14,7 @@ export const UserInput = ({
   setInput,
   handleSend,
   type,
+  inputFocus = false
 }) => {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
@@ -36,6 +37,11 @@ export const UserInput = ({
     handleInput();
   }, [handleSend]);
 
+  useEffect(() => {
+    if (textareaRef.current && inputFocus && InputTypes.POST === type) {
+      textareaRef.current.focus();
+    }
+  })
   return (
     <div
       ref={containerRef}

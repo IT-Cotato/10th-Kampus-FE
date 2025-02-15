@@ -18,6 +18,7 @@ import { formatTime } from '@/utils/formatTime';
 import { PostComment } from '@/components/board/PostComment';
 export const Post = () => {
   const [focusedComment, setFocusedComment] = useState(null);
+  const [inputFocus, setInputFocus] = useState(false);
   const [input, setInput] = useState('');
   const [imageFocus, setImageFocus] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
@@ -72,7 +73,10 @@ export const Post = () => {
   ])
 
   return (
-    <div>
+    <div onClick={() => {
+      setInputFocus(false);
+      setFocusedComment(null)
+    }}>
       {imageFocus && (
         <FocusImageSlider
           images={postData.postPhoroUrls}
@@ -167,7 +171,8 @@ export const Post = () => {
         {/** 댓글 부분 */}
         <div className='flex flex-col'>
           {commentList.map((item, index) => (
-            <PostComment data={item} key={index} focusedComment={focusedComment} setFocusedComment={setFocusedComment} />
+            <PostComment data={item} key={index} setInputFocus={setInputFocus}
+              focusedComment={focusedComment} setFocusedComment={setFocusedComment} />
           ))}
         </div>
       </div>
@@ -178,6 +183,7 @@ export const Post = () => {
         setInput={setInput}
         handleSend={() => { }}
         type='post'
+        inputFocus={inputFocus}
       />
     </div>
   );
