@@ -20,28 +20,30 @@ export const BoardMenuBar = () => {
   const [urlAni, setUrlAni] = useState(false); // URL 복사 애니메이션 상태
   const [copyState, setCopyState] = useState(true); // 복사 성공여부
   const [popupState, setPopupState] = useState({
+    chat: false,
+    block: false,
+    delete: false,
+  });
+  const popupData = {
     chat: {
-      isOpen: false,
       title: 'Chat with this account',
       text: '',
       leftButton: 'Cancel',
       rightButton: 'Chat',
     },
     block: {
-      isOpen: false,
       title: 'Block this account?',
       text: 'All posts by the writer will be not displayed. You cannot unlock them.',
       leftButton: 'Cancel',
       rightButton: 'Block',
     },
     delete: {
-      isOpen: false,
       title: 'Delete this post?',
       text: 'Deleted posts cannot be recovered.',
       leftButton: 'Cancel',
       rightButton: 'Ok',
     },
-  });
+  };
   const myPost = false;
   const startMenuAni = (setAni) => {
     // 애니메이션
@@ -52,7 +54,7 @@ export const BoardMenuBar = () => {
     setOpenModal(false);
     setPopupState((prev) => ({
       ...prev,
-      [type]: { ...prev[type], isOpen: !prev[type].isOpen },
+      [type]: !prev[type],
     }));
   }
   const handleRightButton = (type) => {
@@ -177,17 +179,17 @@ export const BoardMenuBar = () => {
           changeToFalseText="URL copy failed"
         />
       )}
-      {Object.entries(popupState).map(([key, { isOpen, title, text, leftButton, rightButton }]) =>
+      {Object.entries(popupState).map(([key, isOpen]) =>
         isOpen &&
         createPortal(
           <Popup
             key={key}
-            title={title}
-            text={text}
+            title={popupData[key].title}
+            text={popupData[key].text}
             onClickLeft={() => togglePopup(key)}
-            leftButton={leftButton}
+            leftButton={popupData[key].leftButton}
             onClickRight={() => handleRightButton(key)}
-            rightButton={rightButton}
+            rightButton={popupData[key].rightButton}
           />,
           document.getElementById('modal-root')
         )
