@@ -39,6 +39,15 @@ import {
   MyComments,
   MyArticles,
   ChatReport,
+  Admin,
+  Dashboard,
+  UserManagement,
+  BoardManagement,
+  SignupManagement,
+  CreateCardnews,
+  ReportManagement,
+  Statistics,
+  AdminLogin,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -349,6 +358,63 @@ const AppRouter = createBrowserRouter([
       },
     ],
   },
+  {
+    path: path.admin.base,
+    element: (
+      <Admin>
+        <Outlet />
+      </Admin>
+    ),
+    children: [
+      {
+        path: '',
+        element: <Navigate to={path.admin.dashboard} replace />,
+      },
+      {
+        path: path.admin.dashboard,
+        element: <Dashboard />,
+      },
+      {
+        path: path.admin.userManagement,
+        element: <UserManagement />,
+      },
+      {
+        path: path.admin.signupManagement,
+        element: <SignupManagement />,
+      },
+      {
+        path: path.admin.boardManagement,
+        element: <BoardManagement />,
+      },
+      {
+        path: path.admin.cardnews,
+        element: <CreateCardnews />,
+      },
+      {
+        path: path.admin.reportMangement,
+        element: <ReportManagement />,
+      },
+
+      {
+        path: path.admin.statistics,
+        element: <Statistics />,
+      },
+    ],
+  },
+  {
+    path: path.admin.base,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: path.admin.login,
+        element: <AdminLogin />,
+      }
+    ]
+  }
 ]);
 
 export default AppRouter;

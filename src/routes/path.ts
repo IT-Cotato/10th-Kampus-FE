@@ -68,4 +68,15 @@ export const path = {
     chatRoom: ':roomId',
     report: 'report',
   },
+  admin: {
+    base: '/admin',
+    login: 'login',
+    dashboard: 'dashboard',
+    userManagement: 'userManagement',
+    signupManagement: 'signupManagement',
+    boardManagement: 'boardManagement',
+    cardnews: 'cardnews',
+    reportMangement: 'reportMangement',
+    statistics: 'statistics',
+  }
 };
