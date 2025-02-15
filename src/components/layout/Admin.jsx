@@ -17,7 +17,7 @@ export const Admin = ({ children }) => {
     { id: 1, text: '사용자 관리', path: path.admin.userManagement },
     { id: 2, text: '가입 관리', path: path.admin.signupManagement },
     { id: 3, text: '게시판 관리', path: path.admin.boardManagement },
-    { id: 4, text: '카드뉴스 제작', path: path.admin.cardnews },
+    { id: 4, text: '카드뉴스 제작', path: path.admin.cardnews.base },
     { id: 5, text: '신고 관리', path: path.admin.reportMangement },
     { id: 6, text: '통계 관리', path: path.admin.statistics },
   ];
@@ -36,7 +36,7 @@ export const Admin = ({ children }) => {
           )}
         </span>
         {showMenu && (
-          <div className="flex h-dvh w-72 flex-col justify-center rounded-br-3xl bg-white pt-20 text-start align-middle lg:max-h-[37.5rem]">
+          <div className="flex min-h-dvh w-72 flex-col justify-center rounded-br-3xl bg-white pt-20 text-start align-middle max-h-[37.5rem]">
             {menu.map((item) => (
               <button
                 key={item.id}
