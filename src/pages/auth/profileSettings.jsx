@@ -8,6 +8,7 @@ import { SearchDropdown } from '@/components/join/searchDropdown';
 import Nations from '@/constants/nations';
 import Languages from '@/constants/languages';
 import axios from 'axios';
+import { patchSignup } from '../../apis/auth/login.api';
 
 export const ProfileSettings = () => {
   const location = useLocation();
@@ -50,7 +51,19 @@ export const ProfileSettings = () => {
     !isNationalitySelected ||
     !isLanguageSelected;
 
-  const handleClickJoinNow = () => {
+  const returnSignupData = () => {
+    const signupData = {
+      nickname: userName,
+      nationality: nationality,
+      preferredLanguage: language,
+      personalInfoAgreement: true,
+      privacyPolicyAgreement: true,
+      termsOfServiceAgreement: true,
+      marketingAgreement: term
+    }
+    return signupData
+  }
+  const handleClickJoinNow = async () => {
     // api 수정되면 terms, language도 추가로 보내주기
     // axios.post('https://kampus.kro.kr/v1/api/auth/signup', {
     //   "email": "arghstjdy",
@@ -66,7 +79,14 @@ export const ProfileSettings = () => {
     // .catch(error => {
     //   console.log('회원가입 에러: ', error);
     // });
-    navigate(`../${path.signup.welcome}`);
+    const { data, success } = await patchSignup(returnSignupData());
+    if (success) {
+      // 우선은 userId를 쓰는 곳이 없어서 저장안해뒀는데 필요하면 추가시키겠습니다!
+      navigate(`${path.signup.base}/${path.signup.welcome}`);
+    }
+    else {
+      alert("Something wrong. Please try again.")
+    }
   };
 
   return (

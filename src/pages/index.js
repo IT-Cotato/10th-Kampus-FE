@@ -39,5 +39,15 @@ export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 export { MyInfo } from './my/settings/myInfo';
-export { Notification } from './my/settings/notification';
+export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
+
+export { Admin } from '../components/layout/Admin';
+export { AdminLogin } from './admin/AdminLogin';
+export { BoardManagement } from './admin/BoardManagement';
+export { CreateCardnews } from './admin/CreateCardnews';
+export { Dashboard } from './admin/Dashboard';
+export { ReportManagement } from './admin/ReportManagement';
+export { SignupManagement } from './admin/SignupManagement';
+export { Statistics } from './admin/Statistics';
+export { UserManagement } from './admin/UserManagement';

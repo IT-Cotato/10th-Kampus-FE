@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import KakaoLogo from '@/assets/imgs/kakaoLogo.svg';
+import KakaoLogo from '@/assets/imgs/KakaoLogo.svg';
 import { parseTokenFromUrl } from '@/utils/authUtils';
 import { App } from '@capacitor/app';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
@@ -37,13 +37,13 @@ export const KakaoLogin = () => {
     }
 
     // 나중에 앱으로 redirect Uri 구현되면 삭제할 코드들
-    const { accessToken, refreshToken } = parseTokenFromUrl();
+    /*const { accessToken, refreshToken } = parseTokenFromUrl();
     if (accessToken && refreshToken) {
       const appUrl = ` kampus://login?accessToken=${accessToken}&refreshToken=${refreshToken}`;
       if (!window.Capacitor.isNativePlatform()) {
         window.location.href = appUrl;
       }
-    }
+    }*/
   }, []);
 
   const handleKakaoAuthorize = () => {
