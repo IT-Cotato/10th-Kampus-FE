@@ -14,7 +14,7 @@ export const CardnewsList = () => {
     setCardnewsList([
       {
         id: 0,
-        title: 'Cardnews4',
+        title: '한국에서 비자 쉽게 갱신하는 꿀팁 어쩌고',
         date: '2025.02.15',
         thumbnail: bg1,
       },
@@ -40,31 +40,33 @@ export const CardnewsList = () => {
   }, []);
   return (
     <div className="flex flex-col flex-1 gap-5 px-10 py-5">
-      <h1 className="text-pageTitle">카드 뉴스</h1>
-      <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))] gap-10">
-        {cardnewsList.map((cardnews) => (
-          <div
-            key={cardnews.id}
-            className="relative h-[18.75rem] w-[18.75rem] overflow-hidden rounded-2xl"
+      <div className="flex flex-col w-full h-full gap-5 p-8 bg-white rounded-2xl">
+        <h1 className="text-pageTitle">카드 뉴스</h1>
+        <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))] gap-10">
+          {cardnewsList.map((cardnews) => (
+            <div
+              key={cardnews.id}
+              className="relative h-[18.75rem] w-[18.75rem] overflow-hidden rounded-2xl"
+            >
+              <h2 className="absolute left-2 top-2 max-w-[17.75rem] rounded-xl bg-white p-2 text-subTitle">
+                {cardnews.title}
+              </h2>
+              <img
+                src={cardnews.thumbnail}
+                className="object-contain w-full h-full"
+              />
+              <span className="absolute p-1 bg-white rounded-lg bottom-2 right-2 text-small text-neutral-base">
+                {cardnews.date}
+              </span>
+            </div>
+          ))}
+          <button
+            className="h-[18.75rem] w-[18.75rem] rounded-2xl border border-primary-base text-[10rem] text-neutral-border-50"
+            onClick={() => navigate(`${path.admin.cardnews.create}`)}
           >
-            <h2 className="absolute left-2 top-2 max-w-[16.75rem] rounded-xl bg-white p-2 text-subTitle">
-              {cardnews.title}
-            </h2>
-            <img
-              src={cardnews.thumbnail}
-              className="object-contain w-full h-full"
-            />
-            <span className="absolute p-1 bg-white rounded-lg bottom-2 right-2 text-small text-neutral-base">
-              {cardnews.date}
-            </span>
-          </div>
-        ))}
-        <button
-          className="h-[18.75rem] w-[18.75rem] rounded-2xl border border-primary-base text-[10rem] text-neutral-border-50"
-          onClick={() => navigate(`${path.admin.cardnews.create}`)}
-        >
-          +
-        </button>
+            +
+          </button>
+        </div>
       </div>
     </div>
   );
