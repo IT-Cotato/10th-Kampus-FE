@@ -30,9 +30,9 @@ export const Admin = ({ children }) => {
           style={{ backgroundImage: `url(${HamburgerIcon})` }}
           onClick={() => setShowMenu(!showMenu)}
         ></button>
-        <span className="hidden text-pageTitle text-primary-90 lg:flex">
-          Kampus
-        </span>
+        {showMenu && (
+          <span className="text-pageTitle text-primary-90">Kampus</span>
+        )}
       </span>
       {showMenu && (
         <div className="flex flex-row justify-center text-center align-middle w-72">
