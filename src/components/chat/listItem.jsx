@@ -27,11 +27,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
             'translate-x-0': !isSlide,
           },
         )}
-        onClick={() =>
-          navigate(`./${data.chatroomId}`, {
-            state: { postTitle: data.postTitle },
-          })
-        }
+        onClick={() => navigate(`./${data.chatroomId}`)}
         onTouchStart={(e) => {
           setStartX(e.touches[0].clientX);
         }}
