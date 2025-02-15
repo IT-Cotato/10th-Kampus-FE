@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 
-export const UserNameInput = ({ userName, onChange, invalid, duplicated }) => {
+export const UserNameInput = (
+  { userName, onChange, invalid, duplicated, label = true }
+) => {
   const userNameRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -9,10 +11,12 @@ export const UserNameInput = ({ userName, onChange, invalid, duplicated }) => {
   };
 
   return (
-    <div className="flex w-full flex-col">
-      <label htmlFor="username" className="text-base text-neutral-base">
-        User Name<span className="text-primary-red">*</span>
-      </label>
+    <div className="flex flex-col w-full">
+      {label && (
+        <label htmlFor="username" className="text-base text-neutral-base">
+          User Name<span className="text-primary-red">*</span>
+        </label>
+      )}
       <input
         id="username"
         type="text"
