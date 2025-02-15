@@ -23,20 +23,20 @@ export const Admin = ({ children }) => {
   ];
 
   return (
-    <div className="flex min-h-dvh w-full min-w-[64rem] bg-primary-5">
-      <span className="absolute flex flex-row items-center gap-2 left-2 top-2">
-        <button
-          className="w-10 h-10 bg-white bg-cover rounded-lg"
-          style={{ backgroundImage: `url(${HamburgerIcon})` }}
-          onClick={() => setShowMenu(!showMenu)}
-        ></button>
+    <div className="admin-layout">
+      <div className="relative flex min-w-[64rem] flex-1 lg:w-dvw">
+        <span className="absolute flex flex-row items-center gap-2 left-2 top-2">
+          <button
+            className="w-10 h-10 bg-white bg-cover rounded-lg"
+            style={{ backgroundImage: `url(${HamburgerIcon})` }}
+            onClick={() => setShowMenu(!showMenu)}
+          ></button>
+          {showMenu && (
+            <span className="text-pageTitle text-primary-90">Kampus</span>
+          )}
+        </span>
         {showMenu && (
-          <span className="text-pageTitle text-primary-90">Kampus</span>
-        )}
-      </span>
-      {showMenu && (
-        <div className="flex flex-row justify-center text-center align-middle w-72 max-h-[800px] bg-white rounded-br-3xl">
-          <div className="flex flex-col justify-center text-start">
+          <div className="flex h-dvh w-72 flex-col justify-center rounded-br-3xl bg-white pt-20 text-start align-middle lg:max-h-[37.5rem]">
             {menu.map((item) => (
               <button
                 key={item.id}
@@ -53,18 +53,22 @@ export const Admin = ({ children }) => {
               </button>
             ))}
           </div>
-        </div>
-      )}
-      <div className="flex flex-col w-full">
-        <div className="justify-end hidden w-full px-6 py-2 bg-white lg:flex">
-          <span className="px-4 py-1 border-2 rounded-full border-primary-40">
-            ㅇㅇㅇ님
-          </span>
-        </div>
-        <div className={cn("flex flex-col flex-1 w-full ml-0", {
-          'ml-14': !showMenu
-        })}>
-          {children}
+        )}
+        <div className="flex flex-col w-full">
+          {showMenu && (
+            <div className="justify-end hidden w-full px-6 py-2 bg-white lg:flex">
+              <span className="px-4 py-1 border-2 rounded-full border-primary-40">
+                ㅇㅇㅇ님
+              </span>
+            </div>
+          )}
+          <div
+            className={cn('flex w-full flex-1 flex-col pl-0', {
+              'pl-14': !showMenu,
+            })}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>
