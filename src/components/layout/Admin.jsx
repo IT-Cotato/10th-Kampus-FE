@@ -63,8 +63,8 @@ export const Admin = ({ children }) => {
             </div>
           )}
           <div
-            className={cn('flex w-full flex-1 flex-col pl-0', {
-              'pl-14': !showMenu,
+            className={cn('flex w-full flex-1 flex-col', {
+              'pt-14': !showMenu,
             })}
           >
             {children}
