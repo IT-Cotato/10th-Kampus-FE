@@ -1,5 +1,8 @@
-export const WriteContent = ({ content, setContent, placeholder }) => {
+export const WriteContent = ({ content, setContent, placeholder, maxLength = 0 }) => {
   const handleOnChange = (e) => {
+    if(maxLength && e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
     setContent(e.target.value);
   };
 

@@ -70,6 +70,7 @@ export const Write = () => {
           content={content}
           setContent={setContent}
           placeholder="Add a content."
+          maxLength={1000}
         />
         <UploadPics onChange={setUploadedFiles} />
         <div className="flex gap-2">
