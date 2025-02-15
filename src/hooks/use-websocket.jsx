@@ -1,12 +1,25 @@
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
-import { useRef } from 'react';
+import { createContext, useContext, useEffect, useRef } from 'react';
 import { postReadMessage } from '@/apis/chat/chatList.api';
+import { ACCESS_TOKEN_KEY } from '@/constants/api';
 
 const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
 
-export const useWebsocket = () => {
+const WebSocketContext = createContext({
+  connectSocket: (token) => {},
+  sendMessage: (chatroomId, message) => {},
+  subscribeToChatRoom: (
+    chatroomId,
+    currentUserId,
+    setMessages,
+    subscriptionRef,
+  ) => {},
+  disconnect: () => {},
+});
+
+export const WebsocketProvider = ({ children }) => {
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
 
@@ -88,11 +101,28 @@ export const useWebsocket = () => {
     }
   };
 
-  return {
-    connectSocket,
-    sendMessage,
-    subscribeToChatRoom,
-    disconnect,
-    stompClientRef,
-  };
+  //소켓 연결 여부
+  useEffect(() => {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    connectSocket(accessToken);
+
+    return () => {
+      disconnect();
+    };
+  }, []);
+
+  return (
+    <WebSocketContext.Provider
+      value={{
+        connectSocket,
+        sendMessage,
+        subscribeToChatRoom,
+        disconnect,
+      }}
+    >
+      {children}
+    </WebSocketContext.Provider>
+  );
 };
+
+export const useWebsocket = () => useContext(WebSocketContext);

@@ -11,7 +11,7 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getChatMessages } from '@/apis/chat/messages.api';
 import { getChatRoom } from '@/apis/chat/chatRoom.api';
 import { getUserDetail } from '@/apis/auth/login.api';
-import { useWebsocket } from '@/hooks/use-websocket';
+import { useWebsocket } from '@/hooks/use-websocket.jsx';
 
 export const ChatRoom = () => {
   const [input, setInput] = useState('');
@@ -44,7 +44,7 @@ export const ChatRoom = () => {
     if (messageData) {
       setMessages(messageData.messages);
     }
-  //구독
+    //구독
     subscribeToChatRoom(chatRoomId, userId?.data.id, setMessages);
 
     return () => {

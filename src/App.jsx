@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import AppRouter from '@/routes/AppRouter';
 import { toast } from 'react-toastify';
+import { WebsocketProvider } from '@/hooks/use-websocket';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,8 +24,10 @@ function App() {
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={AppRouter} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <WebsocketProvider>
+          <RouterProvider router={AppRouter} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </WebsocketProvider>
       </QueryClientProvider>
     </div>
   );

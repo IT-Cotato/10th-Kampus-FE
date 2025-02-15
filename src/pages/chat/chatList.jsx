@@ -4,14 +4,13 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ACCESS_TOKEN_KEY, QUERY_KEYS } from '@/constants/api';
 import { getChatList } from '@/apis/chat/chatList.api';
-import { useWebsocket } from '@/hooks/use-websocket';
+import { useWebsocket } from '@/hooks/use-websocket.jsx';
 
 export const ChatList = () => {
   const [activeSlide, setActiveSlide] = useState(null);
   const [chatList, setChatList] = useState([]);
-  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
 
-  const { connectSocket, disconnect } = useWebsocket();
+  const {  disconnect } = useWebsocket();
 
   const {
     data: chatListData,
@@ -31,7 +30,6 @@ export const ChatList = () => {
 
   //소켓 연결 여부
   useEffect(() => {
-    connectSocket(accessToken);
 
     return () => {
       disconnect();
