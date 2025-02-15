@@ -7,22 +7,69 @@ import link from '@/assets/imgs/exportLink.svg';
 import postDelete from '@/assets/imgs/delete.svg';
 import { useState, useRef, useEffect } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { Popup } from './popup';
+import { path } from '@/routes/path';
 export const BoardMenuBar = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const modalRef = useRef(null);
-  const [openModal, setOpenModal] = useState(false); // 핀 선택 창
+  const [openModal, setOpenModal] = useState(false); // 메뉴바 모달 창
   const [pinAni, setPinAni] = useState(false); // 핀 애니메이션 상태
-  const [myPost, setMyPost] = useState(false); // 자신의 게시글인지 아닌지 판별 확인용
-  const [popupState, setPopupState] = useState(false);
-  const startPinAni = () => {
-    // 핀 애니메이션
+  const [urlAni, setUrlAni] = useState(false); // URL 복사 애니메이션 상태
+  const [copyState, setCopyState] = useState(true); // 복사 성공여부
+  const [popupState, setPopupState] = useState({
+    chat: {
+      isOpen: false,
+      title: 'Chat with this account',
+      text: '',
+      leftButton: 'Cancel',
+      rightButton: 'Chat',
+    },
+    block: {
+      isOpen: false,
+      title: 'Block this account?',
+      text: 'All posts by the writer will be not displayed. You cannot unlock them.',
+      leftButton: 'Cancel',
+      rightButton: 'Block',
+    },
+    delete: {
+      isOpen: false,
+      title: 'Delete this post?',
+      text: 'Deleted posts cannot be recovered.',
+      leftButton: 'Cancel',
+      rightButton: 'Ok',
+    },
+  });
+  const myPost = false;
+  const startMenuAni = (setAni) => {
+    // 애니메이션
     setOpenModal(false);
-    startAnimation(setPinAni);
-    // 이 때 백엔드와 사용자의 보드 핀 또는 스크랩 상태 업데이트 해야 함
+    startAnimation(setAni);
   };
+  const togglePopup = (type) => {
+    setOpenModal(false);
+    setPopupState((prev) => ({
+      ...prev,
+      [type]: { ...prev[type], isOpen: !prev[type].isOpen },
+    }));
+  }
+  const handleRightButton = (type) => {
+
+  }
+  const copyUrl = async () => {
+    const nowUrl = window.location.href;
+    await navigator.clipboard.writeText(nowUrl)
+      .then(() => {
+        setCopyState(true)
+        startMenuAni(setUrlAni);
+      })
+      .catch(() => {
+        setCopyState(false)
+        startAnimation(setUrlAni)
+      })
+  }
   useEffect(() => {
     const handleOutSide = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -48,7 +95,7 @@ export const BoardMenuBar = () => {
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
             ref={modalRef}
-            onClick={() => startPinAni()}
+            onClick={() => startMenuAni(setPinAni)}
           >
             <p className="text-base">
               {!pinAni ? 'Add to Bookmark' : 'Remove the Bookmark'}
@@ -63,28 +110,28 @@ export const BoardMenuBar = () => {
           <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
             <div
               className="flex items-center justify-between pb-1"
-              onClick={() => setPopupState(true)}
+              onClick={() => togglePopup('chat')}
             >
               <p>Send a message</p>
               <img src={chat} alt="Start a Chat" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
-              onClick={() => console.log('Copy')}
+              onClick={() => copyUrl()}
             >
               <p>Copy URL</p>
               <img src={link} alt="Copy URL" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
-              onClick={() => console.log('Report')}
+              onClick={() => navigate('/', { state: { postId: 1 } })} // 신고 페이지로 이동
             >
               <p>Report</p>
               <img src={report} alt="Report" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
-              onClick={() => console.log('Block')}
+              onClick={() => togglePopup('block')}
             >
               <p>Block</p>
               <img src={block} alt="Block" className="h-4 w-4" />
@@ -97,14 +144,14 @@ export const BoardMenuBar = () => {
           <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
             <div
               className="flex items-center justify-between pb-1"
-              onClick={() => console.log('Copy')}
+              onClick={() => copyUrl()}
             >
               <p className="text-neutral-title">Copy URL</p>
               <img src={link} alt="Copy URL" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
-              onClick={() => console.log('Delete')}
+              onClick={() => togglePopup('delete')}
             >
               <p className="text-primary-red">Delete</p>
               <img
@@ -123,18 +170,28 @@ export const BoardMenuBar = () => {
           changeToFalseText="Unpinned from the board"
         />
       )}
-      {popupState &&
+      {urlAni && (
+        <StateChangeAnimate
+          state={!copyState}
+          changeToTrueText="URL copied successfully"
+          changeToFalseText="URL copy failed"
+        />
+      )}
+      {Object.entries(popupState).map(([key, { isOpen, title, text, leftButton, rightButton }]) =>
+        isOpen &&
         createPortal(
           <Popup
-            title="Chat with this account"
-            text=""
-            onClickLeft={() => setPopupState(false)}
-            leftButton="Cancel"
-            onClickRight={() => setPopupState(false)}
-            rightButton="Chat"
+            key={key}
+            title={title}
+            text={text}
+            onClickLeft={() => togglePopup(key)}
+            leftButton={leftButton}
+            onClickRight={() => handleRightButton(key)}
+            rightButton={rightButton}
           />,
-          document.getElementById('modal-root'),
-        )}
+          document.getElementById('modal-root')
+        )
+      )}
     </div>
   );
 };

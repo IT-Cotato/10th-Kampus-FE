@@ -20,7 +20,7 @@ export const Popup = (props) => {
           </div>
         }
         {props.text &&
-          <div className="flex w-full items-center justify-center px-10 text-center align-middle text-base text-neutral-base">
+          <div className="flex w-full items-center justify-center px-4 text-center align-middle text-base text-neutral-base">
             {props.text}
           </div>
         }
