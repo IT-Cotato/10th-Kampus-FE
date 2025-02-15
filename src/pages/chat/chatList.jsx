@@ -85,7 +85,7 @@ export const ChatList = () => {
 
   return (
     <div
-      className="relative flex h-full w-full flex-col gap-4 p-4"
+      className="relative flex flex-col w-full h-full gap-4 p-4"
       onClick={handleClickOutside}
     >
       <div className="text-title text-neutral-title">Chats</div>
@@ -94,7 +94,7 @@ export const ChatList = () => {
         <ListItem
           key={data.chatroomId}
           data={data}
-          isSlide={activeSlide === data.id}
+          isSlide={activeSlide === data.chatroomId}
           setActiveSlide={setActiveSlide}
         />
       ))}
