@@ -5,12 +5,15 @@ import { useState } from 'react';
 import { BlockModal } from '@/components/chat/blockModal';
 import { LeaveModal } from '@/components/chat/leaveModal';
 import { ChatMenu } from '@/components/chat/chatMenu';
+import { Modal } from '@/components/common/Modal';
+import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 
 export const RoomHeader = ({ text }) => {
   const navigate = useNavigate();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isBlockModal, setIsBlockModal] = useState(false);
   const [isLeaveModal, setIsLeaveModal] = useState(false);
+  const [isMuteModal, setIsMuteModal] = useState(false);
 
   return (
     <div className="flex h-16 flex-row items-center justify-between border-b-[.0313rem] border-neutral-border-30 p-4">
@@ -29,17 +32,24 @@ export const RoomHeader = ({ text }) => {
           setIsOpenMenu={setIsOpenMenu}
           setIsBlockModal={setIsBlockModal}
           setIsLeaveModal={setIsLeaveModal}
+          setIsMuteModal={setIsMuteModal}
         />
       )}
       <BlockModal
         isOpen={isBlockModal}
         onClose={() => setIsBlockModal(false)}
       />
-
       <LeaveModal
         isOpen={isLeaveModal}
         onClose={() => setIsLeaveModal(false)}
       />
+      {isMuteModal && (
+        <StateChangeAnimate
+          state={isMuteModal}
+          changeToTrueText={'Success mute'}
+          changeToFalseText={'Success alram'}
+        />
+      )}
     </div>
   );
 };
