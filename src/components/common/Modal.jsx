@@ -18,10 +18,10 @@ export const Modal = ({ children = null, title = '', onClose }) => {
   return (
     <ModalPortal>
       <div
-        className="absolute left-0 top-0 z-50 flex h-dvh w-full items-center justify-center overflow-hidden bg-black bg-opacity-30"
+        className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden overflow-x-hidden overflow-y-auto bg-black bg-opacity-30"
         onClick={onClose}
       >
-        <div className="mx-4 flex w-full flex-col items-center gap-[1.875rem] overflow-hidden rounded-[.625rem] bg-white p-3 py-[1.875rem]">
+        <div className="mx-4 flex w-full max-w-lg flex-col items-center gap-[1.875rem] overflow-hidden rounded-[.625rem] bg-white p-3 py-[1.875rem]">
           <h2 className="text-subTitle text-neutral-title">{title}</h2>
           {children && <div className="overflow-y-auto">{children}</div>}
         </div>

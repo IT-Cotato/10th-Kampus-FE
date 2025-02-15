@@ -37,7 +37,7 @@ export const UserInput = ({
   }, [handleSend]);
 
   return (
-    <div className="fixed bottom-3 left-0 right-0 mx-auto max-w-lg px-4">
+    <div className="fixed left-0 right-0 max-w-lg px-4 mx-auto bottom-3">
       <div
         ref={containerRef}
         className="h-autoitems-start flex overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
@@ -51,7 +51,7 @@ export const UserInput = ({
               'text-neutral-border-30': !input,
             })}
           >
-            <Camera className="h-full w-full text-neutral-icon" />
+            <Camera className="w-full h-full text-neutral-icon" />
           </button>
         )}
         <textarea
@@ -62,8 +62,9 @@ export const UserInput = ({
             handleInput();
           }}
           rows={1}
-          className="flex-grow resize-none bg-neutral-bg-5 px-2 pt-1 text-base text-neutral-title"
+          className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
           placeholder={placeholder}
+          autoFocus
         />
         <button
           onClick={() => {
@@ -75,7 +76,7 @@ export const UserInput = ({
             'text-neutral-border-30': !input,
           })}
         >
-          <Send className="h-full w-full" />
+          <Send className="w-full h-full" />
         </button>
       </div>
     </div>

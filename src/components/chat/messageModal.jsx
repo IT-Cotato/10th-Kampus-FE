@@ -3,9 +3,10 @@ import blockIcon from '@/assets/imgs/postBlock.svg';
 import muteIcon from '@/assets/imgs/muteIcon.svg';
 import deleteIcon from '@/assets/imgs/delete.svg';
 import ReactDom from 'react-dom';
+import { useEffect } from 'react';
 
 const ModalPortal = ({ children }) => {
-  const root = document.getElementById('portal-root');
+  const root = document.getElementById('modal-root');
   return ReactDom.createPortal(children, root);
 };
 
@@ -15,10 +16,18 @@ export const PRESS_TYPE = {
 };
 
 export const MessageModal = ({ onClose, type = PRESS_TYPE.message }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <ModalPortal>
       <div
-        className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-30 text-neutral-title"
+        className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden overflow-x-hidden overflow-y-auto bg-black bg-opacity-30"
         onClick={onClose}
       >
         <div className="mx-14 flex w-[16.125rem] flex-col items-center gap-3 overflow-hidden rounded-[.625rem] bg-white py-3">
