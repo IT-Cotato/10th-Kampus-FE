@@ -39,7 +39,7 @@ export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 export { MyInfo } from './my/settings/myInfo';
-export { Notification } from './my/settings/Notification';
+export { Notification } from './my/settings/notification';
 export { Search } from './search/Search';
 
 export { Admin } from '../components/layout/Admin';
