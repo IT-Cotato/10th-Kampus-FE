@@ -2,15 +2,12 @@ import { NoticeBox } from '@/components/common/noticeBox';
 import { ListItem } from '@/components/chat/listItem';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ACCESS_TOKEN_KEY, QUERY_KEYS } from '@/constants/api';
+import { QUERY_KEYS } from '@/constants/api';
 import { getChatList } from '@/apis/chat/chatList.api';
-import { useWebsocket } from '@/hooks/use-websocket.jsx';
 
-export const ChatList = () => {
+export const ChatList = ({ onChatRoomSelect }) => {
   const [activeSlide, setActiveSlide] = useState(null);
   const [chatList, setChatList] = useState([]);
-
-  const {  disconnect } = useWebsocket();
 
   const {
     data: chatListData,
@@ -27,14 +24,6 @@ export const ChatList = () => {
       setChatList(chatListData.chatRoomPreviewList || []);
     }
   }, [chatListData]);
-
-  //소켓 연결 여부
-  useEffect(() => {
-
-    return () => {
-      disconnect();
-    };
-  }, [chatList]);
 
   const handleClickOutside = () => {
     setActiveSlide(null);
@@ -60,6 +49,7 @@ export const ChatList = () => {
             data={data}
             isSlide={activeSlide === data.chatroomId}
             setActiveSlide={setActiveSlide}
+            onClick={() => onChatRoomSelect(data.chatroomId)}
           />
         ))
       )}

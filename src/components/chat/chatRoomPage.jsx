@@ -2,7 +2,7 @@ import { ArticleInfo } from '@/components/chat/articleInfo';
 import { NoticeBox } from '@/components/common/noticeBox';
 import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RoomHeader } from '@/components/chat/roomHeader';
 import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
@@ -11,16 +11,11 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getChatMessages } from '@/apis/chat/messages.api';
 import { getChatRoom } from '@/apis/chat/chatRoom.api';
 import { getUserDetail } from '@/apis/auth/login.api';
-import { useWebsocket } from '@/hooks/use-websocket.jsx';
 
-export const ChatRoom = () => {
+export const ChatRoom = ({ chatRoomId }) => {
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [page, setPage] = useState(1);
-  const [messages, setMessages] = useState([]);
-  const chatRoomId = useParams();
-
-  const { subscribeToChatRoom, sendMessage, disconnect } = useWebsocket();
 
   // 초기메시지 GET
   const { data: messageData } = useQuery({
@@ -40,22 +35,10 @@ export const ChatRoom = () => {
     queryFn: () => getUserDetail(),
   });
 
-  useEffect(() => {
-    if (messageData) {
-      setMessages(messageData.messages);
-    }
-    //구독
-    subscribeToChatRoom(chatRoomId, userId?.data.id, setMessages);
-
-    return () => {
-      disconnect();
-    };
-  }, [messageData, chatRoomId, userId]);
-
   //메시지 전송
   const handleSendMessage = () => {
     if (input.trim()) {
-      sendMessage({ chatRoomId, input });
+      // sendMessage({ chatRoomId, input });
       setInput('');
     }
   };
@@ -75,7 +58,7 @@ export const ChatRoom = () => {
       <div className="px-4">
         <NoticeBox />
         <div className="flex flex-col flex-1">
-          {messages.map((message, index) => (
+          {messageData.map((message, index) => (
             <div
               key={index}
               className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {

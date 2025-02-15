@@ -11,8 +11,7 @@ export { SchoolVerification } from './auth/schoolVerification';
 export { SchoolEmail } from './auth/schoolEmail';
 export { SchoolPhoto } from './auth/schoolPhoto';
 
-export { ChatList } from './chat/chatList';
-export { ChatRoom } from './chat/chatRoom';
+export { ChatPage } from './chat/chat';
 export { ChatReport } from './chat/chatReport';
 
 export { AllBoard } from './board/allboard';

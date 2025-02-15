@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 import { NewMsgCnt } from '@/components/chat/newMsgCnt';
 import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
@@ -8,10 +7,9 @@ import leaveIcon from '@/assets/imgs/leaveIcon.svg';
 import { touchDrag } from '@/utils/touchDrag';
 import { parseKstDate, utcToKst } from '@/utils/utcToKst';
 
-export const ListItem = ({ data, isSlide, setActiveSlide }) => {
+export const ListItem = ({ data, isSlide, setActiveSlide, onClick }) => {
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
-  const navigate = useNavigate();
 
   const kst = utcToKst(data.lastChatTime);
   const time = parseKstDate(kst);
@@ -27,7 +25,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
             'translate-x-0': !isSlide,
           },
         )}
-        onClick={() => navigate(`./${data.chatroomId}`)}
+        onClick={onClick}
         onTouchStart={(e) => {
           setStartX(e.touches[0].clientX);
         }}
