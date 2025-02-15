@@ -37,7 +37,7 @@ export { MyArticles } from './my/community/MyArticles';
 export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
-export { MyInfo } from './my/settings/myInfo';
+export { MyInfo } from './my/settings/MyInfo';
 export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
 
