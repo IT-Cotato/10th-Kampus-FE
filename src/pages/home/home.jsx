@@ -86,8 +86,8 @@ export const Home = () => {
 
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
-      <div className="flex items-start justify-between">
-        <Logo className="w-[5.5rem] text-primary-base" />
+      <div className="flex items-start justify-between pb-[.625rem]">
+        <Logo className="w-[6rem] h-auto text-primary-base" />
         <div className="flex gap-[0.875rem]">
           <img
             src={isNotification ? notification_true : notifiaction}
