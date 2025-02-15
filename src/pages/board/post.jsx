@@ -17,7 +17,7 @@ import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { formatTime } from '@/utils/formatTime';
 import { PostComment } from '@/components/board/PostComment';
 export const Post = () => {
-  const [focusedComment, setFocusedComment] = useState(null);
+  const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
   const [input, setInput] = useState('');
   const [imageFocus, setImageFocus] = useState(false);

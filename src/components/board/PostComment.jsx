@@ -4,18 +4,9 @@ import FillLike from "@/assets/imgs/fillLike.svg?react"
 import Comment from "@/assets/imgs/comment.svg?react"
 import Translate from "@/assets/imgs/translate.svg?react"
 import { formatTime } from "@/utils/formatTime"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { cn } from "@/utils/cn"
 export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment }) => {
-    /*{
-    "commentId": 9007199254740991,
-    "commentStatus": "NORMAL",
-    "author": "string",
-    "content": "string",
-    "likes": 9007199254740991,
-    "createdTime": "2025-02-15T15:19:08.060Z"
-  }*/
-
     const commentRef = useRef(null);
     const handleComment = (ref, commentId) => {
         ref.current?.scrollIntoView({

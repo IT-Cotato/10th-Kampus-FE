@@ -11,25 +11,41 @@ import { useParams } from 'react-router-dom';
 
 export const BoardMenuBar = () => {
   const { postId } = useParams();
-  const [openPinModal, setOpenPinModal] = useState(false); // 핀 선택 창
+  const modalRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false); // 핀 선택 창
   const [pinAni, setPinAni] = useState(false); // 핀 애니메이션 상태
   const [myPost, setMyPost] = useState(false); // 자신의 게시글인지 아닌지 판별 확인용
   const startPinAni = () => {
     // 핀 애니메이션
-    setOpenPinModal(false);
+    setOpenModal(false);
     startAnimation(setPinAni);
     // 이 때 백엔드와 사용자의 보드 핀 또는 스크랩 상태 업데이트 해야 함
   };
-
+  useEffect(() => {
+    const handleOutSide = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        setOpenModal(false);
+      }
+    }
+    if (openModal) {
+      document.addEventListener('touchmove', handleOutSide);
+      document.addEventListener('mousedown', handleOutSide);
+    }
+    return () => {
+      document.removeEventListener('touchmove', handleOutSide);
+      document.removeEventListener('mousedown', handleOutSide);
+    }
+  }, [openModal])
   return (
     <div className="h-5 w-5 cursor-pointer text-neutral-title">
-      <button onClick={() => setOpenPinModal(!openPinModal)}>
+      <button onClick={() => setOpenModal(!openModal)}>
         <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
       </button>
-      {openPinModal &&
+      {openModal &&
         !postId && ( // 게시글 리스트 부분
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
+            ref={modalRef}
             onClick={() => startPinAni()}
           >
             <p className="text-base">
@@ -39,10 +55,10 @@ export const BoardMenuBar = () => {
             <img src={pin} className="h-5 w-5 -rotate-90" />
           </div>
         )}
-      {openPinModal &&
+      {openModal &&
         postId &&
         !myPost && ( // 상세 게시글 중 다른 사람 게시글
-          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
+          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
             <div
               className="flex items-center justify-between pb-1"
               onClick={() => console.log('Chat')}
@@ -73,10 +89,10 @@ export const BoardMenuBar = () => {
             </div>
           </div>
         )}
-      {openPinModal &&
+      {openModal &&
         postId &&
         myPost && ( // 상세 게시글 중 내가 작성한 게시글
-          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
+          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
             <div
               className="flex items-center justify-between pb-1"
               onClick={() => console.log('Copy')}
