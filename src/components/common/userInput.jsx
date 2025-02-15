@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 const InputTypes = {
   CHAT: 'chat',
+  POST: 'post'
 };
 
 export const UserInput = ({
@@ -31,7 +32,6 @@ export const UserInput = ({
       }
     }
   };
-
   useEffect(() => {
     handleInput();
   }, [handleSend]);

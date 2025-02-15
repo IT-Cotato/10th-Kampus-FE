@@ -6,7 +6,7 @@ import Translate from "@/assets/imgs/translate.svg?react"
 import { formatTime } from "@/utils/formatTime"
 import { useRef, useState } from "react"
 import { cn } from "@/utils/cn"
-export const PostComment = ({ data, }) => {
+export const PostComment = ({ data, focusedComment, setFocusedComment }) => {
     /*{
     "commentId": 9007199254740991,
     "commentStatus": "NORMAL",
@@ -15,17 +15,24 @@ export const PostComment = ({ data, }) => {
     "likes": 9007199254740991,
     "createdTime": "2025-02-15T15:19:08.060Z"
   }*/
+
     const commentRef = useRef(null);
-    const commentScroll = () => {
-        commentRef.current?.scrollIntoView({
+    const handleComment = (ref, commentId) => {
+        ref.current?.scrollIntoView({
             behavior: "smooth",
             block: "start"
         })
+        setFocusedComment(commentId)
     }
-    console.log(data.isReply)
+
     return (
         <>
-            <div ref={commentRef} className="flex flex-col gap-2 px-4 py-[0.9375rem] text-base">
+            <div ref={commentRef}
+                className={cn("flex flex-col gap-2 px-4 py-[0.9375rem] text-base",
+                    {
+                        "bg-primary-10": focusedComment === data.commentId,
+                        "bg-white": focusedComment !== data.commentId
+                    })}>
                 <div className="flex  justify-between">
                     <div className="flex items-center gap-2">
                         <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
@@ -53,7 +60,7 @@ export const PostComment = ({ data, }) => {
                 <div className="flex justify-between">
                     <div className="text-neutral-border-50"
                         onClick={() => {
-                            commentScroll()
+                            handleComment(commentRef, data.commentId)
                         }}>
                         Reply
                     </div>
@@ -62,17 +69,21 @@ export const PostComment = ({ data, }) => {
             </div>
             {data.isReply &&
                 data.isReply.map((item, index) => (
-                    <ReplyComment data={item} key={index} />
+                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment} />
                 ))
             }
         </>
     )
 }
-const ReplyComment = ({ data }) => {
-    const [isFocus, setIsFocus] = useState(false);
+const ReplyComment = ({ data, focusedComment, handleComment }) => {
+    const commentRef = useRef(null);
     return (
-        <div className={cn("flex flex-col gap-2 pl-[2.8125rem] pr-4 py-[0.9375rem] text-base",
-            { "bg-primary-5": isFocus, "bg-white": !isFocus })}>
+        <div ref={commentRef}
+            className={cn("flex flex-col gap-2 pl-[2.8125rem] pr-4 py-[0.9375rem] text-base",
+                {
+                    "bg-primary-10": focusedComment === data.commentId,
+                    "bg-white": focusedComment !== data.commentId
+                })}>
             <div className="flex  justify-between" >
                 <div className="flex items-center gap-2">
                     <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
@@ -93,7 +104,10 @@ const ReplyComment = ({ data }) => {
                 {data.content}
             </p>
             <div className="flex justify-between">
-                <div className="text-neutral-border-50">
+                <div className="text-neutral-border-50"
+                    onClick={() => {
+                        handleComment(commentRef, data.commentId)
+                    }}>
                     Reply
                 </div>
                 <Translate className="w-[1.125rem] h-[1.125rem] text-neutral-base" />

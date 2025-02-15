@@ -17,6 +17,7 @@ import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { formatTime } from '@/utils/formatTime';
 import { PostComment } from '@/components/board/PostComment';
 export const Post = () => {
+  const [focusedComment, setFocusedComment] = useState(null);
   const [input, setInput] = useState('');
   const [imageFocus, setImageFocus] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
@@ -69,6 +70,7 @@ export const Post = () => {
       createdTime: "2025-02-15T13:58:13.657Z"
     }
   ])
+
   return (
     <div>
       {imageFocus && (
@@ -165,7 +167,7 @@ export const Post = () => {
         {/** 댓글 부분 */}
         <div className='flex flex-col'>
           {commentList.map((item, index) => (
-            <PostComment data={item} key={index} />
+            <PostComment data={item} key={index} focusedComment={focusedComment} setFocusedComment={setFocusedComment} />
           ))}
         </div>
       </div>
@@ -175,7 +177,7 @@ export const Post = () => {
         input={input}
         setInput={setInput}
         handleSend={() => { }}
-        type="post"
+        type='post'
       />
     </div>
   );
