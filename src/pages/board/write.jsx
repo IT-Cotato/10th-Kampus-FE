@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
-
+import { TranslatePopup } from '@/components/board/write/TranslatePopup';
+import { createPortal } from 'react-dom';
 export const Write = () => {
   const { boardTitle } = useParams();
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const Write = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [content, setContent] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
-
+  const [isPopup, setIsPopup] = useState(false);
   const disabled = !title || !content;
 
   const handleUpload = () => {
@@ -32,7 +33,8 @@ export const Write = () => {
   };
 
   const handleTranslateAndUpload = () => {
-    // 번역 관련 팝업
+    setIsPopup(true)
+    // 번역 연동 시, 추가 예정
   };
 
   return (
@@ -82,6 +84,18 @@ export const Write = () => {
           </MainButton>
         </div>
       </div>
+      {/** props의 isLoading은 useQuery 이용 예정 */}
+      {isPopup &&
+        createPortal(
+          <TranslatePopup
+            title={title}
+            text={content}
+            onClickLeft={() => { setIsPopup(false) }}
+            onClickRight={() => { }}
+            isLoading={false}
+          />,
+          document.getElementById('modal-root')
+        )}
     </div>
   );
 };
