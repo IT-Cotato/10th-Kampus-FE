@@ -148,7 +148,7 @@ export const CreateCardnews = () => {
             {/* 드래그앤드롭 */}
             <div
               className={cn(
-                'flex h-40 w-full flex-col items-center justify-end gap-3 rounded-lg border border-dashed border-neutral-border-40 bg-neutral-bg-5 py-5',
+                'flex h-64 w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-neutral-border-40 bg-neutral-bg-5 py-5',
                 {
                   'border-primary-30 bg-primary-5': isDragging,
                 },
@@ -184,23 +184,8 @@ export const CreateCardnews = () => {
                 onChange={getImageFiles}
               />
             </div>
-
-            {/* 카드뉴스 업로드 버튼 */}
-            <button
-              type="button"
-              className={cn(
-                'w-full rounded-md bg-primary-base p-3 text-subTitle text-white',
-                {
-                  'bg-neutral-border-30': isUploadButtonDisabled,
-                },
-              )}
-              disabled={isUploadButtonDisabled}
-              onClick={handleClickUpload}
-            >
-              업로드
-            </button>
           </div>
-          <div className="flex flex-col items-center p-10 text-center border rounded-lg">
+          <div className="flex flex-col items-center gap-4 text-center border rounded-lg p-14">
             <h1 className="text-neutral-base">미리보기</h1>
             <h2
               className={cn('flex h-10 items-center text-pageTitle', {
@@ -246,6 +231,21 @@ export const CreateCardnews = () => {
                 </button>
               )}
             </div>
+
+            {/* 카드뉴스 업로드 버튼 */}
+            <button
+              type="button"
+              className={cn(
+                'w-full rounded-md bg-primary-base p-3 text-subTitle text-white',
+                {
+                  'bg-neutral-border-30': isUploadButtonDisabled,
+                },
+              )}
+              disabled={isUploadButtonDisabled}
+              onClick={handleClickUpload}
+            >
+              업로드
+            </button>
           </div>
         </div>
       </div>
