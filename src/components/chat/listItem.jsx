@@ -13,10 +13,6 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
   const itemRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleTouchMove = (e) => {
-    const currentX = e.touches[0].clientX;
-    touchDrag(startX, currentX, setActiveSlide, data);
-  };
   const kst = utcToKst(data.lastChatTime);
   const time = parseKstDate(kst);
 
@@ -28,12 +24,22 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
           'flex h-full w-full justify-between gap-[1.25rem] transition-transform duration-300',
           {
             '-translate-x-[110px]': isSlide,
-            'transliate-x-0': !isSlide,
+            'translate-x-0': !isSlide,
           },
         )}
-        onClick={() => navigate(`./${data.id}`, { state: data.postName })}
-        onTouchStart={(e) => setStartX(e.touches[0].clientX)}
-        onTouchMove={handleTouchMove}
+        onClick={() =>
+          navigate(`./${data.chatroomId}`, {
+            state: { postTitle: data.postTitle },
+          })
+        }
+        onTouchStart={(e) => {
+          setStartX(e.touches[0].clientX);
+        }}
+        onTouchMove={(e) => {
+          const currentX = e.touches[0].clientX;
+          touchDrag(startX, currentX, setActiveSlide, data);
+          setActiveSlide(data.chatroomId);
+        }}
         onTouchEnd={() => {
           if (!isSlide) {
             setActiveSlide(null);
@@ -41,7 +47,7 @@ export const ListItem = ({ data, isSlide, setActiveSlide }) => {
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex w-full flex-col justify-between">
+        <div className="flex flex-col justify-between w-full">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.postTitle}

@@ -38,6 +38,7 @@ import {
   CommunityScrap,
   MyComments,
   MyArticles,
+  ChatReport,
   Admin,
   Dashboard,
   UserManagement,
@@ -204,8 +205,12 @@ const AppRouter = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ':id',
+        path: path.chatList.chatRoom,
         element: <ChatRoom />,
+      },
+      {
+        path: `${path.chatList.chatRoom}/${path.chatList.report}`,
+        element: <ChatReport />,
       },
     ],
   },

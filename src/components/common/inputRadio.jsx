@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 export const InputRadio = ({
   item,
   name,
@@ -6,13 +8,29 @@ export const InputRadio = ({
   placeholder,
   setAdditionalText,
 }) => {
+  const textareaRef = useRef(null);
+
   const handleOnchange = (e) => {
     setSelected(e.target.id);
   };
 
+  useEffect(() => {
+    // textarea 스크롤
+    if (
+      selected === item.text &&
+      item.text === 'Other' &&
+      textareaRef.current
+    ) {
+      textareaRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [selected, item.text]);
+
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex w-full justify-between border-b border-neutral-border-30 py-4">
+    <div className="flex flex-col w-full">
+      <div className="flex justify-between w-full py-4 border-b border-neutral-border-30">
         <label htmlFor={item.text}>{item.text}</label>
         <input
           type="radio"
@@ -25,10 +43,12 @@ export const InputRadio = ({
       </div>
       {item.text === 'Other' && selected === 'Other' && (
         <textarea
+          ref={textareaRef}
           className="mt-[1.875rem] resize-none rounded-[.625rem] border border-primary-20 p-4 text-base placeholder-neutral-border-50"
           placeholder={placeholder}
           rows={4}
           onChange={(e) => setAdditionalText(e.target.value)}
+          autoFocus
         />
       )}
     </div>

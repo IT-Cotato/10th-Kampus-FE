@@ -74,7 +74,7 @@ export const Board = () => {
           <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
             Notice
           </div>
-          {isActive.filter && <FilterBox />}{' '}
+          {isActive.filter && <FilterBox />}
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
         <div className="flex flex-col flex-1 w-full px-4 bg-white divide-y">
