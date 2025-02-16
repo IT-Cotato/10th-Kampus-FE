@@ -75,7 +75,10 @@ export const path = {
     userManagement: 'userManagement',
     signupManagement: 'signupManagement',
     boardManagement: 'boardManagement',
-    cardnews: 'cardnews',
+    cardnews: {
+      base: 'cardnews',
+      create: 'create',
+    },
     reportMangement: 'reportMangement',
     statistics: 'statistics',
   }
