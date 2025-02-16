@@ -101,7 +101,7 @@ export const SearchDropdown = ({
             </div>
           )}
           {warning && (
-            <div className="absolute z-0 mt-1 text-small text-primary-red">
+            <div className="mt-1 text-small text-primary-red">
               {warn}
             </div>
           )}
