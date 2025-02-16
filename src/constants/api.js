@@ -7,11 +7,29 @@ export const REFRESH_TOKEN_DURATION = 24;
 export const KAKAO_AUTH_API_URL = 'https://kauth.kakao.com/oauth/authorize';
 
 export const API_DOMAINS = {
-  USER: '/user',
+  USER: '/users/details',
+
   MYPAGE: '/mypage',
+
   PRODUCTS: '/products',
+
+  CREATE_CHAT: '/chats/post',
+  READ_MESSAGE: '/chats/:chatroomId/read',
   CHATLIST: '/chats/chatrooms',
-  CHATMESSAGE: '/chats/:chatroomId/messages',
+  CHAT_MESSAGE: '/chats/:chatroomId/messages',
+  CHATROOM_DETAIL: '/chats/chatrooms/{chatroomId}',
+
+  BOARD_PUBLIC: '/boards/public',
+  BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
+  BOARD_UNIV: '/boards/university',
+  BOARD_DETAIL: '/boards/:boardId',
+  BOARD_FAVORITE: '/boards/favorite',
+
+  POST_CREATE: '/posts',
+  POST_HANDLE: '/posts/:postId',
+  POST_GET_LIST: '/posts/boards/:boardId',
+
+  ADMIN_CREATE_BOARD: '/admin/boards'
 };
 
 export const QUERY_KEYS = {
@@ -19,4 +37,6 @@ export const QUERY_KEYS = {
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
   GET_CHAT_LIST: 'chatList',
+  GET_PUBLIC_BOARD_LIST: 'publicBoard',
+  GET_POST_LIST: 'postList'
 };

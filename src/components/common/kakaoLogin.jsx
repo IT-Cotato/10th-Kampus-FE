@@ -50,6 +50,7 @@ export const KakaoLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri,
       scope: 'account_email',
+      throughTalk: false  // 카카오 앱이 아닌 브라우저 로그인하게 하는 옵션 
     });
   };
   return (

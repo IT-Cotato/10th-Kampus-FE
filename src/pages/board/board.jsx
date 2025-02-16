@@ -6,8 +6,15 @@ import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
 import { path } from '@/routes/path';
 import { WriteButton } from '@/components/board/write/WriteButton';
-
+import { getPostList } from '@/apis/board/getPostList.api';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
 export const Board = () => {
+  const boardId = 0;  // params로 boardId가져올것
+  const { data: postList, isLoading, error } = useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
+    queryFn: () => getPostList({ boardId: boardId, page: 0 })
+  })
   const { boardTitle } = useParams(); // 서버와 통신 시, 파라미터에 따라 데이터 가져오기
   const isActive = {
     // 게시글 종류
