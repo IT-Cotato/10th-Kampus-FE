@@ -2,33 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { BoardListBox } from '@/components/board/BoardListBox';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { getBoardList } from '@/apis/board/getBoardList.api';
-import { useQuery } from '@tanstack/react-query';
+import { addBoardFavorite, deleteBoardFavorite } from '@/apis/board/toggleBoardFavorite.api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
 export const AllBoard = () => {
+  const queryClient = useQueryClient()
   const { data: listData, isLoading, error } = useQuery({
     queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST],
     queryFn: getBoardList,
   })
+  const { mutate: toggleFavorite } = useMutation({
+    mutationFn: ({ boardId, isPinned }) =>
+      isPinned ? deleteBoardFavorite({ boardId }) : addBoardFavorite({ boardId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] });
+    }
+  })
+
   const [isUpdate, setIsUpdate] = useState({
     modal: false,
     prev: false,
   });
-  const [listArray, setListArray] = useState({
-    first: [
-      { title: 'Free Talk', pin: false, order: 1 },
-      { title: 'Question', pin: false, order: 2 },
-      { title: 'Information', pin: false, order: 3 },
-      { title: 'Trending', pin: false, order: 4 },
-    ],
-    second: [{ title: 'How to live in Korea', pin: false, order: 1 }],
-    third: [
-      { title: 'Housing', pin: false, order: 1 },
-      { title: 'Part time / Job', pin: false, order: 2 },
-      { title: 'Language Exchange', pin: false, order: 3 },
-      { title: 'Festival / Events', pin: false, order: 4 },
-    ],
-  });
+
+  const [listArray, setListArray] = useState({});
+
   const parseBoardData = (dataList) => {
     const boardList = { first: [], second: [], third: [] };
     dataList?.forEach((data) => {
@@ -37,10 +35,10 @@ export const AllBoard = () => {
         pin: data.isFavorite,
         order: data.boardId,
       }
-      if (data.boardId >= 0 && data.boardId <= 3) {
+      if (data.boardId >= 1 && data.boardId <= 4) {
         boardList.first.push(formatData);
       }
-      else if (data.boardId === 4) {
+      else if (data.boardId === 5) {
         boardList.second.push(formatData);
       }
       else {
@@ -53,6 +51,7 @@ export const AllBoard = () => {
       third: boardList.third ?? [],
     }
   }
+
   const sortList = (data) => {
     const sortedList = {};
     Object.keys(data).forEach((key) => {
@@ -69,7 +68,9 @@ export const AllBoard = () => {
     })
     return sortedList;
   };
-  const togglePin = (listKey, index) => {
+
+  const togglePin = (listKey, index, boardId) => {
+    const isPinned = listArray[listKey][index].pin;
     setListArray((prev) => {
       const updatedList = { ...prev };
       updatedList[listKey] = [...updatedList[listKey]];
@@ -81,9 +82,9 @@ export const AllBoard = () => {
         ...updatedList[listKey][index],
         pin: !updatedList[listKey][index].pin,
       };
-      const sortedList = sortList(updatedList)
-      return sortedList;
+      return sortList(updatedList);
     });
+    toggleFavorite({ boardId, isPinned })
     setTimeout(() => {
       // 핀 변경 시, 1.5초동안 모달 보여주기
       setIsUpdate((prevState) => ({
@@ -94,10 +95,10 @@ export const AllBoard = () => {
   };
 
   useEffect(() => {
-    /*if (!listData || !listData.boards) return;
+    if (!listData || !listData.boards) return;
     const parsedData = parseBoardData(listData.boards);
     const sortedData = sortList(parsedData);
-    setListArray(sortedData);*/
+    setListArray(sortedData);
   }, [listData]);
 
 

@@ -28,6 +28,7 @@ export const API_DOMAINS = {
   POST_CREATE: '/posts',
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
+  POST_WRITE: '/posts',
 
   ADMIN_CREATE_BOARD: '/admin/boards'
 };
@@ -38,5 +39,6 @@ export const QUERY_KEYS = {
   GET_USER_ME: 'me',
   GET_CHAT_LIST: 'chatList',
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
+  GET_BOARD_DETAIL: 'boardData',
   GET_POST_LIST: 'postList'
 };

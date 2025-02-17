@@ -3,37 +3,54 @@ import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
-
+import { postWritePost } from '@/apis/board/postWritePost.api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { path } from '@/routes/path';
 export const Write = () => {
-  const { boardTitle } = useParams();
+  const queryClient = useQueryClient();
+  const { boardId } = useParams();
+  const { state } = useLocation();
+  const { mutate: addPost, isPending, isError } = useMutation({
+    mutationFn: (newPost) => postWritePost({ data: newPost }),
+    onSuccess: (response) => {
+      const createdPostId = response.postid;
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`)
+    }
+  })
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [content, setContent] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
-
   const disabled = !title || !content;
-
-  const handleUpload = () => {
-    // 백 연동
-    console.log(title);
-    if (selectedCategory) {
-      console.log(selectedCategory);
+  const handleUpload = async () => {
+    const data = {
+      boardId: boardId,
+      title: title,
+      content: content,
+      ...(selectedCategory && { postCategory: selectedCategory }),
+      ...(uploadedFiles.length > 0 && { images: uploadedFiles })
     }
-    console.log(content);
-    if (uploadedFiles) {
-      console.log(uploadedFiles);
-    }
-    navigate(-1);
+    addPost(data);
   };
 
   const handleTranslateAndUpload = () => {
     // 번역 관련 팝업
   };
+  useEffect(() => {
+    if (!state) { // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
+      navigate(-1);
+    }
+  }, [state, navigate])
+
+  if (!state) return null;
+  const { boardName } = state
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -60,7 +77,7 @@ export const Write = () => {
           setTitle={setTitle}
           placeholder="Please add a title."
         />
-        {(boardTitle === 'question' || boardTitle === 'information') && (
+        {boardName && (boardName === 'Question' || boardName === 'Information') && (
           <SelectCategory
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
