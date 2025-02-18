@@ -1,11 +1,10 @@
-import Prev from '@/assets/imgs/previous.svg?react';
 import University from '@/constants/university';
 import { path } from '@/routes/path';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { SearchDropdown } from '@/components/join/searchDropdown';
-import { SkipButton } from '@/components/join/skipButtonShadow';
+import { SkipHeader } from '@/components/join/SkipHeader';
 
 export const SchoolSearch = () => {
   const UniversityList = University;
@@ -14,36 +13,35 @@ export const SchoolSearch = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col flex-1 gap-10 px-4 py-5">
-      <div className="flex items-center justify-between">
-        <Prev className="w-5 h-5 cursor-pointer" onClick={() => navigate(-1)} />
-        <SkipButton navigateTo={`../../${path.home}`} />
-      </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-[3.125rem]">
-          <div className="flex justify-center w-full text-pageTitle gap-7">
-            What is your school name?
+    <div className="flex flex-col w-full h-full">
+      <SkipHeader />
+      <div className="flex flex-col flex-1 gap-10 px-4 py-5">
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-[3.125rem]">
+            <div className="flex justify-center w-full gap-7 text-pageTitle">
+              What is your school name?
+            </div>
+            <SearchDropdown
+              keyword={university}
+              name="Language"
+              placeholder="Search your school"
+              onChange={(value) => setUniversity(value)}
+              setIsSelected={setIsUniversitySelected}
+              selected={isUniversitySelected}
+              list={UniversityList}
+              warn="No school found. Kampus supports 397 universities in Korea."
+              label={false}
+            />
           </div>
-          <SearchDropdown
-            keyword={university}
-            name="Language"
-            placeholder="Search your school"
-            onChange={(value) => setUniversity(value)}
-            setIsSelected={setIsUniversitySelected}
-            selected={isUniversitySelected}
-            list={UniversityList}
-            warn="No school found. Kampus supports 397 universities in Korea."
-            label={false}
-          />
+          <MainButton
+            onClick={() =>
+              navigate(`../${path.signup.verify.base}`, { state: university })
+            }
+            disabled={!isUniversitySelected}
+          >
+            Next
+          </MainButton>
         </div>
-        <MainButton
-          onClick={() =>
-            navigate(`../${path.signup.verify.base}`, { state: university })
-          }
-          disabled={!isUniversitySelected}
-        >
-          Next
-        </MainButton>
       </div>
     </div>
   );
