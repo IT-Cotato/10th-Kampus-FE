@@ -25,7 +25,7 @@ export const Layout = ({ children }) => {
           className="container relative flex flex-col justify-between"
         >
           <div className="flex w-full h-full">{children}</div>
-          <div className="flex h-[5rem] w-full"></div>
+          <div className="flex h-[4rem] w-full"></div>
           <Navbar />
         </div>
       ) : (
