@@ -18,23 +18,22 @@ export const ScrapComponent = ({
       isPinned ? deletePostScrap({ postId: actualId }) : addPostScrap({ postId: actualId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      startAnimation(setScrapAni); // 스크랩 애니메이션 시작
     }
   })
   const { postId } = useParams();
   const actualId = postId || id; // 카드뉴스면 전달받은 id, 게시글이면 파라미터에 있는 postId
-  const [selectScrapState, setSelectScrapState] = useState(state); // 선택한 스크랩의 상태
   const [scrapAni, setScrapAni] = useState(false); // 스크랩 애니메이션 상태
 
   const handleScrap = () => {
     console.log(actualId)
     toggleScrap({ isPinned: state });
-    startAnimation(setScrapAni); // 스크랩 애니메이션 시작
   };
   return (
     <div>
       {scrapAni && (
         <StateChangeAnimate
-          state={selectScrapState}
+          state={state}
           changeToTrueText={'Add to scrap'}
           changeToFalseText={'Remove from Scrap'}
         />

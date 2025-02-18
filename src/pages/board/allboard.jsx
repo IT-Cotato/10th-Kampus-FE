@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BoardListBox } from '@/components/board/BoardListBox';
-import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
+import { StateChangeAnimate, startAnimation } from '@/components/common/StateChangeAnimate';
 import { getBoardList } from '@/apis/board/getBoardList.api';
 import { addBoardFavorite, deleteBoardFavorite } from '@/apis/board/toggleBoardFavorite.api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -14,17 +14,18 @@ export const AllBoard = () => {
   })
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: ({ boardId, isPinned }) =>
-      isPinned ? deleteBoardFavorite({ boardId }) : addBoardFavorite({ boardId }),
+      isPinned ? deleteBoardFavorite({ boardId }) : addBoardFavorite({ boardId })
+    ,
+    onMutate: ({ isPinned }) => {
+      setPrevState(isPinned);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] });
+      startAnimation(setIsAni);
     }
   })
-
-  const [isUpdate, setIsUpdate] = useState({
-    modal: false,
-    prev: false,
-  });
-
+  const [isAni, setIsAni] = useState(false);
+  const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
 
   const parseBoardData = (dataList) => {
@@ -70,28 +71,16 @@ export const AllBoard = () => {
   };
 
   const togglePin = (listKey, index, boardId) => {
-    const isPinned = listArray[listKey][index].pin;
     setListArray((prev) => {
       const updatedList = { ...prev };
       updatedList[listKey] = [...updatedList[listKey]];
-      setIsUpdate({
-        modal: true,
-        prev: updatedList[listKey][index].pin,
-      });
       updatedList[listKey][index] = {
         ...updatedList[listKey][index],
         pin: !updatedList[listKey][index].pin,
       };
       return sortList(updatedList);
     });
-    toggleFavorite({ boardId: boardId, isPinned: isPinned })
-    setTimeout(() => {
-      // 핀 변경 시, 1.5초동안 모달 보여주기
-      setIsUpdate((prevState) => ({
-        ...prevState,
-        modal: false,
-      }));
-    }, 1500);
+    toggleFavorite({ boardId: boardId, isPinned: listArray[listKey][index].pin })
   };
 
   useEffect(() => {
@@ -104,9 +93,9 @@ export const AllBoard = () => {
 
   return (
     <div className="relative flex h-full w-full flex-col gap-4 p-4">
-      {isUpdate.modal && (
+      {isAni && (
         <StateChangeAnimate
-          state={isUpdate.prev}
+          state={prevState}
           changeToTrueText={'Pinned to the board'}
           changeToFalseText={'Unpinned from the board'}
         />
