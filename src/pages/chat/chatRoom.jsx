@@ -1,10 +1,12 @@
 import { ArticleInfo } from '@/components/chat/articleInfo';
 import { NoticeBox } from '@/components/common/noticeBox';
-import { TitleHeader } from '@/components/common/titleHeader';
 import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
+import { RoomHeader } from '@/components/chat/roomHeader';
+import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
 
 export const ChatRoom = () => {
   const dummyData = {
@@ -28,7 +30,11 @@ export const ChatRoom = () => {
     ],
     hasNext: true,
   };
+
+  const location = useLocation();
   const [input, setInput] = useState('');
+  const { postTitle } = location.state || {};
+  const [selectedMessage, setSelectedMessage] = useState(false);
 
   // const chatRoomId = useParams();
   // 초기메시지 GET
@@ -50,9 +56,13 @@ export const ChatRoom = () => {
     }
   };
 
+  const handleClickMessage = (messageId) => {
+    setSelectedMessage(messageId);
+  };
+
   return (
-    <div className="h-full w-full">
-      <TitleHeader text={dummyData.postName} />
+    <div className="w-full h-full">
+      <RoomHeader text={postTitle} />
       <ArticleInfo
         boardName={dummyData.boardName}
         postName={dummyData.postName}
@@ -60,16 +70,17 @@ export const ChatRoom = () => {
       />
       <div className="px-4">
         <NoticeBox />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col flex-1">
           {messages.map((message) => (
             <div
               key={message.id}
-              className={cn('mb-2 max-w-60 rounded-lg p-2', {
+              className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
                 'self-end rounded-tr-none bg-primary-base text-white':
                   message.sender === 'user',
                 'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
                   message.sender !== 'user',
               })}
+              onClick={() => handleClickMessage(message.id)}
             >
               {message.text}
             </div>
@@ -83,6 +94,12 @@ export const ChatRoom = () => {
         handleSend={handleSendMessage}
         type={'chat'}
       />
+      {selectedMessage && (
+        <MessageModal
+          onClose={() => setSelectedMessage(false)}
+          type={PRESS_TYPE.image}
+        />
+      )}
     </div>
   );
 };

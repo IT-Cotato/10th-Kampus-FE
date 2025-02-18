@@ -123,6 +123,10 @@ export default {
           '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh':
             '',
         },
+        '.admin-layout': {
+          '@apply flex overflow-auto min-h-dvh bg-primary-10 scrollbar-hide':
+          '',
+        },
         '.animate-bottom-sheet-up': {
           animation: 'bottom-sheet-up 0.2s ease-in-out',
         },

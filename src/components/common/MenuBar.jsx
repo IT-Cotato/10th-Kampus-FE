@@ -101,9 +101,9 @@ export const BoardMenuBar = () => {
           >
             <p className="text-base">
               {!pinAni ? 'Add to Bookmark' : 'Remove the Bookmark'}
-            </p>{' '}
+            </p>
             {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
-            <img src={pin} className="h-5 w-5 -rotate-90" />
+            <img src={pin} className="w-5 h-5 -rotate-90" />
           </div>
         )}
       {openModal &&
@@ -115,28 +115,28 @@ export const BoardMenuBar = () => {
               onClick={() => togglePopup('chat')}
             >
               <p>Send a message</p>
-              <img src={chat} alt="Start a Chat" className="h-4 w-4" />
+              <img src={chat} alt="Start a Chat" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
               onClick={() => copyUrl()}
             >
               <p>Copy URL</p>
-              <img src={link} alt="Copy URL" className="h-4 w-4" />
+              <img src={link} alt="Copy URL" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
               onClick={() => navigate('/', { state: { postId: 1 } })} // 신고 페이지로 이동
             >
               <p>Report</p>
-              <img src={report} alt="Report" className="h-4 w-4" />
+              <img src={report} alt="Report" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
               onClick={() => togglePopup('block')}
             >
               <p>Block</p>
-              <img src={block} alt="Block" className="h-4 w-4" />
+              <img src={block} alt="Block" className="w-4 h-4" />
             </div>
           </div>
         )}
@@ -149,7 +149,7 @@ export const BoardMenuBar = () => {
               onClick={() => copyUrl()}
             >
               <p className="text-neutral-title">Copy URL</p>
-              <img src={link} alt="Copy URL" className="h-4 w-4" />
+              <img src={link} alt="Copy URL" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"

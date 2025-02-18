@@ -13,6 +13,7 @@ export { SchoolPhoto } from './auth/schoolPhoto';
 
 export { ChatList } from './chat/chatList';
 export { ChatRoom } from './chat/chatRoom';
+export { ChatReport } from './chat/chatReport';
 
 export { AllBoard } from './board/allboard';
 export { Board } from './board/board';
@@ -37,13 +38,15 @@ export { MyArticles } from './my/community/MyArticles';
 export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
-export { MyInfo } from './my/settings/myInfo';
+
+export { MyInfo } from './my/settings/MyInfo';
 export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
 export { BoardManagement } from './admin/BoardManagement';
+export { CardnewsList } from './admin/CardnewsList';
 export { CreateCardnews } from './admin/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';

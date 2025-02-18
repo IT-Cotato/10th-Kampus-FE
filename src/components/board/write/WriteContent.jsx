@@ -1,12 +1,8 @@
-import { TranslateButton } from '@/components/common/TranslateButton';
-
-export const WriteContent = ({
-  content,
-  setContent,
-  placeholder,
-  ...props
-}) => {
+export const WriteContent = ({ content, setContent, placeholder, maxLength = 0 }) => {
   const handleOnChange = (e) => {
+    if(maxLength && e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
     setContent(e.target.value);
   };
 
@@ -16,41 +12,19 @@ export const WriteContent = ({
         <label htmlFor="contentInput" className="text-subTitle">
           Content
         </label>
-        <div className="box-border flex w-full flex-row items-start gap-[.625rem] rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
+        <div className="box-border flex w-full flex-col items-start rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
           <textarea
             id="contentInput"
             rows={16}
             placeholder={placeholder}
             value={content}
             onChange={handleOnChange}
-            className="w-full resize-none leading-none placeholder-neutral-border-50 scrollbar-hide"
+            className="w-full leading-none resize-none placeholder-neutral-border-50"
             required
           />
-          {props.translate && (
-            <TranslateButton
-              translateType="content"
-              value={content}
-              setValue={props.setTranslatedContent}
-            />
-          )}
+          {maxLength !== 0 && <span className="flex justify-end w-full text-sm text-neutral-border-50">{content.length}/1000</span>}
         </div>
       </div>
-      {props.translatedContent && (
-        <div className="flex flex-col gap-3">
-          <label htmlFor="translatedContent" className="text-subTitle">
-            Translation of Content
-          </label>
-          <div className="box-border flex w-full flex-row items-start gap-[.625rem] rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
-            <textarea
-              id="translatedContent"
-              rows={16}
-              value={props.translatedContent}
-              className="w-full resize-none bg-transparent leading-none placeholder-neutral-border-50 scrollbar-hide"
-              disabled
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -1,6 +1,12 @@
 import { cn } from '@/utils/cn';
 
-export const ButtonRound = ({ theme, text, width, height, ...props }) => {
+export const ButtonRound = ({
+  theme = 'primary',
+  text,
+  width = 'base',
+  height = 'small',
+  ...props
+}) => {
   return (
     <button
       className={cn(
@@ -9,10 +15,12 @@ export const ButtonRound = ({ theme, text, width, height, ...props }) => {
           'bg-primary-base': theme === 'primary',
           'bg-neutral-base': theme === 'base',
           'bg-neutral-disabled': theme === 'disabled',
+          'border border-neutral-border-40 bg-white text-neutral-title':
+            theme === 'border',
           'w-full': width === 'long',
-          'w-fit p-4': width === 'base',
+          'w-[7.625rem] p-4': width === 'base',
           'w-fit p-2': width === 'short',
-          'py-1': height === 'small',
+          'py-2': height === 'small',
         },
       )}
       {...props}
