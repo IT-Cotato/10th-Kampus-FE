@@ -45,7 +45,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 z-50 flex h-[6.4375rem] w-full max-w-lg flex-row items-center justify-between gap-[1.875rem] rounded-t-2xl bg-white px-4 pb-[36px] pt-2 shadow-navbar">
+    <div className="fixed bottom-0 z-50 flex h-[5rem] w-full max-w-lg flex-row items-center justify-between gap-[1.875rem] rounded-t-2xl bg-white px-4 py-2 shadow-navbar">
       {navItems.map((item) => {
         const urlActive = location.pathname.includes(item.path);
         const IconComponent = item.icon;
