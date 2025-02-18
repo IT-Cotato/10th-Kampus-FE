@@ -4,7 +4,7 @@ import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { replace, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { postWritePost } from '@/apis/board/postWritePost.api';
@@ -18,9 +18,9 @@ export const Write = () => {
   const { mutate: addPost, isPending, isError } = useMutation({
     mutationFn: (newPost) => postWritePost({ data: newPost }),
     onSuccess: (response) => {
-      const createdPostId = response.postid;
+      const createdPostId = response.postId;
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`${path.board.base}/${boardId}/${createdPostId}`)
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`, { replace: true })
     }
   })
   const navigate = useNavigate();
@@ -30,14 +30,22 @@ export const Write = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const disabled = !title || !content;
   const handleUpload = async () => {
-    const data = {
-      boardId: boardId,
-      title: title,
-      content: content,
-      ...(selectedCategory && { postCategory: selectedCategory }),
-      ...(uploadedFiles.length > 0 && { images: uploadedFiles })
+    const formData = new FormData();
+
+    formData.append('boardId', boardId);
+    formData.append('title', title);
+    formData.append('content', content);
+
+    if (selectedCategory) {
+      formData.append('postCategory', selectedCategory);
     }
-    addPost(data);
+
+    if (uploadedFiles.length > 0) {
+      uploadedFiles.forEach((file) => {
+        formData.append(`images`, file); // 각 파일을 개별적으로 추가
+      });
+    }
+    addPost(formData);
   };
 
   const handleTranslateAndUpload = () => {

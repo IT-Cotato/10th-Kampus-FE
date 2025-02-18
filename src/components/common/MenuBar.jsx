@@ -5,15 +5,14 @@ import block from '@/assets/imgs/postBlock.svg';
 import report from '@/assets/imgs/reportIcon.svg';
 import link from '@/assets/imgs/exportLink.svg';
 import postDelete from '@/assets/imgs/delete.svg';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useParams } from 'react-router-dom';
 
-export const BoardMenuBar = () => {
-  const { postId } = useParams();
+export const BoardMenuBar = ({ isAuthor = false }) => {
+  const { postId } = useParams(); // 채팅 시작하실 때 이 변수 사용하시면 됩니다! 
   const [openPinModal, setOpenPinModal] = useState(false); // 핀 선택 창
   const [pinAni, setPinAni] = useState(false); // 핀 애니메이션 상태
-  const [myPost, setMyPost] = useState(false); // 자신의 게시글인지 아닌지 판별 확인용
   const startPinAni = () => {
     // 핀 애니메이션
     setOpenPinModal(false);
@@ -41,7 +40,7 @@ export const BoardMenuBar = () => {
         )}
       {openPinModal &&
         postId &&
-        !myPost && ( // 상세 게시글 중 다른 사람 게시글
+        !isAuthor && ( // 상세 게시글 중 다른 사람 게시글
           <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
             <div
               className="flex items-center justify-between pb-1"
@@ -75,7 +74,7 @@ export const BoardMenuBar = () => {
         )}
       {openPinModal &&
         postId &&
-        myPost && ( // 상세 게시글 중 내가 작성한 게시글
+        isAuthor && ( // 상세 게시글 중 내가 작성한 게시글
           <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
             <div
               className="flex items-center justify-between pb-1"

@@ -27,7 +27,6 @@ export const Board = () => {
     filter: false
   })
   const [boardData, setBoardData] = useState({
-    board_title: 'Tips for living in Korea',
     post: [
       {
         id: 0,
@@ -90,7 +89,7 @@ export const Board = () => {
   }, [boardDetail])
   return (
     <div className="w-full h-full">
-      <PostHeader path={path} boardName={boardDetail && boardDetail.boardName} isLoading={isBoardLoading} error={isBoardError} />
+      <PostHeader path={path} />
       <div className="flex flex-col w-full h-full pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
           <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
