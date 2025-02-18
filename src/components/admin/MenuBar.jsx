@@ -7,7 +7,6 @@ export const MenuBar = ({ menuOptions, onClose }) => {
         const handleClickOutside = (e) => {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
                 onClose();
-                console.log('clicked');
             }
         }
 

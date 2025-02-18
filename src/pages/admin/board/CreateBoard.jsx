@@ -4,6 +4,7 @@ import { SearchDropdown } from '@/components/join/searchDropdown';
 import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
+import { ShortInput } from '@/components/admin/ShortInput';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
@@ -189,20 +190,8 @@ export const CreateBoard = () => {
           )}
         </div>
         <div className="flex max-w-[31.25rem] flex-col gap-5">
-          <input
-            type="text"
-            className="px-2 py-1 border rounded-md border-neutral-border-40"
-            placeholder="게시판명을 적어주세요."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            className="px-2 py-1 border rounded-md border-neutral-border-40"
-            placeholder="게시판 설명을 간단하게 적어주세요."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+        <ShortInput value={title} onChange={setTitle} placeholder="게시판명을 적어주세요." />
+        <ShortInput value={description} onChange={setDescription} placeholder="게시판 설명을 간단하게 적어주세요." />
           <MainButton disabled={disabled} onClick={isEditMode ? handleEditBoard : handleCreateBoard}>
             {isEditMode ? '게시판 수정' : '게시판 생성'}
           </MainButton>
