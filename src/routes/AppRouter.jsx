@@ -49,6 +49,7 @@ import {
   Statistics,
   AdminLogin,
   CardnewsList,
+  NotificationList,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -150,6 +151,20 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Search />,
+      },
+    ],
+  },
+  {
+    path: path.notificationList,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <NotificationList />,
       },
     ],
   },
