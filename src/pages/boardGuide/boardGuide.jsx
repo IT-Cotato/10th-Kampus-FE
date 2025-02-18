@@ -11,7 +11,7 @@ export const BoardGuide = () => {
             <div className="w-full h-full px-4 pb-20 text-base text-neutral-80 leading-normal">
                 {kampusGuide.split("\n").map((line, index) => {
                     const isEmojiLine = emojiList.some((emoji) => line.startsWith(emoji));
-                    if (line.trim() === "") return (<br />)
+                    if (line.trim() === "") return (<br key={index} />)
                     if (isEmojiLine) {
                         isChatSection = line.startsWith("💬");
                         firstLineAfterChat = true; // 'Chat' 이후 첫 줄은 가운데 점 X
