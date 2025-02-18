@@ -63,7 +63,10 @@ export const Dropdown = ({
         >
           {dropdownOptions.map((state, index) => (
             <li key={index} onClick={() => handleDropdownClick(state)}>
-              <button className="flex w-full px-4 py-2 hover:bg-primary-10">
+              <button
+                type="button"
+                className="flex w-full px-4 py-2 hover:bg-primary-10"
+              >
                 {state}
               </button>
             </li>

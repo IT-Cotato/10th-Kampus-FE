@@ -19,7 +19,7 @@ export const CreateBoard = () => {
   const [categoryList, setCategoryList] = useState([]);
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && categoryValue.trim() !== '') {
@@ -141,7 +141,7 @@ export const CreateBoard = () => {
             </div>
           )}
         </div>
-        <div className="flex w-[64rem] flex-col gap-5">
+        <div className="flex flex-col gap-5 max-w-[31.25rem]">
           <input
             type="text"
             className="px-2 py-1 border rounded-md border-neutral-border-40"
@@ -149,13 +149,12 @@ export const CreateBoard = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <textarea
-            cols={10}
-            rows={2}
-            className="p-2 border rounded-md resize-none border-neutral-border-40"
+          <input
+            type="text"
+            className="px-2 py-1 border rounded-md border-neutral-border-40"
             placeholder="게시판 설명을 간단하게 적어주세요."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <MainButton disabled={disabled} onClick={handleCreateBoard}>
             게시판 생성

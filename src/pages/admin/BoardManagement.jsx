@@ -116,6 +116,7 @@ export const BoardManagement = () => {
           </div>
         ))}
         <button
+          type="button"
           className="relative flex h-40 w-60 flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
           onClick={() => navigate(path.admin.boardManagement.create)}
         >
