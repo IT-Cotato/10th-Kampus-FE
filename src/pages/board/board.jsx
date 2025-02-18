@@ -111,7 +111,6 @@ export const Board = () => {
               <TipsPostList
                 key={index}
                 data={item}
-                setBoardData={setBoardData}
               />
             ) : (
               <PostList key={index} data={item} isActive={isActive.trending} />

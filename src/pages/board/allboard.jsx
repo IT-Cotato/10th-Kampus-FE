@@ -84,7 +84,7 @@ export const AllBoard = () => {
       };
       return sortList(updatedList);
     });
-    toggleFavorite({ boardId, isPinned })
+    toggleFavorite({ boardId: boardId, isPinned: isPinned })
     setTimeout(() => {
       // 핀 변경 시, 1.5초동안 모달 보여주기
       setIsUpdate((prevState) => ({

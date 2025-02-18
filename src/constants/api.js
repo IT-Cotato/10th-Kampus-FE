@@ -30,6 +30,7 @@ export const API_DOMAINS = {
   POST_GET_LIST: '/posts/boards/:boardId',
   POST_GET_DETAIL: '/posts/:postId',
   POST_WRITE: '/posts',
+  POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
 
   ADMIN_CREATE_BOARD: '/admin/boards'
 };

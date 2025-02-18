@@ -1,12 +1,8 @@
 import { PostHeader } from '@/components/board/PostHeader';
-import { ScrapComponent } from '@/components/common/ScarpComponent';
+import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { path } from '@/routes/path';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
-import bg1 from '@/assets/imgs/bg1.png';
-import bg2 from '@/assets/imgs/bg2.png';
-import bg3 from '@/assets/imgs/bg3.png';
-import bg4 from '@/assets/imgs/bg4.png';
 import Like from '@/assets/imgs/like.svg?react';
 import FillLike from '@/assets/imgs/fillLike.svg?react';
 import Comment from '@/assets/imgs/comment.svg?react';
@@ -32,18 +28,6 @@ export const Post = () => {
   const [style, setStyle] = useState({
     transform: `translateX(-${currentImgIndex}00%)`,
     transition: `all 0.4s ease-in-out`,
-  });
-  const [boardData, setBoardData] = useState({
-    title: 'Title',
-    content: 'content',
-    likes: 10,
-    comments: 10,
-    createdTime: '1 day ago',
-    thumbnailUrl: null,
-    board_type: 'Tips for living in Korea',
-    scrap: false,
-    isLike: true,
-    postPhoroUrls: [bg1, bg2, bg4, bg1, bg2, bg3, bg4, bg1, bg2],
   });
 
   return (
@@ -74,12 +58,14 @@ export const Post = () => {
                   <h2 className="text-small text-neutral-border-50">{formatTime(postData.createdTime)}</h2>
                 </div>
               </div>
+              {/**  백엔드 isScrap 구현되면 수정 
               <ScrapComponent
                 state={boardData.scrap}
                 width="1.75rem"
                 height="1.75rem"
                 setBoardData={setBoardData}
               />
+              */}
             </div>
             <article className="flex flex-col px-4 gap-1 whitespace-pre-line break-words py-5">
               <h1 className="text-pageTitle text-neutral-title">
@@ -106,7 +92,8 @@ export const Post = () => {
             >
               <div className="flex px-4 items-center gap-[.375rem] text-base text-neutral-border-50">
                 <div className="flex items-center gap-1">
-                  <button
+                  {/** 백엔드 isLike 구현되면 수정 
+                   * <button
                     onClick={() => {
                       setBoardData((prev) => ({
                         ...prev,
@@ -119,7 +106,7 @@ export const Post = () => {
                     ) : (
                       <Like className="h-8 w-8" />
                     )}
-                  </button>
+                  </button>*/}
                   {postData && postData.likes}
                 </div>
                 <div className="flex items-center gap-1">
