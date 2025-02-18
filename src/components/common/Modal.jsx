@@ -1,12 +1,21 @@
 import { useEffect } from 'react';
 import ReactDom from 'react-dom';
+import { ButtonRound } from './ButtonRound';
 
 const ModalPortal = ({ children }) => {
   const root = document.getElementById('modal-root');
   return ReactDom.createPortal(children, root);
 };
 
-export const Modal = ({ children = null, title = '', onClose }) => {
+export const Modal = ({
+  title = '',
+  children = null,
+  leftButton = null,
+  onClickLeft = null,
+  rightButton = null,
+  onClickRight = null,
+  onClose,
+}) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
@@ -18,12 +27,37 @@ export const Modal = ({ children = null, title = '', onClose }) => {
   return (
     <ModalPortal>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center px-4 overflow-hidden overflow-x-hidden overflow-y-auto bg-black bg-opacity-30"
+        className="justsify-center fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center bg-[rgba(11,11,11,0.6)] px-4 align-middle"
         onClick={onClose}
       >
-        <div className="flex w-full max-w-lg flex-col items-center gap-[1.875rem] overflow-hidden rounded-[.625rem] bg-white p-3 py-[1.875rem]">
-          <h2 className="text-subTitle text-neutral-title">{title}</h2>
-          {children && <div className="overflow-y-auto">{children}</div>}
+        <div className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]">
+          <h2 className="flex text-center text-subTitle text-neutral-title">
+            {title}
+          </h2>
+          {children && (
+            <div className="flex flex-col w-full text-center">
+              {children}
+            </div>
+          )}
+          {(leftButton || rightButton) && (
+            <div className="flex flex-row gap-4">
+              {leftButton && (
+                <ButtonRound
+                  theme="border"
+                  size="modal"
+                  onClick={onClickLeft}
+                  text={leftButton}
+                />
+              )}
+              {rightButton && (
+                <ButtonRound
+                  size="modal"
+                  onClick={onClickRight}
+                  text={rightButton}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </ModalPortal>
