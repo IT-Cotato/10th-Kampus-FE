@@ -29,7 +29,7 @@ export const SchoolSearch = () => {
               setIsSelected={setIsUniversitySelected}
               selected={isUniversitySelected}
               list={UniversityList}
-              warn="No school found. Kampus supports 397 universities in Korea."
+              warn={`No school found.\nKampus supports 408 universities in Korea.`}
               label={false}
             />
           </div>
