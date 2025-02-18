@@ -34,7 +34,7 @@ export const Home = () => {
     favorites: [
       {
         board: 'Free Talk',
-        title: 'Title',
+        title: 'TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle',
         postID: 1,
       },
       {
@@ -63,7 +63,7 @@ export const Home = () => {
       },
       {
         board: 'Tips for living in Korea',
-        title: 'Title',
+        title: 'Title TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle',
         postID: 2,
       },
       {
