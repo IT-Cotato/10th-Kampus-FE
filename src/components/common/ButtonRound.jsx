@@ -19,7 +19,7 @@ export const ButtonRound = ({
             theme === 'border',
           'w-full py-1': size === 'long',
           'w-fit min-w-[7.625rem] px-5 py-3 rounded-full': size === 'modal',
-          'w-fit px-4 py-2': size === 'base',
+          'w-fit px-7 py-2': size === 'base',
           'w-fit px-4 py-1': size === 'short',
         },
       )}
