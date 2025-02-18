@@ -36,7 +36,7 @@ export const MyComments = () => {
         // data.inquiry.length === 0
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <Logo className="w-32 text-neutral-disabled" />
-          <span className='text-neutral-border-40'>Looks like there’s nothing here. Time to create something amazing!</span>
+          <span className='text-neutral-border-40'>You haven't posted any comments yet! Share your opinion:)</span>
         </div>
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">
