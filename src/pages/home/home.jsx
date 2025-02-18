@@ -1,5 +1,5 @@
 import Logo from "@/assets/imgs/kampusLogo.svg?react"
-import notifiaction from "@/assets/imgs/notification.svg"
+import notification from "@/assets/imgs/notification.svg"
 import notification_true from "@/assets/imgs/notification_true.svg"
 import search from "@/assets/imgs/search.svg"
 import { useState } from "react";
@@ -90,7 +90,7 @@ export const Home = () => {
         <Logo className="w-[6rem] h-auto text-primary-base" />
         <div className="flex gap-[0.875rem]">
           <img
-            src={isNotification ? notification_true : notifiaction}
+            src={isNotification ? notification_true : notification}
             alt="notification button"
             className="w-5 h-6"
           />
