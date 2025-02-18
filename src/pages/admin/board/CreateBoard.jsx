@@ -145,7 +145,7 @@ export const CreateBoard = () => {
                 setIsSelected={setIsUniversitySelected}
                 selected={isUniversitySelected}
                 list={UniversityList}
-                warn="게시판을 추가할 학교를 선택하세요."
+                warn=""
                 label={false}
               />
             )}
