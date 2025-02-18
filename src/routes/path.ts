@@ -22,6 +22,8 @@ export const path = {
   },
   home: '/home',
   search: '/search',
+
+  boardGuide: '/boardGuide',
   mypage: {
     base: '/my',
     settings: {

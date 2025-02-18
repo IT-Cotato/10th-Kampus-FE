@@ -42,6 +42,7 @@ export { DeleteAccount } from './my/etc/deleteAccount';
 export { MyInfo } from './my/settings/MyInfo';
 export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
+export { BoardGuide } from './boardGuide/boardGuide';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
