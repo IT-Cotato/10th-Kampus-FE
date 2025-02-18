@@ -393,7 +393,11 @@ const AppRouter = createBrowserRouter([
             element: <BoardManagement />,
           },
           {
-            path: path.admin.cardnews.create,
+            path: path.admin.boardManagement.create,
+            element: <CreateBoard />,
+          },
+          {
+            path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
             element: <CreateBoard />,
           },
         ],

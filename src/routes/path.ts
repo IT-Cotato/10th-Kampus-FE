@@ -76,11 +76,15 @@ export const path = {
     signupManagement: 'signupManagement',
     boardManagement: {
       base: 'boardManagement',
-      create: 'create'
+      create: 'create',
+      boardId: ':boardId',
+      edit: 'edit',
     },
     cardnews: {
       base: 'cardnews',
       create: 'create',
+      cardnewsId: ':cardnewsId',
+      edit: 'edit',
     },
     reportMangement: 'reportMangement',
     statistics: 'statistics',

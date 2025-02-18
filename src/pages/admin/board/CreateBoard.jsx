@@ -1,18 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import XIcon from '@/assets/imgs/x.svg?react';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import University from '@/constants/university';
-import { useNavigate } from 'react-router-dom';
-import { ButtonRound } from '@/components/common/ButtonRound';
+import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 
 export const CreateBoard = () => {
+  const navigate = useNavigate();
+  const { boardId } = useParams();
+  const [isEditMode, setIsEditMode] = useState(false);
+
   const [boardType, setBoardType] = useState('generalboard');
 
   const UniversityList = University;
   const [university, setUniversity] = useState('');
   const [isUniversitySelected, setIsUniversitySelected] = useState(false);
-  const navigate = useNavigate();
 
   const [isCategoryChecked, setIsCategoryChecked] = useState(false);
   const [categoryValue, setCategoryValue] = useState('');
@@ -20,6 +22,35 @@ export const CreateBoard = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const data = {
+    type: 'schoolboard',
+    title: 'Free Talk',
+    description:
+      'Chat about anything and everything! Share your experiences, thoughts, and daily life with the community.',
+    categories: ['Question', 'Information'],
+  };
+
+  useEffect(() => {
+    if (boardId) {
+      setIsEditMode(true);
+      // 백 연동
+      setBoardType(data.type);
+      setTitle(data.title);
+      setDescription(data.description);
+
+      // 학교 보드일 경우
+      if (data.type === 'schoolboard') {
+        setUniversity('홍익대학교');
+        setIsUniversitySelected(true);
+      }
+      // 카테고리 선택되어있을 경우
+      if (data.categories && data.categories.length > 0) {
+        setIsCategoryChecked(true);
+        setCategoryList(data.categories);
+      }
+    }
+  }, [boardId]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && categoryValue.trim() !== '') {
@@ -41,7 +72,7 @@ export const CreateBoard = () => {
       console.log(university);
     }
     console.log(title);
-    console.log(content);
+    console.log(description);
     if (isCategoryChecked) {
       console.log(categoryList);
     }
@@ -49,9 +80,25 @@ export const CreateBoard = () => {
     navigate(-1);
   };
 
+  const handleEditBoard = () => {
+    // 백 연동
+    console.log(boardId);
+    console.log(boardType);
+    if (boardType === 'schoolboard') {
+      console.log(university);
+    }
+    console.log(title);
+    console.log(description);
+    if (isCategoryChecked) {
+      console.log(categoryList);
+    }
+
+    navigate(-1);
+  }
+
   const disabled =
     !title ||
-    !content ||
+    !description ||
     (boardType === 'schoolboard' && !isUniversitySelected) ||
     (isCategoryChecked && categoryList.length === 0);
 
@@ -141,7 +188,7 @@ export const CreateBoard = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-5 max-w-[31.25rem]">
+        <div className="flex max-w-[31.25rem] flex-col gap-5">
           <input
             type="text"
             className="px-2 py-1 border rounded-md border-neutral-border-40"
@@ -156,8 +203,8 @@ export const CreateBoard = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <MainButton disabled={disabled} onClick={handleCreateBoard}>
-            게시판 생성
+          <MainButton disabled={disabled} onClick={isEditMode ? handleEditBoard : handleCreateBoard}>
+            {isEditMode ? '게시판 수정' : '게시판 생성'}
           </MainButton>
         </div>
       </div>

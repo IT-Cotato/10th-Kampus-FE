@@ -45,8 +45,8 @@ export { Search } from './search/Search';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
-export { BoardManagement } from './admin/BoardManagement';
-export { CreateBoard } from './admin/CreateBoard';
+export { BoardManagement } from './admin/board/BoardManagement';
+export { CreateBoard } from './admin/board/CreateBoard';
 export { CardnewsList } from './admin/CardnewsList';
 export { CreateCardnews } from './admin/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';

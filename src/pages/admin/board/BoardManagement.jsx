@@ -1,4 +1,8 @@
+// @ts-nocheck
+
 import { Dropdown } from '@/components/admin/Dropdown';
+import menubar from '@/assets/imgs/menubar.svg';
+import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,10 +13,42 @@ export const BoardManagement = () => {
   const [selectedDropdown, setSelectedDropdown] = useState('전체');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [boardList, setBoardList] = useState([]);
+  const [selectedBoardMenu, setSelectedBoardMenu] = useState(null);
+
+  const handleClickEdit = (boardId) => {
+    navigate(`./${boardId}/${path.admin.boardManagement.edit}`);
+  };
+
+  const handleClickKeep = () => {
+    // 보관
+    setSelectedBoardMenu(null);
+    alert('게시판이 보관되었습니다.');
+  };
+
+  const handleClickDelete = () => {
+    // 삭제
+    setSelectedBoardMenu(null);
+    alert('게시판이 삭제되었습니다.');
+  };
+
+  const menuOptions = (boardId) => [
+    { menu: '수정', onClick: () => handleClickEdit(boardId) },
+    { menu: '보관', onClick: handleClickKeep },
+    { menu: '삭제', onClick: handleClickDelete },
+  ];
 
   const handleDropdownClick = (state) => {
     setSelectedDropdown(state);
     setIsDropdownOpen(false);
+  };
+
+  const handleMenuBarClick = (boardId) => {
+    if (selectedBoardMenu !== boardId) {
+      setSelectedBoardMenu(boardId);
+    } else {
+      // 이미 해당 메뉴바가 열려 있을 경우 끔
+      setSelectedBoardMenu(null);
+    }
   };
 
   useEffect(() => {
@@ -21,6 +57,7 @@ export const BoardManagement = () => {
       {
         id: 0,
         title: 'Housing',
+        boardId: 12345,
         postNum: 30,
         description:
           'Share the information about dorms, rental rooms, and shared housing near campus!',
@@ -29,6 +66,7 @@ export const BoardManagement = () => {
       {
         id: 1,
         title: 'Part Time/Job',
+        boardId: 12346,
         postNum: 30,
         description:
           'Find part-time job and employment opportunities in Korea.',
@@ -37,6 +75,7 @@ export const BoardManagement = () => {
       {
         id: 2,
         title: 'Language Exchange',
+        boardId: 12347,
         postNum: 30,
         description:
           'Connect with others for language exchange and cultural learning.',
@@ -45,6 +84,7 @@ export const BoardManagement = () => {
       {
         id: 3,
         title: 'Festival/Events',
+        boardId: 12348,
         postNum: 30,
         description: 'Discover upcoming festivals and events in Korea.',
         dday: 10,
@@ -52,6 +92,7 @@ export const BoardManagement = () => {
       {
         id: 4,
         title: 'Information',
+        boardId: 12349,
         postNum: 30,
         description:
           'Find essential updates and helpful resources for living, studying, and working in Korea.',
@@ -60,6 +101,7 @@ export const BoardManagement = () => {
       {
         id: 5,
         title: 'Question',
+        boardId: 12350,
         postNum: 30,
         description:
           'Got questions? Get answers from fellow international students and expats in Korea.',
@@ -68,6 +110,7 @@ export const BoardManagement = () => {
       {
         id: 6,
         title: 'Free Talk',
+        boardId: 12351,
         postNum: 30,
         description:
           'Chat about anything and everything! Share your experiences, thoughts, and daily life with the community.',
@@ -76,6 +119,7 @@ export const BoardManagement = () => {
       {
         id: 7,
         title: 'Trending',
+        boardId: 12352,
         postNum: 30,
         description:
           'Stay updated with the hottest topics and discussions happening right now in the community.',
@@ -102,7 +146,17 @@ export const BoardManagement = () => {
             key={board.id}
             className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
           >
-            <div className="flex flex-row items-center gap-3 text-center align-middle">
+            <div className="relative flex flex-row items-center gap-3 text-center align-middle">
+              <button onClick={() => handleMenuBarClick(board.boardId)}>
+                <img
+                  src={menubar}
+                  alt="menu"
+                  className="absolute top-0 right-0 px-2 py-1"
+                />
+              </button>
+              {selectedBoardMenu === board.boardId && (
+                <MenuBar menuOptions={menuOptions(board.boardId)} onClose={() => setSelectedBoardMenu(null)}/>
+              )}
               <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
                 {selectedDropdown === '삭제 대기'
                   ? 'D-' + (board.dday === 0 ? 'day' : board.dday)
