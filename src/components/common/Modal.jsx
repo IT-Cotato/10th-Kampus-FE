@@ -14,7 +14,7 @@ export const Modal = ({
   onClickLeft = null,
   rightButton = null,
   onClickRight = null,
-  onClose,
+  onClose = null,
 }) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -40,7 +40,7 @@ export const Modal = ({
             </div>
           )}
           {(leftButton || rightButton) && (
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 whitespace-nowrap">
               {leftButton && (
                 <ButtonRound
                   theme="border"

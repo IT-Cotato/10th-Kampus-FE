@@ -1,22 +1,24 @@
 import Camera from '@/assets/imgs/camera.svg';
 import ImgX from '@/assets/imgs/ImgX.svg?react';
+import { Modal } from '@/components/common/Modal';
 import { useState } from 'react';
 
 export const UploadPics = ({ onChange }) => {
   const [previewImages, setPreviewImages] = useState([]);
   const [files, setFiles] = useState([]);
+  const [showErrorModal, setShowErrorModal] = useState('');
 
   const getImageFiles = async (e) => {
     const newFiles = Array.from(e.target.files);
 
     if (newFiles.length + files.length > 10) {
-      alert('이미지는 최대 10장까지 업로드가 가능합니다.');
+      setShowErrorModal('You can upload up to 10 photos');
       return;
     }
 
     const validFiles = newFiles.filter((file) => file.type.match('image/.*'));
     if (validFiles.length !== newFiles.length) {
-      alert('이미지 파일만 업로드가 가능합니다.');
+      setShowErrorModal('You can only upload image files');
     }
 
     try {
@@ -44,7 +46,7 @@ export const UploadPics = ({ onChange }) => {
         onChange(updatedFiles); // 부모 컴포넌트에 전달
       }
     } catch (error) {
-      alert('파일 처리 중 오류가 발생했습니다.');
+      setShowErrorModal('An error occurred while processing the file.');
       return null;
     }
   };
@@ -83,21 +85,29 @@ export const UploadPics = ({ onChange }) => {
       />
       <div className="grid grid-flow-col gap-[.875rem] overflow-x-scroll pr-[.5625rem] pt-[.5625rem] scrollbar-hide">
         {previewImages.map((src, index) => (
-          <div className="relative h-20 w-20" key={index}>
+          <div className="relative w-20 h-20" key={index}>
             <img
               src={src}
               alt={`Preview ${index + 1}`}
-              className="h-20 w-20 object-cover"
+              className="object-cover w-20 h-20"
             />
             <button
               onClick={() => removeImage(index)}
-              className="absolute right-0 top-0 z-10 -translate-y-1/2 translate-x-1/2"
+              className="absolute top-0 right-0 z-10 translate-x-1/2 -translate-y-1/2"
             >
               <ImgX className="h-[1.125rem] w-[1.125rem] text-neutral-border-50" />
             </button>
           </div>
         ))}
       </div>
+      {showErrorModal !== '' && (
+        <Modal
+          title={showErrorModal}
+          leftButton="Close"
+          onClickLeft={() => setShowErrorModal('')}
+          onClose={() => setShowErrorModal('')}
+        />
+      )}
     </div>
   );
 };

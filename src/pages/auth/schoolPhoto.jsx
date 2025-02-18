@@ -5,21 +5,31 @@ import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
-import { createPortal } from 'react-dom';
-import { Alert } from '@/components/common/Alert';
 import { SkipHeader } from '@/components/join/SkipHeader';
+import { Modal } from '@/components/common/Modal';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const university = location.state;
 
-  const handleUpload = (file) => {
-    console.log(file);
-    navigate(`../../../${path.home}`);
+  const getImageFile = (e) => {
+    const newFiles = Array.from(e.target.files);
+    const validFiles = newFiles.filter((file) => file.type.match('image/.*'));
+    if (validFiles.length !== newFiles.length) {
+      setShowErrorModal(true);
+    } else {
+      setFile(e.target.files[0]);
+    }
+  }
+
+  const handleClickUpload = (file) => {
+    // 백 연동
+    setShowModal(true);
   };
 
   useEffect(() => {
@@ -60,7 +70,7 @@ export const SchoolPhoto = () => {
               className="hidden"
               id="selectFile"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={getImageFile}
               disabled={file}
             />
             {file ? (
@@ -76,18 +86,24 @@ export const SchoolPhoto = () => {
               <span className="text-neutral-border-50">No file selected</span>
             )}
           </div>
-          <MainButton onClick={() => setShowModal(true)} disabled={!file}>
+          <MainButton onClick={handleClickUpload} disabled={!file}>
             Upload
           </MainButton>
-          {showModal &&
-            createPortal(
-              <Alert
-                title="School verification time may take 3-5 business days"
-                button="Save"
-                onClick={() => handleUpload(file)}
-              />,
-              document.getElementById('modal-root'),
-            )}
+          {showErrorModal && (
+            <Modal
+              title="You can only upload a image file"
+              leftButton="Close"
+              onClickLeft={() => setShowErrorModal(false)}
+              onClose={() => setShowErrorModal(false)}
+            />
+          )}
+          {showModal && (
+            <Modal
+              title="School verification may take 3-5 business days"
+              rightButton="Save"
+              onClickRight={() => navigate(`../../../${path.home}`)}
+            ></Modal>
+          )}
         </div>
       </div>
     </div>
