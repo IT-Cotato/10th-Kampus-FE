@@ -3,7 +3,7 @@ import Comment from '../../assets/imgs/comment.svg?react';
 import { ScrapComponent } from '../common/ScarpComponent';
 import { useNavigate } from 'react-router-dom';
 
-export const TipsPostList = ({ data, setBoardData }) => {
+export const TipsPostList = ({ data, setPostData }) => {
   // 카드 뉴스 부분 데이터 요청 시, 스크랩 여부도 같이 가져와야 함
   const navigate = useNavigate();
   return (
@@ -39,7 +39,7 @@ export const TipsPostList = ({ data, setBoardData }) => {
         </div>
         <ScrapComponent
           state={data.scrap}
-          setBoardData={setBoardData}
+          setPostData={setPostData}
           id={data.id}
           width="1.875rem"
           height="1.875rem"
