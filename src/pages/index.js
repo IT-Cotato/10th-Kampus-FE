@@ -11,8 +11,7 @@ export { SchoolVerification } from './auth/schoolVerification';
 export { SchoolEmail } from './auth/schoolEmail';
 export { SchoolPhoto } from './auth/schoolPhoto';
 
-export { ChatList } from './chat/chatList';
-export { ChatRoom } from './chat/chatRoom';
+export { ChatPage } from './chat/chat';
 export { ChatReport } from './chat/chatReport';
 
 export { AllBoard } from './board/allboard';
@@ -46,11 +45,14 @@ export { Search } from './search/Search';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
-export { BoardManagement } from './admin/BoardManagement';
+export { BoardManagement } from './admin/board/BoardManagement';
+export { CreateBoard } from './admin/board/CreateBoard';
 export { CardnewsList } from './admin/CardnewsList';
 export { CreateCardnews } from './admin/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
 export { SignupManagement } from './admin/SignupManagement';
 export { Statistics } from './admin/Statistics';
+
 export { UserManagement } from './admin/UserManagement';
+

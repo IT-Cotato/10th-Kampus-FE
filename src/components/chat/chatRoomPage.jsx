@@ -3,84 +3,71 @@ import { NoticeBox } from '@/components/common/noticeBox';
 import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RoomHeader } from '@/components/chat/roomHeader';
 import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { getChatMessages } from '@/apis/chat/messages.api';
+import { getChatRoom } from '@/apis/chat/chatRoom.api';
+import { getUserDetail } from '@/apis/auth/login.api';
 
-export const ChatRoom = () => {
-  const dummyData = {
-    currentUserId: 1,
-    messages: [
-      {
-        chatRoomId: 1,
-        senderId: 1,
-        content: 'ㅇㅇㅇ',
-        isRead: false,
-        isMine: true,
-      },
-      {
-        chatRoomId: 1,
-        senderId: 2,
-        content: '안녕',
-        isRead: false,
-        isMine: false,
-      },
-      // ...생략,
-    ],
-    hasNext: true,
-  };
-
-  const location = useLocation();
+export const ChatRoom = ({ chatRoomId }) => {
   const [input, setInput] = useState('');
-  const { postTitle } = location.state || {};
   const [selectedMessage, setSelectedMessage] = useState(false);
+  const [page, setPage] = useState(1);
 
-  // const chatRoomId = useParams();
   // 초기메시지 GET
-  // const { data, error, isLoading } = useQuery({
-  //   queryKey: [QUERY_KEYS.GET_CHAT_LIST],
-  //   queryFn: () => getChatMessages(chatRoomId, 1),
-  // });
+  const { data: messageData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
+    queryFn: () => getChatMessages({ chatRoomId, page }),
+  });
 
-  const [messages, setMessages] = useState([]);
+  //방 정보
+  const { data: roomData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
+    queryFn: () => getChatRoom({ chatRoomId }),
+  });
+
+  //userId
+  const { data: userId } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
+    queryFn: () => getUserDetail(),
+  });
 
   //메시지 전송
   const handleSendMessage = () => {
     if (input.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { id: prevMessages.length + 1, text: input, sender: 'user' },
-      ]);
+      // sendMessage({ chatRoomId, input });
       setInput('');
     }
   };
 
-  const handleClickMessage = (messageId) => {
-    setSelectedMessage(messageId);
+  const handleClickMessage = (senderId) => {
+    setSelectedMessage(senderId);
   };
 
   return (
     <div className="w-full h-full">
-      <RoomHeader text={postTitle} />
+      <RoomHeader text={roomData.data.postTitle} />
       <ArticleInfo
-        boardName={dummyData.boardName}
-        postName={dummyData.postName}
-        postId={dummyData.postID}
+        boardName={roomData.data.boardName}
+        postName={roomData.data.postTitle}
+        postId={roomData.data.postId}
       />
       <div className="px-4">
         <NoticeBox />
         <div className="flex flex-col flex-1">
-          {messages.map((message) => (
+          {messageData.map((message, index) => (
             <div
-              key={message.id}
+              key={index}
               className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
                 'self-end rounded-tr-none bg-primary-base text-white':
-                  message.sender === 'user',
+                  message.isMine,
                 'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
-                  message.sender !== 'user',
+                  !message.isMine,
               })}
-              onClick={() => handleClickMessage(message.id)}
+              onClick={() => handleClickMessage(message.senderId)}
             >
               {message.text}
             </div>
@@ -97,7 +84,7 @@ export const ChatRoom = () => {
       {selectedMessage && (
         <MessageModal
           onClose={() => setSelectedMessage(false)}
-          type={PRESS_TYPE.image}
+          type={PRESS_TYPE.message}
         />
       )}
     </div>

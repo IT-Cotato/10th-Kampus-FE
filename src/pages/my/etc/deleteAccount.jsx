@@ -1,5 +1,4 @@
 import { Report } from '@/components/common/Report';
-
 export const DeleteAccount = () => {
   const headerTitle = "Delete Account";
   const pageTitle = "Why are you leaving Kampus?";

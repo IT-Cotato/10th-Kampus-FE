@@ -2,6 +2,7 @@ import Like from '../../assets/imgs/like.svg?react';
 import Comment from '../../assets/imgs/comment.svg?react';
 import Translate from '../../assets/imgs/translate.svg?react';
 import { useNavigate } from 'react-router-dom';
+import { formatTime } from '@/utils/formatTime';
 export const PostList = ({ data, isActive }) => {
   const navigate = useNavigate();
   return (
@@ -40,7 +41,7 @@ export const PostList = ({ data, isActive }) => {
             <p>{data.comments}</p>
           </div>
           <p className="text-small text-neutral-border-50">
-            {data.createdTime}
+            {formatTime(data.createdTime)}
           </p>
         </div>
         <Translate className="text-neutral-title" />

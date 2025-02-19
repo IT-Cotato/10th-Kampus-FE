@@ -7,7 +7,7 @@ export const BoxList = ({ text }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="flex cursor-pointer items-center gap-5 py-[.625rem]"
+      className="flex cursor-pointer items-center gap-5 py-[.625rem] whitespace-nowrap"
       onClick={() =>
         navigate(
           `${path.board.base}/${generateBoardTitle(text.board)}/${text.postID}`,
@@ -23,7 +23,7 @@ export const CardPost = ({ data }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="flex flex-col gap-[.625rem]"
+      className="flex flex-col gap-[.625rem] whitespace-nowrap"
       onClick={() =>
         navigate(`${path.board.base}/tips-for-living-in-korea/${data.postID}`)
       }
@@ -32,7 +32,7 @@ export const CardPost = ({ data }) => {
         <img
           src={data.img}
           alt="Post Img"
-          className="aspect-square min-h-[9.5rem] min-w-[9.5rem] rounded-lg bg-neutral-bg-10"
+          className="aspect-square h-[9.5rem] w-[9.5rem] rounded-lg bg-neutral-bg-10 object-cover"
         />
         <img
           src={postCardIcon}
@@ -40,7 +40,7 @@ export const CardPost = ({ data }) => {
           className="absolute bottom-2 left-2"
         />
       </div>
-      <h1 className="truncate text-subTitle text-neutral-title">
+      <h1 className="truncate text-subTitle text-neutral-title max-w-[9.5rem]">
         {data.title}
       </h1>
     </div>

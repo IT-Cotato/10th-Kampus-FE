@@ -62,7 +62,7 @@ export const CardnewsList = () => {
           ))}
           <button
             className="w-60 h-60 lg:h-[18.75rem] lg:w-[18.75rem] rounded-2xl border border-primary-base text-[5rem] lg:text-[10rem] flex justify-center items-center text-neutral-border-50"
-            onClick={() => navigate(`${path.admin.cardnews.create}`)}
+            onClick={() => navigate(path.admin.cardnews.create)}
           >
             +
           </button>

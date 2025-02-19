@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 const InputTypes = {
   CHAT: 'chat',
+  POST: 'post'
 };
 
 export const UserInput = ({
@@ -13,6 +14,7 @@ export const UserInput = ({
   setInput,
   handleSend,
   type,
+  inputFocus = false
 }) => {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
@@ -31,11 +33,15 @@ export const UserInput = ({
       }
     }
   };
-
   useEffect(() => {
     handleInput();
   }, [handleSend]);
 
+  useEffect(() => {
+    if (textareaRef.current && inputFocus && InputTypes.POST === type) {
+      textareaRef.current.focus();
+    }
+  })
   return (
     <div className="fixed left-0 right-0 max-w-lg px-4 mx-auto bottom-3">
       <div
