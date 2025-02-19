@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom';
 import { Popup } from './popup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
+import { path } from '@/routes/path';
 export const BoardMenuBar = ({ isAuthor = false }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -136,7 +137,7 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
             </div>
             <div
               className="flex items-center justify-between py-1"
-              onClick={() => navigate('/', { state: { postId: 1 } })} // 신고 페이지로 이동
+              onClick={() => navigate(path.board.specific.report, { state: { postId: postId } })} // 신고 페이지로 이동
             >
               <p>Report</p>
               <img src={report} alt="Report" className="w-4 h-4" />
