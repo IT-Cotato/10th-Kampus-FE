@@ -14,11 +14,9 @@ export const CreateNotice = () => {
   const [content, setContent] = useState('');
 
   const data = {
-    type: 'schoolboard',
-    title: 'Free Talk',
-    description:
-      'Chat about anything and everything! Share your experiences, thoughts, and daily life with the community.',
-    categories: ['Question', 'Information'],
+    title: '[EVENT] New board is opened',
+    content:
+      '공지사항 본문',
   };
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export const CreateNotice = () => {
       setIsEditMode(true);
       // 백 연동
       setTitle(data.title);
-      setContent(data.description);
+      setContent(data.content);
     }
   }, [noticeId]);
 

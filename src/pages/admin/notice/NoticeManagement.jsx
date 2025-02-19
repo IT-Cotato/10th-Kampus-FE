@@ -66,7 +66,7 @@ export const NoticeManagement = () => {
                     <ButtonRound
                       text="수정하기"
                       size="short"
-                      onClick={() => navigate(path.admin.notice.edit)}
+                      onClick={() => navigate(`./${notice.noticeId}/${path.admin.notice.edit}`)}
                     />
                   </td>
                   <td>

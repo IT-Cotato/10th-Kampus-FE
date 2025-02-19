@@ -474,6 +474,10 @@ const AppRouter = createBrowserRouter([
             path: path.admin.cardnews.create,
             element: <CreateNotice />,
           },
+          {
+            path: `${path.admin.notice.noticeId}/${path.admin.notice.edit}`,
+            element: <CreateNotice />,
+          },
         ],
       },
     ],
