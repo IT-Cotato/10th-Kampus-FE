@@ -16,7 +16,10 @@ import { getPostDetail } from '@/apis/board/getPostDetail.api';
 import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
 import { formatTime } from '@/utils/formatTime';
+import { PostComment } from '@/components/board/PostComment';
 export const Post = () => {
+  const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
+  const [inputFocus, setInputFocus] = useState(false);
   const { postId } = useParams();
   const { data: postData, isLoading: postLoading, error: postError } = useQuery({
     queryFn: () => getPostDetail({ postId: postId }),
@@ -29,9 +32,57 @@ export const Post = () => {
     transform: `translateX(-${currentImgIndex}00%)`,
     transition: `all 0.4s ease-in-out`,
   });
+  /*const [postData, setPostData] = useState({
+    userId: 0,
+    title: 'Title',
+    content: 'content',
+    postCategory: 'HOSPITAL',
+    isAuthor: false,
+    likes: 10,
+    comments: 10,
+    createdTime: '2025-02-15T13:58:13.657Z',
+    thumbnailUrl: null,
+    board_type: 'Tips for living in Korea',
+    scrap: false,
+    isLike: true,
+    postPhoroUrls: [bg1, bg2, bg4, bg1, bg2, bg3, bg4, bg1, bg2],
+  });*/
+  const [commentList, setCommentList] = useState([
+    {
+      commentId: 1,
+      commentStatus: "NORMAL",
+      author: "Anonymity1",
+      content: "Life is a fleeting moment, a delicate balance between existence and oblivion",
+      likes: 1,
+      isLike: true,
+      createdTime: "2025-02-15T13:58:13.657Z",
+      isReply: [{
+        commentId: 3,
+        commentStatus: "NORMAL",
+        author: "Anonymity2",
+        mentions: "Anonymity1",
+        content: "Text",
+        isLike: false,
+        likes: 1,
+        createdTime: "2025-02-15T13:58:13.657Z",
+      }]
+    },
+    {
+      commentId: 2,
+      commentStatus: "NORMAL",
+      author: "Anonymity2",
+      content: "Text",
+      isLike: true,
+      likes: 5,
+      createdTime: "2025-02-15T13:58:13.657Z"
+    }
+  ])
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full' onClick={() => {
+      setInputFocus(false);
+      setFocusedComment(null)
+    }}>
       {imageFocus && postData?.postPhotoUrls?.length > 0 && (
         <FocusImageSlider
           images={postData.postPhotoUrls}
@@ -120,14 +171,23 @@ export const Post = () => {
                 <Translate className="h-6 w-6 text-neutral-base" />
               </button>
             </div>
-          </div>
-        }
+          </div>}
       </div>
+      {/** 댓글 부분 */}
+      <div className='flex flex-col'>
+        {commentList.map((item, index) => (
+          <PostComment data={item} key={index} setInputFocus={setInputFocus}
+            focusedComment={focusedComment} setFocusedComment={setFocusedComment} />
+        ))}
+      </div>
+      {/** 댓글 입력창 */}
       <UserInput
         placeholder="Write a comment."
         input={input}
         setInput={setInput}
         handleSend={() => { }}
+        type='post'
+        inputFocus={inputFocus}
       />
     </div>
   );

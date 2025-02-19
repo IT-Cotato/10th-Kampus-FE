@@ -6,9 +6,9 @@ export const BoardList = ({ data, listKey, index, togglePin }) => {
   return (
     <div className="flex items-center gap-4 px-4 py-4">
       <Pin
-        className={cn('h-5 w-5 cursor-pointer', {
-          'text-neutral-80': data.pin,
-          'text-neutral-icon': !data.pin,
+        className={cn('h-6 w-6 cursor-pointer', {
+          'text-primary-base': data.pin,
+          'text-primary-20': !data.pin,
         })}
         onClick={() => togglePin(listKey, index, data.order)}
       />

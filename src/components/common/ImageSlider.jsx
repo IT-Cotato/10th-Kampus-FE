@@ -69,7 +69,7 @@ export const ImageSlider = ({
       onTouchMove={touchMove}
       onTouchEnd={touchEnd}
     >
-      <div className="w-full overflow-hidden rounded-md">
+      <div className="w-full overflow-hidden rounded-md z-0">
         <div ref={flexRef} className="flex w-full" style={style}>
           {images.map((image, index) => (
             <div key={index} className="flex-none w-full aspect-square">

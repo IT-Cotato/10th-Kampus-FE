@@ -14,7 +14,7 @@ export const PostHeader = ({ path, isAuthor = false }) => {
     queryFn: () => getBoardDetail({ boardId: boardId })
   })
   return (
-    <div className="fixed flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
+    <div className="fixed z-10 flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
