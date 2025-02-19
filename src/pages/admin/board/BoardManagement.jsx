@@ -31,10 +31,34 @@ export const BoardManagement = () => {
     alert('게시판이 삭제되었습니다.');
   };
 
+  const handleClickDeleteCompletely = () => {
+    // 완전 삭제
+    setSelectedBoardMenu(null);
+    alert('게시판이 완전히 삭제되었습니다.');
+  }
+
+  const handleClickRestore = () => {
+    // 복구
+    setSelectedBoardMenu(null);
+    alert('게시판이 복구되었습니다.');
+  }
+
   const menuOptions = (boardId) => [
     { menu: '수정', onClick: () => handleClickEdit(boardId) },
-    { menu: '보관', onClick: handleClickKeep },
-    { menu: '삭제', onClick: handleClickDelete },
+    { menu: '보관', onClick: () => handleClickKeep(boardId) },
+    { menu: '삭제', onClick: () => handleClickDelete(boardId) },
+  ];
+
+  const keptMenuOptions = (boardId) => [
+    { menu: '수정', onClick: () => handleClickEdit(boardId) },
+    { menu: '보관 해제', onClick: () => handleClickRestore(boardId) },
+    { menu: '삭제', onClick: () => handleClickDelete(boardId) },
+  ];
+
+  const deletedMenuOptions = (boardId) => [
+    { menu: '보관으로 이동', onClick: () => handleClickKeep(boardId) },
+    { menu: '완전 삭제', onClick: () => handleClickDeleteCompletely(boardId) },
+    { menu: '복구', onClick: () => handleClickRestore(boardId) },
   ];
 
   const handleDropdownClick = (state) => {
@@ -52,7 +76,7 @@ export const BoardManagement = () => {
   };
 
   useEffect(() => {
-    // 백 연동
+    // 백 연동 - selectedDropdown이 무엇인지에 따라서 받아오기
     setBoardList([
       {
         id: 0,
@@ -62,6 +86,7 @@ export const BoardManagement = () => {
         description:
           'Share the information about dorms, rental rooms, and shared housing near campus!',
         dday: 1,
+        boardStatus: 'ACTIVE',
       },
       {
         id: 1,
@@ -71,6 +96,7 @@ export const BoardManagement = () => {
         description:
           'Find part-time job and employment opportunities in Korea.',
         dday: 0,
+        boardStatus: 'ACTIVE',
       },
       {
         id: 2,
@@ -79,7 +105,8 @@ export const BoardManagement = () => {
         postNum: 30,
         description:
           'Connect with others for language exchange and cultural learning.',
-        dday: 10,
+        dday: 10, 
+        boardStatus: 'INACTIVE'
       },
       {
         id: 3,
@@ -88,6 +115,7 @@ export const BoardManagement = () => {
         postNum: 30,
         description: 'Discover upcoming festivals and events in Korea.',
         dday: 10,
+        boardStatus: 'ACTIVE',
       },
       {
         id: 4,
@@ -97,6 +125,7 @@ export const BoardManagement = () => {
         description:
           'Find essential updates and helpful resources for living, studying, and working in Korea.',
         dday: 27,
+        boardStatus: 'ACTIVE',
       },
       {
         id: 5,
@@ -106,6 +135,7 @@ export const BoardManagement = () => {
         description:
           'Got questions? Get answers from fellow international students and expats in Korea.',
         dday: 15,
+        boardStatus: 'ACTIVE',
       },
       {
         id: 6,
@@ -115,6 +145,7 @@ export const BoardManagement = () => {
         description:
           'Chat about anything and everything! Share your experiences, thoughts, and daily life with the community.',
         dday: 10,
+        boardStatus: 'ACTIVE',
       },
       {
         id: 7,
@@ -124,6 +155,7 @@ export const BoardManagement = () => {
         description:
           'Stay updated with the hottest topics and discussions happening right now in the community.',
         dday: 10,
+        boardStatus: 'DELETED',
       },
     ]);
   }, [selectedDropdown]);
@@ -149,7 +181,7 @@ export const BoardManagement = () => {
             <div className="relative flex flex-row items-center gap-3 text-center align-middle">
               {selectedBoardMenu === board.boardId && (
                 <MenuBar
-                  menuOptions={menuOptions(board.boardId)}
+                  menuOptions={board.boardStatus === 'DELETED' ? deletedMenuOptions(board.boardId) : board.boardStatus === 'INACTIVE' ? keptMenuOptions(board.boardId) : menuOptions(board.boardId)}
                   onClose={() => setSelectedBoardMenu(null)}
                 />
               )}
