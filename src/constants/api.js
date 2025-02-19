@@ -34,7 +34,9 @@ export const API_DOMAINS = {
   POST_WRITE: '/posts',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
 
-  ADMIN_CREATE_BOARD: '/admin/boards'
+  ADMIN_BOARD: '/admin/boards',
+  ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
+  ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
 };
 
 export const QUERY_KEYS = {
