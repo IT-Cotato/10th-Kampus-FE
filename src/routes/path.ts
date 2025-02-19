@@ -18,6 +18,7 @@ export const path = {
       base: ':boardId',
       write: 'write',
       post: ':postId',
+      report: 'report'
     },
   },
   home: '/home',

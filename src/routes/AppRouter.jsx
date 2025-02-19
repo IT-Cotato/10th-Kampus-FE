@@ -26,6 +26,7 @@ import {
   WriteInquiry,
   NoticeDetail,
   Post,
+  PostReport,
   BlockChat,
   BlockSecondhand,
   Welcome,
@@ -179,7 +180,17 @@ const AppRouter = createBrowserRouter([
           },
           {
             path: path.board.specific.post,
-            element: <Post />,
+            element: <Outlet />,
+            children: [
+              {
+                path: '',
+                element: <Post />,
+              },
+              {
+                path: path.board.specific.report,
+                element: <PostReport />,
+              },
+            ]
           },
         ],
       },
@@ -206,8 +217,18 @@ const AppRouter = createBrowserRouter([
         element: <ChatPage />,
       },
       {
-        path: path.chatList.report,
-        element: <ChatReport />,
+        path: path.chatList.chatRoom,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <ChatRoom />,
+          },
+          {
+            path: path.chatList.report,
+            element: <ChatReport />,
+          },
+        ]
       },
     ],
   },

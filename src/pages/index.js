@@ -18,6 +18,7 @@ export { AllBoard } from './board/allboard';
 export { Board } from './board/board';
 export { Write } from './board/write';
 export { Post } from './board/post';
+export { PostReport } from './board/postReport'
 
 export { Inquiry } from './my/service/inquiry/inquiry';
 export { FAQ } from './my/service/faq';
