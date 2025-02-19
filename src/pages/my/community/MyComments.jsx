@@ -1,5 +1,5 @@
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
-import { PostList } from "@/components/board/PostList";
+import { PostList } from '@/components/board/PostList';
 import { useState } from 'react';
 
 export const MyComments = () => {
@@ -7,10 +7,11 @@ export const MyComments = () => {
     post: [
       {
         title: 'This is an article with a long long title',
-        content: 'And an article that has a long long long long long long long long long long content',
-        like: 8,
-        comment: 4,
-        time: '1 day ago',
+        content:
+          'And an article that has a long long long long long long long long long long content',
+        likes: 8,
+        comments: 4,
+        createdTime: '1 day ago',
         image: Logo,
         board_type: 'Information',
         scrap: false,
@@ -18,9 +19,9 @@ export const MyComments = () => {
       {
         title: 'Wrote a comment on this article',
         content: 'content',
-        like: 10,
-        comment: 10,
-        time: '1 day ago',
+        likes: 10,
+        comments: 10,
+        createdTime: '1 day ago',
         image: null,
         board_type: 'Tips for living in Korea',
         scrap: false,
@@ -36,7 +37,11 @@ export const MyComments = () => {
         // data.inquiry.length === 0
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <Logo className="w-32 text-neutral-disabled" />
-          <span className='text-neutral-border-40'>Looks like there’s nothing here. Time to create something amazing!</span>
+          <span className="text-center text-neutral-border-40">
+            You haven't posted any comments yet!
+            <br />
+            Share your opinion:)
+          </span>
         </div>
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">

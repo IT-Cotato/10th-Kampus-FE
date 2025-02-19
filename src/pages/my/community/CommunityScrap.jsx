@@ -1,5 +1,5 @@
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
-import { PostList } from "@/components/board/PostList";
+import { PostList } from '@/components/board/PostList';
 import { useState } from 'react';
 
 export const CommunityScrap = () => {
@@ -8,9 +8,9 @@ export const CommunityScrap = () => {
       {
         title: 'Title',
         content: 'content',
-        like: 10,
-        comment: 10,
-        time: '1 day ago',
+        likes: 10,
+        comments: 10,
+        createdTime: '1 day ago',
         image: null,
         board_type: 'Tips for living in Korea',
         scrap: false,
@@ -18,9 +18,9 @@ export const CommunityScrap = () => {
       {
         title: 'Title',
         content: 'content',
-        like: 8,
-        comment: 4,
-        time: '1 day ago',
+        likes: 8,
+        comments: 4,
+        createdTime: '1 day ago',
         image: Logo,
         board_type: 'Information',
         scrap: false,
@@ -36,7 +36,11 @@ export const CommunityScrap = () => {
         // data.inquiry.length === 0
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <Logo className="w-32 text-neutral-disabled" />
-          <span className='text-neutral-border-40'>There's nothing you've scraped! Try saving your interest :)</span>
+          <span className="text-center text-neutral-border-40">
+            There's nothing you've scraped!
+            <br />
+            Try saving your interest:)
+          </span>
         </div>
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">

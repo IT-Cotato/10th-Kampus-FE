@@ -2,7 +2,7 @@ export const formatTime = (createdTime) => {
     const now = new Date();
     const createdDate = new Date(createdTime);
     // 차이 ms -> sec 
-    const diff = Math.floor(((now.getTime() + (9 * 60 * 60 * 1000)) - createdDate.getTime()) / 1000);
+    const diff = Math.floor(((now.getTime() - (9 * 60 * 60 * 1000)) - createdDate.getTime()) / 1000);
     if (diff < 60) {
         return `now`
     }
