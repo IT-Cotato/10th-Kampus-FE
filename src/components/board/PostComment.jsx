@@ -6,7 +6,7 @@ import Translate from "@/assets/imgs/translate.svg?react"
 import { formatTime } from "@/utils/formatTime"
 import { useRef } from "react"
 import { cn } from "@/utils/cn"
-export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment }) => {
+export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     const handleComment = (ref, commentId) => {
         ref.current?.scrollIntoView({
@@ -32,8 +32,9 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                     </div>
                     <div className="flex gap-1 text-neutral-base">
-                        <button className="flex gap-[0.125rem] cursor-pointer">
-                            {data.isLike ?
+                        <button className="flex gap-[0.125rem] cursor-pointer"
+                            onClick={() => handleCommentLike({ type: data.isLiked, commentId: data.commentId })}>
+                            {data.isLiked ?
                                 <FillLike className="w-6 h-6 text-primary-red" />
                                 :
                                 <Like className="w-6 h-6 text-neutral-base" />
@@ -62,13 +63,14 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
             </div>
             {data.isReply &&
                 data.replies.map((item, index) => (
-                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment} />
+                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
+                        handleCommentLike={handleCommentLike} />
                 ))
             }
         </>
     )
 }
-const ReplyComment = ({ data, focusedComment, handleComment }) => {
+const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     return (
         <div ref={commentRef}
@@ -83,8 +85,9 @@ const ReplyComment = ({ data, focusedComment, handleComment }) => {
                     <p>{data.author}</p>
                     <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                 </div>
-                <button className="flex gap-[0.125rem] cursor-pointer">
-                    {data.isLike ?
+                <button className="flex gap-[0.125rem] cursor-pointer"
+                    onClick={() => handleCommentLike({ type: data.isLiked, commentId: data.commentId })}>
+                    {data.isLiked ?
                         <FillLike className="w-6 h-6 text-primary-red" />
                         :
                         <Like className="w-6 h-6 text-neutral-base" />

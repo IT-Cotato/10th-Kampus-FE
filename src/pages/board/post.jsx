@@ -21,6 +21,7 @@ import { getComment } from '@/apis/comment/getComment.api';
 import { addComment } from '@/apis/comment/addComment.api';
 import { deleteComment } from '@/apis/comment/deleteComment.api';
 import { addPostLike, deletePostLike } from '@/apis/board/togglePostLike.api';
+import { addCommentLike, deleteCommentLike } from '@/apis/comment/toggleCommentLike.api';
 export const Post = () => {
   const queryClient = useQueryClient();
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
@@ -47,12 +48,21 @@ export const Post = () => {
     }
   })
   const { mutate: handleLike } = useMutation({
-    //  true -> 스크랩 추가 , false -> 스크랩 삭제
+    //  true -> 좋아요 추가 , false -> 좋아요 삭제
     mutationFn: ({ type }) =>
       !type ? addPostLike({ postId: postId }) : deletePostLike({ postId: postId })
     ,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId] });
+    }
+  })
+  const { mutate: handleCommentLike } = useMutation({
+    //  true -> 스크랩 추가 , false -> 스크랩 삭제
+    mutationFn: ({ type, commentId }) =>
+      !type ? addCommentLike({ commentId: commentId }) : deleteCommentLike({ commentId: commentId })
+    ,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId] });
     }
   })
   const [input, setInput] = useState('');
@@ -63,6 +73,9 @@ export const Post = () => {
     transition: `all 0.4s ease-in-out`,
   });
   const submitComment = () => {
+    console.log(postData)
+    console.log(commentData)
+    console.log(focusedComment);
     const buildComment = {
       content: input,
       commentId: focusedComment
@@ -148,7 +161,7 @@ export const Post = () => {
                   <button onClick={() => console.log('comment')}>
                     <Comment className="h-8 w-8" />
                   </button>
-                  {postData && postData.comments}
+                  {commentData && commentData.comments.length}
                 </div>
               </div>
               <button>
@@ -161,7 +174,8 @@ export const Post = () => {
       <div className='flex flex-col pb-16'>
         {commentData && commentData.comments.map((item, index) => (
           <PostComment data={item} key={index} setInputFocus={setInputFocus}
-            focusedComment={focusedComment} setFocusedComment={setFocusedComment} />
+            focusedComment={focusedComment} setFocusedComment={setFocusedComment}
+            handleCommentLike={handleCommentLike} />
         ))}
       </div>
       {/** 댓글 입력창 */}

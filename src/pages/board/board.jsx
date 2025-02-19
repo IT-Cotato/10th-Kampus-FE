@@ -34,6 +34,7 @@ export const Board = () => {
       scrap: boardDetail.boardName === "How to live in Korea",
       filter: boardDetail.boardName === "Question" || boardDetail.boardName === "Information"
     })
+    console.log(postList)
   }
   const sortPostByScrap = (posts) => {
     return [...posts].sort((a, b) => {
