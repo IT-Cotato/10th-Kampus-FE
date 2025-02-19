@@ -32,6 +32,9 @@ export const API_DOMAINS = {
   POST_WRITE: '/posts',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
 
+  COMMENT_HANDLE: '/posts/:postId/comments',
+  COMMENT_DELETE: '/comments/:commentId',
+
   ADMIN_CREATE_BOARD: '/admin/boards'
 };
 
@@ -44,4 +47,5 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
+  GET_COMMENT_LIST: 'commentList'
 };

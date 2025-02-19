@@ -13,6 +13,7 @@ import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
 export const Board = () => {
   const { boardId } = useParams();
+  const navigate = useNavigate();
   const { data: postList, isLoading: isPostLoading, error: isPostError } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
     queryFn: () => getPostList({ boardId: boardId, page: 0 })

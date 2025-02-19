@@ -17,6 +17,7 @@ import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
 import { formatTime } from '@/utils/formatTime';
 import { PostComment } from '@/components/board/PostComment';
+import { getComment } from '@/apis/comment/getComment.api';
 export const Post = () => {
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
@@ -25,6 +26,11 @@ export const Post = () => {
     queryFn: () => getPostDetail({ postId: postId }),
     queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId]
   })
+  const { data: commentData, isLoading: commentLoading, error: commentError } = useQuery({
+    queryFn: () => getComment({ postId: postId }),
+    queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId]
+  })
+
   const [input, setInput] = useState('');
   const [imageFocus, setImageFocus] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
@@ -47,36 +53,6 @@ export const Post = () => {
     isLike: true,
     postPhoroUrls: [bg1, bg2, bg4, bg1, bg2, bg3, bg4, bg1, bg2],
   });*/
-  const [commentList, setCommentList] = useState([
-    {
-      commentId: 1,
-      commentStatus: "NORMAL",
-      author: "Anonymity1",
-      content: "Life is a fleeting moment, a delicate balance between existence and oblivion",
-      likes: 1,
-      isLike: true,
-      createdTime: "2025-02-15T13:58:13.657Z",
-      isReply: [{
-        commentId: 3,
-        commentStatus: "NORMAL",
-        author: "Anonymity2",
-        mentions: "Anonymity1",
-        content: "Text",
-        isLike: false,
-        likes: 1,
-        createdTime: "2025-02-15T13:58:13.657Z",
-      }]
-    },
-    {
-      commentId: 2,
-      commentStatus: "NORMAL",
-      author: "Anonymity2",
-      content: "Text",
-      isLike: true,
-      likes: 5,
-      createdTime: "2025-02-15T13:58:13.657Z"
-    }
-  ])
 
   return (
     <div className='w-full h-full' onClick={() => {
@@ -94,7 +70,7 @@ export const Post = () => {
         />
       )}
       {postData && <PostHeader path={path} isAuthor={postData.isAuthor} />}
-      <div className="flex h-full w-full flex-col pb-[3.625rem] pt-14">
+      <div className="flex h-full w-full flex-col pb-[2.625rem] pt-14">
         {postLoading &&
           <Loading />}
         {postError &&
@@ -174,8 +150,8 @@ export const Post = () => {
           </div>}
       </div>
       {/** 댓글 부분 */}
-      <div className='flex flex-col'>
-        {commentList.map((item, index) => (
+      <div className='flex flex-col pb-16'>
+        {commentData && commentData.comments.map((item, index) => (
           <PostComment data={item} key={index} setInputFocus={setInputFocus}
             focusedComment={focusedComment} setFocusedComment={setFocusedComment} />
         ))}

@@ -61,7 +61,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                 </div>
             </div>
             {data.isReply &&
-                data.isReply.map((item, index) => (
+                data.replies.map((item, index) => (
                     <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment} />
                 ))
             }
