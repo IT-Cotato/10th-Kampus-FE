@@ -15,8 +15,6 @@ import {
   Search,
   Write,
   ProfileSettings,
-  ChatList,
-  ChatRoom,
   MyPage,
   MyInfo,
   SchoolVerification,
@@ -28,6 +26,7 @@ import {
   WriteInquiry,
   NoticeDetail,
   Post,
+  PostReport,
   BlockChat,
   BlockSecondhand,
   Welcome,
@@ -48,8 +47,10 @@ import {
   ReportManagement,
   Statistics,
   AdminLogin,
+  ChatPage,
   CardnewsList,
   NotificationList,
+  CreateBoard,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -194,7 +195,17 @@ const AppRouter = createBrowserRouter([
           },
           {
             path: path.board.specific.post,
-            element: <Post />,
+            element: <Outlet />,
+            children: [
+              {
+                path: '',
+                element: <Post />,
+              },
+              {
+                path: path.board.specific.report,
+                element: <PostReport />,
+              },
+            ]
           },
         ],
       },
@@ -218,15 +229,21 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <ChatList />,
+        element: <ChatPage />,
       },
       {
         path: path.chatList.chatRoom,
-        element: <ChatRoom />,
-      },
-      {
-        path: `${path.chatList.chatRoom}/${path.chatList.report}`,
-        element: <ChatReport />,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <ChatRoom />,
+          },
+          {
+            path: path.chatList.report,
+            element: <ChatReport />,
+          },
+        ]
       },
     ],
   },
@@ -399,8 +416,22 @@ const AppRouter = createBrowserRouter([
         element: <SignupManagement />,
       },
       {
-        path: path.admin.boardManagement,
-        element: <BoardManagement />,
+        path: path.admin.boardManagement.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <BoardManagement />,
+          },
+          {
+            path: path.admin.boardManagement.create,
+            element: <CreateBoard />,
+          },
+          {
+            path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
+            element: <CreateBoard />,
+          },
+        ],
       },
       {
         path: path.admin.cardnews.base,

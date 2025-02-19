@@ -11,7 +11,6 @@ export const FocusImageSlider = ({
   useEffect(() => {
     // 스크롤 막기
     document.body.style.overflow = 'hidden';
-
     return () => {
       // 컴포넌트가 언마운트될 때 원래 상태로 복구
       document.body.style.overflow = 'auto';
@@ -73,7 +72,7 @@ export const FocusImageSlider = ({
       <div className='relative w-full h-full flex flex-col justify-center'>
         <div className="absolute w-full top-5 flex items-center justify-center text-subTitle text-white">
           <h1>
-            {currentImgIndex + 1}/{images.length}
+            {currentImgIndex + 1}/{images && (images.length)}
           </h1>
           <button
             className="absolute left-5 text-white"
@@ -90,7 +89,7 @@ export const FocusImageSlider = ({
         >
           <div className="max-h-[60vh] w-full overflow-hidden">
             <div ref={flexRef} className="flex" style={style}>
-              {images.map((image, index) => (
+              {images && images.map((image, index) => (
                 <div key={index} className="flex-none w-full aspect-square">
                   <img
                     src={image}

@@ -10,8 +10,7 @@ import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { Popup } from './popup';
-import { path } from '@/routes/path';
-export const BoardMenuBar = () => {
+export const BoardMenuBar = ({ isAuthor = false }) => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const modalRef = useRef(null);
@@ -108,7 +107,7 @@ export const BoardMenuBar = () => {
         )}
       {openModal &&
         postId &&
-        !myPost && ( // 상세 게시글 중 다른 사람 게시글
+        !isAuthor && ( // 상세 게시글 중 다른 사람 게시글
           <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
             <div
               className="flex items-center justify-between pb-1"
@@ -142,7 +141,7 @@ export const BoardMenuBar = () => {
         )}
       {openModal &&
         postId &&
-        myPost && ( // 상세 게시글 중 내가 작성한 게시글
+        isAuthor && ( // 상세 게시글 중 내가 작성한 게시글
           <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
             <div
               className="flex items-center justify-between pb-1"
