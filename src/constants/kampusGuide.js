@@ -46,10 +46,4 @@ Please be careful not to leak personal information when exchanging contact infor
 This is a space to introduce local festivals, international student events, cultural exchange events, etc.
 Please share accurate information about the event and do not spread false information.
 It is prohibited to post excessive advertising.
-
-💬 Chat
-Chat rooms may be closed by the administrator in the following cases:
-If a chat room is created with a topic that violates the community rules.
-If the person who created the chat room violates the community rules.
-If a conversation that violates the community rules is held in the chat room.
 `;
