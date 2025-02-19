@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { replace, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
+import { TranslatePopup } from '@/components/board/write/TranslatePopup';
+import { createPortal } from 'react-dom';
 import { postWritePost } from '@/apis/board/postWritePost.api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
@@ -28,6 +30,7 @@ export const Write = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [content, setContent] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [isPopup, setIsPopup] = useState(false);
   const disabled = !title || !content;
   const handleUpload = async () => {
     const formData = new FormData();
@@ -49,7 +52,8 @@ export const Write = () => {
   };
 
   const handleTranslateAndUpload = () => {
-    // 번역 관련 팝업
+    setIsPopup(true)
+    // 번역 연동 시, 추가 예정
   };
   useEffect(() => {
     if (!state) { // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
@@ -107,6 +111,18 @@ export const Write = () => {
           </MainButton>
         </div>
       </div>
+      {/** props의 isLoading은 useQuery 이용 예정 */}
+      {isPopup &&
+        createPortal(
+          <TranslatePopup
+            title={title}
+            text={content}
+            onClickLeft={() => { setIsPopup(false) }}
+            onClickRight={() => { }}
+            isLoading={false}
+          />,
+          document.getElementById('modal-root')
+        )}
     </div>
   );
 };
