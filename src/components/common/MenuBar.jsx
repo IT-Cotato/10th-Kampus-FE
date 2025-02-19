@@ -5,13 +5,18 @@ import block from '@/assets/imgs/postBlock.svg';
 import report from '@/assets/imgs/reportIcon.svg';
 import link from '@/assets/imgs/exportLink.svg';
 import postDelete from '@/assets/imgs/delete.svg';
+import { deletePost } from '@/apis/board/handlePost.api';
 import { useState, useRef, useEffect } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { Popup } from './popup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
 export const BoardMenuBar = ({ isAuthor = false }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { boardId } = useParams();
   const { postId } = useParams();
   const modalRef = useRef(null);
   const [openModal, setOpenModal] = useState(false); // 메뉴바 모달 창
@@ -43,7 +48,13 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       rightButton: 'Ok',
     },
   };
-  const myPost = false;
+  const { mutate: removePost } = useMutation({
+    mutationFn: () => deletePost({ postId: postId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST, boardId] })
+      navigate(-1);
+    }
+  })
   const startMenuAni = (setAni) => {
     // 애니메이션
     setOpenModal(false);
@@ -57,7 +68,7 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
     }));
   }
   const handleRightButton = (type) => {
-
+    removePost();
   }
   const copyUrl = async () => {
     const nowUrl = window.location.href;

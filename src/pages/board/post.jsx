@@ -12,7 +12,7 @@ import { UserInput } from '@/components/common/userInput';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getPostDetail } from '@/apis/board/getPostDetail.api';
+import { getPostDetail } from '@/apis/board/handlePost.api';
 import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
 import { formatTime } from '@/utils/formatTime';
