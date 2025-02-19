@@ -73,10 +73,17 @@ export const path = {
     dashboard: 'dashboard',
     userManagement: 'userManagement',
     signupManagement: 'signupManagement',
-    boardManagement: 'boardManagement',
+    boardManagement: {
+      base: 'boardManagement',
+      create: 'create',
+      boardId: ':boardId',
+      edit: 'edit',
+    },
     cardnews: {
       base: 'cardnews',
       create: 'create',
+      cardnewsId: ':cardnewsId',
+      edit: 'edit',
     },
     reportMangement: 'reportMangement',
     statistics: 'statistics',
