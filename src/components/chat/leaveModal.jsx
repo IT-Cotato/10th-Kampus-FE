@@ -10,19 +10,13 @@ export const LeaveModal = ({ isOpen, onClose }) => {
 
   return (
     <Modal
-      title="Would you like to leave 
-the chat room?"
+      title="Would you like to leave the chat room?"
       onClose={onClose}
+      leftButton='Cancel'
+      onClickLeft={onClose}
+      rightButton='Leave'
+      onClickRight={() => navigate(path.chatList.base)}
     >
-      <div className="flex items-center justify-center gap-8">
-        <ButtonRound text={'Cancel'} theme="border" onClick={onClose} />
-        <ButtonRound
-          text={'Leave'}
-          onClick={() => {
-            navigate(path.chatList.base);
-          }}
-        />
-      </div>
     </Modal>
   );
 };

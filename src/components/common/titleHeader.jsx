@@ -1,7 +1,8 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
+import { cn } from '@/utils/cn';
 import { useNavigate } from 'react-router-dom';
 
-export const TitleHeader = ({text, onClick = null}) => {
+export const TitleHeader = ({ text, onClick = null }) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -11,7 +12,9 @@ export const TitleHeader = ({text, onClick = null}) => {
     } else {
       navigate(-1);
     }
-  }
+  };
+
+  const longText = text.length > 20;
 
   return (
     <div className="flex h-16 flex-row items-center justify-between border-b-[.0313rem] border-neutral-border-30 p-4">
@@ -21,7 +24,10 @@ export const TitleHeader = ({text, onClick = null}) => {
         onClick={handleBackClick}
         className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
-      <span className="mx-auto text-pageTitle text-neutral-title">{text}</span>
+      <span className={cn('text-neutral-title', {
+        'text-base': longText,
+        'text-pageTitle': !longText,
+      })}>{text}</span>
       <div className="h-[1.25rem] w-[1.25rem]" />
     </div>
   );

@@ -1,10 +1,9 @@
 import { InputRadio } from '@/components/common/inputRadio';
 import { MainButton } from '@/components/common/MainButton';
-import { Popup } from '@/components/common/popup';
+import { Modal } from '@/components/common/Modal';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { path } from '@/routes/path';
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 
 export const DeleteAccount = () => {
@@ -35,7 +34,7 @@ export const DeleteAccount = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex flex-col w-full h-full">
       <TitleHeader text="Delete Account"></TitleHeader>
       <div className="flex h-full w-full flex-col px-4 py-[1.875rem]">
         <div className="text-subTitle">Why are you leaving Kampus?</div>
@@ -68,19 +67,19 @@ export const DeleteAccount = () => {
         >
           Delete Account
         </MainButton>
-        {showModal &&
-          createPortal(
-            <Popup
-              title="Are you sure you're leaving Kampus?"
-              text="When you delete your account, all personal information and your articles will be deleted."
-              onClickLeft={handleClickLeave}
-              leftButton="Leave now"
-              onClickRight={() => setShowModal(false)}
-              rightButton="I don't want to leave"
-            />,
-            document.getElementById('modal-root'),
-          )}
       </div>
+      {showModal && (
+        <Modal
+          title="Are you sure you're leaving Kampus?"
+          onClickLeft={handleClickLeave}
+          leftButton="Leave now"
+          onClickRight={() => setShowModal(false)}
+          rightButton="I don't want to leave"
+        >
+          When you delete your account, all personal information and your
+          articles will be deleted.
+        </Modal>
+      )}
     </div>
   );
 };

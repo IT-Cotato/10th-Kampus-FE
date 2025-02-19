@@ -1,22 +1,24 @@
 import Camera from '@/assets/imgs/camera.svg';
 import ImgX from '@/assets/imgs/ImgX.svg?react';
+import { Modal } from '@/components/common/Modal';
 import { useState } from 'react';
 
 export const UploadPics = ({ onChange }) => {
   const [previewImages, setPreviewImages] = useState([]);
   const [files, setFiles] = useState([]);
+  const [showErrorModal, setShowErrorModal] = useState('');
 
   const getImageFiles = async (e) => {
     const newFiles = Array.from(e.target.files);
 
     if (newFiles.length + files.length > 10) {
-      alert('이미지는 최대 10장까지 업로드가 가능합니다.');
+      setShowErrorModal('You can upload up to 10 photos');
       return;
     }
 
     const validFiles = newFiles.filter((file) => file.type.match('image/.*'));
     if (validFiles.length !== newFiles.length) {
-      alert('이미지 파일만 업로드가 가능합니다.');
+      setShowErrorModal('You can only upload image files');
     }
 
     try {
@@ -45,7 +47,7 @@ export const UploadPics = ({ onChange }) => {
         e.target.value = '';
       }
     } catch (error) {
-      alert('파일 처리 중 오류가 발생했습니다.');
+      setShowErrorModal('An error occurred while processing the file.');
       return null;
     }
   };
@@ -99,6 +101,14 @@ export const UploadPics = ({ onChange }) => {
           </div>
         ))}
       </div>
+      {showErrorModal !== '' && (
+        <Modal
+          title={showErrorModal}
+          leftButton="Close"
+          onClickLeft={() => setShowErrorModal('')}
+          onClose={() => setShowErrorModal('')}
+        />
+      )}
     </div>
   );
 };

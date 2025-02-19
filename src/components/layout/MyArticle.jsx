@@ -23,8 +23,7 @@ export const MyArticle = ({ children }) => {
               key={item.id}
               theme={`${pathname.includes(item.path) ? 'primary' : 'disabled'}`}
               text={item.text}
-              width="base"
-              height="small"
+              size="short"
               onClick={() => navigate(`./${item.path}`, { replace: true })}
             />
           ))}

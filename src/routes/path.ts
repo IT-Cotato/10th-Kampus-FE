@@ -15,7 +15,7 @@ export const path = {
   board: {
     base: '/board',
     specific: {
-      base: ':boardTitle',
+      base: ':boardId',
       write: 'write',
       post: ':postId',
     },
@@ -64,8 +64,7 @@ export const path = {
     writeId: ':writeId',
   },
   chatList: {
-    base: '/chatlist',
-    chatRoom: ':roomId',
+    base: '/chat',
     report: 'report',
   },
   admin: {
@@ -74,10 +73,17 @@ export const path = {
     dashboard: 'dashboard',
     userManagement: 'userManagement',
     signupManagement: 'signupManagement',
-    boardManagement: 'boardManagement',
+    boardManagement: {
+      base: 'boardManagement',
+      create: 'create',
+      boardId: ':boardId',
+      edit: 'edit',
+    },
     cardnews: {
       base: 'cardnews',
       create: 'create',
+      cardnewsId: ':cardnewsId',
+      edit: 'edit',
     },
     reportMangement: 'reportMangement',
     statistics: 'statistics',

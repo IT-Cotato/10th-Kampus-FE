@@ -15,8 +15,6 @@ import {
   Search,
   Write,
   ProfileSettings,
-  ChatList,
-  ChatRoom,
   MyPage,
   MyInfo,
   SchoolVerification,
@@ -48,7 +46,9 @@ import {
   ReportManagement,
   Statistics,
   AdminLogin,
+  ChatPage,
   CardnewsList,
+  CreateBoard,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -203,14 +203,10 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <ChatList />,
+        element: <ChatPage />,
       },
       {
-        path: path.chatList.chatRoom,
-        element: <ChatRoom />,
-      },
-      {
-        path: `${path.chatList.chatRoom}/${path.chatList.report}`,
+        path: path.chatList.report,
         element: <ChatReport />,
       },
     ],
@@ -384,8 +380,22 @@ const AppRouter = createBrowserRouter([
         element: <SignupManagement />,
       },
       {
-        path: path.admin.boardManagement,
-        element: <BoardManagement />,
+        path: path.admin.boardManagement.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <BoardManagement />,
+          },
+          {
+            path: path.admin.boardManagement.create,
+            element: <CreateBoard />,
+          },
+          {
+            path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
+            element: <CreateBoard />,
+          },
+        ],
       },
       {
         path: path.admin.cardnews.base,
