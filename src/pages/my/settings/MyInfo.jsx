@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { DisabledInput } from '@/components/common/DisabledInput';
 import { MainButton } from '@/components/common/MainButton';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
@@ -8,7 +6,10 @@ import { TitleHeader } from '@/components/common/titleHeader';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { UserNameInput } from '@/components/join/usernameInput';
 import Languages from '@/constants/languages';
+import useDebounce from '@/hooks/use-Debounce';
+import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
 import { useEffect, useState } from 'react';
+import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 import { useNavigate } from 'react-router-dom';
 
 export const MyInfo = () => {
@@ -37,11 +38,6 @@ export const MyInfo = () => {
     return regex.test(value);
   };
 
-  const handleUserNameChange = (value) => {
-    setInfo((prev) => ({ ...prev, username: value }));
-    setIsUserNameFormatInvalid(!validateUserNameValue(value));
-  };
-
   const handleClickSave = () => {
     // 백 연동 후 마이페이지로 이동
     navigate(-1);
@@ -55,6 +51,32 @@ export const MyInfo = () => {
     }
   };
 
+  const debouncedUserName = useDebounce(info.username, 300); // 입력을 마치고 300ms 후 중복 체크를 위함
+
+  const handleUserNameChange = (value) => {
+    setInfo((prev) => ({ ...prev, username: value }));
+    setIsUserNameFormatInvalid(!validateUserNameValue(value));
+  };
+
+  const { mutate } = useDuplicateCheck(postDuplicateCheck);
+
+  const handleDuplicateCheck = (value) => {
+    mutate(
+      { data: { nickname: value } },
+      {
+        onSuccess: (response) => {
+          setIsUserNameDuplicated(!response?.isAvailable); // API 응답에 따라 상태 업데이트
+        },
+      },
+    );
+  };
+
+  useEffect(() => {
+    if (!isUserNameFormatInvalid && debouncedUserName && (info.username !== savedInfo.username)) {
+      handleDuplicateCheck(debouncedUserName);
+    }
+  }, [debouncedUserName, isUserNameFormatInvalid]);
+
   const disabled =
     !info.username ||
     isUserNameFormatInvalid ||
@@ -65,7 +87,7 @@ export const MyInfo = () => {
   useEffect(() => {
     const userData = {
       school: '홍익대학교',
-      username: 'cotato',
+      username: 'seoyeon',
       language: 'French',
       nationality: 'France',
     };
