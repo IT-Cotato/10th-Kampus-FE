@@ -49,6 +49,7 @@ import {
   AdminLogin,
   ChatPage,
   CardnewsList,
+  NotificationList,
   CreateBoard,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
@@ -151,6 +152,20 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Search />,
+      },
+    ],
+  },
+  {
+    path: path.notificationList,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <NotificationList />,
       },
     ],
   },

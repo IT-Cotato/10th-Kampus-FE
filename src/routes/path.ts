@@ -23,6 +23,7 @@ export const path = {
   },
   home: '/home',
   search: '/search',
+  notificationList: '/notificationList',
   mypage: {
     base: '/my',
     settings: {
