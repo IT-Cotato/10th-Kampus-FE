@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import React, { useState, useRef, useMemo } from 'react';
 
 export const SearchDropdown = ({
@@ -72,7 +73,14 @@ export const SearchDropdown = ({
         <input
           id={name}
           type="text"
-          className={`flex w-full border-b py-1 align-middle text-base ${!warning ? (selected ? 'border-primary-base' : 'border-neutral-base') : 'border-primary-red'} placeholder-neutral-border-50`}
+          className={cn(
+            'flex w-full border-b py-1 align-middle text-base placeholder-neutral-border-50',
+            {
+              'border-primary-base': !warning && selected,
+              'border-neutral-base': !warning && !selected,
+              'border-primary-red': warning,
+            },
+          )}
           placeholder={placeholder}
           autoComplete="off"
           onChange={(e) => handleOnChange(e.target.value)}
@@ -101,7 +109,7 @@ export const SearchDropdown = ({
             </div>
           )}
           {warning && (
-            <div className="mt-1 text-small text-primary-red">
+            <div className="mt-1 whitespace-pre-wrap text-small text-primary-red">
               {warn}
             </div>
           )}

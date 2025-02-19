@@ -9,6 +9,7 @@ import Nations from '@/constants/nations';
 import Languages from '@/constants/languages';
 import axios from 'axios';
 import { patchSignup } from '../../apis/auth/login.api';
+import { TitleHeader } from '@/components/common/titleHeader';
 
 export const ProfileSettings = () => {
   const location = useLocation();
@@ -28,10 +29,6 @@ export const ProfileSettings = () => {
       navigate(`${path.signup.base}/${path.signup.terms}`);
     }
   }, [term]);
-
-  const handleClickPreviousButton = () => {
-    navigate(-1);
-  };
 
   /** username 형식 확인 */
   const validateUserNameValue = (value) => {
@@ -89,17 +86,12 @@ export const ProfileSettings = () => {
   };
 
   return (
-    <div className="h-full px-4">
-      <div className="relative mb-[.625rem] mt-[1.25rem] flex h-[3.0625rem] w-full items-center justify-center text-pageTitle text-neutral-title">
-        <img
-          src={PreviousButton}
-          alt="back button"
-          onClick={handleClickPreviousButton}
-          className="absolute left-0 h-[1.1875rem] w-[1.1875rem] cursor-pointer text-pageTitle"
-        />
-        Profile Settings
-      </div>
-      <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
+    <div className="flex flex-col w-full h-full">
+          <TitleHeader
+            text="Profile Settings"
+          />
+          <div className='flex flex-col px-4 py-[.625rem]'>
+            <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
         <UserNameInput
           userName={userName}
           onChange={handleUserNameChange}
@@ -132,6 +124,7 @@ export const ProfileSettings = () => {
           Join Now
         </MainButton>
       </div>
+    </div>
     </div>
   );
 };
