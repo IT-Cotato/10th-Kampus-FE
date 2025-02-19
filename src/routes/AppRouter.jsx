@@ -15,8 +15,6 @@ import {
   Search,
   Write,
   ProfileSettings,
-  ChatList,
-  ChatRoom,
   MyPage,
   MyInfo,
   SchoolVerification,
@@ -48,6 +46,7 @@ import {
   ReportManagement,
   Statistics,
   AdminLogin,
+  ChatPage,
   CardnewsList,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
@@ -203,14 +202,10 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <ChatList />,
+        element: <ChatPage />,
       },
       {
-        path: path.chatList.chatRoom,
-        element: <ChatRoom />,
-      },
-      {
-        path: `${path.chatList.chatRoom}/${path.chatList.report}`,
+        path: path.chatList.report,
         element: <ChatReport />,
       },
     ],

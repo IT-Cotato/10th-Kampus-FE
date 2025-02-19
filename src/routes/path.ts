@@ -64,8 +64,7 @@ export const path = {
     writeId: ':writeId',
   },
   chatList: {
-    base: '/chatlist',
-    chatRoom: ':roomId',
+    base: '/chat',
     report: 'report',
   },
   admin: {
