@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { path } from '@/routes/path';
-import PreviousButton from '@/assets/imgs/previous.svg';
 import { MainButton } from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import Nations from '@/constants/nations';
 import Languages from '@/constants/languages';
-import axios from 'axios';
 import { patchSignup } from '../../apis/auth/login.api';
 import { TitleHeader } from '@/components/common/titleHeader';
+import useDebounce from '@/hooks/use-Debounce';
 
 export const ProfileSettings = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [isUserNameFormatInvalid, setIsUserNameFormatInvalid] = useState(false);
+  const [debounceState, setDebunceState] = useState('');
   const [isUserNameDuplicated, setIsUserNameDuplicated] = useState(false);
   const [nationality, setNationality] = useState('');
   const [isNationalitySelected, setIsNationalitySelected] = useState(false);
@@ -36,10 +36,23 @@ export const ProfileSettings = () => {
     return regex.test(value);
   };
 
+  const debouncedUserName = useDebounce(userName, 1000); // 입력을 마치고 500ms 후 중복 체크를 위함
+
   const handleUserNameChange = (value) => {
     setUserName(value);
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
   };
+  
+  const handleDuplicateCheck = (value) => {
+    const isDuplicate = true; // api 연결
+    setIsUserNameDuplicated(isDuplicate);
+  }
+
+  useEffect(() => {
+    if(!isUserNameFormatInvalid && debouncedUserName) {
+      handleDuplicateCheck(debouncedUserName);
+    }
+  }, [debouncedUserName, isUserNameFormatInvalid]);
 
   const disabled =
     !userName ||
@@ -60,22 +73,8 @@ export const ProfileSettings = () => {
     };
     return signupData;
   };
+  
   const handleClickJoinNow = async () => {
-    // api 수정되면 terms, language도 추가로 보내주기
-    // axios.post('https://kampus.kro.kr/v1/api/auth/signup', {
-    //   "email": "arghstjdy",
-    //   "uniqueId": "aweghsjd",
-    //   "providerId": "awegrh",
-    //   "username": "awrgsth",
-    //   "nickname": userName,
-    //   "nationality": nationality
-    // })
-    // .then(response => {
-    //   console.log('회원가입 성공:', response.data);
-    // })
-    // .catch(error => {
-    //   console.log('회원가입 에러: ', error);
-    // });
     const { data, success } = await patchSignup(returnSignupData());
     if (success) {
       // 우선은 userId를 쓰는 곳이 없어서 저장안해뒀는데 필요하면 추가시키겠습니다!
