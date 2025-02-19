@@ -44,7 +44,7 @@ export const ProfileSettings = () => {
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
   };
 
-  const { mutate } = useDuplicateCheck(duplicateCheck);
+  const { mutate } = useDuplicateCheck(postDuplicateCheck);
 
   const handleDuplicateCheck = (value) => {
     mutate({ data: { nickname: value } }, {

@@ -87,7 +87,7 @@ export const MyInfo = () => {
   useEffect(() => {
     const userData = {
       school: '홍익대학교',
-      username: 'seoyeon',
+      username: 'cotato',
       language: 'French',
       nationality: 'France',
     };
