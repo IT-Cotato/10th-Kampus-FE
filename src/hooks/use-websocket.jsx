@@ -2,6 +2,9 @@ import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
 import { useRef } from 'react';
 import { postReadMessage } from '@/apis/chat/chatList.api';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { getUser } from '@/apis/user/userDetail.api';
 
 const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
@@ -9,6 +12,12 @@ const SOCKET_URL = `${BASE_URL}/websocket`;
 export const useWebsocket = () => {
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
+
+  const { data: userDetail } = useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_ME],
+    queryFn: getUser,
+  });
+  const userId = userDetail.id;
 
   const connectSocket = (token) => {
     const socket = new SockJS(SOCKET_URL);
@@ -42,11 +51,21 @@ export const useWebsocket = () => {
     });
   };
 
-  const subscribeToChatRoom = (
-    chatroomId,
-    currentUserId,
-    setMessages,
-  ) => {
+  const subscribeToNotifications = (handleNotification) => {
+    const stompClient = stompClientRef.current;
+
+    if (!stompClient || !userId) return;
+
+    stompClient.subscribe(
+      `/user/${userId}/notifications/chat`,
+      (notification) => {
+        const newNotification = JSON.parse(notification.body);
+        handleNotification(newNotification);
+      },
+    );
+  };
+
+  const subscribeToChatRoom = (chatroomId, setMessages) => {
     const stompClient = stompClientRef.current;
 
     if (!stompClient || !chatroomId) return;
@@ -61,7 +80,7 @@ export const useWebsocket = () => {
         const newMessage = JSON.parse(message.body);
         const enrichedMessage = {
           ...newMessage,
-          isMine: Number(newMessage.senderId) === Number(currentUserId),
+          isMine: Number(newMessage.senderId) === Number(userId),
         };
 
         if (!enrichedMessage.isMine) {
@@ -87,5 +106,12 @@ export const useWebsocket = () => {
     }
   };
 
-  return { connectSocket, sendMessage, subscribeToChatRoom, disconnect };
+  return {
+    connectSocket,
+    sendMessage,
+    subscribeToNotifications,
+    subscribeToChatRoom,
+    disconnect,
+    userId: userDetail?.id,
+  };
 };

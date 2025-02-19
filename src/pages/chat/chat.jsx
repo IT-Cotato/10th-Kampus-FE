@@ -6,12 +6,23 @@ import { useEffect, useState } from 'react';
 
 export const ChatPage = () => {
   const [chatRoomId, setChatRoomId] = useState();
+  const [chatList, setChatList] = useState([]);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-  const { connectSocket, disconnect } = useWebsocket();
+  const { connectSocket, subscribeToNotifications, disconnect } =
+    useWebsocket();
 
   useEffect(() => {
     connectSocket(accessToken);
+
+    subscribeToNotifications((newNotification) => {
+      setChatList((prevChatList) => {
+        const updatedChatList = [...prevChatList, newNotification];
+        return updatedChatList.sort(
+          (a, b) => new Date(b.lastMessageTime) - new Date(a.lastMessageTime),
+        );
+      });
+    });
 
     return () => {
       disconnect();
@@ -21,7 +32,11 @@ export const ChatPage = () => {
   return (
     <div className="w-full h-full">
       {!chatRoomId ? (
-        <ChatList onChatRoomSelect={setChatRoomId} />
+        <ChatList
+          onChatRoomSelect={setChatRoomId}
+          chatList={chatList}
+          setChatList={setChatList}
+        />
       ) : (
         <ChatRoom chatRoomId={chatRoomId} />
       )}

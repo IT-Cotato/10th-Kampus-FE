@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatList } from '@/apis/chat/chatList.api';
+import { Loading } from '@/components/common/Loading';
 
-export const ChatList = ({ onChatRoomSelect }) => {
+export const ChatList = ({ onChatRoomSelect, chatList, setChatList }) => {
   const [activeSlide, setActiveSlide] = useState(null);
-  const [chatList, setChatList] = useState([]);
 
   const {
     data: chatListData,
@@ -37,7 +37,7 @@ export const ChatList = ({ onChatRoomSelect }) => {
       <div className="text-title text-neutral-title">Chats</div>
       <NoticeBox />
       {isLoading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : error ? (
         <div>Error: {error.message}</div>
       ) : chatList.length === 0 ? (
