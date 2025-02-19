@@ -89,11 +89,15 @@ export const Home = () => {
       <div className="flex items-start justify-between pb-[.625rem]">
         <Logo className="w-[6rem] h-auto text-primary-base" />
         <div className="flex gap-[0.875rem]">
-          <img
-            src={isNotification ? notification_true : notification}
-            alt="notification button"
-            className="w-5 h-6"
-          />
+          <button
+            className="cursor-pointer"
+            onClick={() => navigate(path.notificationList)}>
+            <img
+              src={isNotification ? notification_true : notification}
+              alt="notification button"
+              className="w-5 h-6"
+            />
+          </button>
           <button
             className="cursor-pointer"
             onClick={() => navigate(path.search)}

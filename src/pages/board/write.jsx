@@ -3,37 +3,66 @@ import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { replace, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
-
+import { TranslatePopup } from '@/components/board/write/TranslatePopup';
+import { createPortal } from 'react-dom';
+import { postWritePost } from '@/apis/board/postWritePost.api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { path } from '@/routes/path';
 export const Write = () => {
-  const { boardTitle } = useParams();
+  const queryClient = useQueryClient();
+  const { boardId } = useParams();
+  const { state } = useLocation();
+  const { mutate: addPost, isPending, isError } = useMutation({
+    mutationFn: (newPost) => postWritePost({ data: newPost }),
+    onSuccess: (response) => {
+      const createdPostId = response.postId;
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`, { replace: true })
+    }
+  })
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [content, setContent] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
-
+  const [isPopup, setIsPopup] = useState(false);
   const disabled = !title || !content;
+  const handleUpload = async () => {
+    const formData = new FormData();
 
-  const handleUpload = () => {
-    // 백 연동
-    console.log(title);
+    formData.append('boardId', boardId);
+    formData.append('title', title);
+    formData.append('content', content);
+
     if (selectedCategory) {
-      console.log(selectedCategory);
+      formData.append('postCategory', selectedCategory);
     }
-    console.log(content);
-    if (uploadedFiles) {
-      console.log(uploadedFiles);
+
+    if (uploadedFiles.length > 0) {
+      uploadedFiles.forEach((file) => {
+        formData.append(`images`, file); // 각 파일을 개별적으로 추가
+      });
     }
-    navigate(-1);
+    addPost(formData);
   };
 
   const handleTranslateAndUpload = () => {
-    // 번역 관련 팝업
+    setIsPopup(true)
+    // 번역 연동 시, 추가 예정
   };
+  useEffect(() => {
+    if (!state) { // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
+      navigate(-1);
+    }
+  }, [state, navigate])
+
+  if (!state) return null;
+  const { boardName } = state
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -60,7 +89,7 @@ export const Write = () => {
           setTitle={setTitle}
           placeholder="Please add a title."
         />
-        {(boardTitle === 'question' || boardTitle === 'information') && (
+        {boardName && (boardName === 'Question' || boardName === 'Information') && (
           <SelectCategory
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
@@ -82,6 +111,18 @@ export const Write = () => {
           </MainButton>
         </div>
       </div>
+      {/** props의 isLoading은 useQuery 이용 예정 */}
+      {isPopup &&
+        createPortal(
+          <TranslatePopup
+            title={title}
+            text={content}
+            onClickLeft={() => { setIsPopup(false) }}
+            onClickRight={() => { }}
+            isLoading={false}
+          />,
+          document.getElementById('modal-root')
+        )}
     </div>
   );
 };

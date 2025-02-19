@@ -26,6 +26,7 @@ import {
   WriteInquiry,
   NoticeDetail,
   Post,
+  PostReport,
   BlockChat,
   BlockSecondhand,
   Welcome,
@@ -48,6 +49,9 @@ import {
   AdminLogin,
   ChatPage,
   CardnewsList,
+  BoardGuide,
+  NotificationList,
+  CreateBoard,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -153,6 +157,34 @@ const AppRouter = createBrowserRouter([
     ],
   },
   {
+    path: path.boardGuide,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <BoardGuide />,
+      },
+    ],
+  },
+  {
+    path: path.notificationList,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <NotificationList />,
+      },
+    ],
+  },
+  {
     path: path.board.base,
     element: (
       <Layout>
@@ -178,7 +210,17 @@ const AppRouter = createBrowserRouter([
           },
           {
             path: path.board.specific.post,
-            element: <Post />,
+            element: <Outlet />,
+            children: [
+              {
+                path: '',
+                element: <Post />,
+              },
+              {
+                path: path.board.specific.report,
+                element: <PostReport />,
+              },
+            ]
           },
         ],
       },
@@ -379,8 +421,22 @@ const AppRouter = createBrowserRouter([
         element: <SignupManagement />,
       },
       {
-        path: path.admin.boardManagement,
-        element: <BoardManagement />,
+        path: path.admin.boardManagement.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <BoardManagement />,
+          },
+          {
+            path: path.admin.boardManagement.create,
+            element: <CreateBoard />,
+          },
+          {
+            path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
+            element: <CreateBoard />,
+          },
+        ],
       },
       {
         path: path.admin.cardnews.base,

@@ -18,6 +18,7 @@ export { AllBoard } from './board/allboard';
 export { Board } from './board/board';
 export { Write } from './board/write';
 export { Post } from './board/post';
+export { PostReport } from './board/postReport'
 
 export { Inquiry } from './my/service/inquiry/inquiry';
 export { FAQ } from './my/service/faq';
@@ -41,11 +42,14 @@ export { DeleteAccount } from './my/etc/deleteAccount';
 export { MyInfo } from './my/settings/MyInfo';
 export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
+export { BoardGuide } from './boardGuide/boardGuide';
+export { NotificationList } from './notification/notificationList';
+
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
-export { BoardManagement } from './admin/BoardManagement';
-
+export { BoardManagement } from './admin/board/BoardManagement';
+export { CreateBoard } from './admin/board/CreateBoard';
 export { CardnewsList } from './admin/CardnewsList';
 export { CreateCardnews } from './admin/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';

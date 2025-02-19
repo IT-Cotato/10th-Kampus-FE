@@ -8,9 +8,9 @@ export const MyArticles = () => {
       {
         title: 'My Article',
         content: 'content',
-        like: 80,
-        comment: 10,
-        time: '1 day ago',
+        likes: 80,
+        comments: 10,
+        createdTime: '1 day ago',
         image: null,
         board_type: 'Tips for living in Korea',
         scrap: false,
@@ -18,9 +18,9 @@ export const MyArticles = () => {
       {
         title: 'This is an article with a long long title',
         content: 'And an article that has a long long long long long long long long long long content',
-        like: 8,
-        comment: 4,
-        time: '1 day ago',
+        likes: 8,
+        comments: 4,
+        createdTime: '1 day ago',
         image: Logo,
         board_type: 'Information',
         scrap: false,
@@ -36,7 +36,7 @@ export const MyArticles = () => {
         // data.inquiry.length === 0
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <Logo className="w-32 text-neutral-disabled" />
-          <span className='text-neutral-border-40'>Looks like there’s nothing here. Time to create something amazing!</span>
+          <span className='text-neutral-border-40'>You haven't written anything yet! Share your story:)</span>
         </div>
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">
