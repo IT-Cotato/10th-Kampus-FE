@@ -7,30 +7,97 @@ import link from '@/assets/imgs/exportLink.svg';
 import postDelete from '@/assets/imgs/delete.svg';
 import { useState, useRef, useEffect } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
-import { useParams } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import { createPortal } from 'react-dom';
+import { Popup } from './popup';
+import { path } from '@/routes/path';
 export const BoardMenuBar = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
-  const [openPinModal, setOpenPinModal] = useState(false); // 핀 선택 창
+  const modalRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false); // 메뉴바 모달 창
   const [pinAni, setPinAni] = useState(false); // 핀 애니메이션 상태
-  const [myPost, setMyPost] = useState(false); // 자신의 게시글인지 아닌지 판별 확인용
-  const startPinAni = () => {
-    // 핀 애니메이션
-    setOpenPinModal(false);
-    startAnimation(setPinAni);
-    // 이 때 백엔드와 사용자의 보드 핀 또는 스크랩 상태 업데이트 해야 함
+  const [urlAni, setUrlAni] = useState(false); // URL 복사 애니메이션 상태
+  const [copyState, setCopyState] = useState(true); // 복사 성공여부
+  const [popupState, setPopupState] = useState({
+    chat: false,
+    block: false,
+    delete: false,
+  });
+  const popupData = {
+    chat: {
+      title: 'Chat with this account',
+      text: '',
+      leftButton: 'Cancel',
+      rightButton: 'Chat',
+    },
+    block: {
+      title: 'Block this account?',
+      text: 'All posts by the writer will be not displayed. You cannot unlock them.',
+      leftButton: 'Cancel',
+      rightButton: 'Block',
+    },
+    delete: {
+      title: 'Delete this post?',
+      text: 'Deleted posts cannot be recovered.',
+      leftButton: 'Cancel',
+      rightButton: 'Ok',
+    },
   };
+  const myPost = false;
+  const startMenuAni = (setAni) => {
+    // 애니메이션
+    setOpenModal(false);
+    startAnimation(setAni);
+  };
+  const togglePopup = (type) => {
+    setOpenModal(false);
+    setPopupState((prev) => ({
+      ...prev,
+      [type]: !prev[type],
+    }));
+  }
+  const handleRightButton = (type) => {
 
+  }
+  const copyUrl = async () => {
+    const nowUrl = window.location.href;
+    await navigator.clipboard.writeText(nowUrl)
+      .then(() => {
+        setCopyState(true)
+        startMenuAni(setUrlAni);
+      })
+      .catch(() => {
+        setCopyState(false)
+        startAnimation(setUrlAni)
+      })
+  }
+  useEffect(() => {
+    const handleOutSide = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        setOpenModal(false);
+      }
+    }
+    if (openModal) {
+      document.addEventListener('touchmove', handleOutSide);
+      document.addEventListener('mousedown', handleOutSide);
+    }
+    return () => {
+      document.removeEventListener('touchmove', handleOutSide);
+      document.removeEventListener('mousedown', handleOutSide);
+    }
+  }, [openModal])
   return (
-    <div className="w-5 h-5 cursor-pointer text-neutral-title">
-      <button onClick={() => setOpenPinModal(!openPinModal)}>
-        <img src={menubar} alt="Menu Bar" className="w-5 h-5" />
+    <div className="h-5 w-5 cursor-pointer text-neutral-title">
+      <button onClick={() => setOpenModal(!openModal)}>
+        <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
       </button>
-      {openPinModal &&
+      {openModal &&
         !postId && ( // 게시글 리스트 부분
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
-            onClick={() => startPinAni()}
+            ref={modalRef}
+            onClick={() => startMenuAni(setPinAni)}
           >
             <p className="text-base">
               {!pinAni ? 'Add to Bookmark' : 'Remove the Bookmark'}
@@ -39,54 +106,54 @@ export const BoardMenuBar = () => {
             <img src={pin} className="w-5 h-5 -rotate-90" />
           </div>
         )}
-      {openPinModal &&
+      {openModal &&
         postId &&
         !myPost && ( // 상세 게시글 중 다른 사람 게시글
-          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
+          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
             <div
               className="flex items-center justify-between pb-1"
-              onClick={() => console.log('Chat')}
+              onClick={() => togglePopup('chat')}
             >
               <p>Send a message</p>
               <img src={chat} alt="Start a Chat" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
-              onClick={() => console.log('Copy')}
+              onClick={() => copyUrl()}
             >
               <p>Copy URL</p>
               <img src={link} alt="Copy URL" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
-              onClick={() => console.log('Report')}
+              onClick={() => navigate('/', { state: { postId: 1 } })} // 신고 페이지로 이동
             >
               <p>Report</p>
               <img src={report} alt="Report" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
-              onClick={() => console.log('Block')}
+              onClick={() => togglePopup('block')}
             >
               <p>Block</p>
               <img src={block} alt="Block" className="w-4 h-4" />
             </div>
           </div>
         )}
-      {openPinModal &&
+      {openModal &&
         postId &&
         myPost && ( // 상세 게시글 중 내가 작성한 게시글
-          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
+          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
             <div
               className="flex items-center justify-between pb-1"
-              onClick={() => console.log('Copy')}
+              onClick={() => copyUrl()}
             >
               <p className="text-neutral-title">Copy URL</p>
               <img src={link} alt="Copy URL" className="w-4 h-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
-              onClick={() => console.log('Delete')}
+              onClick={() => togglePopup('delete')}
             >
               <p className="text-primary-red">Delete</p>
               <img
@@ -97,6 +164,7 @@ export const BoardMenuBar = () => {
             </div>
           </div>
         )}
+      {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
       {pinAni && (
         <StateChangeAnimate
           state={!pinAni}
@@ -104,7 +172,28 @@ export const BoardMenuBar = () => {
           changeToFalseText="Unpinned from the board"
         />
       )}
-      {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
+      {urlAni && (
+        <StateChangeAnimate
+          state={!copyState}
+          changeToTrueText="URL copied successfully"
+          changeToFalseText="URL copy failed"
+        />
+      )}
+      {Object.entries(popupState).map(([key, isOpen]) =>
+        isOpen &&
+        createPortal(
+          <Popup
+            key={key}
+            title={popupData[key].title}
+            text={popupData[key].text}
+            onClickLeft={() => togglePopup(key)}
+            leftButton={popupData[key].leftButton}
+            onClickRight={() => handleRightButton(key)}
+            rightButton={popupData[key].rightButton}
+          />,
+          document.getElementById('modal-root')
+        )
+      )}
     </div>
   );
 };

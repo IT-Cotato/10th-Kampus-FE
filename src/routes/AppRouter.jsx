@@ -47,6 +47,7 @@ import {
   Statistics,
   AdminLogin,
   ChatPage,
+  CardnewsList,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -382,8 +383,18 @@ const AppRouter = createBrowserRouter([
         element: <BoardManagement />,
       },
       {
-        path: path.admin.cardnews,
-        element: <CreateCardnews />,
+        path: path.admin.cardnews.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <CardnewsList />,
+          },
+          {
+            path: path.admin.cardnews.create,
+            element: <CreateCardnews />,
+          },
+        ],
       },
       {
         path: path.admin.reportMangement,

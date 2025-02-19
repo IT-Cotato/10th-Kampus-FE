@@ -4,7 +4,7 @@ import { path } from '@/routes/path';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
-import { SearchDropdownWithNoLabel } from '@/components/join/searchDropdownWithNoLabel';
+import { SearchDropdown } from '@/components/join/searchDropdown';
 import { SkipButton } from '@/components/join/skipButtonShadow';
 
 export const SchoolSearch = () => {
@@ -24,7 +24,7 @@ export const SchoolSearch = () => {
           <div className="flex justify-center w-full text-pageTitle gap-7">
             What is your school name?
           </div>
-          <SearchDropdownWithNoLabel
+          <SearchDropdown
             keyword={university}
             name="Language"
             placeholder="Search your school"
@@ -33,6 +33,7 @@ export const SchoolSearch = () => {
             selected={isUniversitySelected}
             list={UniversityList}
             warn="No school found. Kampus supports 397 universities in Korea."
+            label={false}
           />
         </div>
         <MainButton

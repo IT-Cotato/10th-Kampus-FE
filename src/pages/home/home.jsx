@@ -1,5 +1,5 @@
 import Logo from "@/assets/imgs/kampusLogo.svg?react"
-import notifiaction from "@/assets/imgs/notification.svg"
+import notification from "@/assets/imgs/notification.svg"
 import notification_true from "@/assets/imgs/notification_true.svg"
 import search from "@/assets/imgs/search.svg"
 import { useState } from "react";
@@ -34,7 +34,7 @@ export const Home = () => {
     favorites: [
       {
         board: 'Free Talk',
-        title: 'Title',
+        title: 'TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle',
         postID: 1,
       },
       {
@@ -63,7 +63,7 @@ export const Home = () => {
       },
       {
         board: 'Tips for living in Korea',
-        title: 'Title',
+        title: 'Title TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle',
         postID: 2,
       },
       {
@@ -86,11 +86,11 @@ export const Home = () => {
 
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
-      <div className="flex items-start justify-between">
-        <Logo className="w-[5.5rem] text-primary-base" />
+      <div className="flex items-start justify-between pb-[.625rem]">
+        <Logo className="w-[6rem] h-auto text-primary-base" />
         <div className="flex gap-[0.875rem]">
           <img
-            src={isNotification ? notification_true : notifiaction}
+            src={isNotification ? notification_true : notification}
             alt="notification button"
             className="w-5 h-6"
           />

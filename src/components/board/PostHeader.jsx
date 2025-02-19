@@ -8,7 +8,7 @@ export const PostHeader = ({ path }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
+    <div className="fixed z-10 flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       <p className="absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-subTitle font-medium text-neutral-title">
         {boardTitle}

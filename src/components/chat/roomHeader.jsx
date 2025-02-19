@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { BlockModal } from '@/components/chat/blockModal';
 import { LeaveModal } from '@/components/chat/leaveModal';
 import { ChatMenu } from '@/components/chat/chatMenu';
-import { Modal } from '@/components/common/Modal';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 
 export const RoomHeader = ({ text }) => {
@@ -46,8 +45,8 @@ export const RoomHeader = ({ text }) => {
       {isMuteModal && (
         <StateChangeAnimate
           state={isMuteModal}
-          changeToTrueText={'Success mute'}
-          changeToFalseText={'Success alram'}
+          changeToTrueText={'Successfully muted'}
+          changeToFalseText={'Successfully unmuted'}
         />
       )}
     </div>

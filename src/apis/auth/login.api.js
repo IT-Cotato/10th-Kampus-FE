@@ -11,6 +11,7 @@ export const getUserDetail = async () => {
   const response = await authApi.get(API_DOMAINS.USER);
   return { success: true, data: response.data.data };
 };
+
 export const patchSignup = async (signupData) => {
   const response = await authApi.patch(API_DOMAINS.USER, {
     ...signupData,
@@ -19,3 +20,4 @@ export const patchSignup = async (signupData) => {
   });
   return { success: true, data: response.data.data };
 };
+

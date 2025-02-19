@@ -7,7 +7,7 @@ export const ScrapComponent = ({
   state,
   width,
   height,
-  setBoardData,
+  setPostData,
   id = undefined,
 }) => {
   const { postId } = useParams();
@@ -16,7 +16,7 @@ export const ScrapComponent = ({
   const [scrapAni, setScrapAni] = useState(false); // 스크랩 애니메이션 상태
 
   const handleScrap = () => {
-    setBoardData((prev) => {
+    setPostData((prev) => {
       if (postId) {
         // 게시글
         setSelectScrapState(prev.scrap);
