@@ -49,6 +49,7 @@ import {
   AdminLogin,
   ChatPage,
   CardnewsList,
+  BoardGuide,
   NotificationList,
   CreateBoard,
 } from '@/pages';
@@ -156,6 +157,20 @@ const AppRouter = createBrowserRouter([
     ],
   },
   {
+    path: path.boardGuide,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      {
+        path: '',
+        element: <BoardGuide />,
+      },.
+    ],
+  },
+   {
     path: path.notificationList,
     element: (
       <Layout>

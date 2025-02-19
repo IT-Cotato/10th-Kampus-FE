@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PostList } from '@/components/board/PostList';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
@@ -92,8 +92,9 @@ export const Board = () => {
       <PostHeader path={path} />
       <div className="flex flex-col w-full h-full pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-          <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-neutral-bg-10 py-3 text-subTitle font-normal text-[#6A6A6A]">
-            Notice
+          <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-primary-10 py-2 text-small text-neutral-base"
+            onClick={() => navigate(path.boardGuide)}>
+            Board guide
           </div>
           {isActive.filter && <FilterBox />}
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}

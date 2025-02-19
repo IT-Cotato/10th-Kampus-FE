@@ -23,6 +23,7 @@ export const path = {
   },
   home: '/home',
   search: '/search',
+  boardGuide: '/boardGuide',
   notificationList: '/notificationList',
   mypage: {
     base: '/my',
