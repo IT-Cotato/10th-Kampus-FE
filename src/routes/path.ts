@@ -90,5 +90,11 @@ export const path = {
     },
     reportMangement: 'reportMangement',
     statistics: 'statistics',
+    notice: {
+      base: 'notice',
+      create: 'create',
+      noticeId: ':noticeId',
+      edit: 'edit',
+    }
   }
 };

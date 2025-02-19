@@ -18,7 +18,7 @@ export { AllBoard } from './board/allboard';
 export { Board } from './board/board';
 export { Write } from './board/write';
 export { Post } from './board/post';
-export { PostReport } from './board/postReport'
+export { PostReport } from './board/postReport';
 
 export { Inquiry } from './my/service/inquiry/inquiry';
 export { FAQ } from './my/service/faq';
@@ -45,7 +45,6 @@ export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
 export { NotificationList } from './notification/notificationList';
 
-
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
 export { BoardManagement } from './admin/board/BoardManagement';
@@ -56,6 +55,6 @@ export { Dashboard } from './admin/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
 export { SignupManagement } from './admin/SignupManagement';
 export { Statistics } from './admin/Statistics';
-
 export { UserManagement } from './admin/UserManagement';
-
+export { NoticeManagement } from './admin/notice/NoticeManagement';
+export { CreateNotice } from './admin/notice/CreateNotice';
