@@ -198,15 +198,15 @@ export const CreateCardnews = () => {
           </div>
           <div className="flex flex-col items-center h-full gap-4 p-5 text-center border rounded-lg">
             <h1 className="text-neutral-base">미리보기</h1>
-            <div className='flex flex-col items-center h-fit'>
+            <div className='flex flex-col w-full align-top h-fit text-start'>
               <h2
-                className={cn('flex h-10 items-center text-pageTitle', {
+                className={cn('flex h-10 text-pageTitle', {
                   'text-neutral-border-50': !title,
                 })}
               >
                 {title ? title : '제목을 입력하세요'}
               </h2>
-              <h2 className={cn("flex items-center w-full text-base whitespace-pre-line min-h-10 h-fit text-neutral-title", {
+              <h2 className={cn("flex w-full text-base whitespace-pre-line min-h-10 h-fit text-neutral-title", {
                   'text-neutral-border-50': !content,
                 })}
               >
