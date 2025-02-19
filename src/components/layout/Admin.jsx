@@ -50,7 +50,7 @@ export const Admin = ({ children }) => {
               <button
                 key={item.id}
                 className={cn(
-                  'flex items-center gap-4 box-border h-16 w-72 px-10 text-start text-subTitle text-neutral-base',
+                  'flex items-center gap-4 box-border h-16 w-72 px-7 text-start text-subTitle text-neutral-base',
                   {
                     'border-l-4 border-primary-base text-primary-base':
                       pathname.includes(item.path),
