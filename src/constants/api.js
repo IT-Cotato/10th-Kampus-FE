@@ -36,6 +36,8 @@ export const API_DOMAINS = {
   COMMENT_DELETE: '/comments/:commentId',
   COMMENT_LIKE_TOGGLE: '/comments/:commentId/like',
 
+  TRANSLATE_POST: '/translations/posts',
+
   ADMIN_CREATE_BOARD: '/admin/boards'
 };
 
