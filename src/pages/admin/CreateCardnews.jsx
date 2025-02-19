@@ -229,7 +229,7 @@ export const CreateCardnews = () => {
                     // 추후 사용자가 보는 카드뉴스 컴포넌트로 대체
                     previewIndex === index && (
                       <div
-                        className="flex justify-center w-full h-full border rounded-xl"
+                        className="flex justify-center w-full h-full border"
                         key={index}
                       >
                         <img

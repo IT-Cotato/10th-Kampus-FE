@@ -6,6 +6,7 @@ import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Plus from '@/assets/imgs/admin/Plus.svg';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
@@ -206,10 +207,10 @@ export const BoardManagement = () => {
         ))}
         <button
           type="button"
-          className="relative flex h-40 w-60 flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
+          className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
           onClick={() => navigate(path.admin.boardManagement.create)}
         >
-          +
+          <img src={Plus} />
         </button>
       </div>
     </div>
