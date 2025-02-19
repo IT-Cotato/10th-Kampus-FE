@@ -46,7 +46,6 @@ export const useWebsocket = () => {
     chatroomId,
     currentUserId,
     setMessages,
-    subscriptionRef,
   ) => {
     const stompClient = stompClientRef.current;
 
