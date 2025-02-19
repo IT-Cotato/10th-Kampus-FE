@@ -167,10 +167,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <BoardGuide />,
-      },.
+      },
     ],
   },
-   {
+  {
     path: path.notificationList,
     element: (
       <Layout>
@@ -247,18 +247,8 @@ const AppRouter = createBrowserRouter([
         element: <ChatPage />,
       },
       {
-        path: path.chatList.chatRoom,
-        element: <Outlet />,
-        children: [
-          {
-            path: '',
-            element: <ChatRoom />,
-          },
-          {
-            path: path.chatList.report,
-            element: <ChatReport />,
-          },
-        ]
+        path: path.chatList.report,
+        element: <ChatReport />,
       },
     ],
   },
