@@ -10,7 +10,7 @@ import { patchSignup } from '../../apis/auth/login.api';
 import { TitleHeader } from '@/components/common/titleHeader';
 import useDebounce from '@/hooks/use-Debounce';
 import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
-import { duplicateCheck } from '@/apis/auth/duplicateCheck.api';
+import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 
 export const ProfileSettings = () => {
   const location = useLocation();
