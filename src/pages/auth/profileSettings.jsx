@@ -37,7 +37,7 @@ export const ProfileSettings = () => {
     return regex.test(value);
   };
 
-  const debouncedUserName = useDebounce(userName, 1000); // 입력을 마치고 500ms 후 중복 체크를 위함
+  const debouncedUserName = useDebounce(userName, 300); // 입력을 마치고 300ms 후 중복 체크를 위함
 
   const handleUserNameChange = (value) => {
     setUserName(value);
