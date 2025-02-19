@@ -147,15 +147,11 @@ export const BoardManagement = () => {
             className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
           >
             <div className="relative flex flex-row items-center gap-3 text-center align-middle">
-              <button onClick={() => handleMenuBarClick(board.boardId)}>
-                <img
-                  src={menubar}
-                  alt="menu"
-                  className="absolute top-0 right-0 px-2 py-1"
-                />
-              </button>
               {selectedBoardMenu === board.boardId && (
-                <MenuBar menuOptions={menuOptions(board.boardId)} onClose={() => setSelectedBoardMenu(null)}/>
+                <MenuBar
+                  menuOptions={menuOptions(board.boardId)}
+                  onClose={() => setSelectedBoardMenu(null)}
+                />
               )}
               <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
                 {selectedDropdown === '삭제 대기'
@@ -165,6 +161,13 @@ export const BoardManagement = () => {
               <h2 className="whitespace-nowrap">
                 {board.title} | {board.postNum}개
               </h2>
+              <button onClick={() => handleMenuBarClick(board.boardId)}>
+                <img
+                  src={menubar}
+                  alt="menu"
+                  className="absolute top-0 right-0 px-2"
+                />
+              </button>
             </div>
             {board.description}
           </div>

@@ -19,7 +19,7 @@ export const MenuBar = ({ menuOptions, onClose }) => {
 
 
   return (
-    <div ref={menuRef} className="absolute z-10 flex flex-col justify-center text-base translate-x-full bg-white border shadow-md top-6 right-1 w-fit min-w-24 border-neutral-disabled y-2 text-neutral-title">
+    <div ref={menuRef} className="absolute z-10 flex flex-col justify-center text-base bg-white border shadow-md top-6 right-1 w-fit min-w-24 border-neutral-disabled y-2 text-neutral-title">
       {menuOptions.map((menu, index) => (
         <button
           key={index}
