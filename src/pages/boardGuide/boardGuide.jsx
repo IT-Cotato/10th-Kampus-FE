@@ -6,7 +6,7 @@ export const BoardGuide = () => {
 
     return (
         <div className="flex flex-col w-full h-full">
-            <TitleHeader text="Notice" />
+            <TitleHeader text="Board guide" />
             <div className="w-full h-full px-4 pb-20 text-base text-neutral-80 leading-normal">
                 {kampusGuide.split("\n").map((line, index) => {
                     const isEmojiLine = emojiList.some((emoji) => line.startsWith(emoji));
