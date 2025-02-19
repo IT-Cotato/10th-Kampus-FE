@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
+
 export const Board = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
@@ -27,32 +28,6 @@ export const Board = () => {
     scrap: false,
     filter: false
   })
-  const [boardData, setBoardData] = useState({
-    post: [
-      {
-        id: 0,
-        title: 'Title',
-        content: 'content',
-        likes: 10,
-        comments: 10,
-        createdTime: '1 day ago',
-        thumbnailUrl: null,
-        board_type: 'Tips for living in Korea',
-        scrap: false,
-      },
-      {
-        id: 1,
-        title: 'Title',
-        content: 'content',
-        like: 8,
-        comment: 4,
-        time: '1 day ago',
-        image: null,
-        board_type: 'Information',
-        scrap: true,
-      },
-    ],
-  });
   const checkIsActive = () => {
     setIsActive({
       trending: boardDetail.boardName === "Trending",
@@ -67,22 +42,6 @@ export const Board = () => {
     }); // scrap 우선 정렬
     // 여기에 백에서 보내주는 양식 보고 시간 기준 정렬 추가해야함
   };
-  useEffect(() => {
-    // 서버와 통신되면 리액트 쿼리로 바꿀 예정
-    if (isActive.scrap) {
-      setBoardData((prev) => {
-        const sortedPost = sortPostByScrap(prev.post);
-        if (
-          !sortedPost.every(
-            (post, index) => post.scrap === prev.post[index].scrap,
-          )
-        ) {
-          return { ...prev, post: sortedPost };
-        }
-        return prev;
-      });
-    }
-  }, [boardData.post.map((post) => post.scrap).join()]); // 스크랩이 바뀔 때만
   useEffect(() => {
     if (boardDetail) {
       checkIsActive();
@@ -113,6 +72,7 @@ export const Board = () => {
               <TipsPostList
                 key={index}
                 data={item}
+                boardId={boardId}
               />
             ) : (
               <PostList key={index} data={item} isActive={isActive.trending} />

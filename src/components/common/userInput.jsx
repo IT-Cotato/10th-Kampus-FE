@@ -71,7 +71,7 @@ export const UserInput = ({
             rows={1}
             className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
             placeholder={placeholder}
-            autoFocus
+            autoFocus={type === InputTypes.CHAT}
           />
           <button
             onClick={() => {
