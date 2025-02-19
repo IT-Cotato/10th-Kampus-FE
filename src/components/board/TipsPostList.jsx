@@ -1,11 +1,12 @@
 import Like from '../../assets/imgs/like.svg?react';
 import Comment from '../../assets/imgs/comment.svg?react';
-import { ScrapComponent } from '../common/ScarpComponent';
+import { ScrapComponent } from '../common/ScrapComponent';
 import { useNavigate } from 'react-router-dom';
-
-export const TipsPostList = ({ data, setPostData }) => {
+import { formatTime } from '@/utils/formatTime';
+export const TipsPostList = ({ data }) => {
   // 카드 뉴스 부분 데이터 요청 시, 스크랩 여부도 같이 가져와야 함
   const navigate = useNavigate();
+
   return (
     <div
       className="flex justify-between pb-3 pt-5"
@@ -23,7 +24,7 @@ export const TipsPostList = ({ data, setPostData }) => {
             <p>{data.comments}</p>
           </div>
           <p className="text-small text-neutral-border-50">
-            {data.createdTime}
+            {formatTime(data.createdTime)}
           </p>
         </div>
       </div>
@@ -39,7 +40,6 @@ export const TipsPostList = ({ data, setPostData }) => {
         </div>
         <ScrapComponent
           state={data.scrap}
-          setPostData={setPostData}
           id={data.id}
           width="1.875rem"
           height="1.875rem"

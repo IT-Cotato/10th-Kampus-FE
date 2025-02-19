@@ -8,7 +8,7 @@ import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 export const KakaoLogin = () => {
   const kakaoKey = import.meta.env.VITE_KAKAO_JS_KEY;
   const redirectUri =
-    import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    import.meta.env.VITE_API_SOCKET_URL + import.meta.env.VITE_KAKAO_REDIRECT_URI;
   App.addListener('appUrlOpen', async (event) => {
     const url = event.url; // 전달받은 URL 예: kampus://login?accessToken=abc123&refreshToken=xyz456
 
@@ -50,6 +50,7 @@ export const KakaoLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri,
       scope: 'account_email',
+      throughTalk: false  // 카카오 앱이 아닌 브라우저 로그인하게 하는 옵션 
     });
   };
   return (
