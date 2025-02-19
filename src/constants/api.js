@@ -8,7 +8,6 @@ export const KAKAO_AUTH_API_URL = 'https://kauth.kakao.com/oauth/authorize';
 
 export const API_DOMAINS = {
   USER: '/users/details',
-
   MYPAGE: '/mypage',
 
   PRODUCTS: '/products',
@@ -18,6 +17,7 @@ export const API_DOMAINS = {
   CHATLIST: '/chats/chatrooms',
   CHAT_MESSAGE: '/chats/:chatroomId/messages',
   CHATROOM_DETAIL: '/chats/chatrooms/{chatroomId}',
+
 
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',

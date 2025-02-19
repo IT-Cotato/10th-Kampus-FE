@@ -16,7 +16,7 @@ export const Admin = ({ children }) => {
     { id: 0, text: '대시보드', path: path.admin.dashboard },
     { id: 1, text: '사용자 관리', path: path.admin.userManagement },
     { id: 2, text: '가입 관리', path: path.admin.signupManagement },
-    { id: 3, text: '게시판 관리', path: path.admin.boardManagement },
+    { id: 3, text: '게시판 관리', path: path.admin.boardManagement.base },
     { id: 4, text: '카드뉴스 제작', path: path.admin.cardnews.base },
     { id: 5, text: '신고 관리', path: path.admin.reportMangement },
     { id: 6, text: '통계 관리', path: path.admin.statistics },
@@ -63,7 +63,7 @@ export const Admin = ({ children }) => {
             </div>
           )}
           <div
-            className={cn('flex w-full flex-1 flex-col pt-4', {
+            className={cn('flex w-full flex-1 flex-col pt-4 pb-4', {
               'pt-14': !showMenu,
             })}
           >

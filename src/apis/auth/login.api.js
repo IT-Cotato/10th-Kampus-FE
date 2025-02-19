@@ -19,3 +19,4 @@ export const patchSignup = async (signupData) => {
   });
   return { success: true, data: response.data.data };
 };
+

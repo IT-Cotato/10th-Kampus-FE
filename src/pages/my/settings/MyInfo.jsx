@@ -3,13 +3,12 @@
 import { DisabledInput } from '@/components/common/DisabledInput';
 import { MainButton } from '@/components/common/MainButton';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
-import { Popup } from '@/components/common/popup';
+import { Modal } from '@/components/common/Modal';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { UserNameInput } from '@/components/join/usernameInput';
 import Languages from '@/constants/languages';
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 
 export const MyInfo = () => {
@@ -49,7 +48,7 @@ export const MyInfo = () => {
   };
 
   const handleBackClick = () => {
-    if(!disabled) {
+    if (!disabled) {
       setShowModal(true);
     } else {
       navigate(-1);
@@ -121,18 +120,18 @@ export const MyInfo = () => {
           <MainButton onClick={handleClickSave} disabled={disabled}>
             Save
           </MainButton>
-          {showModal &&
-            createPortal(
-              <Popup
-                title="Do you want to save the changes?"
-                text="If you cancel this, the changes will not be saved."
-                onClickLeft={() => navigate(-1)}
-                leftButton="Cancel"
-                onClickRight={handleClickSave}
-                rightButton="Save"
-              />,
-              document.getElementById('modal-root'),
-            )}
+          {showModal && (
+            <Modal
+              title="Do you want to save the changes?"
+              onClickLeft={() => navigate(-1)}
+              leftButton="Cancel"
+              onClickRight={handleClickSave}
+              rightButton="Save"
+              onClose={() => setShowModal(false)}
+            >
+              If you cancel this, the changes will not be saved.
+            </Modal>
+          )}
         </div>
       </div>
     </div>
