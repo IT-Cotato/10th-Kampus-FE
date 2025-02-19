@@ -10,6 +10,8 @@ export const API_DOMAINS = {
   USER: '/users/details',
   MYPAGE: '/mypage',
 
+  DUPLICATE_CHECK: '/users/check-nickname',
+
   PRODUCTS: '/products',
 
   CREATE_CHAT: '/chats/post',

@@ -9,13 +9,14 @@ import Languages from '@/constants/languages';
 import { patchSignup } from '../../apis/auth/login.api';
 import { TitleHeader } from '@/components/common/titleHeader';
 import useDebounce from '@/hooks/use-Debounce';
+import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
+import { duplicateCheck } from '@/apis/auth/duplicateCheck.api';
 
 export const ProfileSettings = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [isUserNameFormatInvalid, setIsUserNameFormatInvalid] = useState(false);
-  const [debounceState, setDebunceState] = useState('');
   const [isUserNameDuplicated, setIsUserNameDuplicated] = useState(false);
   const [nationality, setNationality] = useState('');
   const [isNationalitySelected, setIsNationalitySelected] = useState(false);
@@ -42,14 +43,19 @@ export const ProfileSettings = () => {
     setUserName(value);
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
   };
-  
+
+  const { mutate } = useDuplicateCheck(duplicateCheck);
+
   const handleDuplicateCheck = (value) => {
-    const isDuplicate = true; // api 연결
-    setIsUserNameDuplicated(isDuplicate);
-  }
+    mutate({ data: { nickname: value } }, {
+      onSuccess: (response) => {
+        setIsUserNameDuplicated(!(response?.isAvailable)); // API 응답에 따라 상태 업데이트
+      },
+    });
+  };
 
   useEffect(() => {
-    if(!isUserNameFormatInvalid && debouncedUserName) {
+    if (!isUserNameFormatInvalid && debouncedUserName) {
       handleDuplicateCheck(debouncedUserName);
     }
   }, [debouncedUserName, isUserNameFormatInvalid]);
@@ -73,7 +79,7 @@ export const ProfileSettings = () => {
     };
     return signupData;
   };
-  
+
   const handleClickJoinNow = async () => {
     const { data, success } = await patchSignup(returnSignupData());
     if (success) {
@@ -86,44 +92,42 @@ export const ProfileSettings = () => {
 
   return (
     <div className="flex flex-col w-full h-full">
-          <TitleHeader
-            text="Profile Settings"
+      <TitleHeader text="Profile Settings" />
+      <div className="flex flex-col px-4 py-[.625rem]">
+        <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
+          <UserNameInput
+            userName={userName}
+            onChange={handleUserNameChange}
+            invalid={isUserNameFormatInvalid}
+            duplicated={isUserNameDuplicated}
           />
-          <div className='flex flex-col px-4 py-[.625rem]'>
-            <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
-        <UserNameInput
-          userName={userName}
-          onChange={handleUserNameChange}
-          invalid={isUserNameFormatInvalid}
-          duplicated={isUserNameDuplicated}
-        />
-        <SearchDropdown
-          keyword={nationality}
-          name="Nationality"
-          placeholder="Select your nationality"
-          onChange={(value) => setNationality(value)}
-          setIsSelected={setIsNationalitySelected}
-          selected={isNationalitySelected}
-          list={Nations}
-          warn="You have to select your country"
-        />
-        <SearchDropdown
-          keyword={language}
-          name="Language"
-          placeholder="Select your language"
-          onChange={(value) => setLanguage(value)}
-          setIsSelected={setIsLanguageSelected}
-          selected={isLanguageSelected}
-          list={Languages}
-          warn="You have to select your language"
-        />
+          <SearchDropdown
+            keyword={nationality}
+            name="Nationality"
+            placeholder="Select your nationality"
+            onChange={(value) => setNationality(value)}
+            setIsSelected={setIsNationalitySelected}
+            selected={isNationalitySelected}
+            list={Nations}
+            warn="You have to select your country"
+          />
+          <SearchDropdown
+            keyword={language}
+            name="Language"
+            placeholder="Select your language"
+            onChange={(value) => setLanguage(value)}
+            setIsSelected={setIsLanguageSelected}
+            selected={isLanguageSelected}
+            list={Languages}
+            warn="You have to select your language"
+          />
+        </div>
+        <div className="flex mt-8 mb-5">
+          <MainButton onClick={handleClickJoinNow} disabled={disabled}>
+            Join Now
+          </MainButton>
+        </div>
       </div>
-      <div className="flex mt-8 mb-5">
-        <MainButton onClick={handleClickJoinNow} disabled={disabled}>
-          Join Now
-        </MainButton>
-      </div>
-    </div>
     </div>
   );
 };
