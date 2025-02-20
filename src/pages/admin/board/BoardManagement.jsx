@@ -141,7 +141,7 @@ export const BoardManagement = () => {
                 {selectedBoardMenu === board.boardId && (
                   <MenuBar
                     menuOptions={
-                      board.boardStatus === 'DELETED'
+                      board.boardStatus === 'PENDING_DELETION'
                         ? deletedMenuOptions(board.boardId)
                         : board.boardStatus === 'INACTIVE'
                           ? keptMenuOptions(board.boardId)
