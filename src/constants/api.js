@@ -10,6 +10,8 @@ export const API_DOMAINS = {
   USER: '/users/details',
   MYPAGE: '/mypage',
 
+  DUPLICATE_CHECK: '/users/check-nickname',
+
   PRODUCTS: '/products',
 
   CREATE_CHAT: '/chats/post',
@@ -31,7 +33,10 @@ export const API_DOMAINS = {
   POST_WRITE: '/posts',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
 
-  ADMIN_CREATE_BOARD: '/admin/boards',
+  ADMIN_BOARD: '/admin/boards',
+  ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
+  ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
+  ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
 };
 
 export const QUERY_KEYS = {
@@ -46,4 +51,6 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
+  GET_BOARD_LIST: 'status',
+  GET_BOARD: 'boardId',
 };

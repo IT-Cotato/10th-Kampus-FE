@@ -5,13 +5,19 @@ import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { ShortInput } from '@/components/admin/ShortInput';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { postCreateBoard } from '@/apis/admin/postCreateBoard.api';
+import { toast } from 'react-toastify';
+import { QUERY_KEYS } from '@/constants/api';
+import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
+import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
   const { boardId } = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [boardType, setBoardType] = useState('generalboard');
+  const [boardType, setBoardType] = useState('GENERAL');
 
   const UniversityList = University;
   const [university, setUniversity] = useState('');
@@ -24,34 +30,35 @@ export const CreateBoard = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const data = {
-    type: 'schoolboard',
-    title: 'Free Talk',
-    description:
-      'Chat about anything and everything! Share your experiences, thoughts, and daily life with the community.',
-    categories: ['Question', 'Information'],
-  };
+  const { data: boardDetailsData } = useQuery({
+    queryKey: [QUERY_KEYS.ADMIN_BOARD_DETAIL, boardId],
+    queryFn: () => getAdminBoardDetail({ boardId: boardId }),
+    enabled: !!boardId,
+  });
 
+  // 수정하는 페이지일 경우 백 연동
   useEffect(() => {
-    if (boardId) {
+    if (boardDetailsData) {
+      console.log(boardDetailsData);
       setIsEditMode(true);
       // 백 연동
-      setBoardType(data.type);
-      setTitle(data.title);
-      setDescription(data.description);
+      setBoardType(boardDetailsData.boardType);
+      setTitle(boardDetailsData.boardName);
+      setDescription(boardDetailsData.description);
 
       // 학교 보드일 경우
-      if (data.type === 'schoolboard') {
-        setUniversity('홍익대학교');
+      if (boardDetailsData.boardType === 'UNIVERSITY') {
+        setUniversity(boardDetailsData.universityName);
         setIsUniversitySelected(true);
       }
+      setIsCategoryChecked(boardDetailsData.isCategoryRequired);
       // 카테고리 선택되어있을 경우
-      if (data.categories && data.categories.length > 0) {
-        setIsCategoryChecked(true);
-        setCategoryList(data.categories);
-      }
+      // if (data.categories && data.categories.length > 0) {
+      //   setIsCategoryChecked(true);
+      //   setCategoryList(data.categories);
+      // }
     }
-  }, [boardId]);
+  }, [boardDetailsData]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && categoryValue.trim() !== '') {
@@ -66,41 +73,68 @@ export const CreateBoard = () => {
     setCategoryList(updatedList);
   };
 
+  const { mutate: createBoard } = useMutation({
+    mutationFn: postCreateBoard,
+  });
+
   const handleCreateBoard = () => {
-    // 백 연동
-    console.log(boardType);
-    if (boardType === 'schoolboard') {
-      console.log(university);
-    }
-    console.log(title);
-    console.log(description);
+    const universityName = boardType === 'UNIVERSITY' ? university : null;
+    const data = {
+      boardName: title,
+      description: description,
+      universityName: universityName,
+      isCategoryRequired: isCategoryChecked,
+    };
+
     if (isCategoryChecked) {
-      console.log(categoryList);
+      console.log(categoryList); // 나중에 백 api 수정되면 보내줘야함
     }
 
-    navigate(-1);
+    createBoard(
+      { data: data },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+          navigate(-1);
+        },
+        onError: (err) => {
+          alert(err.message);
+        },
+      },
+    );
   };
 
-  const handleEditBoard = () => {
-    // 백 연동
-    console.log(boardId);
-    console.log(boardType);
-    if (boardType === 'schoolboard') {
-      console.log(university);
-    }
-    console.log(title);
-    console.log(description);
-    if (isCategoryChecked) {
-      console.log(categoryList);
-    }
+  const { mutate: editBoard } = useMutation({
+    mutationFn: ({ boardId, boardData }) =>
+      putAdminBoard({ boardId, data: boardData }),
+  });
 
-    navigate(-1);
-  }
+  const handleEditBoard = (boardId) => {
+    // 백 연동
+    const data = {
+      boardName: title,
+      description: description,
+      isCategoryRequired: isCategoryChecked,
+    };
+
+    editBoard(
+      { boardId: boardId, boardData: data },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+          navigate(-1);
+        },
+        onError: (err) => {
+          alert(err.message);
+        },
+      },
+    );
+  };
 
   const disabled =
     !title ||
     !description ||
-    (boardType === 'schoolboard' && !isUniversitySelected) ||
+    (boardType === 'UNIVERSITY' && !isUniversitySelected) ||
     (isCategoryChecked && categoryList.length === 0);
 
   return (
@@ -109,34 +143,36 @@ export const CreateBoard = () => {
         <div className="flex h-10 gap-5">
           <div className="flex items-center gap-2 text-subTitle">
             <input
-              id="generalboard"
+              id="GENERAL"
               type="radio"
-              value="generalboard"
+              value="GENERAL"
               name="boardType"
               className="w-5 h-5 cursor-pointer"
               onChange={(e) => setBoardType(e.target.value)}
-              checked={boardType === 'generalboard'}
+              checked={boardType === 'GENERAL'}
+              disabled={isEditMode}
             />
-            <label htmlFor="generalboard" className="cursor-pointer">
+            <label htmlFor="GENERAL" className="cursor-pointer">
               일반 게시판
             </label>
           </div>
           <div className="flex items-center gap-2 text-subTitle">
             <input
-              id="schoolboard"
+              id="UNIVERSITY"
               type="radio"
-              value="schoolboard"
+              value="UNIVERSITY"
               name="boardType"
               className="w-5 h-5 cursor-pointer"
               onChange={(e) => setBoardType(e.target.value)}
-              checked={boardType === 'schoolboard'}
+              checked={boardType === 'UNIVERSITY'}
+              disabled={isEditMode}
             />
-            <label htmlFor="schoolboard" className="cursor-pointer">
+            <label htmlFor="UNIVERSITY" className="cursor-pointer">
               학교 게시판
             </label>
           </div>
           <div className="flex">
-            {boardType === 'schoolboard' && (
+            {boardType === 'UNIVERSITY' && (
               <SearchDropdown
                 keyword={university}
                 name="Language"
@@ -147,6 +183,7 @@ export const CreateBoard = () => {
                 list={UniversityList}
                 warn=""
                 label={false}
+                disabled={isEditMode}
               />
             )}
           </div>
@@ -190,9 +227,20 @@ export const CreateBoard = () => {
           )}
         </div>
         <div className="flex max-w-[31.25rem] flex-col gap-5">
-        <ShortInput value={title} onChange={setTitle} placeholder="게시판명을 적어주세요." />
-        <ShortInput value={description} onChange={setDescription} placeholder="게시판 설명을 간단하게 적어주세요." />
-          <MainButton disabled={disabled} onClick={isEditMode ? handleEditBoard : handleCreateBoard}>
+          <ShortInput
+            value={title}
+            onChange={setTitle}
+            placeholder="게시판명을 적어주세요."
+          />
+          <ShortInput
+            value={description}
+            onChange={setDescription}
+            placeholder="게시판 설명을 간단하게 적어주세요."
+          />
+          <MainButton
+            disabled={disabled}
+            onClick={isEditMode ? () => handleEditBoard(boardId) : handleCreateBoard}
+          >
             {isEditMode ? '게시판 수정' : '게시판 생성'}
           </MainButton>
         </div>

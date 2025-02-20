@@ -3,6 +3,15 @@ import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import HamburgerIcon from '@/assets/imgs/admin/HamburgerIcon.png';
+import Board from '@/assets/imgs/admin/Board.svg?react';
+import Cardnews from '@/assets/imgs/admin/Cardnews.svg?react';
+import Graph from '@/assets/imgs/admin/Graph.svg?react';
+import Home from '@/assets/imgs/admin/Home.svg?react';
+import Report from '@/assets/imgs/admin/Report.svg?react';
+import Setting from '@/assets/imgs/admin/Setting.svg?react';
+import User from '@/assets/imgs/admin/User.svg?react';
+import Volume from '@/assets/imgs/admin/Volume.svg?react';
+
 
 export const Admin = ({ children }) => {
   const location = useLocation();
@@ -13,13 +22,14 @@ export const Admin = ({ children }) => {
   const [showMenu, setShowMenu] = useState(true);
 
   const menu = [
-    { id: 0, text: '대시보드', path: path.admin.dashboard },
-    { id: 1, text: '사용자 관리', path: path.admin.userManagement },
-    { id: 2, text: '가입 관리', path: path.admin.signupManagement },
-    { id: 3, text: '게시판 관리', path: path.admin.boardManagement.base },
-    { id: 4, text: '카드뉴스 제작', path: path.admin.cardnews.base },
-    { id: 5, text: '신고 관리', path: path.admin.reportMangement },
-    { id: 6, text: '통계 관리', path: path.admin.statistics },
+    { id: 0, text: '대시보드', path: path.admin.dashboard, img: Home },
+    { id: 1, text: '사용자 관리', path: path.admin.userManagement, img: User},
+    { id: 2, text: '가입 관리', path: path.admin.signupManagement, img: Setting },
+    { id: 3, text: '게시판 관리', path: path.admin.boardManagement.base, img: Board },
+    { id: 4, text: '카드뉴스 제작', path: path.admin.cardnews.base , img: Cardnews},
+    { id: 5, text: '신고 관리', path: path.admin.reportMangement, img: Report },
+    { id: 6, text: '통계 관리', path: path.admin.statistics, img: Graph },
+    { id: 7, text: '공지 작성', path: path.admin.notice.base, img: Volume },
   ];
 
   return (
@@ -41,7 +51,7 @@ export const Admin = ({ children }) => {
               <button
                 key={item.id}
                 className={cn(
-                  'box-border h-16 w-72 px-10 text-start text-subTitle text-neutral-base',
+                  'flex items-center gap-4 box-border h-16 w-72 px-7 text-start text-subTitle text-neutral-base',
                   {
                     'border-l-4 border-primary-base text-primary-base':
                       pathname.includes(item.path),
@@ -49,7 +59,8 @@ export const Admin = ({ children }) => {
                 )}
                 onClick={() => navigate(`./${item.path}`, { replace: true })}
               >
-                {item.text}
+                <item.img className='flex w-6 h-auto'/>
+                <span className='flex'>{item.text}</span>
               </button>
             ))}
           </div>
