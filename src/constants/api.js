@@ -10,6 +10,10 @@ export const API_DOMAINS = {
   USER: '/users/details',
   MYPAGE: '/mypage',
 
+  GET_MY_POSTS: '/posts/my',
+  GET_MY_COMMENTED_POST: '/my/commented-post',
+  GET_MY_SCRAPED_POST: '/posts/my/scrap',
+
   DUPLICATE_CHECK: '/users/check-nickname',
 
   PRODUCTS: '/products',
@@ -75,5 +79,9 @@ export const QUERY_KEYS = {
   POST_NOTICE: 'postNotice',
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',
+
+  MY_POST_LIST: 'myPostList',
+  MY_COMMENTED_POST_LIST: 'myCommentedPostList',
+  MY_SCRAPED_POST_LIST: 'scrapedPostList',
 };
 

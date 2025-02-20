@@ -8,54 +8,63 @@ import { Translating } from '../common/Translating';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { translatePost } from '@/apis/translate/translatePost.api';
 import { QUERY_KEYS } from '@/constants/api';
-export const PostList = ({ data, isActive }) => {
+export const PostList = ({ data, isActive, ...props }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [translateState, setTranslateState] = useState(false);
   const [translatedPost, setTranslatedPost] = useState(null);
   const { mutate: postTranslate, isPending: translatePending } = useMutation({
     mutationFn: async (postId) => {
-      return await translatePost({ postId: postId })
+      return await translatePost({ postId: postId });
     },
     onSuccess: (response, postId) => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_POST_LIST, postId] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_TRANSLATE_POST_LIST, postId],
+      });
       setTranslatedPost(response);
       setTranslateState(true);
-    }
-  })
+    },
+  });
   const handleTranslate = () => {
     if (translatedPost) {
       setTranslateState(true);
-    }
-    else {
+    } else {
       postTranslate(data.id);
     }
-  }
+  };
+
+  const handleOnClick = (data) => {
+    if (props.onClick) {
+      props.onClick(data);
+    } else {
+      navigate(`${data.id}`);
+    }
+  };
   return (
     <div
-      className="flex flex-col gap-3 pb-3 pt-4"
-      onClick={() => navigate(`${data.id}`)}
+      className="flex flex-col gap-3 pt-4 pb-3 cursor-pointer"
+      onClick={() => handleOnClick(data)}
     >
       {isActive /** 인기 게시판 레이아웃 */ && (
         <div className="w-fit rounded-md bg-primary-10 px-[0.625rem] py-[0.3125rem] text-small text-neutral-base">
-          {data.board_type}
+          {data.board_type || data.boardName}
         </div>
       )}
       <div className="flex justify-between gap-3">
         <div className="relative flex flex-col line-clamp-3">
           <h1 className="truncate text-subTitle text-neutral-title">
-            <span className={translatePending ? "opacity-0" : "opacity-100"}>
+            <span className={translatePending ? 'opacity-0' : 'opacity-100'}>
               {translateState ? translatedPost.title : data?.title}
             </span>
           </h1>
-          <h2 className="line-clamp-2  text-neutral-base">
-            <span className={translatePending ? "opacity-0" : "opacity-100"}>
+          <h2 className="line-clamp-2 text-neutral-base">
+            <span className={translatePending ? 'opacity-0' : 'opacity-100'}>
               {translateState ? translatedPost.content : data?.content}
             </span>
           </h2>
           {translatePending && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2">
-              <Translating width={"3rem"} height={"3rem"} />
+            <div className="absolute left-0 -translate-y-1/2 top-1/2">
+              <Translating width={'3rem'} height={'3rem'} />
             </div>
           )}
         </div>
@@ -64,7 +73,7 @@ export const PostList = ({ data, isActive }) => {
             <img
               src={data.thumbnailUrl}
               alt="post image"
-              className="h-20 w-20 object-cover"
+              className="object-cover w-20 h-20"
             />
           )}
         </div>
@@ -83,14 +92,15 @@ export const PostList = ({ data, isActive }) => {
             {formatTime(data.createdTime)}
           </p>
         </div>
-        <button onClick={(e) => {
-          e.stopPropagation()
-          translateState ? setTranslateState(false) : handleTranslate()
-        }
-        }  >
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            translateState ? setTranslateState(false) : handleTranslate();
+          }}
+        >
           <Translate className="text-neutral-title" />
         </button>
       </div>
-    </div >
+    </div>
   );
 };
