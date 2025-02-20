@@ -99,15 +99,17 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
     }
   }, [openModal])
   return (
-    <div className="h-5 w-5 cursor-pointer text-neutral-title">
-      <button onClick={() => setOpenModal(!openModal)}>
+    <div ref={modalRef} className="h-5 w-5 cursor-pointer text-neutral-title">
+      <button onClick={(e) => {
+        e.stopPropagation()
+        setOpenModal(!openModal)
+      }}>
         <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
       </button>
       {openModal &&
         !postId && ( // 게시글 리스트 부분
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
-            ref={modalRef}
             onClick={() => startMenuAni(setPinAni)}
           >
             <p className="text-base">
@@ -120,7 +122,7 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       {openModal &&
         postId &&
         !isAuthor && ( // 상세 게시글 중 다른 사람 게시글
-          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
+          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
             <div
               className="flex items-center justify-between pb-1"
               onClick={() => togglePopup('chat')}
@@ -154,7 +156,7 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       {openModal &&
         postId &&
         isAuthor && ( // 상세 게시글 중 내가 작성한 게시글
-          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
+          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
             <div
               className="flex items-center justify-between pb-1"
               onClick={() => copyUrl()}
