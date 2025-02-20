@@ -15,16 +15,11 @@ export const useWebsocket = (setChatList, chatroomId) => {
   const notificationSubscriptionRef = useRef(null);
 
   const [connected, setConnected] = useState(false);
-  const [userId, setUserId] = useState('');
 
   const { data: userDetail } = useQuery({
     queryKey: [QUERY_KEYS.GET_USER_ME],
     queryFn: getUser,
   });
-
-  useEffect(() => {
-    setUserId(userDetail?.id);
-  }, [userDetail]);
 
   useEffect(() => {
     if (stompClientRef.current) {
@@ -55,6 +50,9 @@ export const useWebsocket = (setChatList, chatroomId) => {
         console.log('✅ WebSocket 연결 성공');
         stompClientRef.current = stompClient;
         setConnected(true);
+        if (chatroomId) {
+          subscribeToChatRoom(chatroomId);
+        }
         subscribeToNotifications();
       },
       onStompError: (frame) => {
@@ -113,8 +111,12 @@ export const useWebsocket = (setChatList, chatroomId) => {
     console.log('stompClient 존재 여부:', !!stompClientRef.current);
     console.log('connected 상태:', connected);
 
-    if (!stompClientRef.current || !userId || !connected) {
-      console.warn('❌ 알림 구독 실패: 클라이언트 또는 사용자 ID 없음'); // 경고 메시지
+    if (!stompClientRef.current) {
+      console.warn('❌ 채팅방 구독 실패: 클라이언트가 초기화되지 않음');
+      return;
+    }
+    if (!userDetail?.id) {
+      console.warn('❌ 채팅방 구독 실패: 유저 ID 없음');
       return;
     }
 
@@ -124,7 +126,7 @@ export const useWebsocket = (setChatList, chatroomId) => {
     }
 
     notificationSubscriptionRef.current = stompClientRef.current.subscribe(
-      `/user/${userId}/notifications/chat`,
+      `/user/${userDetail?.id}/notifications/chat`,
       (message) => {
         const newNotification = JSON.parse(message.body);
         console.log('💬 새로운 채팅 알림 수신:', newNotification);
@@ -164,7 +166,7 @@ export const useWebsocket = (setChatList, chatroomId) => {
         const newMessage = JSON.parse(message.body);
         const enrichedMessage = {
           ...newMessage,
-          isMine: Number(newMessage.senderId) === Number(userId),
+          isMine: Number(newMessage.senderId) === Number(userDetail?.id),
         };
 
         if (!enrichedMessage.isMine) {
@@ -178,8 +180,17 @@ export const useWebsocket = (setChatList, chatroomId) => {
   };
 
   const sendMessage = (chatroomId, message) => {
-    if (!message || !stompClientRef.current) {
-      console.warn('❌ 메시지 전송 실패: 메시지 또는 클라이언트 없음');
+    if (!connected) {
+      // 연결 상태 확인
+      console.warn('❌ 메시지 전송 실패: 연결상태확인');
+      return;
+    }
+    if (!message) {
+      console.warn('❌ 메시지 전송 실패: 메시지 없음');
+      return;
+    }
+    if (!stompClientRef.current) {
+      console.warn('❌ 메시지 전송 실패: 클라이언트 없음');
       return;
     }
 

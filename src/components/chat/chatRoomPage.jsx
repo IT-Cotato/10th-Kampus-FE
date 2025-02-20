@@ -5,21 +5,19 @@ import { cn } from '@/utils/cn';
 import { useEffect, useState } from 'react';
 import { RoomHeader } from '@/components/chat/roomHeader';
 import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatRoom } from '@/apis/chat/chatRoom.api';
 import { Loading } from '@/components/common/Loading';
-import { useWebsocket } from '@/hooks/use-websocket';
 import { getChatMessages } from '@/apis/chat/messages.api';
+import { postReadMessage } from '@/apis/chat/chatList.api';
 
-export const ChatRoom = ({ chatroomId, setChatroomId }) => {
+export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [page, setPage] = useState(1);
   const [messages, setMessages] = useState([]);
   const [dataDelete, setDataDelete] = useState(false);
-
-  const { sendMessage } = useWebsocket(setMessages);
 
   //방 정보
   const { data: roomData, isLoading: isRoomLoading } = useQuery({
@@ -35,6 +33,12 @@ export const ChatRoom = ({ chatroomId, setChatroomId }) => {
     enabled: !!chatroomId,
   });
 
+  //읽음처리
+  const { mutate: chatsRead } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
+    mutationFn: (chatroomId) => postReadMessage({ chatroomId }),
+  });
+
   //채팅메시지 데이터
   useEffect(() => {
     if (chatroomId) {
@@ -42,8 +46,11 @@ export const ChatRoom = ({ chatroomId, setChatroomId }) => {
       setMessages(allMessages);
     }
     //게시글 삭제된 경우
-    if (roomData.postId === -1) {
+    if (roomData?.postId === -1) {
       setDataDelete(true);
+    }
+    if (messages == null) {
+      chatsRead(chatroomId);
     }
   }, [chatroomId, messageData]);
 
@@ -64,21 +71,21 @@ export const ChatRoom = ({ chatroomId, setChatroomId }) => {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <RoomHeader
         text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
         setChatroomId={setChatroomId}
       />
       <ArticleInfo
-        boardName={!dataDelete ?roomData.boardName: '삭제된 게시글입니다.'}
-        postName={!dataDelete ?roomData.postTitle: '삭제된 게시글입니다.'}
-        postId={!dataDelete ?roomData.postId: '삭제된 게시글입니다.'}
-        boardId={!dataDelete ?roomData.boardId: '삭제된 게시글입니다.'}
+        boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
+        postName={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
+        postId={!dataDelete ? roomData.postId : '삭제된 게시글입니다.'}
+        boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
         dataDelete={dataDelete}
       />
-      <div className="px-4 mt-4">
+      <div className="mt-4 px-4">
         <NoticeBox />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           {messages.length > 0 ? (
             messages.map((message, index) => (
               <div

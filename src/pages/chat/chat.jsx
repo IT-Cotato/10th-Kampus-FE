@@ -17,7 +17,7 @@ export const ChatPage = () => {
   const [page, setPage] = useState(1);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-  const { connectSocket, disconnect } = useWebsocket(setChatList, chatroomId);
+  const { connectSocket, sendMessage } = useWebsocket(setChatList, chatroomId);
   //채팅 리스트
   const {
     data: chatListData,
@@ -40,19 +40,32 @@ export const ChatPage = () => {
   //웹소켓 서버
   useEffect(() => {
     connectSocket(accessToken);
+  }, [connectSocket]);
 
-    return () => {
-      disconnect();
-    };
-  }, [connectSocket, disconnect]);
+  const handleChatRoomLeave = (chatroomId) => {
+    setChatList((prevChatList) =>
+      prevChatList.filter((room) => room.chatroomId !== chatroomId),
+    );
+    if (chatroomId === chatroomId) {
+      setChatroomId(null);
+    }
+  };
 
   return (
     <div className="h-full w-full">
       <ChatLayout render={!chatroomId ? 'chatList' : null}>
         {!chatroomId ? (
-          <ChatList onChatRoomSelect={setChatroomId} chatList={chatList} />
+          <ChatList
+            onChatRoomSelect={setChatroomId}
+            chatList={chatList}
+            onChatRoomLeave={handleChatRoomLeave}
+          />
         ) : (
-          <ChatRoom chatroomId={chatroomId} setChatroomId={setChatroomId} />
+          <ChatRoom
+            chatroomId={chatroomId}
+            setChatroomId={setChatroomId}
+            sendMessage={sendMessage}
+          />
         )}
       </ChatLayout>
     </div>
