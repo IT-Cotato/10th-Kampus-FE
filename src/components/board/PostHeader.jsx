@@ -18,7 +18,7 @@ export const PostHeader = ({ path, isAuthor = false }) => {
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
-      {!isBoardLoading && !isBoardError &&
+      {!isBoardLoading && !isBoardError && boardDetail.boardName &&
         <p className="absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-subTitle font-medium text-neutral-title">
           {boardDetail.boardName}
         </p>
@@ -27,7 +27,7 @@ export const PostHeader = ({ path, isAuthor = false }) => {
         <button onClick={() => navigate(path.search)}>
           <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
         </button>
-        <BoardMenuBar isAuthor={isAuthor} />
+        <BoardMenuBar isAuthor={isAuthor} data={boardDetail} />
       </div>
     </div>
   );

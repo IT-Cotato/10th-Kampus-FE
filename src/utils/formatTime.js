@@ -2,7 +2,7 @@ export const formatTime = (createdTime) => {
     const now = new Date();
     const createdDate = new Date(createdTime);
     // 차이 ms -> sec 
-    const diff = Math.floor(((now.getTime() - (9 * 60 * 60 * 1000)) - createdDate.getTime()) / 1000);
+    const diff = Math.floor((now.getTime() - createdDate.getTime()) / 1000); // 서버에서 한국 시간대로 줘서 변경
     if (diff < 60) {
         return `now`
     }

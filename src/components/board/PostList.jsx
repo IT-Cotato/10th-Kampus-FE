@@ -3,8 +3,34 @@ import Comment from '../../assets/imgs/comment.svg?react';
 import Translate from '../../assets/imgs/translate.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
+import { useState } from 'react';
+import { Translating } from '../common/Translating';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { translatePost } from '@/apis/translate/translatePost.api';
+import { QUERY_KEYS } from '@/constants/api';
 export const PostList = ({ data, isActive }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [translateState, setTranslateState] = useState(false);
+  const [translatedPost, setTranslatedPost] = useState(null);
+  const { mutate: postTranslate, isPending: translatePending } = useMutation({
+    mutationFn: async (postId) => {
+      return await translatePost({ postId: postId })
+    },
+    onSuccess: (response, postId) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_POST_LIST, postId] });
+      setTranslatedPost(response);
+      setTranslateState(true);
+    }
+  })
+  const handleTranslate = () => {
+    if (translatedPost) {
+      setTranslateState(true);
+    }
+    else {
+      postTranslate(data.id);
+    }
+  }
   return (
     <div
       className="flex flex-col gap-3 pb-3 pt-4"
@@ -16,9 +42,22 @@ export const PostList = ({ data, isActive }) => {
         </div>
       )}
       <div className="flex justify-between gap-3">
-        <div className="flex flex-col line-clamp-3">
-          <h1 className="truncate text-subTitle text-neutral-title">{data.title}</h1>
-          <h2 className="line-clamp-2  text-neutral-base">{data.content}</h2>
+        <div className="relative flex flex-col line-clamp-3">
+          <h1 className="truncate text-subTitle text-neutral-title">
+            <span className={translatePending ? "opacity-0" : "opacity-100"}>
+              {translateState ? translatedPost.title : data?.title}
+            </span>
+          </h1>
+          <h2 className="line-clamp-2  text-neutral-base">
+            <span className={translatePending ? "opacity-0" : "opacity-100"}>
+              {translateState ? translatedPost.content : data?.content}
+            </span>
+          </h2>
+          {translatePending && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2">
+              <Translating width={"3rem"} height={"3rem"} />
+            </div>
+          )}
         </div>
         <div className="min-h-20 min-w-20">
           {data.thumbnailUrl && (
@@ -44,8 +83,14 @@ export const PostList = ({ data, isActive }) => {
             {formatTime(data.createdTime)}
           </p>
         </div>
-        <Translate className="text-neutral-title" />
+        <button onClick={(e) => {
+          e.stopPropagation()
+          translateState ? setTranslateState(false) : handleTranslate()
+        }
+        }  >
+          <Translate className="text-neutral-title" />
+        </button>
       </div>
-    </div>
+    </div >
   );
 };

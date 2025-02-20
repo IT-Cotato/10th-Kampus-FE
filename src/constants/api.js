@@ -29,14 +29,25 @@ export const API_DOMAINS = {
   POST_CREATE: '/posts',
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
-  POST_GET_DETAIL: '/posts/:postId',
   POST_WRITE: '/posts',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
+  POST_LIKE_TOGGLE: '/posts/:postId/likes',
+  POST_GET_CARDNEWS: '/posts/cardNews',
+
+  COMMENT_HANDLE: '/posts/:postId/comments',
+  COMMENT_DELETE: '/comments/:commentId',
+  COMMENT_LIKE_TOGGLE: '/comments/:commentId/like',
+
+  TRANSLATE_CREATE_POST: '/translations/posts',
+  TRANSLATE_POST: '/translations/:postId',
+  TRANSLATE_TEXT: '/translations/texts',
+
 
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
+
 };
 
 export const QUERY_KEYS = {
@@ -51,6 +62,13 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
+
+  GET_COMMENT_LIST: 'commentList',
+  GET_TRANSLATE_POST: 'postTranslated',
+  GET_TRANSLATE_POST_LIST: 'postTranslatedList',
+  GET_TRANSLATE_TEXT: 'textTranslated'
+  
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
 };
+
