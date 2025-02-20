@@ -17,14 +17,15 @@ export const ChatRoom = ({ chatroomId, setChatroomId }) => {
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [page, setPage] = useState(1);
   const [messages, setMessages] = useState([]);
+  const [dataDelete, setDataDelete] = useState(false);
 
-  const { sendMessage, subscribeToChatRoom } = useWebsocket(setMessages);
+  const { sendMessage } = useWebsocket(setMessages);
 
   //방 정보
   const { data: roomData, isLoading: isRoomLoading } = useQuery({
     queryKey: [QUERY_KEYS.GET_CHAT_ROOM, chatroomId],
     queryFn: () => getChatRoom({ chatroomId }),
-    enabled: chatroomId,
+    enabled: !!chatroomId,
   });
 
   //채팅방 메시지 초기내역
@@ -37,9 +38,12 @@ export const ChatRoom = ({ chatroomId, setChatroomId }) => {
   //채팅메시지 데이터
   useEffect(() => {
     if (chatroomId) {
-      messageData();
       const allMessages = [...(messageData?.messages || []), ...messages];
       setMessages(allMessages);
+    }
+    //게시글 삭제된 경우
+    if (roomData.postId === -1) {
+      setDataDelete(true);
     }
   }, [chatroomId, messageData]);
 
@@ -60,17 +64,21 @@ export const ChatRoom = ({ chatroomId, setChatroomId }) => {
   }
 
   return (
-    <div className="h-full w-full">
-      <RoomHeader text={roomData.postTitle} setChatroomId={setChatroomId} />
-      <ArticleInfo
-        boardName={roomData.boardName}
-        postName={roomData.postTitle}
-        postId={roomData.postId}
-        boardId={roomData.boardId}
+    <div className="w-full h-full">
+      <RoomHeader
+        text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
+        setChatroomId={setChatroomId}
       />
-      <div className="mt-4 px-4">
+      <ArticleInfo
+        boardName={!dataDelete ?roomData.boardName: '삭제된 게시글입니다.'}
+        postName={!dataDelete ?roomData.postTitle: '삭제된 게시글입니다.'}
+        postId={!dataDelete ?roomData.postId: '삭제된 게시글입니다.'}
+        boardId={!dataDelete ?roomData.boardId: '삭제된 게시글입니다.'}
+        dataDelete={dataDelete}
+      />
+      <div className="px-4 mt-4">
         <NoticeBox />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col flex-1">
           {messages.length > 0 ? (
             messages.map((message, index) => (
               <div
