@@ -52,6 +52,8 @@ import {
   BoardGuide,
   NotificationList,
   CreateBoard,
+  NoticeManagement,
+  CreateNotice,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -456,10 +458,27 @@ const AppRouter = createBrowserRouter([
         path: path.admin.reportMangement,
         element: <ReportManagement />,
       },
-
       {
         path: path.admin.statistics,
         element: <Statistics />,
+      },
+      {
+        path: path.admin.notice.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <NoticeManagement />,
+          },
+          {
+            path: path.admin.cardnews.create,
+            element: <CreateNotice />,
+          },
+          {
+            path: `${path.admin.notice.noticeId}/${path.admin.notice.edit}`,
+            element: <CreateNotice />,
+          },
+        ],
       },
     ],
   },

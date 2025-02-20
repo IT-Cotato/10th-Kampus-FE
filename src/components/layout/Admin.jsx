@@ -29,6 +29,7 @@ export const Admin = ({ children }) => {
     { id: 4, text: '카드뉴스 제작', path: path.admin.cardnews.base , img: Cardnews},
     { id: 5, text: '신고 관리', path: path.admin.reportMangement, img: Report },
     { id: 6, text: '통계 관리', path: path.admin.statistics, img: Graph },
+    { id: 7, text: '공지 작성', path: path.admin.notice.base, img: Volume },
   ];
 
   return (
