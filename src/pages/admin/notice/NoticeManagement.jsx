@@ -20,7 +20,7 @@ export const NoticeManagement = () => {
     mutationFn: (noticeId) => deleteAdminNotice({ noticeId: noticeId }),
     onSuccess: () => {
       alert('공지사항이 삭제되었습니다.');
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.NOTICE_DETAIL] }); // 삭제 후 리스트 다시 불러오기
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_NOTICE] }); // 삭제 후 리스트 다시 불러오기
     },
     onError: (error) => {
       alert('공지사항을 삭제하지 못했습니다.');
