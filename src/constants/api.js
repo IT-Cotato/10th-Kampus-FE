@@ -55,5 +55,6 @@ export const QUERY_KEYS = {
   GET_POST_LIST: 'postList',
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
+  GET_TRANSLATE_POST_LIST: 'postTranslatedList',
   GET_TRANSLATE_TEXT: 'textTranslated'
 };

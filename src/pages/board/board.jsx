@@ -7,7 +7,7 @@ import { PostHeader } from '@/components/board/PostHeader';
 import { path } from '@/routes/path';
 import { WriteButton } from '@/components/board/write/WriteButton';
 import { getCardNewsList, getPostList } from '@/apis/board/getPostList.api';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
@@ -15,6 +15,7 @@ import { Loading } from '@/components/common/Loading';
 export const Board = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data: postList, isLoading: isPostLoading, error: isPostError } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
     queryFn: () => (boardId !== "5" ? getPostList({ boardId: boardId, page: 1 }) : getCardNewsList({ page: 1 }))
@@ -45,7 +46,6 @@ export const Board = () => {
   useEffect(() => {
     if (boardDetail) {
       checkIsActive();
-      console.log(postList)
     }
   }, [boardDetail])
   return (

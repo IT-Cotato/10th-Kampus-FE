@@ -153,7 +153,7 @@ export const Post = () => {
               </div>
               {translatePending && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-                  <Translating />
+                  <Translating width={"4rem"} height={"4rem"} />
                 </div>
               )}
             </article>
