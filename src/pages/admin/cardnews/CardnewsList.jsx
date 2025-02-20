@@ -61,7 +61,7 @@ export const CardnewsList = () => {
         <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
           {cardnewsList && cardnewsList.map((cardnews) => (
             <div
-              key={cardnews.id}
+              key={cardnews.postId}
               className="relative h-60 w-60 overflow-hidden lg:h-[18.75rem] lg:w-[18.75rem]"
             >
               <h2 className="absolute p-2 text-base bg-white left-2 top-2 max-w-36 rounded-xl lg:max-w-64 lg:text-subTitle">
