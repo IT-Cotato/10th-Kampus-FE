@@ -53,4 +53,5 @@ export const QUERY_KEYS = {
   GET_POST_LIST: 'postList',
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
+  USER_INFO: 'userInfo',
 };
