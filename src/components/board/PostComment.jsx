@@ -43,11 +43,11 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         </button>
                         <button className="flex gap-[0.125rem] cursor-pointer">
                             <Comment className="w-6 h-6" />
-                            <p className="min-w-[.625rem]">{data.isReply ? data.isReply.length : 0}</p>
+                            <p className="min-w-[.625rem]">{data.replies ? data.replies.length : 0}</p>
                         </button>
                     </div>
                 </div>
-                <p className="text-neutral-base leading-normal">
+                <p className="text-neutral-base leading-normal whitespace-pre-line">
                     {data.content}
                 </p>
                 <div className="flex justify-between">
@@ -61,7 +61,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                     <Translate className="w-[1.125rem] h-[1.125rem] text-neutral-base" />
                 </div>
             </div>
-            {data.isReply &&
+            {data.replies &&
                 data.replies.map((item, index) => (
                     <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
                         handleCommentLike={handleCommentLike} />
@@ -95,8 +95,8 @@ const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }
                     <p className="min-w-[.625rem] text-neutral-base">{data.likes}</p>
                 </button>
             </div>
-            <p className="text-neutral-base leading-normal">
-                <span className="text-primary-base">@{data.mentions}&nbsp;</span>
+            <p className="text-neutral-base leading-normal whitespace-pre-line">
+                <span className="text-primary-base">@{data.author}&nbsp;</span>
                 {data.content}
             </p>
             <div className="flex justify-between">

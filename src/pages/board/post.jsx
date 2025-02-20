@@ -78,7 +78,7 @@ export const Post = () => {
     console.log(focusedComment);
     const buildComment = {
       content: input,
-      commentId: focusedComment
+      parentId: focusedComment
     };
     handleComment({ type: true, param: postId, data: buildComment });
   }
