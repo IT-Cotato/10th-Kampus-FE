@@ -17,3 +17,11 @@ export const getChatRoom = async ({ chatroomId }) => {
   );
   return response.data.data;
 };
+
+//채팅방 삭제
+export const deleteChatroom = async ({ chatroomId }) => {
+  const response = await authApi.delete(
+    generateApiPath(API_DOMAINS.CHATROOM_DETAIL, { chatroomId }),
+  );
+  return response.data.data;
+};
