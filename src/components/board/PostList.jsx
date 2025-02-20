@@ -33,12 +33,12 @@ export const PostList = ({ data, isActive }) => {
   }
   return (
     <div
-      className="flex flex-col gap-3 pb-3 pt-4"
+      className="flex flex-col gap-3 pt-4 pb-3"
       onClick={() => navigate(`${data.id}`)}
     >
       {isActive /** 인기 게시판 레이아웃 */ && (
         <div className="w-fit rounded-md bg-primary-10 px-[0.625rem] py-[0.3125rem] text-small text-neutral-base">
-          {data.board_type}
+          {data.board_type || data.boardName}
         </div>
       )}
       <div className="flex justify-between gap-3">
@@ -48,13 +48,13 @@ export const PostList = ({ data, isActive }) => {
               {translateState ? translatedPost.title : data?.title}
             </span>
           </h1>
-          <h2 className="line-clamp-2  text-neutral-base">
+          <h2 className="line-clamp-2 text-neutral-base">
             <span className={translatePending ? "opacity-0" : "opacity-100"}>
               {translateState ? translatedPost.content : data?.content}
             </span>
           </h2>
           {translatePending && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2">
+            <div className="absolute left-0 -translate-y-1/2 top-1/2">
               <Translating width={"3rem"} height={"3rem"} />
             </div>
           )}
@@ -64,7 +64,7 @@ export const PostList = ({ data, isActive }) => {
             <img
               src={data.thumbnailUrl}
               alt="post image"
-              className="h-20 w-20 object-cover"
+              className="object-cover w-20 h-20"
             />
           )}
         </div>

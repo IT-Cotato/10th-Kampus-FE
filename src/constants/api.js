@@ -10,6 +10,10 @@ export const API_DOMAINS = {
   USER: '/users/details',
   MYPAGE: '/mypage',
 
+  GET_MY_POSTS: '/posts/my',
+  GET_MY_COMMENTED_POST: '/my/commented-post',
+  GET_MY_POSTS_SCRAP: '/posts/my/scrap',
+
   DUPLICATE_CHECK: '/users/check-nickname',
 
   PRODUCTS: '/products',
@@ -70,5 +74,7 @@ export const QUERY_KEYS = {
   
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
+
+  MY_POST_LIST: 'myPostList',
 };
 
