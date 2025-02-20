@@ -66,7 +66,7 @@ export const QUERY_KEYS = {
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
   GET_TRANSLATE_POST_LIST: 'postTranslatedList',
-  GET_TRANSLATE_TEXT: 'textTranslated'
+  GET_TRANSLATE_TEXT: 'textTranslated',
   
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
