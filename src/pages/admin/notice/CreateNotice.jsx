@@ -5,7 +5,7 @@ import { ShortInput } from '@/components/admin/ShortInput';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { postCreateNotice } from '@/apis/admin/postCreateNotice.api';
-import { getAdminNoticeDetail } from '@/apis/admin/getAdminNoticeDetail.api';
+import { getNoticeDetail } from '@/apis/mypage/getNoticeDetail.api';
 import { patchAdminNotice } from '@/apis/admin/patchAdminNotice.api';
 
 export const CreateNotice = () => {
@@ -17,7 +17,7 @@ export const CreateNotice = () => {
 
   const { data: noticeData } = useQuery({
     queryKey: [QUERY_KEYS.GET_NOTICE, noticeId],
-    queryFn: () => getAdminNoticeDetail({ noticeId: noticeId }),
+    queryFn: () => getNoticeDetail({ noticeId: noticeId }),
     enabled: !!noticeId,
   });
 

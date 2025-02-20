@@ -48,7 +48,7 @@ export const API_DOMAINS = {
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
 
-  ADMIN_NOTICE: '/notices',
+  NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
 };
 

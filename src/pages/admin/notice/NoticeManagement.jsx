@@ -1,5 +1,5 @@
 import { deleteAdminNotice } from '@/apis/admin/deleteAdminNotice.api';
-import { getAdminNoticeList } from '@/apis/admin/getAdminNoticeList.api';
+import { getNoticeList } from '@/apis/mypage/getNoticeList.api';
 import { ButtonRound } from '@/components/common/ButtonRound';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
@@ -11,7 +11,7 @@ export const NoticeManagement = () => {
 
   const { data: noticeList } = useQuery({
     queryKey: [QUERY_KEYS.GET_NOTICE],
-    queryFn: () => getAdminNoticeList(),
+    queryFn: () => getNoticeList(),
   });
 
   const queryClient = useQueryClient();

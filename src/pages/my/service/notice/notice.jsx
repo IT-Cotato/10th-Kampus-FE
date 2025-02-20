@@ -1,26 +1,17 @@
+import { getNoticeList } from '@/apis/mypage/getNoticeList.api';
 import { NoticeList } from '@/components/service/notice/NoticeList';
+import { QUERY_KEYS } from '@/constants/api';
+import { useQuery } from '@tanstack/react-query';
 
 export const Notice = () => {
-  const Notice = [
-    {
-      id: 0,
-      title: 'Very very very very very very long title of notice',
-      date: '2025.02.05',
-    },
-    {
-      id: 1,
-      title: 'Title',
-      date: '2025.02.05',
-    },
-    {
-      id: 2,
-      title: '[Event] 이벤트입니다',
-      date: '2025.02.05',
-    },
-  ];
+  const { data: noticeList } = useQuery({
+    queryKey: [QUERY_KEYS.GET_NOTICE],
+    queryFn: () => getNoticeList(),
+  });
+
   return (
-    <div className="flex w-full flex-col">
-      {Notice.map((notice) => (
+    <div className="flex flex-col w-full">
+      {noticeList && noticeList.notices.map((notice) => (
         <NoticeList
           key={notice.id}
           noticeId={notice.id}
