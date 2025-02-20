@@ -162,7 +162,7 @@ export const BoardManagement = () => {
                   <img
                     src={menubar}
                     alt="menu"
-                    className="absolute top-0 right-0 px-2"
+                    className="absolute px-2 -top-2 lg:top-0 -right-4 lg:right-0"
                   />
                 </button>
               </div>
