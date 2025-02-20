@@ -1,16 +1,23 @@
-// @ts-nocheck
-
 import { Dropdown } from '@/components/admin/Dropdown';
 import menubar from '@/assets/imgs/menubar.svg';
 import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Plus from '@/assets/imgs/admin/Plus.svg';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
+import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
+import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
+import { postInactivateBoard } from '@/apis/admin/postInactivateBoard.api';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const BoardOptions = ['전체', '활성화', '보관', '삭제 대기'];
   const [selectedDropdown, setSelectedDropdown] = useState('전체');
+  const [state, setState] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [boardList, setBoardList] = useState([]);
   const [selectedBoardMenu, setSelectedBoardMenu] = useState(null);
@@ -19,29 +26,68 @@ export const BoardManagement = () => {
     navigate(`./${boardId}/${path.admin.boardManagement.edit}`);
   };
 
-  const handleClickKeep = () => {
+  const { mutate: inactivateBoard } = useMutation({
+    mutationFn: (boardId) => postInactivateBoard({ boardId : boardId }),
+    onSuccess: () => {
+      alert('게시판이 보관되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('게시판 보관 실패');
+    },
+    onSettled: () => {
+      setSelectedBoardMenu(null);
+    },
+  });
+
+  const handleClickKeep = (boardId) => {
     // 보관
-    setSelectedBoardMenu(null);
-    alert('게시판이 보관되었습니다.');
+    inactivateBoard(boardId);
   };
 
-  const handleClickDelete = () => {
+  const { mutate: deleteBoard } = useMutation({
+    mutationFn: (boardId) => deleteAdminBoard({ boardId : boardId }),
+    onSuccess: () => {
+      alert('게시판이 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('게시판 삭제 실패');
+    },
+    onSettled: () => {
+      setSelectedBoardMenu(null);
+    },
+  });
+
+  const handleClickDelete = (boardId) => {
     // 삭제
-    setSelectedBoardMenu(null);
-    alert('게시판이 삭제되었습니다.');
+    deleteBoard(boardId);
   };
 
   const handleClickDeleteCompletely = () => {
     // 완전 삭제
     setSelectedBoardMenu(null);
     alert('게시판이 완전히 삭제되었습니다.');
-  }
+  };
 
-  const handleClickRestore = () => {
+  const { mutate: activateBoard } = useMutation({
+    mutationFn: (boardId) => postActivateBoard({ boardId : boardId }),
+    onSuccess: () => {
+      alert('게시판이 활성화되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('게시판 활성화 실패');
+    },
+    onSettled: () => {
+      setSelectedBoardMenu(null);
+    },
+  });
+
+  const handleClickRestore = (boardId) => {
     // 복구
-    setSelectedBoardMenu(null);
-    alert('게시판이 복구되었습니다.');
-  }
+    activateBoard(boardId);
+  };
 
   const menuOptions = (boardId) => [
     { menu: '수정', onClick: () => handleClickEdit(boardId) },
@@ -75,90 +121,31 @@ export const BoardManagement = () => {
     }
   };
 
+  const getStateFromDropdown = (dropdown) => {
+    switch (dropdown) {
+      case '활성화':
+        return 'ACTIVE';
+      case '보관':
+        return 'INACTIVE';
+      case '삭제 대기':
+        return 'PENDING_DELETION';
+      default:
+        return null;
+    }
+  };
+
+  const { data: boardData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_BOARD_LIST, state],
+    queryFn: () => getAdminBoardList({ status: state }),
+  });
+
   useEffect(() => {
-    // 백 연동 - selectedDropdown이 무엇인지에 따라서 받아오기
-    setBoardList([
-      {
-        id: 0,
-        title: 'Housing',
-        boardId: 12345,
-        postNum: 30,
-        description:
-          'Share the information about dorms, rental rooms, and shared housing near campus!',
-        dday: 1,
-        boardStatus: 'ACTIVE',
-      },
-      {
-        id: 1,
-        title: 'Part Time/Job',
-        boardId: 12346,
-        postNum: 30,
-        description:
-          'Find part-time job and employment opportunities in Korea.',
-        dday: 0,
-        boardStatus: 'ACTIVE',
-      },
-      {
-        id: 2,
-        title: 'Language Exchange',
-        boardId: 12347,
-        postNum: 30,
-        description:
-          'Connect with others for language exchange and cultural learning.',
-        dday: 10, 
-        boardStatus: 'INACTIVE'
-      },
-      {
-        id: 3,
-        title: 'Festival/Events',
-        boardId: 12348,
-        postNum: 30,
-        description: 'Discover upcoming festivals and events in Korea.',
-        dday: 10,
-        boardStatus: 'ACTIVE',
-      },
-      {
-        id: 4,
-        title: 'Information',
-        boardId: 12349,
-        postNum: 30,
-        description:
-          'Find essential updates and helpful resources for living, studying, and working in Korea.',
-        dday: 27,
-        boardStatus: 'ACTIVE',
-      },
-      {
-        id: 5,
-        title: 'Question',
-        boardId: 12350,
-        postNum: 30,
-        description:
-          'Got questions? Get answers from fellow international students and expats in Korea.',
-        dday: 15,
-        boardStatus: 'ACTIVE',
-      },
-      {
-        id: 6,
-        title: 'Free Talk',
-        boardId: 12351,
-        postNum: 30,
-        description:
-          'Chat about anything and everything! Share your experiences, thoughts, and daily life with the community.',
-        dday: 10,
-        boardStatus: 'ACTIVE',
-      },
-      {
-        id: 7,
-        title: 'Trending',
-        boardId: 12352,
-        postNum: 30,
-        description:
-          'Stay updated with the hottest topics and discussions happening right now in the community.',
-        dday: 10,
-        boardStatus: 'DELETED',
-      },
-    ]);
+    setState(getStateFromDropdown(selectedDropdown));
   }, [selectedDropdown]);
+
+  useEffect(() => {
+    setBoardList(boardData?.adminBoardDetails);
+  }, [boardData]);
 
   return (
     <div className="flex flex-col flex-1 gap-5 px-5">
@@ -173,43 +160,50 @@ export const BoardManagement = () => {
         />
       </div>
       <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] place-items-center gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
-        {boardList.map((board, index) => (
-          <div
-            key={board.id}
-            className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
-          >
-            <div className="relative flex flex-row items-center gap-3 text-center align-middle">
-              {selectedBoardMenu === board.boardId && (
-                <MenuBar
-                  menuOptions={board.boardStatus === 'DELETED' ? deletedMenuOptions(board.boardId) : board.boardStatus === 'INACTIVE' ? keptMenuOptions(board.boardId) : menuOptions(board.boardId)}
-                  onClose={() => setSelectedBoardMenu(null)}
-                />
-              )}
-              <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
-                {selectedDropdown === '삭제 대기'
-                  ? 'D-' + (board.dday === 0 ? 'day' : board.dday)
-                  : index}
-              </span>
-              <h2 className="whitespace-nowrap">
-                {board.title} | {board.postNum}개
-              </h2>
-              <button onClick={() => handleMenuBarClick(board.boardId)}>
-                <img
-                  src={menubar}
-                  alt="menu"
-                  className="absolute top-0 right-0 px-2"
-                />
-              </button>
+        {boardList &&
+          boardList.map((board, index) => (
+            <div
+              key={board.boardId}
+              className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
+            >
+              <div className="relative flex flex-row items-center gap-3 text-center align-middle">
+                {selectedBoardMenu === board.boardId && (
+                  <MenuBar
+                    menuOptions={
+                      board.boardStatus === 'PENDING_DELETION'
+                        ? deletedMenuOptions(board.boardId)
+                        : board.boardStatus === 'INACTIVE'
+                          ? keptMenuOptions(board.boardId)
+                          : menuOptions(board.boardId)
+                    }
+                    onClose={() => setSelectedBoardMenu(null)}
+                  />
+                )}
+                <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
+                  {selectedDropdown === '삭제 대기'
+                    ? 'D-' + (board.deletionCountdown === 0 ? 'day' : board.deletionCountdown)
+                    : index + 1}
+                </span>
+                <h2 className="whitespace-nowrap">
+                  {board.boardName} | {board.postCount}개
+                </h2>
+                <button onClick={() => handleMenuBarClick(board.boardId)}>
+                  <img
+                    src={menubar}
+                    alt="menu"
+                    className="absolute px-2 -top-2 lg:top-0 -right-4 lg:right-0"
+                  />
+                </button>
+              </div>
+              {board.description}
             </div>
-            {board.description}
-          </div>
-        ))}
+          ))}
         <button
           type="button"
-          className="relative flex h-40 w-60 flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
+          className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
           onClick={() => navigate(path.admin.boardManagement.create)}
         >
-          +
+          <img src={Plus} />
         </button>
       </div>
     </div>

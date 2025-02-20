@@ -15,7 +15,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
 import { addBoardFavorite, deleteBoardFavorite } from '@/apis/board/toggleBoardFavorite.api';
+import { postChat } from '@/apis/chat/chatRoom.api';
 export const BoardMenuBar = ({ isAuthor = false, data }) => {
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { boardId } = useParams();
@@ -82,11 +84,27 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] })
     }
   });
-  const startMenuAni = (set) => {
-    setOpenModal(false)
-    startAnimation(set)
-  }
-  const togglePopup = (type) => { // 팝업 닫기
+
+  const { mutate: createChatRoom } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_ROOM],
+    mutationFn: () => postChat({ postId }),
+    onSuccess: () => {
+      navigate(path.chatList.base);
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'CHAT-002') {
+        navigate(path.chatList.base);
+      }
+    },
+  });
+
+
+  const startMenuAni = (setAni) => {
+    // 애니메이션
+    setOpenModal(false);
+    startAnimation(setAni);
+  };
+  const togglePopup = (type) => {
     setOpenModal(false);
     setPopupState((prev) => ({
       ...prev,
@@ -97,10 +115,14 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
     if (type === "delete") {
       removePost();
     }
-  }
-  const copyUrl = async () => { // url 복사 
+    if (type === 'chat') {
+      createChatRoom();
+    }
+  };
+  const copyUrl = async () => {
     const nowUrl = window.location.href;
-    await navigator.clipboard.writeText(nowUrl)
+    await navigator.clipboard
+      .writeText(nowUrl)
       .then(() => {
         setCopyState(true)
         startMenuAni(setUrlAni)
@@ -115,7 +137,7 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         setOpenModal(false);
       }
-    }
+    };
     if (openModal) {
       document.addEventListener('touchmove', handleOutSide);
       document.addEventListener('mousedown', handleOutSide);
@@ -123,8 +145,8 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
     return () => {
       document.removeEventListener('touchmove', handleOutSide);
       document.removeEventListener('mousedown', handleOutSide);
-    }
-  }, [openModal])
+    };
+  }, [openModal]);
   return (
     <div ref={modalRef} className="h-5 w-5 cursor-pointer text-neutral-title">
       <button onClick={(e) => {
@@ -219,20 +241,21 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
           changeToFalseText="URL copy failed"
         />
       )}
-      {Object.entries(popupState).map(([key, isOpen]) =>
-        isOpen &&
-        createPortal(
-          <Popup
-            key={key}
-            title={popupData[key].title}
-            text={popupData[key].text}
-            onClickLeft={() => togglePopup(key)}
-            leftButton={popupData[key].leftButton}
-            onClickRight={() => handleRightButton(key)}
-            rightButton={popupData[key].rightButton}
-          />,
-          document.getElementById('modal-root')
-        )
+      {Object.entries(popupState).map(
+        ([key, isOpen]) =>
+          isOpen &&
+          createPortal(
+            <Popup
+              key={key}
+              title={popupData[key].title}
+              text={popupData[key].text}
+              onClickLeft={() => togglePopup(key)}
+              leftButton={popupData[key].leftButton}
+              onClickRight={() => handleRightButton(key)}
+              rightButton={popupData[key].rightButton}
+            />,
+            document.getElementById('modal-root'),
+          ),
       )}
     </div>
   );

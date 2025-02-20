@@ -1,29 +1,9 @@
 import { NoticeBox } from '@/components/common/noticeBox';
 import { ListItem } from '@/components/chat/listItem';
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getChatList } from '@/apis/chat/chatList.api';
+import { useState } from 'react';
 
-export const ChatList = ({ onChatRoomSelect }) => {
+export const ChatList = ({ onChatRoomSelect, chatList ,onChatRoomLeave}) => {
   const [activeSlide, setActiveSlide] = useState(null);
-  const [chatList, setChatList] = useState([]);
-
-  const {
-    data: chatListData,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
-    queryFn: () => getChatList(1),
-  });
-
-  //채팅리스트 데이터
-  useEffect(() => {
-    if (chatListData) {
-      setChatList(chatListData.chatRoomPreviewList || []);
-    }
-  }, [chatListData]);
 
   const handleClickOutside = () => {
     setActiveSlide(null);
@@ -36,11 +16,7 @@ export const ChatList = ({ onChatRoomSelect }) => {
     >
       <div className="text-title text-neutral-title">Chats</div>
       <NoticeBox />
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>Error: {error.message}</div>
-      ) : chatList.length === 0 ? (
+      {chatList.length === 0 ? (
         <p className="mx-auto text-neutral-border-40">Empty</p>
       ) : (
         chatList.map((data) => (
@@ -49,7 +25,10 @@ export const ChatList = ({ onChatRoomSelect }) => {
             data={data}
             isSlide={activeSlide === data.chatroomId}
             setActiveSlide={setActiveSlide}
-            onClick={() => onChatRoomSelect(data.chatroomId)}
+            onClick={() => {
+              onChatRoomSelect(data.chatroomId);
+            }}
+            onChatRoomLeave={onChatRoomLeave}
           />
         ))
       )}

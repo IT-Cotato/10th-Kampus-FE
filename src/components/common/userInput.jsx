@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 const InputTypes = {
   CHAT: 'chat',
-  POST: 'post'
+  POST: 'post',
 };
 
 export const UserInput = ({
@@ -14,7 +14,7 @@ export const UserInput = ({
   setInput,
   handleSend,
   type,
-  inputFocus = false
+  inputFocus = false,
 }) => {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
@@ -41,53 +41,50 @@ export const UserInput = ({
     if (textareaRef.current && inputFocus && InputTypes.POST === type) {
       textareaRef.current.focus();
     }
-  })
+  });
   return (
-    <div className='fixed w-full left-0 bottom-0 bg-white'>
-      <div className="max-w-lg px-4 py-2">
-        <div
-          ref={containerRef}
-          className="h-autoitems-start flex overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
-        >
-          {type === InputTypes.CHAT && (
-            <button
-              // onClick={handlePhoto}
-              aria-label="사진파일 전송"
-              className={cn('left-6 h-8 w-8', {
-                'text-primary-30': input,
-                'text-neutral-border-30': !input,
-              })}
-            >
-              <Camera className="w-full h-full text-neutral-icon" />
-            </button>
-          )}
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-              handleInput();
-            }}
-            rows={1}
-            className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
-            placeholder={placeholder}
-            autoFocus={type === InputTypes.CHAT}
-          />
+    <div className="fixed left-0 right-0 max-w-lg px-4 pt-4 mx-auto bg-white bottom-3">
+      <div
+        ref={containerRef}
+        className="flex h-auto items-start overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
+      >
+        {type === InputTypes.CHAT && (
           <button
-            onClick={() => {
-              handleSend();
-            }}
-            aria-label="메시지 전송"
-            className={cn('right-6 h-8 w-8', {
+            // onClick={handlePhoto}
+            aria-label="사진파일 전송"
+            className={cn('left-6 h-8 w-8', {
               'text-primary-30': input,
               'text-neutral-border-30': !input,
             })}
           >
-            <Send className="w-full h-full" />
+            <Camera className="w-full h-full text-neutral-icon" />
           </button>
-        </div>
+        )}
+        <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+            handleInput();
+          }}
+          rows={1}
+          className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
+          placeholder={placeholder}
+          autoFocus
+        />
+        <button
+          onClick={() => {
+            handleSend();
+          }}
+          aria-label="메시지 전송"
+          className={cn('right-6 h-8 w-8', {
+            'text-primary-30': input,
+            'text-neutral-border-30': !input,
+          })}
+        >
+          <Send className="w-full h-full" />
+        </button>
       </div>
     </div>
-
   );
 };
