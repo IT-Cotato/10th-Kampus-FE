@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
+import { useMutation } from '@tanstack/react-query';
+import { postSchoolPhoto } from '@/apis/auth/postSchoolPhoto.api';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
@@ -25,11 +27,21 @@ export const SchoolPhoto = () => {
     } else {
       setFile(e.target.files[0]);
     }
-  }
+  };
+
+  const {
+    mutate: sendPhoto,
+  } = useMutation({
+    mutationFn: (image) => postSchoolPhoto({ data: image, universityId: university }),
+    onSuccess: (response) => {
+      setShowModal(true);
+    },
+  });
 
   const handleClickUpload = (file) => {
-    // 백 연동
-    setShowModal(true);
+    const formData = new FormData();
+    formData.append('certImage', file);
+    sendPhoto(formData);
   };
 
   useEffect(() => {
@@ -86,7 +98,7 @@ export const SchoolPhoto = () => {
               <span className="text-neutral-border-50">No file selected</span>
             )}
           </div>
-          <MainButton onClick={handleClickUpload} disabled={!file}>
+          <MainButton onClick={() => handleClickUpload(file)} disabled={!file}>
             Upload
           </MainButton>
           {showErrorModal && (
