@@ -141,6 +141,7 @@ export const CreateCardnews = () => {
               type="text"
               placeholder="카드뉴스 제목"
               value={title}
+              maxLength={50}
               className={cn(
                 'w-full rounded-xl border border-neutral-border-40 px-3 py-2',
                 {
@@ -229,7 +230,7 @@ export const CreateCardnews = () => {
             <h1 className="text-neutral-base">미리보기</h1>
             <div className="flex flex-col w-full align-top h-fit text-start">
               <h2
-                className={cn('flex h-10 text-pageTitle', {
+                className={cn('flex min-h-10 h-fit text-pageTitle', {
                   'text-neutral-border-50': !title,
                 })}
               >
