@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import XIcon from '@/assets/imgs/x.svg?react';
-import { SearchDropdown } from '@/components/join/searchDropdown';
-import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { ShortInput } from '@/components/admin/ShortInput';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { postCreateNotice } from '@/apis/admin/postCreateNotice.api';
+import { getAdminNoticeDetail } from '@/apis/admin/getAdminNoticeDetail.api';
+import { patchAdminNotice } from '@/apis/admin/patchAdminNotice.api';
 
 export const CreateNotice = () => {
   const navigate = useNavigate();
@@ -16,28 +15,27 @@ export const CreateNotice = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const data = {
-    title: '[EVENT] New board is opened',
-    content:
-      '공지사항 본문',
-  };
+  const { data: noticeData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_NOTICE, noticeId],
+    queryFn: () => getAdminNoticeDetail({ noticeId: noticeId }),
+    enabled: !!noticeId,
+  });
 
   useEffect(() => {
-    if (noticeId) {
+    if (noticeData) {
+      console.log(noticeData);
       setIsEditMode(true);
       // 백 연동
-      setTitle(data.title);
-      setContent(data.content);
+      setTitle(noticeData.title);
+      setContent(noticeData.content);
     }
-  }, [noticeId]);
-
+  }, [noticeData, noticeId]);
   
   const { mutate: createBoard } = useMutation({
     mutationFn: postCreateNotice,
   });
 
   const handleCreateNotice = () => {
-    // 백 연동
     const data = {
       title: title,
       content: content,
@@ -47,7 +45,6 @@ export const CreateNotice = () => {
       { data: data },
       {
         onSuccess: (response) => {
-          console.log(response);
           navigate(-1);
         },
         onError: (err) => {
@@ -57,13 +54,28 @@ export const CreateNotice = () => {
     );
   };
 
-  const handleEditNotice = () => {
-    // 백 연동
-    console.log(noticeId);
-    console.log(title);
-    console.log(content);
+  const { mutate: editBoard } = useMutation({
+      mutationFn: ({ noticeId, noticeData }) =>
+        patchAdminNotice({ noticeId, data: noticeData }),
+    });
 
-    navigate(-1);
+  const handleEditNotice = (noticeId) => {
+    const data = {
+      title: title,
+      content: content,
+    };
+
+    editBoard(
+      { noticeId: noticeId, noticeData: data },
+      {
+        onSuccess: (response) => {
+          navigate(-1);
+        },
+        onError: (err) => {
+          alert(err.message);
+        },
+      },
+    );
   };
 
   const disabled = !title || !content;
@@ -91,7 +103,7 @@ export const CreateNotice = () => {
           />
           <MainButton
             disabled={disabled}
-            onClick={isEditMode ? handleEditNotice : handleCreateNotice}
+            onClick={isEditMode ? () => handleEditNotice(noticeId) : handleCreateNotice}
           >
             {isEditMode ? '공지 수정' : '공지 작성'}
           </MainButton>

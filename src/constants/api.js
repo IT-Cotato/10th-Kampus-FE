@@ -73,6 +73,7 @@ export const QUERY_KEYS = {
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
   POST_NOTICE: 'postNotice',
-  GET_NOTICE: 'noticeId',
+  GET_NOTICE: 'getNotice',
+  NOTICE_DETAIL: 'noticeId',
 };
 
