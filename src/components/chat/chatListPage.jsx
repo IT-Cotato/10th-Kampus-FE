@@ -1,9 +1,6 @@
 import { NoticeBox } from '@/components/common/noticeBox';
 import { ListItem } from '@/components/chat/listItem';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { postReadMessage } from '@/apis/chat/chatList.api';
-import { QUERY_KEYS } from '@/constants/api';
 
 export const ChatList = ({ onChatRoomSelect, chatList ,onChatRoomLeave}) => {
   const [activeSlide, setActiveSlide] = useState(null);

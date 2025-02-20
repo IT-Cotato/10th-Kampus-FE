@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatList } from '@/apis/chat/chatList.api';
 import { ChatLayout } from '@/components/layout/chatLayout';
-import { getChatMessages } from '@/apis/chat/messages.api';
 import { Loading } from '@/components/common/Loading';
 
 export const ChatPage = () => {

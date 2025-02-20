@@ -5,7 +5,7 @@ import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
 import blockIcon from '@/assets/imgs/blockIcon.svg';
 import leaveIcon from '@/assets/imgs/leaveIcon.svg';
 import { touchDrag } from '@/utils/touchDrag';
-import { parseToDate, utcToKst } from '@/utils/utcToKst';
+import { parseToDate } from '@/utils/utcToKst';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 
@@ -60,7 +60,7 @@ export const ListItem = ({
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex w-full flex-col justify-between">
+        <div className="flex flex-col justify-between w-full">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.postTitle}
