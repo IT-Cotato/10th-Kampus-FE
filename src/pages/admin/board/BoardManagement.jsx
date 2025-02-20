@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
 import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
+import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
@@ -54,10 +55,23 @@ export const BoardManagement = () => {
     alert('게시판이 완전히 삭제되었습니다.');
   };
 
-  const handleClickRestore = () => {
+  const { mutate: activateBoard } = useMutation({
+    mutationFn: (boardId) => postActivateBoard({ boardId : boardId }),
+    onSuccess: () => {
+      alert('게시판이 복구되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('게시판 복구 실패');
+    },
+    onSettled: () => {
+      setSelectedBoardMenu(null);
+    },
+  });
+
+  const handleClickRestore = (boardId) => {
     // 복구
-    setSelectedBoardMenu(null);
-    alert('게시판이 복구되었습니다.');
+    activateBoard(boardId);
   };
 
   const menuOptions = (boardId) => [
