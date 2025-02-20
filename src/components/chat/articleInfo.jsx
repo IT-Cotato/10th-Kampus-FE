@@ -1,16 +1,16 @@
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 
-export const ArticleInfo = ({ boardName, postName, postId }) => {
+export const ArticleInfo = ({ boardName, postName, postId, boardId }) => {
   const navigate = useNavigate();
   return (
-    <div className="bg-nuetral-5 flex w-full flex-col items-start justify-center p-4 text-neutral-base">
+    <div className="flex flex-col items-start justify-center w-full p-4 bg-neutral-bg-5 text-neutral-base">
       <p className="text-base">{boardName}</p>
       <p className="text-pageTitle text-neutral-title">{postName}</p>
       <button
-        className="h-10 w-full rounded-lg border border-neutral-border-30 bg-white text-small"
+        className="w-full h-10 bg-white border rounded-lg border-neutral-border-30 text-small"
         onClick={() => {
-          navigate(`${path.board.base}/${postId}`);
+          navigate(`${path.board.base}/${boardId}/${postId}`);
         }}
       >
         Go to the article

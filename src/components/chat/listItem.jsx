@@ -5,14 +5,13 @@ import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
 import blockIcon from '@/assets/imgs/blockIcon.svg';
 import leaveIcon from '@/assets/imgs/leaveIcon.svg';
 import { touchDrag } from '@/utils/touchDrag';
-import { parseKstDate, utcToKst } from '@/utils/utcToKst';
+import { parseToDate, utcToKst } from '@/utils/utcToKst';
 
 export const ListItem = ({ data, isSlide, setActiveSlide, onClick }) => {
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
 
-  const kst = utcToKst(data.lastChatTime);
-  const time = parseKstDate(kst);
+  const time = parseToDate(data.lastChatTime);
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">
@@ -41,20 +40,20 @@ export const ListItem = ({ data, isSlide, setActiveSlide, onClick }) => {
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.postTitle}
             </p>
             <p className="text-small text-neutral-border-50">
-              {time.hh}:{time.mm}
+              {time.hh}:{time.mi}
             </p>
           </div>
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-base text-neutral-base">
               {data.lastChatMessage}
             </p>
-            {/* 메시지 개수 서버 미완성*/}
+            {/* 메시지 개수 미완성*/}
             {data.cnt > 0 && <NewMsgCnt cnt={data.cnt.toString()} />}
           </div>
         </div>
