@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/apis/user/userDetail.api';
+import { NotificationButton } from '@/components/common/NotificationButton';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const MyPage = () => {
     <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
       {/* 알림 영역 */}
       <div className="flex justify-end w-full h-full">
-        <img src={notification} alt="notification button" />
+        <NotificationButton isNotification={false} />
       </div>
       {/* 본문 영역 */}
       <div className="flex h-full w-full flex-col gap-[2.5rem]">
