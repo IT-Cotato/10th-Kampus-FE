@@ -9,6 +9,7 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
 import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
 import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
+import { postInactivateBoard } from '@/apis/admin/postInactivateBoard.api';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
@@ -24,10 +25,23 @@ export const BoardManagement = () => {
     navigate(`./${boardId}/${path.admin.boardManagement.edit}`);
   };
 
-  const handleClickKeep = () => {
+  const { mutate: inactivateBoard } = useMutation({
+    mutationFn: (boardId) => postInactivateBoard({ boardId : boardId }),
+    onSuccess: () => {
+      alert('게시판이 보관되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('게시판 보관 실패');
+    },
+    onSettled: () => {
+      setSelectedBoardMenu(null);
+    },
+  });
+
+  const handleClickKeep = (boardId) => {
     // 보관
-    setSelectedBoardMenu(null);
-    alert('게시판이 보관되었습니다.');
+    inactivateBoard(boardId);
   };
 
   const { mutate: deleteBoard } = useMutation({
