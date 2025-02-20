@@ -72,11 +72,11 @@ export const BoardManagement = () => {
   const { mutate: activateBoard } = useMutation({
     mutationFn: (boardId) => postActivateBoard({ boardId : boardId }),
     onSuccess: () => {
-      alert('게시판이 복구되었습니다.');
+      alert('게시판이 활성화되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
     },
     onError: (error) => {
-      alert('게시판 복구 실패');
+      alert('게시판 활성화 실패');
     },
     onSettled: () => {
       setSelectedBoardMenu(null);
