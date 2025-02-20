@@ -5,6 +5,9 @@ import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { ShortInput } from '@/components/admin/ShortInput';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { postCreateNotice } from '@/apis/admin/postCreateNotice.api';
 
 export const CreateNotice = () => {
   const navigate = useNavigate();
@@ -28,12 +31,30 @@ export const CreateNotice = () => {
     }
   }, [noticeId]);
 
+  
+  const { mutate: createBoard } = useMutation({
+    mutationFn: postCreateNotice,
+  });
+
   const handleCreateNotice = () => {
     // 백 연동
-    console.log(title);
-    console.log(content);
+    const data = {
+      title: title,
+      content: content,
+    };
 
-    navigate(-1);
+    createBoard(
+      { data: data },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+          navigate(-1);
+        },
+        onError: (err) => {
+          alert(err.message);
+        },
+      },
+    );
   };
 
   const handleEditNotice = () => {
