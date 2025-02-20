@@ -48,4 +48,5 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
+  GET_BOARD_LIST: 'status',
 };

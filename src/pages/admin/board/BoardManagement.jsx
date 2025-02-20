@@ -4,13 +4,15 @@ import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
   const BoardOptions = ['전체', '활성화', '보관', '삭제 대기'];
   const [selectedDropdown, setSelectedDropdown] = useState('전체');
+  const [state, setState] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [boardList, setBoardList] = useState([]);
   const [selectedBoardMenu, setSelectedBoardMenu] = useState(null);
@@ -75,35 +77,31 @@ export const BoardManagement = () => {
     }
   };
 
-  const { mutate } = useMutation({
-    mutationFn: getAdminBoardList,
-  });
-
-  let state;
-
-  useEffect(() => {
-    // 백 연동 - selectedDropdown이 무엇인지에 따라서 받아오기
-    switch (selectedDropdown) {
+  const getStateFromDropdown = (dropdown) => {
+    switch (dropdown) {
       case '활성화':
-        state = 'ACTIVE';
-        break;
-      case '대기':
-        state = 'INACTIVE';
-        break;
+        return 'ACTIVE';
+      case '보관':
+        return 'INACTIVE';
       case '삭제 대기':
-        state = 'PENDING_DELETION';
-        break;
-      default: state = null;
+        return 'PENDING_DELETION';
+      default:
+        return null;
     }
+  };
 
-    mutate(
-      {status: state},
-      {
-        onSuccess: (response) => {
-          setBoardList(response?.adminBoardDetails); // API 응답에 따라 상태 업데이트
-        },
-      });
+  const { data: boardData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_BOARD_LIST, state],
+    queryFn: () => getAdminBoardList({ status: state }),
+  });
+  
+  useEffect(() => {
+    setState(getStateFromDropdown(selectedDropdown));
   }, [selectedDropdown]);
+  
+  useEffect(() => {
+    setBoardList(boardData?.adminBoardDetails);
+  }, [boardData]);
 
   return (
     <div className="flex flex-col flex-1 gap-5 px-5">
@@ -118,43 +116,44 @@ export const BoardManagement = () => {
         />
       </div>
       <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] place-items-center gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
-        {boardList && boardList.map((board, index) => (
-          <div
-            key={board.boardId}
-            className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
-          >
-            <div className="relative flex flex-row items-center gap-3 text-center align-middle">
-              {selectedBoardMenu === board.boardId && (
-                <MenuBar
-                  menuOptions={
-                    board.boardStatus === 'DELETED'
-                      ? deletedMenuOptions(board.boardId)
-                      : board.boardStatus === 'INACTIVE'
-                        ? keptMenuOptions(board.boardId)
-                        : menuOptions(board.boardId)
-                  }
-                  onClose={() => setSelectedBoardMenu(null)}
-                />
-              )}
-              <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
-                {selectedDropdown === '삭제 대기'
-                  ? 'D-' + (board.dday === 0 ? 'day' : board.dday)
-                  : index + 1}
-              </span>
-              <h2 className="whitespace-nowrap">
-                {board.boardName} | {board.postCount}개
-              </h2>
-              <button onClick={() => handleMenuBarClick(board.boardId)}>
-                <img
-                  src={menubar}
-                  alt="menu"
-                  className="absolute top-0 right-0 px-2"
-                />
-              </button>
+        {boardList &&
+          boardList.map((board, index) => (
+            <div
+              key={board.boardId}
+              className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
+            >
+              <div className="relative flex flex-row items-center gap-3 text-center align-middle">
+                {selectedBoardMenu === board.boardId && (
+                  <MenuBar
+                    menuOptions={
+                      board.boardStatus === 'DELETED'
+                        ? deletedMenuOptions(board.boardId)
+                        : board.boardStatus === 'INACTIVE'
+                          ? keptMenuOptions(board.boardId)
+                          : menuOptions(board.boardId)
+                    }
+                    onClose={() => setSelectedBoardMenu(null)}
+                  />
+                )}
+                <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
+                  {selectedDropdown === '삭제 대기'
+                    ? 'D-' + (board.dday === 0 ? 'day' : board.dday)
+                    : index + 1}
+                </span>
+                <h2 className="whitespace-nowrap">
+                  {board.boardName} | {board.postCount}개
+                </h2>
+                <button onClick={() => handleMenuBarClick(board.boardId)}>
+                  <img
+                    src={menubar}
+                    alt="menu"
+                    className="absolute top-0 right-0 px-2"
+                  />
+                </button>
+              </div>
+              {board.description}
             </div>
-            {board.description}
-          </div>
-        ))}
+          ))}
         <button
           type="button"
           className="relative flex h-40 w-60 flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
