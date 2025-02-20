@@ -7,8 +7,7 @@ import { LeaveModal } from '@/components/chat/leaveModal';
 import { ChatMenu } from '@/components/chat/chatMenu';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 
-export const RoomHeader = ({ text }) => {
-  const navigate = useNavigate();
+export const RoomHeader = ({ text, setChatroomId }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isBlockModal, setIsBlockModal] = useState(false);
   const [isLeaveModal, setIsLeaveModal] = useState(false);
@@ -19,7 +18,7 @@ export const RoomHeader = ({ text }) => {
       <img
         src={arrowLeft}
         alt="back button"
-        onClick={() => navigate(-1)}
+        onClick={() => setChatroomId(null)}
         className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
       <span className="mx-auto text-pageTitle text-neutral-title">{text}</span>
