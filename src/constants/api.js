@@ -16,8 +16,7 @@ export const API_DOMAINS = {
   READ_MESSAGE: '/chats/:chatroomId/read',
   CHATLIST: '/chats/chatrooms',
   CHAT_MESSAGE: '/chats/:chatroomId/messages',
-  CHATROOM_DETAIL: '/chats/chatrooms/{chatroomId}',
-
+  CHATROOM_DETAIL: '/chats/chatrooms/:chatroomId',
 
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
@@ -32,14 +31,17 @@ export const API_DOMAINS = {
   POST_WRITE: '/posts',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
 
-  ADMIN_CREATE_BOARD: '/admin/boards'
+  ADMIN_CREATE_BOARD: '/admin/boards',
 };
 
 export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
-  GET_CHAT_LIST: 'chatList',
+  GET_CHAT_LIST: 'getChatList',
+  POST_CHAT_ROOM: 'postChatroom',
+  GET_CHAT_ROOM: 'getChatroom',
+  POST_CHAT_READ: 'postChatRead',
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
