@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { data, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PostList } from '@/components/board/PostList';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
 import { path } from '@/routes/path';
 import { WriteButton } from '@/components/board/write/WriteButton';
-import { getCardNewsList, getPostList } from '@/apis/board/getPostList.api';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getCardNewsList, getPostList, getTrendingList } from '@/apis/board/getPostList.api';
+import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
@@ -15,10 +15,17 @@ import { Loading } from '@/components/common/Loading';
 export const Board = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { data: postList, isLoading: isPostLoading, error: isPostError } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
-    queryFn: () => (boardId !== "5" ? getPostList({ boardId: boardId, page: 1 }) : getCardNewsList({ page: 1 }))
+    queryFn: () => {
+      if (boardId === "5") {
+        return getCardNewsList({ page: 1 });
+      } else if (boardId === "4") {
+        return getTrendingList({ page: 1 });
+      } else {
+        return getPostList({ boardId: boardId, page: 1 });
+      }
+    }
   })
   const { data: boardDetail, isLoading: isBoardLoading, error: isBoardError } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
