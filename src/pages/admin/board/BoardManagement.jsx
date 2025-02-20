@@ -180,7 +180,7 @@ export const BoardManagement = () => {
                 )}
                 <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
                   {selectedDropdown === '삭제 대기'
-                    ? 'D-' + (board.dday === 0 ? 'day' : board.dday)
+                    ? 'D-' + (board.deletionCountdown === 0 ? 'day' : board.deletionCountdown)
                     : index + 1}
                 </span>
                 <h2 className="whitespace-nowrap">
