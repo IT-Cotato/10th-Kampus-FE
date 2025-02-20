@@ -11,6 +11,7 @@ export const SearchDropdown = ({
   placeholder,
   warn,
   label = true,
+  ...props
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [warning, setWarning] = useState(false);
@@ -87,6 +88,7 @@ export const SearchDropdown = ({
           value={keyword}
           onFocus={() => setIsActive(true)}
           aria-expanded={isActive ? 'true' : 'false'}
+          {...props}
         />
 
         <div className="flex flex-col">
