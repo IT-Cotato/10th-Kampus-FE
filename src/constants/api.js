@@ -31,6 +31,7 @@ export const API_DOMAINS = {
   POST_WRITE: '/posts',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
   POST_LIKE_TOGGLE: '/posts/:postId/likes',
+  POST_GET_CARDNEWS: '/posts/cardNews',
 
   COMMENT_HANDLE: '/posts/:postId/comments',
   COMMENT_DELETE: '/comments/:commentId',

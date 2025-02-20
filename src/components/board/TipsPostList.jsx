@@ -10,7 +10,7 @@ export const TipsPostList = ({ data, boardId }) => {
   return (
     <div
       className="flex justify-between pb-3 pt-5"
-      onClick={() => navigate(`${data.id}`)}
+      onClick={() => navigate(`${data.postId}`)}
     >
       <div className="flex flex-col justify-between">
         <p className="text-subTitle text-neutral-title">{data.title}</p>
@@ -39,8 +39,8 @@ export const TipsPostList = ({ data, boardId }) => {
           )}
         </div>
         <ScrapComponent
-          state={data.scrap}
-          id={data.id}
+          state={data.isScrapped}
+          id={data.postId}
           width="1.875rem"
           height="1.875rem"
           boardId={boardId}

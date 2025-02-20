@@ -6,7 +6,7 @@ import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
 import { path } from '@/routes/path';
 import { WriteButton } from '@/components/board/write/WriteButton';
-import { getPostList } from '@/apis/board/getPostList.api';
+import { getCardNewsList, getPostList } from '@/apis/board/getPostList.api';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
@@ -17,7 +17,7 @@ export const Board = () => {
   const navigate = useNavigate();
   const { data: postList, isLoading: isPostLoading, error: isPostError } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
-    queryFn: () => getPostList({ boardId: boardId, page: 0 })
+    queryFn: () => (boardId !== "5" ? getPostList({ boardId: boardId, page: 1 }) : getCardNewsList({ page: 1 }))
   })
   const { data: boardDetail, isLoading: isBoardLoading, error: isBoardError } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
@@ -43,9 +43,9 @@ export const Board = () => {
     // 여기에 백에서 보내주는 양식 보고 시간 기준 정렬 추가해야함
   };
   useEffect(() => {
-    console.log(boardDetail)
     if (boardDetail) {
       checkIsActive();
+      console.log(postList)
     }
   }, [boardDetail])
   return (
@@ -68,7 +68,7 @@ export const Board = () => {
             <p>Error Data Loading</p>
           }
           {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
-          {!isPostLoading && !isPostError && postList.posts && postList.posts.map((item, index) =>
+          {!isPostLoading && !isPostError && postList.posts && postList.posts.length > 0 && postList.posts.map((item, index) =>
             isActive.scrap ? (
               <TipsPostList
                 key={index}

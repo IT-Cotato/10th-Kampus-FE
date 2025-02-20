@@ -1,6 +1,6 @@
 import activeScrap from '@/assets/imgs/activeScrap.svg';
 import scrap from '@/assets/imgs/scrap.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -28,7 +28,6 @@ export const ScrapComponent = ({
         // 게시글 뷰
         await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId] });
         previousPostDetail = queryClient.getQueryData([QUERY_KEYS.GET_POST_DETAIL, postId]);
-
         queryClient.setQueryData([QUERY_KEYS.GET_POST_DETAIL, postId], (old) =>
           old ? { ...old, isScrapped: !state } : old
         );
@@ -36,7 +35,6 @@ export const ScrapComponent = ({
         // 카드뉴스 뷰
         await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST, boardId] });
         previousPostList = queryClient.getQueryData([QUERY_KEYS.GET_POST_LIST, boardId]);
-
         queryClient.setQueryData([QUERY_KEYS.GET_POST_LIST, boardId], (old) => {
           if (!old?.posts) return old;
           return {
@@ -57,9 +55,8 @@ export const ScrapComponent = ({
         queryClient.setQueryData([QUERY_KEYS.GET_POST_LIST, boardId], context.previousPostList);
       }
     },
-    onSuccess: (_, { postId }) => {
-      startAnimation(setScrapAni);
-    },
+    onSuccess: () => startAnimation(setScrapAni)
+    ,
     onSettled: (_, __, { postId }) => {
       if (postId !== id) {
         queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId] });
@@ -68,8 +65,6 @@ export const ScrapComponent = ({
       }
     }
   });
-
-
 
   const handleScrapClick = () => {
     handleScrap({ postId: actualId });
