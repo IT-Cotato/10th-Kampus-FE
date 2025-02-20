@@ -5,6 +5,9 @@ import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { ShortInput } from '@/components/admin/ShortInput';
+import { useMutation } from '@tanstack/react-query';
+import { postCreateBoard } from '@/apis/admin/postCreateBoard.api';
+import { toast } from 'react-toastify';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
@@ -66,19 +69,35 @@ export const CreateBoard = () => {
     setCategoryList(updatedList);
   };
 
+  const { mutate } = useMutation({
+    mutationFn: postCreateBoard,
+  });
+
   const handleCreateBoard = () => {
-    // 백 연동
-    console.log(boardType);
-    if (boardType === 'schoolboard') {
-      console.log(university);
-    }
-    console.log(title);
-    console.log(description);
+    const universityName = boardType === 'schoolboard' ? university : null;
+    const data = {
+      boardName: title,
+      description: description,
+      universityName: universityName,
+      isCategoryRequired: isCategoryChecked,
+    };
+
     if (isCategoryChecked) {
-      console.log(categoryList);
+      console.log(categoryList); // 나중에 백 api 수정되면 보내줘야함
     }
 
-    navigate(-1);
+    mutate(
+      { data: data },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+          navigate(-1);
+        },
+        onError: (err) => {
+          alert(err.message);
+        },
+      },
+    );
   };
 
   const handleEditBoard = () => {
@@ -95,7 +114,7 @@ export const CreateBoard = () => {
     }
 
     navigate(-1);
-  }
+  };
 
   const disabled =
     !title ||
@@ -190,9 +209,20 @@ export const CreateBoard = () => {
           )}
         </div>
         <div className="flex max-w-[31.25rem] flex-col gap-5">
-        <ShortInput value={title} onChange={setTitle} placeholder="게시판명을 적어주세요." />
-        <ShortInput value={description} onChange={setDescription} placeholder="게시판 설명을 간단하게 적어주세요." />
-          <MainButton disabled={disabled} onClick={isEditMode ? handleEditBoard : handleCreateBoard}>
+          <ShortInput
+            value={title}
+            onChange={setTitle}
+            placeholder="게시판명을 적어주세요."
+          />
+          <ShortInput
+            value={description}
+            onChange={setDescription}
+            placeholder="게시판 설명을 간단하게 적어주세요."
+          />
+          <MainButton
+            disabled={disabled}
+            onClick={isEditMode ? handleEditBoard : handleCreateBoard}
+          >
             {isEditMode ? '게시판 수정' : '게시판 생성'}
           </MainButton>
         </div>
