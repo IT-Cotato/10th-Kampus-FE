@@ -220,7 +220,7 @@ const AppRouter = createBrowserRouter([
                 path: path.board.specific.report,
                 element: <PostReport />,
               },
-            ]
+            ],
           },
         ],
       },
@@ -236,11 +236,7 @@ const AppRouter = createBrowserRouter([
   },
   {
     path: path.chatList.base,
-    element: (
-      <Layout>
-        <Outlet />
-      </Layout>
-    ),
+    element: <Outlet />,
     children: [
       {
         path: '',
@@ -248,7 +244,11 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.chatList.report,
-        element: <ChatReport />,
+        element: (
+          <Layout>
+            <ChatReport />,
+          </Layout>
+        ),
       },
     ],
   },
