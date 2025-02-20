@@ -24,7 +24,6 @@ export const ScrapComponent = ({
     onMutate: async ({ postId }) => {
       let previousPostDetail = null;
       let previousPostList = null;
-
       if (postId !== id) {
         // 게시글 뷰
         await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId] });

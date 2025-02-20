@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { data, useNavigate, useParams } from 'react-router-dom';
 import { PostList } from '@/components/board/PostList';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
@@ -34,7 +34,6 @@ export const Board = () => {
       scrap: boardDetail.boardName === "How to live in Korea",
       filter: boardDetail.boardName === "Question" || boardDetail.boardName === "Information"
     })
-    console.log(postList)
   }
   const sortPostByScrap = (posts) => {
     return [...posts].sort((a, b) => {
@@ -44,6 +43,7 @@ export const Board = () => {
     // 여기에 백에서 보내주는 양식 보고 시간 기준 정렬 추가해야함
   };
   useEffect(() => {
+    console.log(boardDetail)
     if (boardDetail) {
       checkIsActive();
     }
@@ -68,7 +68,7 @@ export const Board = () => {
             <p>Error Data Loading</p>
           }
           {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
-          {!isPostLoading && !isPostError && postList && postList.posts.map((item, index) =>
+          {!isPostLoading && !isPostError && postList.posts && postList.posts.map((item, index) =>
             isActive.scrap ? (
               <TipsPostList
                 key={index}
@@ -80,7 +80,9 @@ export const Board = () => {
             ),
           )}
         </div>
-        <WriteButton boardName={boardDetail && boardDetail.boardName} />
+        {boardDetail && (boardDetail.boardName !== "Trending" && boardDetail.boardName !== "How to live in Korea") &&
+          <WriteButton boardName={boardDetail.boardName} />
+        }
       </div>
     </div>
   );

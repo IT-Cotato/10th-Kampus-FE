@@ -18,10 +18,10 @@ export const AllBoard = () => {
     ,
     onMutate: ({ isPinned }) => {
       setPrevState(isPinned);
+      startAnimation(setIsAni);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] });
-      startAnimation(setIsAni);
     }
   })
   const [isAni, setIsAni] = useState(false);

@@ -73,9 +73,6 @@ export const Post = () => {
     transition: `all 0.4s ease-in-out`,
   });
   const submitComment = () => {
-    console.log(postData)
-    console.log(commentData)
-    console.log(focusedComment);
     const buildComment = {
       content: input,
       parentId: focusedComment
@@ -98,13 +95,13 @@ export const Post = () => {
         />
       )}
       {postData && <PostHeader path={path} isAuthor={postData.isAuthor} />}
-      <div className="flex h-full w-full flex-col pb-[2.625rem] pt-14">
+      <div className="flex h-full w-full flex-col pt-14">
         {postLoading &&
           <Loading />}
         {postError &&
           <p>Error Data Loading</p>}
-        {!postLoading && !postError &&
-          <div className="flex flex-col py-5">
+        {!postLoading && !postError && postData &&
+          <div className="flex flex-col pt-5">
             <div className="flex items-center justify-between px-4">
               <div className="flex gap-2">
                 <img src={anonymous} alt="anonymous icon" className="h-10 w-10" />
@@ -172,7 +169,7 @@ export const Post = () => {
       </div>
       {/** 댓글 부분 */}
       <div className='flex flex-col pb-16'>
-        {commentData && commentData.comments.map((item, index) => (
+        {commentData && commentData.comments && commentData.comments.map((item, index) => (
           <PostComment data={item} key={index} setInputFocus={setInputFocus}
             focusedComment={focusedComment} setFocusedComment={setFocusedComment}
             handleCommentLike={handleCommentLike} />
@@ -187,6 +184,6 @@ export const Post = () => {
         type='post'
         inputFocus={inputFocus}
       />
-    </div>
+    </div >
   );
 };

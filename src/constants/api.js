@@ -38,7 +38,7 @@ export const API_DOMAINS = {
 
   TRANSLATE_POST: '/translations/posts',
 
-  ADMIN_CREATE_BOARD: '/admin/boards'
+  ADMIN_CREATE_BOARD: '/admin/boards',
 };
 
 export const QUERY_KEYS = {

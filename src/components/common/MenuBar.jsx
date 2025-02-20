@@ -14,7 +14,8 @@ import { Popup } from './popup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
-export const BoardMenuBar = ({ isAuthor = false }) => {
+import { addBoardFavorite, deleteBoardFavorite } from '@/apis/board/toggleBoardFavorite.api';
+export const BoardMenuBar = ({ isAuthor = false, data }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { boardId } = useParams();
@@ -56,31 +57,57 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       navigate(-1);
     }
   })
-  const startMenuAni = (setAni) => {
-    // 애니메이션
-    setOpenModal(false);
-    startAnimation(setAni);
-  };
-  const togglePopup = (type) => {
+  const { mutate: toggleFavorite } = useMutation({
+    mutationFn: async () =>
+      data.isFavorite ? deleteBoardFavorite({ boardId }) : addBoardFavorite({ boardId }),
+    onMutate: async () => {
+      startMenuAni(setPinAni)
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId] });
+      const previousBoardDetail = queryClient.getQueryData([QUERY_KEYS.GET_BOARD_DETAIL, boardId]);
+      // 낙관적 업데이트 적용
+      queryClient.setQueryData([QUERY_KEYS.GET_BOARD_DETAIL, boardId], (oldData) => {
+        if (!oldData) return oldData;
+        return { ...oldData, isFavorite: !oldData.isFavorite };
+      });
+      return { previousBoardDetail }; // 에러 시 롤백 값 주기
+    },
+    onError: (err, variables, context) => {
+      // 에러시 롤백 
+      if (context?.previousBoardDetail) {
+        queryClient.setQueryData([QUERY_KEYS.GET_BOARD_DETAIL, boardId], context.previousBoardDetail);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] })
+    }
+  });
+  const startMenuAni = (set) => {
+    setOpenModal(false)
+    startAnimation(set)
+  }
+  const togglePopup = (type) => { // 팝업 닫기
     setOpenModal(false);
     setPopupState((prev) => ({
       ...prev,
       [type]: !prev[type],
     }));
   }
-  const handleRightButton = (type) => {
-    removePost();
+  const handleRightButton = (type) => { // 팝업 오른쪽 버튼
+    if (type === "delete") {
+      removePost();
+    }
   }
-  const copyUrl = async () => {
+  const copyUrl = async () => { // url 복사 
     const nowUrl = window.location.href;
     await navigator.clipboard.writeText(nowUrl)
       .then(() => {
         setCopyState(true)
-        startMenuAni(setUrlAni);
+        startMenuAni(setUrlAni)
       })
       .catch(() => {
         setCopyState(false)
-        startAnimation(setUrlAni)
+        startMenuAni(setUrlAni)
       })
   }
   useEffect(() => {
@@ -110,10 +137,10 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
         !postId && ( // 게시글 리스트 부분
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
-            onClick={() => startMenuAni(setPinAni)}
+            onClick={() => toggleFavorite()}
           >
             <p className="text-base">
-              {!pinAni ? 'Add to Bookmark' : 'Remove the Bookmark'}
+              {data && !data.isFavorite ? 'Add to Bookmark' : 'Remove the Bookmark'}
             </p>
             {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
             <img src={pin} className="w-5 h-5 -rotate-90" />
@@ -180,7 +207,7 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
       {pinAni && (
         <StateChangeAnimate
-          state={!pinAni}
+          state={!data.isFavorite}
           changeToTrueText="Pinned to the board"
           changeToFalseText="Unpinned from the board"
         />
