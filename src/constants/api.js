@@ -10,6 +10,10 @@ export const API_DOMAINS = {
   USER: '/users/details',
   MYPAGE: '/mypage',
 
+  GET_MY_POSTS: '/posts/my',
+  GET_MY_COMMENTED_POST: '/my/commented-post',
+  GET_MY_SCRAPED_POST: '/posts/my/scrap',
+
   DUPLICATE_CHECK: '/users/check-nickname',
 
   PRODUCTS: '/products',
@@ -49,8 +53,12 @@ export const API_DOMAINS = {
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
 
+
   HOME_TRENDING: '/boards/trending',
   HOME_FAVORITE: '/boards/favorite',
+
+  NOTICE: '/notices',
+  ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
 };
 
 export const QUERY_KEYS = {
@@ -71,11 +79,20 @@ export const QUERY_KEYS = {
   GET_TRANSLATE_POST_LIST: 'postTranslatedList',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
+
   GET_HOME_TRENDING: 'homeTrend',
   GET_HOME_FAVORITE: 'homeFavorite',
   GET_HOME_CARDNEWS: 'homeCardNews',
 
+
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
+  POST_NOTICE: 'postNotice',
+  GET_NOTICE: 'getNotice',
+  NOTICE_DETAIL: 'noticeId',
+
+  MY_POST_LIST: 'myPostList',
+  MY_COMMENTED_POST_LIST: 'myCommentedPostList',
+  MY_SCRAPED_POST_LIST: 'scrapedPostList',
 };
 

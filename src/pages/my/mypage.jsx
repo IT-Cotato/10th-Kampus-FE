@@ -2,6 +2,7 @@ import notification from '@/assets/imgs/notification.svg';
 import arrow from '@/assets/imgs/arrowRight.svg';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
+import { removeTokens } from '@/utils/authUtils';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,10 @@ export const MyPage = () => {
   const username = 'COTATO';
   const university = 'Cotato University';
 
+  const handleLogout = async () => {
+    await removeTokens();
+    navigate(path.login);
+  }
   return (
     <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
       {/* 알림 영역 */}
@@ -140,7 +145,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate('/')}
+                onClick={() => handleLogout()}
               >
                 Log Out
               </button>
