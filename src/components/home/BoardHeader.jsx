@@ -4,7 +4,6 @@ import more from '@/assets/imgs/more.svg';
 import { path } from '@/routes/path';
 export const BoardHeader = ({ title }) => {
   const navigate = useNavigate();
-  console.log(title)
   return (
     <div className="flex items-center justify-between">
       <h1 className="text-pageTitle text-neutral-title">{title}</h1>

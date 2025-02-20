@@ -2,11 +2,10 @@ import Logo from "@/assets/imgs/kampusLogo.svg?react"
 import notification from "@/assets/imgs/notification.svg"
 import notification_true from "@/assets/imgs/notification_true.svg"
 import search from "@/assets/imgs/search.svg"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { path } from "@/routes/path";
 import { BoardBox, CardPostBox } from "@/components/home/BoardBox.jsx";
-import { getUserDetail } from "@/apis/auth/login.api";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/api";
 import { getFavorite } from "@/apis/home/getFavorite.api";
@@ -106,9 +105,6 @@ export const Home = () => {
       },
     ],
   });
-  useEffect(() => {
-    console.log(userDetail)
-  }, [])
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
       <div className="flex items-start justify-between pb-[.625rem]">
