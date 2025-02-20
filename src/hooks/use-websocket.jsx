@@ -197,7 +197,7 @@ export const useWebsocket = (setChatList, chatroomId) => {
       stompClient.deactivate();
       subscriptionRef.current?.unsubscribe();
       stompClientRef.current = null;
-      setConnected(false);
+      // setConnected(false);
       console.log('✅ WebSocket 연결 종료');
     }
   };
