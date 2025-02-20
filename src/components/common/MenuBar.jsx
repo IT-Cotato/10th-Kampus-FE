@@ -10,6 +10,10 @@ import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { Popup } from './popup';
+import { useMutation } from '@tanstack/react-query';
+import { postChat } from '@/apis/chat/chatRoom.api';
+import { QUERY_KEYS } from '@/constants/api';
+import { path } from '@/routes/path';
 export const BoardMenuBar = ({ isAuthor = false }) => {
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -43,6 +47,20 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       rightButton: 'Ok',
     },
   };
+
+  const { mutate: createChatRoom } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_ROOM],
+    mutationFn: () => postChat({ postId }),
+    onSuccess: () => {
+      navigate(path.chatList.base);
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'CHAT-002') {
+        navigate(path.chatList.base);
+      }
+    },
+  });
+
   const myPost = false;
   const startMenuAni = (setAni) => {
     // 애니메이션
@@ -55,28 +73,31 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       ...prev,
       [type]: !prev[type],
     }));
-  }
+  };
   const handleRightButton = (type) => {
-
-  }
+    if (type === 'chat') {
+      createChatRoom();
+    }
+  };
   const copyUrl = async () => {
     const nowUrl = window.location.href;
-    await navigator.clipboard.writeText(nowUrl)
+    await navigator.clipboard
+      .writeText(nowUrl)
       .then(() => {
-        setCopyState(true)
+        setCopyState(true);
         startMenuAni(setUrlAni);
       })
       .catch(() => {
-        setCopyState(false)
-        startAnimation(setUrlAni)
-      })
-  }
+        setCopyState(false);
+        startAnimation(setUrlAni);
+      });
+  };
   useEffect(() => {
     const handleOutSide = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         setOpenModal(false);
       }
-    }
+    };
     if (openModal) {
       document.addEventListener('touchmove', handleOutSide);
       document.addEventListener('mousedown', handleOutSide);
@@ -84,12 +105,12 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
     return () => {
       document.removeEventListener('touchmove', handleOutSide);
       document.removeEventListener('mousedown', handleOutSide);
-    }
-  }, [openModal])
+    };
+  }, [openModal]);
   return (
-    <div className="h-5 w-5 cursor-pointer text-neutral-title">
+    <div className="w-5 h-5 cursor-pointer text-neutral-title">
       <button onClick={() => setOpenModal(!openModal)}>
-        <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
+        <img src={menubar} alt="Menu Bar" className="w-5 h-5" />
       </button>
       {openModal &&
         !postId && ( // 게시글 리스트 부분
@@ -108,7 +129,10 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       {openModal &&
         postId &&
         !isAuthor && ( // 상세 게시글 중 다른 사람 게시글
-          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
+          <div
+            ref={modalRef}
+            className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md"
+          >
             <div
               className="flex items-center justify-between pb-1"
               onClick={() => togglePopup('chat')}
@@ -142,7 +166,10 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
       {openModal &&
         postId &&
         isAuthor && ( // 상세 게시글 중 내가 작성한 게시글
-          <div ref={modalRef} className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
+          <div
+            ref={modalRef}
+            className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md"
+          >
             <div
               className="flex items-center justify-between pb-1"
               onClick={() => copyUrl()}
@@ -178,20 +205,21 @@ export const BoardMenuBar = ({ isAuthor = false }) => {
           changeToFalseText="URL copy failed"
         />
       )}
-      {Object.entries(popupState).map(([key, isOpen]) =>
-        isOpen &&
-        createPortal(
-          <Popup
-            key={key}
-            title={popupData[key].title}
-            text={popupData[key].text}
-            onClickLeft={() => togglePopup(key)}
-            leftButton={popupData[key].leftButton}
-            onClickRight={() => handleRightButton(key)}
-            rightButton={popupData[key].rightButton}
-          />,
-          document.getElementById('modal-root')
-        )
+      {Object.entries(popupState).map(
+        ([key, isOpen]) =>
+          isOpen &&
+          createPortal(
+            <Popup
+              key={key}
+              title={popupData[key].title}
+              text={popupData[key].text}
+              onClickLeft={() => togglePopup(key)}
+              leftButton={popupData[key].leftButton}
+              onClickRight={() => handleRightButton(key)}
+              rightButton={popupData[key].rightButton}
+            />,
+            document.getElementById('modal-root'),
+          ),
       )}
     </div>
   );
