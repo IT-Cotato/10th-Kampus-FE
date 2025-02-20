@@ -20,7 +20,7 @@ export const Notice = () => {
             key={notice.id}
             noticeId={notice.id}
             title={notice.title}
-            date={notice.date}
+            date={notice.createdTime}
           />
         ))
       )}
