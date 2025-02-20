@@ -5,10 +5,10 @@ export const NoticeList = ({ noticeId, title, date }) => {
 
   return (
     <div
-      className="flex w-full flex-row items-center justify-between border-b border-primary-20 py-5"
+      className="flex flex-row items-center justify-between w-full py-5 border-b cursor-pointer border-primary-20"
       onClick={() => navigate(`./${noticeId}`)}
     >
-      <div className="flex w-full flex-col truncate">
+      <div className="flex flex-col w-full truncate">
         <span className="truncate text-subTitle text-neutral-title">
           {title}
         </span>
