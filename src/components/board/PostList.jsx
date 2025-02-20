@@ -42,7 +42,7 @@ export const PostList = ({ data, isActive, ...props }) => {
   };
   return (
     <div
-      className="flex flex-col gap-3 pt-4 pb-3"
+      className="flex flex-col gap-3 pt-4 pb-3 cursor-pointer"
       onClick={() => handleOnClick(data)}
     >
       {isActive /** 인기 게시판 레이아웃 */ && (
