@@ -3,26 +3,43 @@ import { ChatRoom } from '@/components/chat/chatRoomPage';
 import { ACCESS_TOKEN_KEY } from '@/constants/api';
 import { useWebsocket } from '@/hooks/use-websocket';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { getChatList } from '@/apis/chat/chatList.api';
+import { ChatLayout } from '@/components/layout/chatLayout';
+import { getChatMessages } from '@/apis/chat/messages.api';
+import { Loading } from '@/components/common/Loading';
 
 export const ChatPage = () => {
-  const [chatRoomId, setChatRoomId] = useState();
+  const [chatroomId, setChatroomId] = useState(null);
   const [chatList, setChatList] = useState([]);
 
-  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-  const { connectSocket, subscribeToNotifications, disconnect } =
-    useWebsocket();
+  const [page, setPage] = useState(1);
 
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+  const { connectSocket, disconnect } = useWebsocket(setChatList, chatroomId);
+  //채팅 리스트
+  const {
+    data: chatListData,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_LIST, accessToken],
+    queryFn: () => getChatList(page),
+  });
+
+  //채팅리스트
+  useEffect(() => {
+    if (isLoading) <Loading />;
+    if (error) <div>Error: {error.message}</div>;
+    if (chatListData) {
+      setChatList(chatListData.chatRoomPreviewList || []);
+    }
+  }, [chatListData]);
+
+  //웹소켓 서버
   useEffect(() => {
     connectSocket(accessToken);
-
-    subscribeToNotifications((newNotification) => {
-      setChatList((prevChatList) => {
-        const updatedChatList = [...prevChatList, newNotification];
-        return updatedChatList.sort(
-          (a, b) => new Date(b.lastMessageTime) - new Date(a.lastMessageTime),
-        );
-      });
-    });
 
     return () => {
       disconnect();
@@ -30,16 +47,14 @@ export const ChatPage = () => {
   }, [connectSocket, disconnect]);
 
   return (
-    <div className="w-full h-full">
-      {!chatRoomId ? (
-        <ChatList
-          onChatRoomSelect={setChatRoomId}
-          chatList={chatList}
-          setChatList={setChatList}
-        />
-      ) : (
-        <ChatRoom chatRoomId={chatRoomId} />
-      )}
+    <div className="h-full w-full">
+      <ChatLayout render={!chatroomId ? 'chatList' : null}>
+        {!chatroomId ? (
+          <ChatList onChatRoomSelect={setChatroomId} chatList={chatList} />
+        ) : (
+          <ChatRoom chatroomId={chatroomId} setChatroomId={setChatroomId} />
+        )}
+      </ChatLayout>
     </div>
   );
 };

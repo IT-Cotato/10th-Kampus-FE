@@ -1,46 +1,31 @@
 import { NoticeBox } from '@/components/common/noticeBox';
 import { ListItem } from '@/components/chat/listItem';
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getChatList } from '@/apis/chat/chatList.api';
+import { useState } from 'react';
 import { Loading } from '@/components/common/Loading';
+import { useMutation } from '@tanstack/react-query';
+import { postReadMessage } from '@/apis/chat/chatList.api';
+import { QUERY_KEYS } from '@/constants/api';
 
-export const ChatList = ({ onChatRoomSelect, chatList, setChatList }) => {
+export const ChatList = ({ onChatRoomSelect, chatList }) => {
   const [activeSlide, setActiveSlide] = useState(null);
-
-  const {
-    data: chatListData,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
-    queryFn: () => getChatList(1),
-  });
-
-  //채팅리스트 데이터
-  useEffect(() => {
-    if (chatListData) {
-      setChatList(chatListData.chatRoomPreviewList || []);
-    }
-  }, [chatListData]);
 
   const handleClickOutside = () => {
     setActiveSlide(null);
   };
 
+  const { mutate: chatsRead } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
+    mutationFn: (chatroomId) => postReadMessage({ chatroomId }),
+  });
+
   return (
     <div
-      className="relative flex flex-col w-full h-full gap-4 p-4"
+      className="relative flex h-full w-full flex-col gap-4 p-4"
       onClick={handleClickOutside}
     >
       <div className="text-title text-neutral-title">Chats</div>
       <NoticeBox />
-      {isLoading ? (
-        <Loading />
-      ) : error ? (
-        <div>Error: {error.message}</div>
-      ) : chatList.length === 0 ? (
+      {chatList.length === 0 ? (
         <p className="mx-auto text-neutral-border-40">Empty</p>
       ) : (
         chatList.map((data) => (
@@ -49,7 +34,10 @@ export const ChatList = ({ onChatRoomSelect, chatList, setChatList }) => {
             data={data}
             isSlide={activeSlide === data.chatroomId}
             setActiveSlide={setActiveSlide}
-            onClick={() => onChatRoomSelect(data.chatroomId)}
+            onClick={() => {
+              onChatRoomSelect(data.chatroomId);
+              chatsRead(data.chatroomId);
+            }}
           />
         ))
       )}
