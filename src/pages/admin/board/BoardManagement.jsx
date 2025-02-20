@@ -4,12 +4,14 @@ import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
+import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const BoardOptions = ['전체', '활성화', '보관', '삭제 대기'];
   const [selectedDropdown, setSelectedDropdown] = useState('전체');
   const [state, setState] = useState(null);
@@ -27,10 +29,23 @@ export const BoardManagement = () => {
     alert('게시판이 보관되었습니다.');
   };
 
-  const handleClickDelete = () => {
+  const { mutate: deleteBoard } = useMutation({
+    mutationFn: (boardId) => deleteAdminBoard({ boardId : boardId }),
+    onSuccess: () => {
+      alert('게시판이 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('게시판 삭제 실패');
+    },
+    onSettled: () => {
+      setSelectedBoardMenu(null);
+    },
+  });
+
+  const handleClickDelete = (boardId) => {
     // 삭제
-    setSelectedBoardMenu(null);
-    alert('게시판이 삭제되었습니다.');
+    deleteBoard(boardId);
   };
 
   const handleClickDeleteCompletely = () => {
@@ -94,11 +109,11 @@ export const BoardManagement = () => {
     queryKey: [QUERY_KEYS.GET_BOARD_LIST, state],
     queryFn: () => getAdminBoardList({ status: state }),
   });
-  
+
   useEffect(() => {
     setState(getStateFromDropdown(selectedDropdown));
   }, [selectedDropdown]);
-  
+
   useEffect(() => {
     setBoardList(boardData?.adminBoardDetails);
   }, [boardData]);
