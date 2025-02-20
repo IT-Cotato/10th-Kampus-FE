@@ -48,7 +48,7 @@ export const CreateBoard = () => {
 
       // 학교 보드일 경우
       if (boardDetailsData.boardType === 'UNIVERSITY') {
-        setUniversity('홍익대학교');
+        setUniversity(boardDetailsData.universityName);
         setIsUniversitySelected(true);
       }
       setIsCategoryChecked(boardDetailsData.isCategoryRequired);
