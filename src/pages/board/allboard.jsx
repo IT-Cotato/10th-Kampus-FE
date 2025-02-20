@@ -27,7 +27,6 @@ export const AllBoard = () => {
   const [isAni, setIsAni] = useState(false);
   const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
-
   const parseBoardData = (dataList) => {
     const boardList = { first: [], second: [], third: [] };
     dataList?.forEach((data) => {

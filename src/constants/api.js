@@ -33,6 +33,7 @@ export const API_DOMAINS = {
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
   POST_LIKE_TOGGLE: '/posts/:postId/likes',
   POST_GET_CARDNEWS: '/posts/cardNews',
+  POST_GET_TRENDING: '/posts/trending',
 
   COMMENT_HANDLE: '/posts/:postId/comments',
   COMMENT_DELETE: '/comments/:commentId',
@@ -48,6 +49,8 @@ export const API_DOMAINS = {
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
 
+  HOME_TRENDING: '/boards/trending',
+  HOME_FAVORITE: '/boards/favorite',
 };
 
 export const QUERY_KEYS = {
@@ -66,8 +69,12 @@ export const QUERY_KEYS = {
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
   GET_TRANSLATE_POST_LIST: 'postTranslatedList',
-  GET_TRANSLATE_TEXT: 'textTranslated'
-  
+  GET_TRANSLATE_TEXT: 'textTranslated',
+
+  GET_HOME_TRENDING: 'homeTrend',
+  GET_HOME_FAVORITE: 'homeFavorite',
+  GET_HOME_CARDNEWS: 'homeCardNews',
+
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
 };

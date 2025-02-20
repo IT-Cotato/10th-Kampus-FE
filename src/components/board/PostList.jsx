@@ -38,7 +38,7 @@ export const PostList = ({ data, isActive }) => {
     >
       {isActive /** 인기 게시판 레이아웃 */ && (
         <div className="w-fit rounded-md bg-primary-10 px-[0.625rem] py-[0.3125rem] text-small text-neutral-base">
-          {data.board_type}
+          {data.boardName}
         </div>
       )}
       <div className="flex justify-between gap-3">
