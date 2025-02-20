@@ -100,7 +100,7 @@ export const BoardManagement = () => {
       {status: state},
       {
         onSuccess: (response) => {
-          setBoardList(response?.boardDetails); // API 응답에 따라 상태 업데이트
+          setBoardList(response?.adminBoardDetails); // API 응답에 따라 상태 업데이트
         },
       });
   }, [selectedDropdown]);
