@@ -1,7 +1,7 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { path } from '@/routes/path';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
 import Like from '@/assets/imgs/like.svg?react';
 import FillLike from '@/assets/imgs/fillLike.svg?react';
@@ -22,10 +22,10 @@ import { addComment } from '@/apis/comment/addComment.api';
 import { deleteComment } from '@/apis/comment/deleteComment.api';
 import { addPostLike, deletePostLike } from '@/apis/board/togglePostLike.api';
 import { addCommentLike, deleteCommentLike } from '@/apis/comment/toggleCommentLike.api';
+import { translatePost } from '@/apis/translate/translatePost.api';
+import { Translating } from '@/components/common/Translating';
 export const Post = () => {
   const queryClient = useQueryClient();
-  const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
-  const [inputFocus, setInputFocus] = useState(false);
   const { postId } = useParams();
   const { data: postData, isLoading: postLoading, error: postError } = useQuery({
     queryFn: () => getPostDetail({ postId: postId }),
@@ -65,7 +65,21 @@ export const Post = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId] });
     }
   })
+  const { mutate: postTranslate, isPending: translatePending } = useMutation({
+    mutationFn: async () => {
+      return await translatePost({ postId: postId })
+    },
+    onSuccess: (translatedPost) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_POST, postId] });
+      setTranslateState(true);
+      setTranslatedPost(translatedPost)
+    }
+  })
+  const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
+  const [inputFocus, setInputFocus] = useState(false);
   const [input, setInput] = useState('');
+  const [translateState, setTranslateState] = useState(false);
+  const [translatedPost, setTranslatedPost] = useState(null);
   const [imageFocus, setImageFocus] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [style, setStyle] = useState({
@@ -78,6 +92,14 @@ export const Post = () => {
       parentId: focusedComment
     };
     handleComment({ type: true, param: postId, data: buildComment });
+  }
+  const handleTranslate = () => {
+    if (translatedPost) {
+      setTranslateState(true);
+    }
+    else {
+      postTranslate();
+    }
   }
   return (
     <div className='w-full h-full' onClick={() => {
@@ -116,13 +138,24 @@ export const Post = () => {
                 height="1.75rem"
               />
             </div>
-            <article className="flex flex-col px-4 gap-1 whitespace-pre-line break-words py-5">
-              <h1 className="text-pageTitle text-neutral-title">
-                {postData && postData.title}
-              </h1>
-              <p className="text-base text-neutral-base">
-                {postData && postData.content}
-              </p>
+            <article className="relative flex px-4  whitespace-pre-line break-words py-5">
+              <div className='flex flex-col gap-1'>
+                <h1 className="text-pageTitle text-neutral-title flex">
+                  <span className={translatePending ? "opacity-0" : "opacity-100"}>
+                    {translateState ? translatedPost.title : postData?.title}
+                  </span>
+                </h1>
+                <p className="text-base text-neutral-base">
+                  <span className={translatePending ? "opacity-0" : "opacity-100"}>
+                    {translateState ? translatedPost.content : postData?.content}
+                  </span>
+                </p>
+              </div>
+              {translatePending && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                  <Translating />
+                </div>
+              )}
             </article>
             {postData?.postPhotoUrls?.length > 0 && (
               <div className="pb-3" onClick={() => setImageFocus(true)}>
@@ -161,7 +194,9 @@ export const Post = () => {
                   {commentData && commentData.comments.length}
                 </div>
               </div>
-              <button>
+              <button onClick={() => {
+                translateState ? setTranslateState(false) : handleTranslate()
+              }}>
                 <Translate className="h-6 w-6 text-neutral-base" />
               </button>
             </div>

@@ -37,7 +37,9 @@ export const API_DOMAINS = {
   COMMENT_DELETE: '/comments/:commentId',
   COMMENT_LIKE_TOGGLE: '/comments/:commentId/like',
 
-  TRANSLATE_POST: '/translations/posts',
+  TRANSLATE_CREATE_POST: '/translations/posts',
+  TRANSLATE_POST: '/translations/:postId',
+  TRANSLATE_TEXT: '/translations/texts',
 
   ADMIN_CREATE_BOARD: '/admin/boards',
 };
@@ -51,5 +53,7 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
-  GET_COMMENT_LIST: 'commentList'
+  GET_COMMENT_LIST: 'commentList',
+  GET_TRANSLATE_POST: 'postTranslated',
+  GET_TRANSLATE_TEXT: 'textTranslated'
 };
