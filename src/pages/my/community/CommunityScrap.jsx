@@ -1,39 +1,28 @@
+import { getMyScrapedPosts } from '@/apis/mypage/getMyScraps.api';
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { PostList } from '@/components/board/PostList';
-import { useState } from 'react';
+import { QUERY_KEYS } from '@/constants/api';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const CommunityScrap = () => {
-  const [boardData, setBoardData] = useState({
-    post: [
-      {
-        title: 'Title',
-        content: 'content',
-        likes: 10,
-        comments: 10,
-        createdTime: '1 day ago',
-        image: null,
-        board_type: 'Tips for living in Korea',
-        scrap: false,
-      },
-      {
-        title: 'Title',
-        content: 'content',
-        likes: 8,
-        comments: 4,
-        createdTime: '1 day ago',
-        image: Logo,
-        board_type: 'Information',
-        scrap: false,
-      },
-    ],
+  const navigate = useNavigate();
+  const {
+    data: postList,
+    isLoading: isPostLoading,
+    error: isPostError,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.MY_SCRAPED_POST_LIST],
+    queryFn: () => getMyScrapedPosts({ page: 1 }),
   });
 
-  let count = 0;
+  const handleNavigate = (data) => {
+    navigate(`../../../${data.boardId}/${data.id}`);
+  }
 
   return (
     <div className="flex flex-col w-full h-full">
-      {count === 0 ? (
-        // data.inquiry.length === 0
+      {!postList ? (
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
@@ -44,8 +33,8 @@ export const CommunityScrap = () => {
         </div>
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">
-          {boardData.post.map((item, index) => (
-            <PostList key={index} data={item} isActive={true} />
+          {postList.posts.map((item, index) => (
+            <PostList key={index} data={item} isActive={true} onClick={handleNavigate} />
           ))}
         </div>
       )}

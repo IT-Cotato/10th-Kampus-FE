@@ -3,9 +3,10 @@ import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { PostList } from "@/components/board/PostList";
 import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const MyArticles = () => {
+  const navigate = useNavigate();
   const {
     data: postList,
     isLoading: isPostLoading,
@@ -14,6 +15,10 @@ export const MyArticles = () => {
     queryKey: [QUERY_KEYS.MY_POST_LIST],
     queryFn: () => getMyArticlesList({ page: 1 }),
   });
+  
+  const handleNavigate = (data) => {
+    navigate(`../../../${data.boardId}/${data.id}`);
+  }
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -25,7 +30,7 @@ export const MyArticles = () => {
       ) : (
         <div className="flex flex-col flex-1 w-full bg-white divide-y">
           {postList.posts.map((item, index) => (
-            <PostList key={index} data={item} isActive={true} />
+            <PostList key={index} data={item} isActive={true} onClick={handleNavigate}/>
           ))}
         </div>
       )}
