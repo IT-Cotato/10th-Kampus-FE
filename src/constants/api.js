@@ -8,6 +8,7 @@ export const KAKAO_AUTH_API_URL = 'https://kauth.kakao.com/oauth/authorize';
 
 export const API_DOMAINS = {
   USER: '/users/details',
+  PATCH_USER: '/users/info',
   MYPAGE: '/mypage',
 
   GET_MY_POSTS: '/posts/my',
@@ -15,6 +16,10 @@ export const API_DOMAINS = {
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
 
   DUPLICATE_CHECK: '/users/check-nickname',
+  VERIFY_SCHOOL_PHOTO: '/users/verify/document',
+  SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE: '/users/verify/mail/confirm',
+  GET_SCHOOL_STATUS: 'users/verify/status',
 
   PRODUCTS: '/products',
 
@@ -51,9 +56,16 @@ export const API_DOMAINS = {
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
+  
+  ADMIN_CARDNEWS: '/admin/cardNews',
+  ADMIN_CARDNEWS_DETAIL: '/admin/cardNews/:postId',
 
   HOME_TRENDING: '/boards/trending',
   HOME_FAVORITE: '/boards/favorite',
+
+  SEARCH_TOTAL: '/posts/search',
+  SEARCH_KEYWORD: '/posts/search/keywords',
+  SEARCH_DELETE: '/posts/search/keywords/:keywordId',
 
   NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
@@ -63,7 +75,8 @@ export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
-
+  GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
+  GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
   CHAT_LIST: 'chatList',
   POST_CHAT_ROOM: 'postChatroom',
   GET_CHAT_ROOM: 'getChatroom',
@@ -79,6 +92,9 @@ export const QUERY_KEYS = {
   GET_TRANSLATE_POST_LIST: 'postTranslatedList',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
+  GET_SEARCH_KEYWORD: 'searchKeyword',
+  GET_SEARCH_RESULT: 'searchResult',
+
   GET_HOME_TRENDING: 'homeTrend',
   GET_HOME_FAVORITE: 'homeFavorite',
   GET_HOME_CARDNEWS: 'homeCardNews',
@@ -92,4 +108,5 @@ export const QUERY_KEYS = {
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
+  USER_INFO: 'userInfo',
 };

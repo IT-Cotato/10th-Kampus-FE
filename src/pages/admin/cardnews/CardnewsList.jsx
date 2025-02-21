@@ -8,6 +8,10 @@ import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 import Plus from '@/assets/imgs/admin/Plus.svg';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getAdminCardnewsList } from '@/apis/admin/getAdminCardnewsList.api';
+import { QUERY_KEYS } from '@/constants/api';
+import { deleteCardnews } from '@/apis/admin/deleteCardnews.api';
 
 export const CardnewsList = () => {
   const navigate = useNavigate();
@@ -20,10 +24,24 @@ export const CardnewsList = () => {
     alert('게시판이 수정되었습니다.');
   };
 
-  const handleClickDelete = (cardId) => {
-    // 삭제
-    setSelectedCardNewsMenu(null);
-    alert('카드뉴스가 삭제되었습니다.');
+  const queryClient = useQueryClient();
+
+  const { mutate: deletePost } = useMutation({
+    mutationFn: (postId) => deleteCardnews({ postId : postId }),
+    onSuccess: () => {
+      alert('카드뉴스가 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('카드뉴스 삭제를 실패하였습니다.');
+    },
+    onSettled: () => {
+      setSelectedCardNewsMenu(null);
+    },
+  });
+
+  const handleClickDelete = (postId) => {
+    deletePost(postId);
   };
 
   const menuOptions = (cardId) => [
@@ -40,66 +58,49 @@ export const CardnewsList = () => {
     }
   };
 
+  const { data: cardnewsListData, isLoading: isPostLoading, error: isPostError } = useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_LIST],
+    queryFn: () => getAdminCardnewsList({ page: 1 })
+  })
+
   useEffect(() => {
-    setCardnewsList([
-      {
-        cardId: 0,
-        title: '한국에서 비자 쉽게 갱신하는 꿀팁 어쩌고',
-        date: '2025.02.15',
-        thumbnail: bg1,
-      },
-      {
-        cardId: 1,
-        title: 'Cardnews3',
-        date: '2025.02.14',
-        thumbnail: bg2,
-      },
-      {
-        cardId: 2,
-        title: 'Cardnews2',
-        date: '2025.02.13',
-        thumbnail: bg3,
-      },
-      {
-        cardId: 3,
-        title: 'Cardnews1',
-        date: '2025.02.12',
-        thumbnail: bg4,
-      },
-    ]);
-  }, []);
+    if(cardnewsListData) {
+      setCardnewsList(cardnewsListData?.posts);
+    }
+  }, [cardnewsListData]);
+  
   return (
     <div className="flex flex-col flex-1 gap-5 px-5">
       <div className="flex flex-col w-full h-full gap-5 p-8 bg-white rounded-2xl">
         <h1 className="text-pageTitle">카드뉴스</h1>
         <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
-          {cardnewsList.map((cardnews) => (
+          {cardnewsList && cardnewsList.map((cardnews) => (
             <div
-              key={cardnews.id}
+              key={cardnews.postId}
               className="relative h-60 w-60 overflow-hidden lg:h-[18.75rem] lg:w-[18.75rem]"
             >
               <h2 className="absolute p-2 text-base bg-white left-2 top-2 max-w-36 rounded-xl lg:max-w-64 lg:text-subTitle">
                 {cardnews.title}
               </h2>
               <img
-                src={cardnews.thumbnail}
+                src={cardnews.thumbnailUrl}
                 className="object-contain w-full h-full"
               />
-              <button onClick={() => handleMenuBarClick(cardnews.cardId)}>
+              <button onClick={() => handleMenuBarClick(cardnews.postId)}>
                 <img
                   src={menubar}
                   alt="menu"
                   className="absolute px-2 right-1 top-3"
                 />
-                {selectedCardNewsMenu === cardnews.cardId && (
+                {selectedCardNewsMenu === cardnews.postId && (
                   <MenuBar
-                    menuOptions={menuOptions(cardnews.cardId)}
+                    menuOptions={menuOptions(cardnews.postId)}
                     onClose={() => setSelectedCardNewsMenu(null)}
                   />
                 )}
               </button>
               <span className="absolute px-1 bg-white rounded-lg bottom-2 right-2 text-small text-neutral-base opacity-70">
-                {cardnews.date}
+                {cardnews.createdTime}
               </span>
             </div>
           ))}
