@@ -3,15 +3,10 @@ import { Loading } from '@/components/common/Loading';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const InquiryDetail = () => {
   const { inquiryId } = useParams();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const { data: inquiryDetails, isLoading } = useQuery({
     queryKey: [QUERY_KEYS.GET_INQUIRY_DETAILS, inquiryId],
