@@ -65,7 +65,7 @@ export const ChatRoom = ({
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full h-full">
       <RoomHeader
         text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
         setChatroomId={setChatroomId}
@@ -78,24 +78,27 @@ export const ChatRoom = ({
         boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
         dataDelete={dataDelete}
       />
-      <div className="mt-4 px-4">
+      <div className="px-4 mt-4">
         <NoticeBox />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col flex-1">
           {messages.length > 0 ? (
-            messages.map((message, index) => (
-              <div
-                key={index}
-                className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
-                  'self-end rounded-tr-none bg-primary-base text-white':
-                    message.isMine,
-                  'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
-                    !message.isMine,
-                })}
-                onClick={() => handleClickMessage(message.senderId)}
-              >
-                {message.content}
-              </div>
-            ))
+            messages
+              .slice()
+              .sort((a, b) => a.id - b.id)
+              .map((message, index) => (
+                <div
+                  key={index}
+                  className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
+                    'self-end rounded-tr-none bg-primary-base text-white':
+                      message.isMine,
+                    'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
+                      !message.isMine,
+                  })}
+                  onClick={() => handleClickMessage(message.senderId)}
+                >
+                  {message.content}
+                </div>
+              ))
           ) : (
             <p className="mx-auto text-neutral-border-40">Empty</p>
           )}
