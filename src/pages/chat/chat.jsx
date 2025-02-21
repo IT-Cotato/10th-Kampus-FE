@@ -12,11 +12,17 @@ import { Loading } from '@/components/common/Loading';
 export const ChatPage = () => {
   const [chatroomId, setChatroomId] = useState(null);
   const [chatList, setChatList] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const [page, setPage] = useState(1);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-  const { connectSocket, sendMessage } = useWebsocket(setChatList, chatroomId);
+  const { connectSocket, sendMessage } = useWebsocket(
+    setChatList,
+    chatroomId,
+    setMessages,
+    page,
+  );
   //채팅 리스트
   const {
     data: chatListData,
@@ -64,6 +70,8 @@ export const ChatPage = () => {
             chatroomId={chatroomId}
             setChatroomId={setChatroomId}
             sendMessage={sendMessage}
+            messages={messages}
+            setMessages={setMessages}
           />
         )}
       </ChatLayout>

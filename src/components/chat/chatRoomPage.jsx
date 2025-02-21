@@ -12,24 +12,22 @@ import { Loading } from '@/components/common/Loading';
 import { getChatMessages } from '@/apis/chat/messages.api';
 import { postReadMessage } from '@/apis/chat/chatList.api';
 
-export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
+export const ChatRoom = ({
+  chatroomId,
+  setChatroomId,
+  sendMessage,
+  messages,
+  setMessages,
+}) => {
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [page, setPage] = useState(1);
-  const [messages, setMessages] = useState([]);
   const [dataDelete, setDataDelete] = useState(false);
 
   //방 정보
   const { data: roomData, isLoading: isRoomLoading } = useQuery({
     queryKey: [QUERY_KEYS.GET_CHAT_ROOM, chatroomId],
     queryFn: () => getChatRoom({ chatroomId }),
-    enabled: !!chatroomId,
-  });
-
-  //채팅방 메시지 초기내역
-  const { data: messageData } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST, chatroomId],
-    queryFn: () => getChatMessages({ chatroomId, page }),
     enabled: !!chatroomId,
   });
 
@@ -41,10 +39,6 @@ export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
 
   //채팅메시지 데이터
   useEffect(() => {
-    if (chatroomId) {
-      const allMessages = [...(messageData?.messages || []), ...messages];
-      setMessages(allMessages);
-    }
     //게시글 삭제된 경우
     if (roomData?.postId === -1) {
       setDataDelete(true);
@@ -52,7 +46,7 @@ export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
     if (messages == null) {
       chatsRead(chatroomId);
     }
-  }, [chatroomId, messageData]);
+  }, [chatroomId, roomData, setMessages]);
 
   //메시지 전송
   const handleSendMessage = () => {
@@ -75,6 +69,7 @@ export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
       <RoomHeader
         text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
         setChatroomId={setChatroomId}
+        setMessages={setMessages}
       />
       <ArticleInfo
         boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
@@ -98,7 +93,7 @@ export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
                 })}
                 onClick={() => handleClickMessage(message.senderId)}
               >
-                {message.text}
+                {message.content}
               </div>
             ))
           ) : (

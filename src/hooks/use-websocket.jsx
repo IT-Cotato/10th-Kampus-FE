@@ -5,28 +5,43 @@ import { postReadMessage } from '@/apis/chat/chatList.api';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
+import { getChatMessages } from '@/apis/chat/messages.api';
 
 const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
 
-export const useWebsocket = (setChatList, chatroomId) => {
+export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
   const notificationSubscriptionRef = useRef(null);
 
   const [connected, setConnected] = useState(false);
 
+  //유저정보
   const { data: userDetail } = useQuery({
     queryKey: [QUERY_KEYS.GET_USER_ME],
     queryFn: getUser,
   });
+
+  //채팅방 메시지 초기내역
+  const { data: messageData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_IST, chatroomId],
+    queryFn: () => getChatMessages({ chatroomId, page }),
+    enabled: !!chatroomId,
+  });
+
+  useEffect(() => {
+    if (messageData?.messages) {
+      setMessages(messageData.messages); // 초기 메시지 설정
+    }
+  }, [messageData, setMessages]);
 
   useEffect(() => {
     if (stompClientRef.current) {
       console.log('✅ Connected 상태 변경 감지 - 구독 시작');
       subscribeToNotifications();
     }
-  }, [stompClientRef]);
+  }, [stompClientRef, chatroomId]);
 
   useEffect(() => {
     return () => {
@@ -52,8 +67,9 @@ export const useWebsocket = (setChatList, chatroomId) => {
         setConnected(true);
         if (chatroomId) {
           subscribeToChatRoom(chatroomId);
+        } else {
+          subscribeToNotifications();
         }
-        subscribeToNotifications();
       },
       onStompError: (frame) => {
         console.error('❌ WebSocket 오류:', frame);
@@ -127,7 +143,7 @@ export const useWebsocket = (setChatList, chatroomId) => {
 
     notificationSubscriptionRef.current = stompClientRef.current.subscribe(
       `/user/${userDetail?.id}/notifications/chat`,
-      (message) => {
+      async (message) => {
         const newNotification = JSON.parse(message.body);
         console.log('💬 새로운 채팅 알림 수신:', newNotification);
 
@@ -136,13 +152,14 @@ export const useWebsocket = (setChatList, chatroomId) => {
           return;
         }
 
-        handleNotification(newNotification);
+        await handleNotification(newNotification);
         console.log('✅ 알림 처리 성공:', newNotification);
       },
     );
   };
 
   const subscribeToChatRoom = (chatroomId) => {
+    console.log('subscribeToChatRoom 호출됨');
     if (!stompClientRef.current) {
       console.warn('❌ 채팅방 구독 실패: 클라이언트가 초기화되지 않음');
       return;
@@ -157,23 +174,35 @@ export const useWebsocket = (setChatList, chatroomId) => {
       console.log('✅ 이전 채팅방 구독 해제');
     }
 
+    if (
+      chatroomId === messageData?.messages.chatroomId &&
+      messageData?.messages
+    ) {
+      setMessages(messageData.message);
+    }
+
     console.log(`🟢 구독 시도: /chatrooms/${chatroomId}`);
     subscriptionRef.current = stompClientRef.current.subscribe(
       `/chatrooms/${chatroomId}`,
       async (message) => {
-        console.log(message, 'message'); // 수신된 메시지 로그
+        console.log(message, '💬 수신된 message');
 
         const newMessage = JSON.parse(message.body);
+        console.log(newMessage, '💬 수신된 newMessage');
         const enrichedMessage = {
-          ...newMessage,
+          id: newMessage.id,
+          chatroomId: newMessage.chatroomId,
+          senderId: newMessage.senderId,
+          content: newMessage.content, // 메시지 내용
+          createdTime: newMessage.createdTime,
           isMine: Number(newMessage.senderId) === Number(userDetail?.id),
         };
 
         if (!enrichedMessage.isMine) {
-          postReadMessage(chatroomId);
+          await postReadMessage(chatroomId);
         }
 
-        return enrichedMessage;
+        setMessages((prevMessages) => [...prevMessages, enrichedMessage]);
       },
     );
     console.log('✅ 채팅방 구독 성공:', chatroomId);
