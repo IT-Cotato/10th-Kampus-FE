@@ -15,6 +15,9 @@ export const API_DOMAINS = {
   GET_MY_COMMENTED_POST: '/my/commented-post',
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
 
+  POST_INQUIRY: '/support/inquiry',
+
+
   DUPLICATE_CHECK: '/users/check-nickname',
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
   SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
@@ -69,6 +72,8 @@ export const API_DOMAINS = {
 
   NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
+  INQUIRY: '/support/inquiry',
+  GET_INQUIRY_DETAILS: '/support/inquiry/:inquiryId',
 };
 
 export const QUERY_KEYS = {
@@ -104,6 +109,8 @@ export const QUERY_KEYS = {
   POST_NOTICE: 'postNotice',
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',
+  GET_INQUIRY: 'getInquiry',
+  GET_INQUIRY_DETAILS: 'getInquiryDetails',
 
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
