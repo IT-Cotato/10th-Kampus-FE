@@ -74,7 +74,7 @@ export const ListItem = ({
               {data.lastChatMessage}
             </p>
             {data.unreadCount > 0 && (
-              <NewMsgCnt cnt={data.unreadcount.toString()} />
+              <NewMsgCnt cnt={data.unreadcount} />
             )}
           </div>
         </div>
