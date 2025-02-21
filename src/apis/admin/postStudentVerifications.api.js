@@ -2,9 +2,10 @@ import { generateApiPath } from '@/utils/generateApiPath';
 import { authApi } from '../axios-instance';
 import { API_DOMAINS } from '@/constants/api';
 
-export const postRejectStudentVerifications = async ({ verificationRecordId }) => {
+export const postRejectStudentVerifications = async ({ verificationRecordId, data }) => {
   const response = await authApi.post(
       generateApiPath(API_DOMAINS.ADMIN_VERIFICATION_REJECT, { verificationRecordId }),
+      { rejectionReason: data }
     );
 
   return response.data.data;

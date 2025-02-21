@@ -67,6 +67,7 @@ export const API_DOMAINS = {
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
 
   ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
+  ADMIN_VERIFICATION_DETAILS: '/admin/student-verifications/:verificationRecordId',
   ADMIN_VERIFICATION_REJECT: '/admin/student-verifications/:verificationRecordId/reject',
   ADMIN_VERIFICATION_APPROVE: '/admin/student-verifications/:verificationRecordId/approve',
 };
@@ -108,8 +109,8 @@ export const QUERY_KEYS = {
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
 
-  ADMIN_GET_VERIFICATIOIN_LIST: 'getVerficationList',
+  ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',
-  ADMIN_POST_VERIFICATION: 'getVerficationList',
+  ADMIN_POST_VERIFICATION: 'postVerficationList',
 };
 

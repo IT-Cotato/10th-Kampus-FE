@@ -8,9 +8,15 @@ export const SignupManagement = () => {
     const navigate = useNavigate();
 
     const { data: verificationList } = useQuery({
-        queryKey: [QUERY_KEYS.ADMIN_GET_VERIFICATIOIN_LIST],
+        queryKey: [QUERY_KEYS.ADMIN_GET_VERIFICATION_LIST],
         queryFn: () => getVerificationList(),
       });
+
+      const handleClickListDetail = (verification) => {
+        if(verification.verificationType == 'PHOTO' && verification.verificationStatus === 'PENDING') {
+          navigate(`${verification.verificationRecordId}`);
+        }
+      } 
     
   return (
     <div className="flex flex-col flex-1 gap-5 px-5">
@@ -37,18 +43,18 @@ export const SignupManagement = () => {
             </tr>
           </thead>
           {verificationList &&
-            verificationList.studentVerification.map((verfication, index) => (
-              <tbody key={index} onClick={() => navigate('')} className="cursor-pointer">
+            verificationList.studentVerification.map((verification, index) => (
+              <tbody key={index} onClick={()=> handleClickListDetail(verification)} className="cursor-pointer">
                 <tr className="h-12">
-                  <td>{verfication.verificationRequestDate}</td>
-                  <td>{verfication.univName}</td>
+                  <td>{verification.verificationRequestDate}</td>
+                  <td>{verification.univName}</td>
                   <td>
-                    {verfication.verificationType}
+                    {verification.verificationType}
                   </td>
                   <td>
                     <ButtonRound
-                      text={verfication.verificationStatus}
-                      theme={verfication.verificationStatus}
+                      text={verification.verificationStatus}
+                      theme={verification.verificationStatus}
                       size="short"
                     />
                   </td>
