@@ -4,7 +4,7 @@ import XIcon from '@/assets/imgs/x.svg?react';
 import ImgIcon from '@/assets/imgs/imgIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { postCreateCardnews } from '@/apis/admin/postCreateCardNews.api';
+import { postCreateCardnews } from '@/apis/admin/postCreateCardnews.api';
 
 export const CreateCardnews = () => {
   const navigate = useNavigate();
