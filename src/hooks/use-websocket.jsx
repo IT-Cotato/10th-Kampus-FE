@@ -113,7 +113,7 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
           chatroomId: notification.chatroomId,
           lastMessageContent: notification.lastChatMessage,
           lastChatTime: notification.lastChatTime,
-          unreadCount: 1, // 새로 추가된 방은 읽지 않은 메시지 수 1로 설정
+          unreadCount: 0, // 새로 추가된 방은 읽지 않은 메시지 수 0
         };
         updatedRooms.unshift(newRoom);
       }

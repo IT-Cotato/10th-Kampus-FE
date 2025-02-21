@@ -3,8 +3,8 @@ import { ListItem } from '@/components/chat/listItem';
 import { useState } from 'react';
 
 export const ChatList = ({ onChatRoomSelect, chatList, 
-  // onChatRoomLeave
- }) => {
+  onChatRoomLeave 
+}) => {
   const [activeSlide, setActiveSlide] = useState(null);
 
   const handleClickOutside = () => {
@@ -30,7 +30,7 @@ export const ChatList = ({ onChatRoomSelect, chatList,
             onClick={() => {
               onChatRoomSelect(data.chatroomId);
             }}
-            // onChatRoomLeave={onChatRoomLeave}
+            onChatRoomLeave={onChatRoomLeave}
           />
         ))
       )}

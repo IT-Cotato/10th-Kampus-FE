@@ -8,25 +8,26 @@ import { touchDrag } from '@/utils/touchDrag';
 import { parseToDate } from '@/utils/utcToKst';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
+import { deleteChatroom } from '@/apis/chat/chatRoom.api';
 
 export const ListItem = ({
   data,
   isSlide,
   setActiveSlide,
   onClick,
-  // onChatRoomLeave,
+  onChatRoomLeave,
 }) => {
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
 
   const time = parseToDate(data.lastChatTime);
 
-  const { mutate: deleteChatroom } = useMutation({
+  const { mutate: deleteChatroomId } = useMutation({
     mutationKey: [QUERY_KEYS.CHAT_LIST],
     mutationFn: (chatroomId) => deleteChatroom({ chatroomId }),
-    // onSuccess: () => {
-    //   onChatRoomLeave(data.chatroomId);
-    // },
+    onSuccess: () => {
+      onChatRoomLeave(data.chatroomId);
+    },
   });
 
   return (
@@ -90,7 +91,7 @@ export const ListItem = ({
         <div
           className="flex h-[3.875rem] w-[55px] flex-col items-center justify-center bg-primary-red p-4"
           onClick={() => {
-            deleteChatroom(data.chatroomId);
+            deleteChatroomId(data.chatroomId);
           }}
         >
           <img src={leaveIcon} alt="leave" />

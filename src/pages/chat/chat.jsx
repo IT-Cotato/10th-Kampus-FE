@@ -28,8 +28,9 @@ export const ChatPage = () => {
     data: chatListData,
     error,
     isLoading,
+    refetch,
   } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST, accessToken],
+    queryKey: [QUERY_KEYS.CHAT_LIST, accessToken, chatroomId],
     queryFn: () => getChatList(page),
   });
 
@@ -47,13 +48,11 @@ export const ChatPage = () => {
     connectSocket(accessToken);
   }, [connectSocket]);
 
-  const handleChatRoomLeave = (chatroomId) => {
+  const handleChatRoomLeave = (roomId) => {
     setChatList((prevChatList) =>
-      prevChatList.filter((room) => room.chatroomId !== chatroomId),
+      prevChatList.filter((room) => room.chatroomId !== roomId),
     );
-    if (chatroomId === chatroomId) {
-      setChatroomId(null);
-    }
+    refetch();
   };
 
   return (
