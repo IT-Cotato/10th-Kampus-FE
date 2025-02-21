@@ -37,8 +37,8 @@ export const setTokens = async ({ accessToken, refreshToken }) => {
         await SecureStoragePlugin.set({ key: REFRESH_TOKEN_KEY, value: refreshToken });
     }
     else {
-        accessToken = localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-        refreshToken = localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+        localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+        localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
     }
 }
 export const removeTokens = async () => {
