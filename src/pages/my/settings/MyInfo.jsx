@@ -54,12 +54,6 @@ export const MyInfo = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (status === 'APPROVED' || status === 'PENDING') {
-      navigate(`../../${path.home}`);
-    }
-  }, [status]);
-
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;
     return regex.test(value);
@@ -135,7 +129,7 @@ export const MyInfo = () => {
           {info.universityName ? (
             <DisabledInput name="School" defaultValue={info.universityName} />
           ) : status === 'PENDING' ? (
-            <div>학교 인증 확인 중입니다.</div>
+            <div className='text-primary-base'>School verification is in progress.</div>
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
