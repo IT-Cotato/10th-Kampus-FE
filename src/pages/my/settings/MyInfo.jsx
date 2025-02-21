@@ -11,20 +11,26 @@ import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
 import { useEffect, useState } from 'react';
 import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/api';
+import { getUser } from '@/apis/user/userDetail.api';
+import { path } from '@/routes/path';
+import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState({
-    school: '',
-    username: '',
-    language: '',
+    universityName: '',
+    nickname: '',
+    preferredLanguage: '',
     nationality: '',
   });
 
   const [savedInfo, setSavedInfo] = useState({
-    school: '',
-    username: '',
-    language: '',
+    universityName: '',
+    nickname: '',
+    preferredLanguage: '',
     nationality: '',
   });
 
@@ -33,14 +39,46 @@ export const MyInfo = () => {
   const [isLanguageSelected, setIsLanguageSelected] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const [status, setStatus] = useState(''); // 학교 인증 상태
+
+  // 학교 인증 여부에 따라 학교 인증 버튼/학교 이름으로 보임
+  const { mutate: checkSchoolStatus } = useCheckSchoolStatus();
+
+  useEffect(() => {
+    checkSchoolStatus(undefined, {
+      onSuccess: (data) => {
+        setStatus(data.status);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  }, []);
+
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;
     return regex.test(value);
   };
 
+  const { mutate: saveUserDetails } = useMutation({
+    mutationFn: (user) => patchUserDetail({ data: user }),
+  });
+
   const handleClickSave = () => {
-    // 백 연동 후 마이페이지로 이동
-    navigate(-1);
+    const data = {
+      nickname: info.nickname,
+      preferredLanguage: info.preferredLanguage,
+    };
+    saveUserDetails(data, {
+      onSuccess: (response) => {
+        console.log(response);
+        navigate(-1);
+      },
+      onError: (err) => {
+        alert(err.message);
+      },
+    });
+    //    navigate(-1);
   };
 
   const handleBackClick = () => {
@@ -51,17 +89,17 @@ export const MyInfo = () => {
     }
   };
 
-  const debouncedUserName = useDebounce(info.username, 300); // 입력을 마치고 300ms 후 중복 체크를 위함
+  const debouncedUserName = useDebounce(info.nickname, 300); // 입력을 마치고 300ms 후 중복 체크를 위함
 
   const handleUserNameChange = (value) => {
-    setInfo((prev) => ({ ...prev, username: value }));
+    setInfo((prev) => ({ ...prev, nickname: value }));
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
   };
 
-  const { mutate } = useDuplicateCheck(postDuplicateCheck);
+  const { mutate: checkDuplicate } = useDuplicateCheck(postDuplicateCheck);
 
   const handleDuplicateCheck = (value) => {
-    mutate(
+    checkDuplicate(
       { data: { nickname: value } },
       {
         onSuccess: (response) => {
@@ -72,48 +110,63 @@ export const MyInfo = () => {
   };
 
   useEffect(() => {
-    if (!isUserNameFormatInvalid && debouncedUserName && (info.username !== savedInfo.username)) {
+    if (
+      !isUserNameFormatInvalid &&
+      debouncedUserName &&
+      info.nickname !== savedInfo.nickname
+    ) {
       handleDuplicateCheck(debouncedUserName);
     }
   }, [debouncedUserName, isUserNameFormatInvalid]);
 
   const disabled =
-    !info.username ||
+    !info.nickname ||
     isUserNameFormatInvalid ||
     isUserNameDuplicated ||
     !isLanguageSelected ||
     JSON.stringify(info) === JSON.stringify(savedInfo);
 
+  const { data: userData } = useQuery({
+    queryKey: [QUERY_KEYS.USER_INFO],
+    queryFn: () => getUser(),
+  });
+
   useEffect(() => {
-    const userData = {
-      school: '홍익대학교',
-      username: 'cotato',
-      language: 'French',
-      nationality: 'France',
-    };
-    setInfo(userData);
-    setSavedInfo(userData);
-  }, []);
+    if (userData) {
+      setInfo(userData);
+      setSavedInfo(userData);
+    }
+  }, [userData]);
 
   return (
     <div className="flex flex-col w-full h-full">
       <TitleHeader text="My Information" onClick={handleBackClick} />
       <div className="flex flex-col w-full h-full px-4">
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
-          {info.school ? (
-            <DisabledInput name="School" defaultValue={info.school} />
+          {info.universityName ? (
+            <DisabledInput name="School" defaultValue={info.universityName} />
+          ) : status === 'PENDING' ? (
+            <div className="text-primary-base">
+              School verification is in progress.
+            </div>
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
                 Verify your school to access the school board!
               </span>
-              <MainWhiteButton>Search your school</MainWhiteButton>
+              <MainWhiteButton
+                onClick={() =>
+                  navigate(`../../../${path.signup.base}/${path.signup.school}`)
+                }
+              >
+                Search your school
+              </MainWhiteButton>
             </div>
           )}
           <div className="flex flex-col">
             <span className="text-primary-base">User name</span>
             <UserNameInput
-              userName={info.username}
+              userName={info.nickname}
               onChange={handleUserNameChange}
               invalid={isUserNameFormatInvalid}
               duplicated={isUserNameDuplicated}
@@ -123,11 +176,11 @@ export const MyInfo = () => {
           <div className="flex flex-col">
             <span className="text-primary-base">Language</span>
             <SearchDropdown
-              keyword={info.language}
+              keyword={info.preferredLanguage}
               name="Language"
               placeholder="Select your nationality"
               onChange={(value) =>
-                setInfo((prev) => ({ ...prev, language: value }))
+                setInfo((prev) => ({ ...prev, preferredLanguage: value }))
               }
               setIsSelected={setIsLanguageSelected}
               selected={isLanguageSelected}

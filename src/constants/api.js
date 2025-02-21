@@ -8,6 +8,7 @@ export const KAKAO_AUTH_API_URL = 'https://kauth.kakao.com/oauth/authorize';
 
 export const API_DOMAINS = {
   USER: '/users/details',
+  PATCH_USER: '/users/info',
   MYPAGE: '/mypage',
 
   GET_MY_POSTS: '/posts/my',
@@ -102,5 +103,6 @@ export const QUERY_KEYS = {
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
+  USER_INFO: 'userInfo',
 };
 

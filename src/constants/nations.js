@@ -1,4 +1,3 @@
-// 더미 데이터
 const Nations = [
   { name: 'Saudi Arabia', code: 'SA' },
   { name: 'Bulgaria', code: 'BG' },
