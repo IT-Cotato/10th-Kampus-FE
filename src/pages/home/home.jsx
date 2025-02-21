@@ -128,7 +128,7 @@ export const Home = () => {
         </div>
       </div>
       {userDetail?.universityId !== -1 && (
-        <h1 className="text-pageTitle text-neutral-title">OO University</h1>
+        <h1 className="text-pageTitle text-neutral-title">{userDetail?.universityName}</h1>
       )}
       <div className="flex flex-col gap-[1.625rem]">
         <div className="flex justify-center w-fit h-28 flex-col gap-[.625rem] rounded-[.625rem] border-[0.03125rem] border-primary-30 px-[.875rem] py-8">
