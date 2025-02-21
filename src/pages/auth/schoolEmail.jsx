@@ -1,8 +1,12 @@
-import { postSchoolEmailCodeSend, postSchoolEmailCodeVerify } from '@/apis/auth/postSchoolEmailCode.api';
+import {
+  postSchoolEmailCodeSend,
+  postSchoolEmailCodeVerify,
+} from '@/apis/auth/postSchoolEmailCode.api';
 import { MainButton } from '@/components/common/MainButton';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { VerificationCodeModal } from '@/components/join/VerificationCodeModal';
 import { QUERY_KEYS } from '@/constants/api';
+import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 import { path } from '@/routes/path';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -14,6 +18,7 @@ export const SchoolEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState('');
 
   const university = location.state;
 
@@ -34,7 +39,7 @@ export const SchoolEmail = () => {
     const data = {
       email: email,
       universityName: university,
-    }
+    };
     sendSchoolEmailCode(data);
   };
 
@@ -43,15 +48,31 @@ export const SchoolEmail = () => {
       email: email,
       universityName: university,
       code: code,
-    }
+    };
     return data;
-  }
+  };
+
+  const { mutate } = useCheckSchoolStatus();
 
   useEffect(() => {
+    mutate(undefined, {
+      onSuccess: (data) => {
+        setStatus(data.status);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    if (status === 'APPROVED' || status === 'PENDING') {
+      navigate(`../../${path.home}`);
+    }
     if (university === undefined) {
       navigate(`../${path.signup.school}`);
     }
-  }, [university]);
+  }, [status, university]);
 
   return (
     <div className="flex flex-col w-full h-full">
