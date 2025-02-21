@@ -16,9 +16,9 @@ export const API_DOMAINS = {
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
 
   DUPLICATE_CHECK: '/users/check-nickname',
-  VERIFY_SCHOOL_PHOTO:'/users/verify/document',
-  SEND_SCHOOL_EMAIL_CODE:'/users/verify/email/send',
-  VERIFY_SCHOOL_EMAIL_CODE:'/users/verify/mail/confirm',
+  VERIFY_SCHOOL_PHOTO: '/users/verify/document',
+  SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE: '/users/verify/mail/confirm',
   GET_SCHOOL_STATUS: 'users/verify/status',
 
   PRODUCTS: '/products',
@@ -64,6 +64,10 @@ export const API_DOMAINS = {
   HOME_TRENDING: '/boards/trending',
   HOME_FAVORITE: '/boards/favorite',
 
+  SEARCH_TOTAL: '/posts/search',
+  SEARCH_KEYWORD: '/posts/search/keywords',
+  SEARCH_DELETE: '/posts/search/keywords/:keywordId',
+
   NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
 };
@@ -88,6 +92,8 @@ export const QUERY_KEYS = {
   GET_TRANSLATE_POST_LIST: 'postTranslatedList',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
+  GET_SEARCH_KEYWORD: 'searchKeyword',
+  GET_SEARCH_RESULT: 'searchResult',
 
   GET_HOME_TRENDING: 'homeTrend',
   GET_HOME_FAVORITE: 'homeFavorite',

@@ -1,6 +1,7 @@
 import PreviousIcon from '@/assets/imgs/previous.svg?react';
 import SearchIcon from '@/assets/imgs/search.svg?react';
-import { useState } from 'react';
+import { QUERY_KEYS } from '@/constants/api';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 export const SearchBar = ({
@@ -8,9 +9,10 @@ export const SearchBar = ({
   setValue,
   isSearch,
   setIsSearch,
-  startSearch,
+  startSearch
 }) => {
   const navigate = useNavigate();
+  const queryclient = useQueryClient();
   return (
     <div className="flex w-full items-center justify-center gap-4">
       <PreviousIcon
@@ -25,7 +27,12 @@ export const SearchBar = ({
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {
-            if (isSearch === false) setIsSearch(true);
+            if (isSearch === false) {
+              queryclient.refetchQueries({
+                queryKey: [QUERY_KEYS.GET_SEARCH_KEYWORD]
+              })
+              setIsSearch(true)
+            };
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
