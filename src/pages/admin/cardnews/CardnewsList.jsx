@@ -8,9 +8,10 @@ import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 import Plus from '@/assets/imgs/admin/Plus.svg';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getAdminCardnewsList } from '@/apis/admin/getAdminCardnewsList.api';
 import { QUERY_KEYS } from '@/constants/api';
+import { deleteCardnews } from '@/apis/admin/deleteCardnews.api';
 
 export const CardnewsList = () => {
   const navigate = useNavigate();
@@ -23,10 +24,24 @@ export const CardnewsList = () => {
     alert('게시판이 수정되었습니다.');
   };
 
-  const handleClickDelete = (cardId) => {
-    // 삭제
-    setSelectedCardNewsMenu(null);
-    alert('카드뉴스가 삭제되었습니다.');
+  const queryClient = useQueryClient();
+
+  const { mutate: deletePost } = useMutation({
+    mutationFn: (postId) => deleteCardnews({ postId : postId }),
+    onSuccess: () => {
+      alert('카드뉴스가 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('카드뉴스 삭제를 실패하였습니다.');
+    },
+    onSettled: () => {
+      setSelectedCardNewsMenu(null);
+    },
+  });
+
+  const handleClickDelete = (postId) => {
+    deletePost(postId);
   };
 
   const menuOptions = (cardId) => [
