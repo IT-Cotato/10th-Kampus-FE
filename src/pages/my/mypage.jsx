@@ -7,11 +7,13 @@ import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/apis/user/userDetail.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
+import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 
 export const MyPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [university, setUniversity] = useState('');
+  const [status, setStatus] = useState(''); // 학교 인증 상태
 
   const { data: userData } = useQuery({
     queryKey: [QUERY_KEYS.USER_INFO],
@@ -25,6 +27,19 @@ export const MyPage = () => {
     }
   }, [userData]);
 
+  const { mutate: checkSchoolStatus } = useCheckSchoolStatus();
+
+  useEffect(() => {
+    checkSchoolStatus(undefined, {
+      onSuccess: (data) => {
+        setStatus(data.status);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  }, []);
+
   return (
     <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
       {/* 알림 영역 */}
@@ -35,13 +50,17 @@ export const MyPage = () => {
       <div className="flex h-full w-full flex-col gap-[2.5rem]">
         {/* 마이페이지 메인 버튼 */}
         <div
-          className="flex h-full w-full items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem] cursor-pointer"
+          className="flex h-full w-full cursor-pointer items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
           onClick={() => navigate(path.mypage.settings.info)}
         >
           <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
             <div className="text-pageTitle">{username}</div>
             <div className="text-neutral-disabled">
-              {university ? university : "What's the name of your school?"}
+              {university
+                ? university
+                : status === 'PENDING'
+                  ? 'School verification is in progress.'
+                  : "What's the name of your school?"}
             </div>
           </div>
           <div className="right-0 h-full">
