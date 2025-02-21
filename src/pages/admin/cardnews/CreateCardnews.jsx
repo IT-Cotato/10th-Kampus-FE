@@ -2,8 +2,12 @@ import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import XIcon from '@/assets/imgs/x.svg?react';
 import ImgIcon from '@/assets/imgs/imgIcon.svg';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { postCreateCardnews } from '@/apis/admin/postCreateCardNews.api';
 
 export const CreateCardnews = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [previewImages, setPreviewImages] = useState([]);
@@ -96,8 +100,33 @@ export const CreateCardnews = () => {
     URL.revokeObjectURL(urlToRevoke); // URL 해제
   };
 
+  const { mutate: createCardnews } = useMutation({
+    mutationFn: postCreateCardnews,
+  });
+
   const handleClickUpload = () => {
     // 업로드. 팝업도 있으면 좋을 듯...
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('content', content);
+
+    files.forEach((file) => {
+      formData.append('images', file); // 각 파일을 개별적으로 추가
+    });
+
+    createCardnews(
+      { data: formData },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+          navigate(-1);
+        },
+        onError: (err) => {
+          alert(err.message);
+        },
+      },
+    );
   };
 
   const isUploadButtonDisabled = !title || files.length === 0;
@@ -112,6 +141,7 @@ export const CreateCardnews = () => {
               type="text"
               placeholder="카드뉴스 제목"
               value={title}
+              maxLength={50}
               className={cn(
                 'w-full rounded-xl border border-neutral-border-40 px-3 py-2',
                 {
@@ -198,17 +228,21 @@ export const CreateCardnews = () => {
           </div>
           <div className="flex flex-col items-center h-full gap-4 p-5 text-center border rounded-lg">
             <h1 className="text-neutral-base">미리보기</h1>
-            <div className='flex flex-col w-full align-top h-fit text-start'>
+            <div className="flex flex-col w-full align-top h-fit text-start">
               <h2
-                className={cn('flex h-10 text-pageTitle', {
+                className={cn('flex min-h-10 h-fit text-pageTitle', {
                   'text-neutral-border-50': !title,
                 })}
               >
                 {title ? title : '제목을 입력하세요'}
               </h2>
-              <h2 className={cn("flex w-full text-base whitespace-pre-line min-h-10 h-fit text-neutral-title", {
-                  'text-neutral-border-50': !content,
-                })}
+              <h2
+                className={cn(
+                  'flex h-fit min-h-10 w-full whitespace-pre-line text-base text-neutral-title',
+                  {
+                    'text-neutral-border-50': !content,
+                  },
+                )}
               >
                 {content ? content : '본문이 없습니다.'}
               </h2>

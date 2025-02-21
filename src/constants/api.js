@@ -56,7 +56,9 @@ export const API_DOMAINS = {
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
-
+  
+  ADMIN_CARDNEWS: '/admin/cardNews',
+  ADMIN_CARDNEWS_DETAIL: '/admin/cardNews/:postId',
 
   HOME_TRENDING: '/boards/trending',
   HOME_FAVORITE: '/boards/favorite',
