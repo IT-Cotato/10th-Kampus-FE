@@ -14,7 +14,7 @@ export const ListItem = ({
   isSlide,
   setActiveSlide,
   onClick,
-  onChatRoomLeave,
+  // onChatRoomLeave,
 }) => {
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
@@ -22,16 +22,12 @@ export const ListItem = ({
   const time = parseToDate(data.lastChatTime);
 
   const { mutate: deleteChatroom } = useMutation({
-    mutationKey: [QUERY_KEYS.GET_CHAT_LIST],
+    mutationKey: [QUERY_KEYS.CHAT_LIST],
     mutationFn: (chatroomId) => deleteChatroom({ chatroomId }),
-    onSuccess: () => {
-      onChatRoomLeave(data.chatroomId);
-      alert('채팅방을 나갔습니다.');
-      setActiveSlide(false);
-    },
+    // onSuccess: () => {
+    //   onChatRoomLeave(data.chatroomId);
+    // },
   });
-
-  const handleLeaveChatroom = () => {};
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">
@@ -60,7 +56,7 @@ export const ListItem = ({
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.postTitle}
@@ -71,11 +67,9 @@ export const ListItem = ({
           </div>
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-base text-neutral-base">
-              {data.lastChatMessage}
+              {data.lastMessageContent}
             </p>
-            {data.unreadCount > 0 && (
-              <NewMsgCnt cnt={data.unreadcount} />
-            )}
+            {data.unreadCount > 0 && <NewMsgCnt cnt={data.unreadCount} />}
           </div>
         </div>
       </div>

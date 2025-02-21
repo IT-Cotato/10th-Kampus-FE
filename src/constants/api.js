@@ -47,12 +47,10 @@ export const API_DOMAINS = {
   TRANSLATE_POST: '/translations/:postId',
   TRANSLATE_TEXT: '/translations/texts',
 
-
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
   ADMIN_INACTIVE_BOARD: '/admin/boards/:boardId/inactive',
-
 
   HOME_TRENDING: '/boards/trending',
   HOME_FAVORITE: '/boards/favorite',
@@ -65,10 +63,12 @@ export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
-  GET_CHAT_LIST: 'getChatList',
+
+  CHAT_LIST: 'chatList',
   POST_CHAT_ROOM: 'postChatroom',
   GET_CHAT_ROOM: 'getChatroom',
   POST_CHAT_READ: 'postChatRead',
+
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
@@ -79,11 +79,9 @@ export const QUERY_KEYS = {
   GET_TRANSLATE_POST_LIST: 'postTranslatedList',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
-
   GET_HOME_TRENDING: 'homeTrend',
   GET_HOME_FAVORITE: 'homeFavorite',
   GET_HOME_CARDNEWS: 'homeCardNews',
-
 
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
@@ -95,4 +93,3 @@ export const QUERY_KEYS = {
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
 };
-
