@@ -17,7 +17,7 @@ export const InquiryDetail = () => {
   }, []);
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex flex-col w-full h-full">
       <TitleHeader text="1:1 Inquriy" />
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         {/* Title */}
@@ -33,7 +33,7 @@ export const InquiryDetail = () => {
         <div className="flex flex-col gap-3">
           <div className="text-subTitle">Content</div>
           <div className="box-border flex w-full flex-row gap-[.625rem] rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
-            <div className="h-[12.5rem] w-full leading-none placeholder-neutral-border-50">
+            <div className="h-[12.5rem] w-full whitespace-pre leading-none placeholder-neutral-border-50">
               {content}
             </div>
           </div>

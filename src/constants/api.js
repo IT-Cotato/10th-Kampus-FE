@@ -69,6 +69,8 @@ export const API_DOMAINS = {
 
   NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
+  INQUIRY: '/support/inquiry',
+  GET_INQUIRY_DETAILS: '/support/inquiry/:inquiryId',
 };
 
 export const QUERY_KEYS = {
@@ -102,6 +104,7 @@ export const QUERY_KEYS = {
   POST_NOTICE: 'postNotice',
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',
+  GET_INQUIRY: 'getInquiry',
 
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
