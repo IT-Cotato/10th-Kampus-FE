@@ -46,10 +46,10 @@ export const ChatRoom = ({
         setDataDelete(true);
       } else {
         setDataDelete(false);
-        //채팅 읽음 처리
-        chatsRead();
       }
     }
+    //채팅 읽음 처리
+    chatsRead();
   }, [chatroomId, roomData, setMessages]);
 
   //메시지 전송
