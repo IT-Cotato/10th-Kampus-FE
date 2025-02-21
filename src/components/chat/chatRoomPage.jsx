@@ -29,12 +29,26 @@ export const ChatRoom = ({
     queryFn: () => getChatRoom({ chatroomId }),
     enabled: !!chatroomId,
   });
+  //읽음처리
+  const { mutate: chatsRead } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
+    mutationFn: () => postReadMessage({ chatroomId }),
+    onSuccess: () => {
+      console.log('🚨✨ 읽음처리 전송');
+    },
+  });
 
   //채팅메시지 데이터
   useEffect(() => {
-    //게시글 삭제된 경우
-    if (roomData?.postId === -1) {
-      setDataDelete(true);
+    if (roomData) {
+      //게시글 삭제된 경우
+      if (roomData.postId === -1) {
+        setDataDelete(true);
+      } else {
+        setDataDelete(false);
+        //채팅 읽음 처리
+        chatsRead();
+      }
     }
   }, [chatroomId, roomData, setMessages]);
 
