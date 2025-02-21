@@ -15,6 +15,9 @@ export const API_DOMAINS = {
   GET_MY_COMMENTED_POST: '/my/commented-post',
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
 
+  POST_INQUIRY: '/support/inquiry',
+
+
   DUPLICATE_CHECK: '/users/check-nickname',
   VERIFY_SCHOOL_PHOTO:'/users/verify/document',
   SEND_SCHOOL_EMAIL_CODE:'/users/verify/email/send',

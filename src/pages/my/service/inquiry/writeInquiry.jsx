@@ -1,9 +1,10 @@
+import { postWriteInquiry } from '@/apis/mypage/postWriteInquiry.api';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { ButtonRound } from '@/components/common/ButtonRound';
-import { MainButton } from '@/components/common/MainButton';
 import { TitleHeader } from '@/components/common/titleHeader';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,15 +14,30 @@ export const WriteInquiry = () => {
   const [content, setContent] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
+  const { mutate: addInquiry } = useMutation({
+    mutationFn: (inquiry) => postWriteInquiry({ data: inquiry }),
+    onSuccess: () => {
+      navigate(-1);
+    }
+  });
+
   const disabled = !title || !content;
 
   const handleSubmit = () => {
     // 백 연동
-    console.log(title);
-    console.log(content);
-    if (uploadedFiles) {
-      console.log(uploadedFiles);
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('content', content);
+
+
+    if (uploadedFiles.length > 0) {
+      uploadedFiles.forEach((file) => {
+        formData.append('images', file); // 각 파일을 개별적으로 추가
+      });
     }
+    addInquiry(formData);
+    
     navigate(-1);
   };
 
