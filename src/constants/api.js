@@ -11,6 +11,10 @@ export const API_DOMAINS = {
   MYPAGE: '/mypage',
 
   DUPLICATE_CHECK: '/users/check-nickname',
+  VERIFY_SCHOOL_PHOTO:'/users/verify/document',
+  SEND_SCHOOL_EMAIL_CODE:'/users/verify/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE:'/users/verify/mail/confirm',
+  GET_SCHOOL_STATUS: 'users/verify/status',
 
   PRODUCTS: '/products',
 

@@ -11,6 +11,7 @@ export const SchoolEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState('');
 
   const university = location.state;
 
@@ -25,10 +26,13 @@ export const SchoolEmail = () => {
   };
 
   useEffect(() => {
+    if (status === 'APPROVED' || status === 'PENDING') {
+      navigate(`../../${path.home}`);
+    }
     if (university === undefined) {
       navigate(`../${path.signup.school}`);
     }
-  }, [university]);
+  }, [status, university]);
 
   return (
     <div className="flex flex-col w-full h-full">
