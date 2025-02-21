@@ -19,10 +19,10 @@ export const GoogleLogin = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      initializeGoogleAuth();
-    }
-    GoogleAuth.initialize();
+    //if (Capacitor.isNativePlatform()) {
+    //  initializeGoogleAuth();
+    //}
+    //GoogleAuth.initialize();
   }, []);
 
   const handleGoogleLogin = async () => {
