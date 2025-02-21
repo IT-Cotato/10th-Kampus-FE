@@ -28,7 +28,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                 <div className="flex  justify-between">
                     <div className="flex items-center gap-2">
                         <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                        <p>{data.author}</p>
+                        <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
                         <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                     </div>
                     <div className="flex gap-1 text-neutral-base">
@@ -63,14 +63,14 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
             </div>
             {data.replies &&
                 data.replies.map((item, index) => (
-                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
+                    <ReplyComment reply={data.author} data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
                         handleCommentLike={handleCommentLike} />
                 ))
             }
         </>
     )
 }
-const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }) => {
+const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     return (
         <div ref={commentRef}
@@ -82,7 +82,7 @@ const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }
             <div className="flex  justify-between" >
                 <div className="flex items-center gap-2">
                     <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                    <p>{data.author}</p>
+                    <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
                     <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                 </div>
                 <button className="flex gap-[0.125rem] cursor-pointer"
@@ -96,7 +96,7 @@ const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }
                 </button>
             </div>
             <p className="text-neutral-base leading-normal whitespace-pre-line">
-                <span className="text-primary-base">@{data.author}&nbsp;</span>
+                <span className="text-primary-base">@{reply === "Author" ? "Anontmity(Author)" : reply}&nbsp;</span>
                 {data.content}
             </p>
             <div className="flex justify-between">

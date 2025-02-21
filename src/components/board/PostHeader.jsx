@@ -6,6 +6,7 @@ import { Loading } from '../common/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
+import { cn } from '@/utils/cn';
 export const PostHeader = ({ path, isAuthor = false }) => {
   const navigate = useNavigate();
   const { boardId } = useParams();
@@ -19,7 +20,8 @@ export const PostHeader = ({ path, isAuthor = false }) => {
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
       {!isBoardLoading && !isBoardError && boardDetail.boardName &&
-        <p className="absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-subTitle font-medium text-neutral-title">
+        <p className={`absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-pageTitle font-semibold text-neutral-title 
+          ${boardDetail?.boardName?.length < 12 ? "text-pageTitle" : "text-subTitle"}`} >
           {boardDetail.boardName}
         </p>
       }
