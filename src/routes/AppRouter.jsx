@@ -426,8 +426,18 @@ const AppRouter = createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: path.admin.signupManagement,
-        element: <SignupManagement />,
+        path: path.admin.signupManagement.base,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <SignupManagement />,
+          },
+          {
+            path: path.admin.signupManagement.studentVertifications,
+            element: <SignupManagement />,
+          },
+        ]
       },
       {
         path: path.admin.boardManagement.base,

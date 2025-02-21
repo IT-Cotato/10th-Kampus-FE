@@ -40,7 +40,7 @@ export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
-export { Notification } from './my/settings/notification';
+export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
 export { NotificationList } from './notification/notificationList';
@@ -54,7 +54,8 @@ export { CardnewsList } from './admin/cardnews/CardnewsList';
 export { CreateCardnews } from './admin/cardnews/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
-export { SignupManagement } from './admin/SignupManagement';
+export { SignupManagement } from './admin/signup/SignupManagement';
+export { StudentVertifications } from './admin/signup/StudentVertifications';
 export { Statistics } from './admin/Statistics';
 export { UserManagement } from './admin/UserManagement';
 export { NoticeManagement } from './admin/notice/NoticeManagement';

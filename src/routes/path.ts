@@ -75,7 +75,10 @@ export const path = {
     login: 'login',
     dashboard: 'dashboard',
     userManagement: 'userManagement',
-    signupManagement: 'signupManagement',
+    signupManagement: {
+      base: 'signupManagement',
+      studentVertifications: ':verificationRecordId',
+    },
     boardManagement: {
       base: 'boardManagement',
       create: 'create',
