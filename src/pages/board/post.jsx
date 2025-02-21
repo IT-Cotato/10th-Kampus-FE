@@ -1,7 +1,7 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { path } from '@/routes/path';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
 import kampus from '@/assets/imgs/kampusPost.svg';
 import Like from '@/assets/imgs/like.svg?react';
@@ -90,10 +90,14 @@ export const Post = () => {
   const submitComment = () => {
     const buildComment = {
       content: input,
-      parentId: focusedComment
+      parentId: focusedComment?.parentId,
+      targetId: focusedComment?.targetId
     };
     handleComment({ type: true, param: postId, data: buildComment });
   }
+  useEffect(() => {
+    console.log(commentData)
+  })
   const handleTranslate = () => {
     if (translatedPost) {
       setTranslateState(true);

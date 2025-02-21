@@ -8,12 +8,15 @@ import { useRef } from "react"
 import { cn } from "@/utils/cn"
 export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment, handleCommentLike }) => {
     const commentRef = useRef(null);
-    const handleComment = (ref, commentId) => {
+    const handleComment = (ref, commentId, parentId) => {
         ref.current?.scrollIntoView({
             behavior: "smooth",
             block: "start"
         })
-        setFocusedComment(commentId)
+        setFocusedComment({
+            parentId: commentId,
+            targetId: commentId
+        })
         setInputFocus(true)
     }
 
@@ -22,8 +25,8 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
             <div ref={commentRef}
                 className={cn("flex flex-col gap-2 px-4 py-[0.9375rem] text-base",
                     {
-                        "bg-primary-10": focusedComment === data.commentId,
-                        "bg-white": focusedComment !== data.commentId
+                        "bg-primary-10": focusedComment?.targetId === data.commentId,
+                        "bg-white": focusedComment?.targetId !== data.commentId
                     })}>
                 <div className="flex  justify-between">
                     <div className="flex items-center gap-2">
@@ -54,7 +57,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                     <div className="text-neutral-border-50"
                         onClick={(e) => {
                             e.stopPropagation();
-                            handleComment(commentRef, data.commentId)
+                            handleComment(commentRef, data.commentId, data.parentId)
                         }}>
                         Reply
                     </div>
@@ -76,13 +79,13 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
         <div ref={commentRef}
             className={cn("flex flex-col gap-2 pl-[2.8125rem] pr-4 py-[0.9375rem] text-base",
                 {
-                    "bg-primary-10": focusedComment === data.commentId,
-                    "bg-white": focusedComment !== data.commentId
+                    "bg-primary-10": focusedComment?.targetId === data.commentId,
+                    "bg-white": focusedComment?.targetId !== data.commentId
                 })}>
             <div className="flex  justify-between" >
                 <div className="flex items-center gap-2">
                     <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                    <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
+                    <p>{data.targetAuthor === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.targetAuthor}</p>
                     <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                 </div>
                 <button className="flex gap-[0.125rem] cursor-pointer"
@@ -103,7 +106,7 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
                 <div className="text-neutral-border-50"
                     onClick={(e) => {
                         e.stopPropagation()
-                        handleComment(commentRef, data.commentId)
+                        handleComment(commentRef, data.commentId, data.parentId)
                     }}>
                     Reply
                 </div>
