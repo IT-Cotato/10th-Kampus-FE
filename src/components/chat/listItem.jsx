@@ -8,6 +8,7 @@ import { touchDrag } from '@/utils/touchDrag';
 import { parseToDate } from '@/utils/utcToKst';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
+import { deleteChatroom } from '@/apis/chat/chatRoom.api';
 
 export const ListItem = ({
   data,
@@ -21,17 +22,13 @@ export const ListItem = ({
 
   const time = parseToDate(data.lastChatTime);
 
-  const { mutate: deleteChatroom } = useMutation({
-    mutationKey: [QUERY_KEYS.GET_CHAT_LIST],
+  const { mutate: deleteChatroomId } = useMutation({
+    mutationKey: [QUERY_KEYS.CHAT_LIST],
     mutationFn: (chatroomId) => deleteChatroom({ chatroomId }),
     onSuccess: () => {
       onChatRoomLeave(data.chatroomId);
-      alert('채팅방을 나갔습니다.');
-      setActiveSlide(false);
     },
   });
-
-  const handleLeaveChatroom = () => {};
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">
@@ -60,7 +57,7 @@ export const ListItem = ({
         }}
       >
         <img src={data.profile || DefaultProfile} alt="user profile" />
-        <div className="flex flex-col justify-between w-full">
+        <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
               {data.postTitle}
@@ -71,11 +68,9 @@ export const ListItem = ({
           </div>
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-base text-neutral-base">
-              {data.lastChatMessage}
+              {data.lastMessageContent}
             </p>
-            {data.unreadCount > 0 && (
-              <NewMsgCnt cnt={data.unreadcount} />
-            )}
+            {data.unreadCount > 0 && <NewMsgCnt cnt={data.unreadCount} />}
           </div>
         </div>
       </div>
@@ -96,7 +91,7 @@ export const ListItem = ({
         <div
           className="flex h-[3.875rem] w-[55px] flex-col items-center justify-center bg-primary-red p-4"
           onClick={() => {
-            deleteChatroom(data.chatroomId);
+            deleteChatroomId(data.chatroomId);
           }}
         >
           <img src={leaveIcon} alt="leave" />

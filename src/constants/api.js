@@ -52,7 +52,6 @@ export const API_DOMAINS = {
   TRANSLATE_POST: '/translations/:postId',
   TRANSLATE_TEXT: '/translations/texts',
 
-
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
@@ -78,10 +77,11 @@ export const QUERY_KEYS = {
   GET_USER_ME: 'me',
   GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
   GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
-  GET_CHAT_LIST: 'getChatList',
+  CHAT_LIST: 'chatList',
   POST_CHAT_ROOM: 'postChatroom',
   GET_CHAT_ROOM: 'getChatroom',
   POST_CHAT_READ: 'postChatRead',
+
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
@@ -99,7 +99,6 @@ export const QUERY_KEYS = {
   GET_HOME_FAVORITE: 'homeFavorite',
   GET_HOME_CARDNEWS: 'homeCardNews',
 
-
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
   POST_NOTICE: 'postNotice',
@@ -111,4 +110,3 @@ export const QUERY_KEYS = {
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
 };
-

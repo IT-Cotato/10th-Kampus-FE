@@ -2,10 +2,8 @@ import { NoticeBox } from '@/components/common/noticeBox';
 import { ListItem } from '@/components/chat/listItem';
 import { useState } from 'react';
 
-export const ChatList = ({
-  onChatRoomSelect,
-  chatList,
-  onChatRoomLeave,
+export const ChatList = ({ onChatRoomSelect, chatList, 
+  onChatRoomLeave 
 }) => {
   const [activeSlide, setActiveSlide] = useState(null);
 
@@ -15,7 +13,7 @@ export const ChatList = ({
 
   return (
     <div
-      className="relative flex h-full w-full flex-col gap-4 p-4"
+      className="relative flex flex-col w-full h-full gap-4 p-4"
       onClick={handleClickOutside}
     >
       <div className="text-title text-neutral-title">Chats</div>

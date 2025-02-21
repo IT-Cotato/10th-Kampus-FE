@@ -9,8 +9,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatRoom } from '@/apis/chat/chatRoom.api';
 import { Loading } from '@/components/common/Loading';
-import { getChatMessages } from '@/apis/chat/messages.api';
-import { postReadMessage } from '@/apis/chat/chatList.api';
+import { postReadMessage } from '@/apis/chat/messages.api';
 
 export const ChatRoom = ({
   chatroomId,
@@ -31,20 +30,11 @@ export const ChatRoom = ({
     enabled: !!chatroomId,
   });
 
-  //읽음처리
-  const { mutate: chatsRead } = useMutation({
-    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
-    mutationFn: (chatroomId) => postReadMessage({ chatroomId }),
-  });
-
   //채팅메시지 데이터
   useEffect(() => {
     //게시글 삭제된 경우
     if (roomData?.postId === -1) {
       setDataDelete(true);
-    }
-    if (messages == null) {
-      chatsRead(chatroomId);
     }
   }, [chatroomId, roomData, setMessages]);
 
@@ -82,20 +72,23 @@ export const ChatRoom = ({
         <NoticeBox />
         <div className="flex flex-1 flex-col">
           {messages.length > 0 ? (
-            messages.map((message, index) => (
-              <div
-                key={index}
-                className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
-                  'self-end rounded-tr-none bg-primary-base text-white':
-                    message.isMine,
-                  'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
-                    !message.isMine,
-                })}
-                onClick={() => handleClickMessage(message.senderId)}
-              >
-                {message.content}
-              </div>
-            ))
+            messages
+              .slice()
+              .sort((a, b) => a.id - b.id)
+              .map((message, index) => (
+                <div
+                  key={index}
+                  className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
+                    'self-end rounded-tr-none bg-primary-base text-white':
+                      message.isMine,
+                    'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
+                      !message.isMine,
+                  })}
+                  onClick={() => handleClickMessage(message.senderId)}
+                >
+                  {message.content}
+                </div>
+              ))
           ) : (
             <p className="mx-auto text-neutral-border-40">Empty</p>
           )}
