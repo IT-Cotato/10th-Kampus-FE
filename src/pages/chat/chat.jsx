@@ -20,7 +20,6 @@ export const ChatPage = () => {
   const { connectSocket, sendMessage } = useWebsocket(
     setChatList,
     chatroomId,
-    messages,
     setMessages,
     page,
   );

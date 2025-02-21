@@ -12,7 +12,6 @@ const SOCKET_URL = `${BASE_URL}/websocket`;
 export const useWebsocket = (
   setChatList,
   chatroomId,
-  messages,
   setMessages,
   page,
 ) => {
@@ -33,15 +32,6 @@ export const useWebsocket = (
     queryKey: [QUERY_KEYS.GET_CHAT_IST, chatroomId],
     queryFn: () => getChatMessages({ chatroomId, page }),
     enabled: !!chatroomId,
-  });
-
-  //읽음처리
-  const { mutate: chatsRead } = useMutation({
-    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
-    mutationFn: () => postReadMessage({ chatroomId }),
-    onSuccess: () => {
-      console.log('🚨✨ 읽음처리 전송');
-    },
   });
 
   useEffect(() => {
@@ -212,9 +202,9 @@ export const useWebsocket = (
           isMine: Number(newMessage.senderId) === Number(userDetail?.id),
         };
 
-        if (!enrichedMessage.isMine) {
-          chatsRead();
-        }
+        // if (!enrichedMessage.isMine) {
+
+        // }
 
         setMessages((prevMessages) => [...prevMessages, enrichedMessage]);
       },
