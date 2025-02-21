@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/apis/user/userDetail.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
 import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { Loading } from '@/components/common/Loading';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const MyPage = () => {
   const [university, setUniversity] = useState('');
   const [status, setStatus] = useState(''); // 학교 인증 상태
 
-  const { data: userData } = useQuery({
+  const { data: userData, isLoading: isUserDetailsLoading } = useQuery({
     queryKey: [QUERY_KEYS.USER_INFO],
     queryFn: () => getUser(),
   });
@@ -27,7 +28,8 @@ export const MyPage = () => {
     }
   }, [userData]);
 
-  const { mutate: checkSchoolStatus } = useCheckSchoolStatus();
+  const { mutate: checkSchoolStatus, isLoading: isSchoolStatusLoading } =
+    useCheckSchoolStatus();
 
   useEffect(() => {
     checkSchoolStatus(undefined, {
@@ -53,19 +55,25 @@ export const MyPage = () => {
           className="flex h-full w-full cursor-pointer items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
           onClick={() => navigate(path.mypage.settings.info)}
         >
-          <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
-            <div className="text-pageTitle">{username}</div>
-            <div className="text-neutral-disabled">
-              {university
-                ? university
-                : status === 'PENDING'
-                  ? 'School verification is in progress.'
-                  : "What's the name of your school?"}
-            </div>
-          </div>
-          <div className="right-0 h-full">
-            <img src={arrow} alt="" className="h-[1.25rem] w-[1.25rem]" />
-          </div>
+          {isUserDetailsLoading && isSchoolStatusLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
+                <div className="text-pageTitle">{username}</div>
+                <div className="text-neutral-disabled">
+                  {university
+                    ? university
+                    : status === 'PENDING'
+                      ? 'School verification is in progress.'
+                      : "What's the name of your school?"}
+                </div>
+              </div>
+              <div className="right-0 h-full">
+                <img src={arrow} alt="" className="h-[1.25rem] w-[1.25rem]" />
+              </div>
+            </>
+          )}
         </div>
         {/* 마이페이지 항목들 */}
         <div className="flex h-full w-full flex-col gap-[1.875rem]">
