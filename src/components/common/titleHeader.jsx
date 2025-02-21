@@ -30,7 +30,7 @@ export const TitleHeader = ({ text, onClick = null }) => {
         onClick={handleBackClick}
         className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
-      <span className={`text-neutral-title ${longText ? "text-small" : "text-subTitle"}`}>
+      <span className={`text-neutral-title ${longText ? "text-base font-semibold" : "text-pageTitle"}`}>
         {text}
       </span>
       <div className="h-[1.25rem] w-[1.25rem]" />
