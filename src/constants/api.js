@@ -105,6 +105,7 @@ export const QUERY_KEYS = {
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',
   GET_INQUIRY: 'getInquiry',
+  GET_INQUIRY_DETAILS: 'getInquiryDetails',
 
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
