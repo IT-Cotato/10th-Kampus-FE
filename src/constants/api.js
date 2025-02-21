@@ -66,6 +66,8 @@ export const API_DOMAINS = {
 
   NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
+
+  ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
 };
 
 export const QUERY_KEYS = {
@@ -104,5 +106,7 @@ export const QUERY_KEYS = {
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
+
+  ADMIN_GET_VERIFICATIOIN_LIST: 'getVerficationList',
 };
 

@@ -15,6 +15,9 @@ export const ButtonRound = ({
           'bg-primary-base': theme === 'primary',
           'bg-neutral-base': theme === 'base',
           'bg-neutral-disabled': theme === 'disabled',
+          'bg-[#D3F2D3] text-primary-green': theme === 'APPROVED',
+          'bg-[#D1E6FF] text-primary-blue': theme === 'PENDING',
+          'bg-[#F4CCCC] text-primary-red': theme === 'REJECTED',
           'border border-neutral-border-40 bg-white text-neutral-title':
             theme === 'border',
           'w-full py-1': size === 'long',
