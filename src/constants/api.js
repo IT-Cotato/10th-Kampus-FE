@@ -8,6 +8,7 @@ export const KAKAO_AUTH_API_URL = 'https://kauth.kakao.com/oauth/authorize';
 
 export const API_DOMAINS = {
   USER: '/users/details',
+  PATCH_USER: '/users/info',
   MYPAGE: '/mypage',
 
   DUPLICATE_CHECK: '/users/check-nickname',

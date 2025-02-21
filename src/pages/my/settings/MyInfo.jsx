@@ -11,11 +11,12 @@ import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
 import { useEffect, useState } from 'react';
 import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
 import { path } from '@/routes/path';
 import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
@@ -59,9 +60,25 @@ export const MyInfo = () => {
     return regex.test(value);
   };
 
+  const { mutate: saveUserDetails } = useMutation({
+    mutationFn: (user) => patchUserDetail({ data: user }),
+  });
+
   const handleClickSave = () => {
-    // 백 연동 후 마이페이지로 이동
-    navigate(-1);
+    const data = {
+      nickname: info.nickname,
+      preferredLanguage: info.preferredLanguage,
+    };
+    saveUserDetails(data, {
+      onSuccess: (response) => {
+        console.log(response);
+        navigate(-1);
+      },
+      onError: (err) => {
+        alert(err.message);
+      },
+    });
+    //    navigate(-1);
   };
 
   const handleBackClick = () => {
@@ -129,7 +146,9 @@ export const MyInfo = () => {
           {info.universityName ? (
             <DisabledInput name="School" defaultValue={info.universityName} />
           ) : status === 'PENDING' ? (
-            <div className='text-primary-base'>School verification is in progress.</div>
+            <div className="text-primary-base">
+              School verification is in progress.
+            </div>
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
