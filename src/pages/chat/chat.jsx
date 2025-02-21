@@ -20,9 +20,11 @@ export const ChatPage = () => {
   const { connectSocket, sendMessage } = useWebsocket(
     setChatList,
     chatroomId,
+    messages,
     setMessages,
     page,
   );
+
   //채팅 리스트
   const {
     data: chatListData,

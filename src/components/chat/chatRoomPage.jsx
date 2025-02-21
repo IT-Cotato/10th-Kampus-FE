@@ -9,8 +9,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatRoom } from '@/apis/chat/chatRoom.api';
 import { Loading } from '@/components/common/Loading';
-import { getChatMessages } from '@/apis/chat/messages.api';
-import { postReadMessage } from '@/apis/chat/chatList.api';
+import { postReadMessage } from '@/apis/chat/messages.api';
 
 export const ChatRoom = ({
   chatroomId,
@@ -31,20 +30,11 @@ export const ChatRoom = ({
     enabled: !!chatroomId,
   });
 
-  //읽음처리
-  const { mutate: chatsRead } = useMutation({
-    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
-    mutationFn: (chatroomId) => postReadMessage({ chatroomId }),
-  });
-
   //채팅메시지 데이터
   useEffect(() => {
     //게시글 삭제된 경우
     if (roomData?.postId === -1) {
       setDataDelete(true);
-    }
-    if (messages == null) {
-      chatsRead(chatroomId);
     }
   }, [chatroomId, roomData, setMessages]);
 
@@ -65,7 +55,7 @@ export const ChatRoom = ({
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <RoomHeader
         text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
         setChatroomId={setChatroomId}
@@ -78,9 +68,9 @@ export const ChatRoom = ({
         boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
         dataDelete={dataDelete}
       />
-      <div className="px-4 mt-4">
+      <div className="mt-4 px-4">
         <NoticeBox />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           {messages.length > 0 ? (
             messages
               .slice()

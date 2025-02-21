@@ -1,16 +1,21 @@
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
-import { postReadMessage } from '@/apis/chat/chatList.api';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
-import { getChatMessages } from '@/apis/chat/messages.api';
+import { getChatMessages, postReadMessage } from '@/apis/chat/messages.api';
 
 const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
 
-export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
+export const useWebsocket = (
+  setChatList,
+  chatroomId,
+  messages,
+  setMessages,
+  page,
+) => {
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
   const notificationSubscriptionRef = useRef(null);
@@ -28,6 +33,15 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
     queryKey: [QUERY_KEYS.GET_CHAT_IST, chatroomId],
     queryFn: () => getChatMessages({ chatroomId, page }),
     enabled: !!chatroomId,
+  });
+
+  //읽음처리
+  const { mutate: chatsRead } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
+    mutationFn: () => postReadMessage({ chatroomId }),
+    onSuccess: () => {
+      console.log('🚨✨ 읽음처리 전송');
+    },
   });
 
   useEffect(() => {
@@ -199,7 +213,7 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
         };
 
         if (!enrichedMessage.isMine) {
-          await postReadMessage(chatroomId);
+          chatsRead();
         }
 
         setMessages((prevMessages) => [...prevMessages, enrichedMessage]);
