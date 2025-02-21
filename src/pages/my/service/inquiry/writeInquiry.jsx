@@ -37,8 +37,6 @@ export const WriteInquiry = () => {
       });
     }
     addInquiry(formData);
-    
-    navigate(-1);
   };
 
   return (
