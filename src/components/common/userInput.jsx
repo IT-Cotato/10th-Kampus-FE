@@ -43,7 +43,7 @@ export const UserInput = ({
     }
   });
   return (
-    <div className="fixed left-0 right-0 max-w-lg px-4 pt-4 mx-auto bg-white bottom-3">
+    <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-lg bg-white px-4 py-4">
       <div
         ref={containerRef}
         className="flex h-auto items-start overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
@@ -57,7 +57,7 @@ export const UserInput = ({
               'text-neutral-border-30': !input,
             })}
           >
-            <Camera className="w-full h-full text-neutral-icon" />
+            <Camera className="h-full w-full text-neutral-icon" />
           </button>
         )}
         <textarea
@@ -68,7 +68,7 @@ export const UserInput = ({
             handleInput();
           }}
           rows={1}
-          className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
+          className="flex-grow resize-none bg-neutral-bg-5 px-2 pt-1 text-base text-neutral-title"
           placeholder={placeholder}
           autoFocus={type === InputTypes.CHAT}
         />
@@ -82,7 +82,7 @@ export const UserInput = ({
             'text-neutral-border-30': !input,
           })}
         >
-          <Send className="w-full h-full" />
+          <Send className="h-full w-full" />
         </button>
       </div>
     </div>
