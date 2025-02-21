@@ -1,7 +1,7 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { path } from '@/routes/path';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
 import kampus from '@/assets/imgs/kampusPost.svg';
 import Like from '@/assets/imgs/like.svg?react';
@@ -75,9 +75,6 @@ export const Post = () => {
       setTranslateState(true);
       setTranslatedPost(translatedPost)
     }
-  })
-  useEffect(() => {
-    console.log(commentData)
   })
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
@@ -173,8 +170,7 @@ export const Post = () => {
               </div>
             )}
             <div
-              className="flex items-center justify-between pb-4 pt-6 px-4"
-              style={{ borderBottom: '0.5px solid #D8D8D8' }}
+              className="flex items-center justify-between pb-4 pt-6 px-4 border-b-[0.5px] border-b-[#D8D8D8]"
             >
               <div className="flex items-center gap-[.375rem] text-base text-neutral-border-50">
                 <div className="flex items-center gap-1">

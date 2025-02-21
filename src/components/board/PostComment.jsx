@@ -63,14 +63,14 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
             </div>
             {data.replies &&
                 data.replies.map((item, index) => (
-                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
+                    <ReplyComment reply={data.author} data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
                         handleCommentLike={handleCommentLike} />
                 ))
             }
         </>
     )
 }
-const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }) => {
+const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     return (
         <div ref={commentRef}
@@ -96,7 +96,7 @@ const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }
                 </button>
             </div>
             <p className="text-neutral-base leading-normal whitespace-pre-line">
-                <span className="text-primary-base">@{data.author}&nbsp;</span>
+                <span className="text-primary-base">@{reply === "Author" ? "Anontmity(Author)" : reply}&nbsp;</span>
                 {data.content}
             </p>
             <div className="flex justify-between">
