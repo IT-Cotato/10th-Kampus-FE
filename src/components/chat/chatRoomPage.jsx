@@ -2,43 +2,62 @@ import { ArticleInfo } from '@/components/chat/articleInfo';
 import { NoticeBox } from '@/components/common/noticeBox';
 import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { RoomHeader } from '@/components/chat/roomHeader';
 import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { getChatMessages } from '@/apis/chat/messages.api';
 import { getChatRoom } from '@/apis/chat/chatRoom.api';
-import { getUserDetail } from '@/apis/auth/login.api';
+import { Loading } from '@/components/common/Loading';
+import { getChatMessages } from '@/apis/chat/messages.api';
+import { postReadMessage } from '@/apis/chat/chatList.api';
 
-export const ChatRoom = ({ chatRoomId }) => {
+export const ChatRoom = ({ chatroomId, setChatroomId, sendMessage }) => {
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [page, setPage] = useState(1);
-
-  // 초기메시지 GET
-  const { data: messageData } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
-    queryFn: () => getChatMessages({ chatRoomId, page }),
-  });
+  const [messages, setMessages] = useState([]);
+  const [dataDelete, setDataDelete] = useState(false);
 
   //방 정보
-  const { data: roomData } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
-    queryFn: () => getChatRoom({ chatRoomId }),
+  const { data: roomData, isLoading: isRoomLoading } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_ROOM, chatroomId],
+    queryFn: () => getChatRoom({ chatroomId }),
+    enabled: !!chatroomId,
   });
 
-  //userId
-  const { data: userId } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_LIST],
-    queryFn: () => getUserDetail(),
+  //채팅방 메시지 초기내역
+  const { data: messageData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_CHAT_LIST, chatroomId],
+    queryFn: () => getChatMessages({ chatroomId, page }),
+    enabled: !!chatroomId,
   });
+
+  //읽음처리
+  const { mutate: chatsRead } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_READ],
+    mutationFn: (chatroomId) => postReadMessage({ chatroomId }),
+  });
+
+  //채팅메시지 데이터
+  useEffect(() => {
+    if (chatroomId) {
+      const allMessages = [...(messageData?.messages || []), ...messages];
+      setMessages(allMessages);
+    }
+    //게시글 삭제된 경우
+    if (roomData?.postId === -1) {
+      setDataDelete(true);
+    }
+    if (messages == null) {
+      chatsRead(chatroomId);
+    }
+  }, [chatroomId, messageData]);
 
   //메시지 전송
   const handleSendMessage = () => {
-    if (input.trim()) {
-      // sendMessage({ chatRoomId, input });
+    if (input && input.trim()) {
+      sendMessage(chatroomId, input.trim());
       setInput('');
     }
   };
@@ -47,31 +66,44 @@ export const ChatRoom = ({ chatRoomId }) => {
     setSelectedMessage(senderId);
   };
 
+  if (isRoomLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="w-full h-full">
-      <RoomHeader text={roomData.data.postTitle} />
-      <ArticleInfo
-        boardName={roomData.data.boardName}
-        postName={roomData.data.postTitle}
-        postId={roomData.data.postId}
+    <div className="h-full w-full">
+      <RoomHeader
+        text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
+        setChatroomId={setChatroomId}
       />
-      <div className="px-4">
+      <ArticleInfo
+        boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
+        postName={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
+        postId={!dataDelete ? roomData.postId : '삭제된 게시글입니다.'}
+        boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
+        dataDelete={dataDelete}
+      />
+      <div className="mt-4 px-4">
         <NoticeBox />
-        <div className="flex flex-col flex-1">
-          {messageData.map((message, index) => (
-            <div
-              key={index}
-              className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
-                'self-end rounded-tr-none bg-primary-base text-white':
-                  message.isMine,
-                'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
-                  !message.isMine,
-              })}
-              onClick={() => handleClickMessage(message.senderId)}
-            >
-              {message.text}
-            </div>
-          ))}
+        <div className="flex flex-1 flex-col">
+          {messages.length > 0 ? (
+            messages.map((message, index) => (
+              <div
+                key={index}
+                className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
+                  'self-end rounded-tr-none bg-primary-base text-white':
+                    message.isMine,
+                  'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
+                    !message.isMine,
+                })}
+                onClick={() => handleClickMessage(message.senderId)}
+              >
+                {message.text}
+              </div>
+            ))
+          ) : (
+            <p className="mx-auto text-neutral-border-40">Empty</p>
+          )}
         </div>
       </div>
       <UserInput

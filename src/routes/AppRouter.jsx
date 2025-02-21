@@ -54,6 +54,7 @@ import {
   CreateBoard,
   NoticeManagement,
   CreateNotice,
+  Market
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -222,7 +223,7 @@ const AppRouter = createBrowserRouter([
                 path: path.board.specific.report,
                 element: <PostReport />,
               },
-            ]
+            ],
           },
         ],
       },
@@ -235,14 +236,16 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
+    children: [
+      {
+        path: '',
+        element: <Market />
+      }
+    ]
   },
   {
     path: path.chatList.base,
-    element: (
-      <Layout>
-        <Outlet />
-      </Layout>
-    ),
+    element: <Outlet />,
     children: [
       {
         path: '',
@@ -250,7 +253,11 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: path.chatList.report,
-        element: <ChatReport />,
+        element: (
+          <Layout>
+            <ChatReport />,
+          </Layout>
+        ),
       },
     ],
   },

@@ -3,14 +3,14 @@ import Comment from '../../assets/imgs/comment.svg?react';
 import { ScrapComponent } from '../common/ScrapComponent';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
-export const TipsPostList = ({ data }) => {
+export const TipsPostList = ({ data, boardId }) => {
   // 카드 뉴스 부분 데이터 요청 시, 스크랩 여부도 같이 가져와야 함
   const navigate = useNavigate();
 
   return (
     <div
       className="flex justify-between pb-3 pt-5"
-      onClick={() => navigate(`${data.id}`)}
+      onClick={() => navigate(`${data.postId}`)}
     >
       <div className="flex flex-col justify-between">
         <p className="text-subTitle text-neutral-title">{data.title}</p>
@@ -39,10 +39,11 @@ export const TipsPostList = ({ data }) => {
           )}
         </div>
         <ScrapComponent
-          state={data.scrap}
-          id={data.id}
+          state={data.isScrapped}
+          id={data.postId}
           width="1.875rem"
           height="1.875rem"
+          boardId={boardId}
         />
       </div>
     </div>

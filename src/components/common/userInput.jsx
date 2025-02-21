@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 const InputTypes = {
   CHAT: 'chat',
-  POST: 'post'
+  POST: 'post',
 };
 
 export const UserInput = ({
@@ -14,7 +14,7 @@ export const UserInput = ({
   setInput,
   handleSend,
   type,
-  inputFocus = false
+  inputFocus = false,
 }) => {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
@@ -41,12 +41,12 @@ export const UserInput = ({
     if (textareaRef.current && inputFocus && InputTypes.POST === type) {
       textareaRef.current.focus();
     }
-  })
+  });
   return (
-    <div className="fixed left-0 right-0 max-w-lg px-4 mx-auto bottom-3">
+    <div className="fixed left-0 right-0 max-w-lg px-4 pt-4 mx-auto bg-white bottom-3">
       <div
         ref={containerRef}
-        className="h-autoitems-start flex overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
+        className="flex h-auto items-start overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
       >
         {type === InputTypes.CHAT && (
           <button
@@ -70,7 +70,7 @@ export const UserInput = ({
           rows={1}
           className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
           placeholder={placeholder}
-          autoFocus
+          autoFocus={type === InputTypes.CHAT}
         />
         <button
           onClick={() => {

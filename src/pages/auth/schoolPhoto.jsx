@@ -7,6 +7,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
+import { useMutation } from '@tanstack/react-query';
+import { postSchoolPhoto } from '@/apis/auth/postSchoolPhoto.api';
+import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
@@ -14,8 +17,31 @@ export const SchoolPhoto = () => {
   const [file, setFile] = useState(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState('');
 
   const university = location.state;
+
+  const { mutate } = useCheckSchoolStatus();
+
+  useEffect(() => {
+    mutate(undefined, {
+      onSuccess: (data) => {
+        setStatus(data.status);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    if (status === 'APPROVED' || status === 'PENDING') {
+      navigate(`../../${path.home}`);
+    }
+    if (university === undefined) {
+      navigate(`../${path.signup.school}`);
+    }
+  }, [status, university]);
 
   const getImageFile = (e) => {
     const newFiles = Array.from(e.target.files);
@@ -25,19 +51,21 @@ export const SchoolPhoto = () => {
     } else {
       setFile(e.target.files[0]);
     }
-  }
-
-  const handleClickUpload = (file) => {
-    // 백 연동
-    setShowModal(true);
   };
 
-  useEffect(() => {
-    if (university === undefined) {
-      navigate(`../${path.signup.school}`);
-    }
-    // 이미 인증 되었거나 인증 진행 중인지도 확인 필요
-  }, [university]);
+  const { mutate: sendPhoto } = useMutation({
+    mutationFn: (image) =>
+      postSchoolPhoto({ data: image, universityName: university }),
+    onSuccess: (response) => {
+      setShowModal(true);
+    },
+  });
+
+  const handleClickUpload = (file) => {
+    const formData = new FormData();
+    formData.append('certImage', file);
+    sendPhoto(formData);
+  };
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -86,7 +114,7 @@ export const SchoolPhoto = () => {
               <span className="text-neutral-border-50">No file selected</span>
             )}
           </div>
-          <MainButton onClick={handleClickUpload} disabled={!file}>
+          <MainButton onClick={() => handleClickUpload(file)} disabled={!file}>
             Upload
           </MainButton>
           {showErrorModal && (

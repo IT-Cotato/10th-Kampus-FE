@@ -1,31 +1,34 @@
+import { deleteAdminNotice } from '@/apis/admin/deleteAdminNotice.api';
+import { getNoticeList } from '@/apis/mypage/getNoticeList.api';
 import { ButtonRound } from '@/components/common/ButtonRound';
+import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
-import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 export const NoticeManagement = () => {
   const navigate = useNavigate();
-  const [noticeList, setNoticeList] = useState([]);
 
-  useEffect(() => {
-    // 백 연동
-    setNoticeList([
-      {
-        createdDate: 2024121232,
-        title: '[EVENT] New board is opened',
-        noticeId: 1234,
-      },
-      {
-        createdDate: 2024121232,
-        title: '[EVENT] New board is opened',
-        noticeId: 1255,
-      },
-    ]);
-  }, []);
+  const { data: noticeList } = useQuery({
+    queryKey: [QUERY_KEYS.GET_NOTICE],
+    queryFn: () => getNoticeList(),
+  });
 
-  const handleDeleteNotice = (noticeId) => {
-    alert('공지사항이 삭제되었습니다.');
-    // 백 연동
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteNotice } = useMutation({
+    mutationFn: (noticeId) => deleteAdminNotice({ noticeId: noticeId }),
+    onSuccess: () => {
+      alert('공지사항이 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_NOTICE] }); // 삭제 후 리스트 다시 불러오기
+    },
+    onError: (error) => {
+      alert('공지사항을 삭제하지 못했습니다.');
+    },
+  });
+
+  const handleDeleteNotice = (id) => {
+    deleteNotice(id);
   };
 
   return (
@@ -57,16 +60,18 @@ export const NoticeManagement = () => {
             </tr>
           </thead>
           {noticeList &&
-            noticeList.map((notice, index) => (
+            noticeList.notices.map((notice, index) => (
               <tbody key={index}>
                 <tr className="h-12">
-                  <td>{notice.createdDate}</td>
+                  <td>{notice.createdTime}</td>
                   <td>{notice.title}</td>
                   <td>
                     <ButtonRound
                       text="수정하기"
                       size="short"
-                      onClick={() => navigate(`./${notice.noticeId}/${path.admin.notice.edit}`)}
+                      onClick={() =>
+                        navigate(`./${notice.id}/${path.admin.notice.edit}`)
+                      }
                     />
                   </td>
                   <td>
@@ -74,7 +79,7 @@ export const NoticeManagement = () => {
                       text="삭제하기"
                       theme="border"
                       size="short"
-                      onClick={() => handleDeleteNotice(notice.noticeId)}
+                      onClick={() => handleDeleteNotice(notice.id)}
                     />
                   </td>
                 </tr>

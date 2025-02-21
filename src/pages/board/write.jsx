@@ -4,20 +4,21 @@ import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useState } from 'react';
-import { replace, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
 import { postWritePost } from '@/apis/board/postWritePost.api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
+import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId } = useParams();
   const { state } = useLocation();
-  const { mutate: addPost, isPending, isError } = useMutation({
+  const { mutate: addPost, isPending: postPending, isError: postError } = useMutation({
     mutationFn: (newPost) => postWritePost({ data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
@@ -25,10 +26,20 @@ export const Write = () => {
       navigate(`${path.board.base}/${boardId}/${createdPostId}`, { replace: true })
     }
   })
+  const { mutate: setTranslate, isPending: translatePending, isError: translateError } = useMutation({
+    mutationFn: (data) => writePostTranslate(data),
+    onSuccess: (response) => {
+      setTranslatedTitle(response.title)
+      setTranslatedContent(response.content)
+    }
+  })
+
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [content, setContent] = useState('');
+  const [translatedTitle, setTranslatedTitle] = useState(null);
+  const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
   const disabled = !title || !content;
@@ -36,8 +47,8 @@ export const Write = () => {
     const formData = new FormData();
 
     formData.append('boardId', boardId);
-    formData.append('title', title);
-    formData.append('content', content);
+    formData.append('title', translatedTitle ?? title);
+    formData.append('content', translatedContent ?? content);
 
     if (selectedCategory) {
       formData.append('postCategory', selectedCategory);
@@ -50,10 +61,21 @@ export const Write = () => {
     }
     addPost(formData);
   };
-
+  const handleCancelTranslatePopup = () => {
+    setIsPopup(false);
+    setTranslatedTitle(null);
+    setTranslatedContent(null);
+  }
   const handleTranslateAndUpload = () => {
     setIsPopup(true)
-    // 번역 연동 시, 추가 예정
+    const buildData = () => {
+      return {
+        title: title,
+        content: content,
+        targetLanguageCode: "EN-US"
+      }
+    }
+    setTranslate({ data: buildData() })
   };
   useEffect(() => {
     if (!state) { // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
@@ -115,11 +137,11 @@ export const Write = () => {
       {isPopup &&
         createPortal(
           <TranslatePopup
-            title={title}
-            text={content}
-            onClickLeft={() => { setIsPopup(false) }}
-            onClickRight={() => { }}
-            isLoading={false}
+            title={translatedTitle}
+            text={translatedContent}
+            onClickLeft={() => handleCancelTranslatePopup()}
+            onClickRight={() => handleUpload()}
+            isLoading={translatePending}
           />,
           document.getElementById('modal-root')
         )}

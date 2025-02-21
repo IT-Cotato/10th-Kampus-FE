@@ -1,3 +1,4 @@
+import { generateApiPath } from '@/utils/generateApiPath';
 import { authApi } from '../axios-instance';
 import { API_DOMAINS } from '@/constants/api';
 
@@ -10,9 +11,9 @@ export const getChatList = async (page) => {
 };
 
 //채팅 읽음 처리
-export const postReadMessage = async ({ chatRoomId }) => {
-  const response = await authApi.post(API_DOMAINS.READ_MESSAGE, {
-    params: { chatRoomId },
-  });
+export const postReadMessage = async ({ chatroomId }) => {
+  const response = await authApi.post(
+    generateApiPath(API_DOMAINS.READ_MESSAGE, { chatroomId }),
+  );
   return response.data.data;
 };

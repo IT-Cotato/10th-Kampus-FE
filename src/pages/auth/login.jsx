@@ -9,6 +9,7 @@ import { path } from '@/routes/path';
 import { setTokens } from '../../utils/authUtils';
 export const Login = () => {
   const navigate = useNavigate();
+
   useEffect(() => {
     const handleLogin = async () => {
       const { accessToken, refreshToken } = parseTokenFromUrl();
@@ -17,6 +18,9 @@ export const Login = () => {
       }
       await setTokens({ accessToken, refreshToken })
       const { data, success } = await getUserDetail();
+      if (data === undefined) {
+        window.location.reload();
+      }
       if (success && data.needSetup) {
         navigate(path.signup.base);
       }

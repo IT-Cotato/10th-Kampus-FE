@@ -8,3 +8,15 @@ export const getPostList = async ({ boardId, page }) => {
     });
     return response.data.data
 }
+export const getCardNewsList = async ({ page }) => {
+    const response = await authApi.get(API_DOMAINS.POST_GET_CARDNEWS, {
+        params: { page }
+    });
+    return response.data.data
+}
+export const getTrendingList = async ({ page }) => {
+    const response = await authApi.get(API_DOMAINS.POST_GET_TRENDING, {
+        params: { page }
+    });
+    return response.data.data
+}

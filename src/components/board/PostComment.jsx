@@ -6,7 +6,7 @@ import Translate from "@/assets/imgs/translate.svg?react"
 import { formatTime } from "@/utils/formatTime"
 import { useRef } from "react"
 import { cn } from "@/utils/cn"
-export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment }) => {
+export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     const handleComment = (ref, commentId) => {
         ref.current?.scrollIntoView({
@@ -32,8 +32,9 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                     </div>
                     <div className="flex gap-1 text-neutral-base">
-                        <button className="flex gap-[0.125rem] cursor-pointer">
-                            {data.isLike ?
+                        <button className="flex gap-[0.125rem] cursor-pointer"
+                            onClick={() => handleCommentLike({ type: data.isLiked, commentId: data.commentId })}>
+                            {data.isLiked ?
                                 <FillLike className="w-6 h-6 text-primary-red" />
                                 :
                                 <Like className="w-6 h-6 text-neutral-base" />
@@ -42,11 +43,11 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         </button>
                         <button className="flex gap-[0.125rem] cursor-pointer">
                             <Comment className="w-6 h-6" />
-                            <p className="min-w-[.625rem]">{data.isReply ? data.isReply.length : 0}</p>
+                            <p className="min-w-[.625rem]">{data.replies ? data.replies.length : 0}</p>
                         </button>
                     </div>
                 </div>
-                <p className="text-neutral-base leading-normal">
+                <p className="text-neutral-base leading-normal whitespace-pre-line">
                     {data.content}
                 </p>
                 <div className="flex justify-between">
@@ -60,15 +61,16 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                     <Translate className="w-[1.125rem] h-[1.125rem] text-neutral-base" />
                 </div>
             </div>
-            {data.isReply &&
-                data.isReply.map((item, index) => (
-                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment} />
+            {data.replies &&
+                data.replies.map((item, index) => (
+                    <ReplyComment data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
+                        handleCommentLike={handleCommentLike} />
                 ))
             }
         </>
     )
 }
-const ReplyComment = ({ data, focusedComment, handleComment }) => {
+const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     return (
         <div ref={commentRef}
@@ -83,8 +85,9 @@ const ReplyComment = ({ data, focusedComment, handleComment }) => {
                     <p>{data.author}</p>
                     <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                 </div>
-                <button className="flex gap-[0.125rem] cursor-pointer">
-                    {data.isLike ?
+                <button className="flex gap-[0.125rem] cursor-pointer"
+                    onClick={() => handleCommentLike({ type: data.isLiked, commentId: data.commentId })}>
+                    {data.isLiked ?
                         <FillLike className="w-6 h-6 text-primary-red" />
                         :
                         <Like className="w-6 h-6 text-neutral-base" />
@@ -92,8 +95,8 @@ const ReplyComment = ({ data, focusedComment, handleComment }) => {
                     <p className="min-w-[.625rem] text-neutral-base">{data.likes}</p>
                 </button>
             </div>
-            <p className="text-neutral-base leading-normal">
-                <span className="text-primary-base">@{data.mentions}&nbsp;</span>
+            <p className="text-neutral-base leading-normal whitespace-pre-line">
+                <span className="text-primary-base">@{data.author}&nbsp;</span>
                 {data.content}
             </p>
             <div className="flex justify-between">

@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { generateBoardTitle } from '@/utils/boardTitleUtils';
 import more from '@/assets/imgs/more.svg';
-export const BoardHeader = ({ title, path }) => {
+import { path } from '@/routes/path';
+export const BoardHeader = ({ title }) => {
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between">
@@ -9,12 +10,16 @@ export const BoardHeader = ({ title, path }) => {
       <button
         className="flex items-center gap-[0.125rem] text-small text-neutral-base"
         onClick={() => {
-          console.log(generateBoardTitle(title));
-          if (generateBoardTitle(title) === '') {
+          if (title === "Favorites") {
             navigate(path.board.base);
-          } else {
-            navigate(path.board.base + '/' + generateBoardTitle(title));
           }
+          else if (title === "Trending") {
+            navigate(path.board.base + '/' + '4');
+          }
+          else if (title === "How to live in Korea") {
+            navigate(path.board.base + '/' + '5');
+          }
+          {/** 백엔드 타입 변경 전까지는 임시입니다*/ }
         }}
       >
         <p>more</p>
