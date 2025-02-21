@@ -8,7 +8,6 @@ import { cn } from '@/utils/cn';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
 import { useMutation } from '@tanstack/react-query';
-import { postSchoolPhoto } from '@/apis/auth/postSchoolPhoto.api';
 import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 
 export const SchoolPhoto = () => {

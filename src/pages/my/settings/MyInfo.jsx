@@ -15,6 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
 import { path } from '@/routes/path';
+import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
@@ -36,6 +37,28 @@ export const MyInfo = () => {
   const [isUserNameDuplicated, setIsUserNameDuplicated] = useState(false);
   const [isLanguageSelected, setIsLanguageSelected] = useState(true);
   const [showModal, setShowModal] = useState(false);
+
+  const [status, setStatus] = useState(''); // 학교 인증 상태
+
+  // 학교 인증 여부에 따라 학교 인증 버튼/학교 이름으로 보임
+  const { mutate: checkSchoolStatus } = useCheckSchoolStatus();
+
+  useEffect(() => {
+    checkSchoolStatus(undefined, {
+      onSuccess: (data) => {
+        setStatus(data.status);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    if (status === 'APPROVED' || status === 'PENDING') {
+      navigate(`../../${path.home}`);
+    }
+  }, [status]);
 
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;
@@ -62,10 +85,10 @@ export const MyInfo = () => {
     setIsUserNameFormatInvalid(!validateUserNameValue(value));
   };
 
-  const { mutate } = useDuplicateCheck(postDuplicateCheck);
+  const { mutate: checkDuplicate } = useDuplicateCheck(postDuplicateCheck);
 
   const handleDuplicateCheck = (value) => {
-    mutate(
+    checkDuplicate(
       { data: { nickname: value } },
       {
         onSuccess: (response) => {
@@ -111,12 +134,20 @@ export const MyInfo = () => {
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
           {info.universityName ? (
             <DisabledInput name="School" defaultValue={info.universityName} />
+          ) : status === 'PENDING' ? (
+            <div>학교 인증 확인 중입니다.</div>
           ) : (
             <div className="flex flex-col gap-[.625rem]">
               <span className="text-primary-base">
                 Verify your school to access the school board!
               </span>
-              <MainWhiteButton onClick={() => navigate(`../../../${path.signup.base}/${path.signup.school}`)}>Search your school</MainWhiteButton>
+              <MainWhiteButton
+                onClick={() =>
+                  navigate(`../../../${path.signup.base}/${path.signup.school}`)
+                }
+              >
+                Search your school
+              </MainWhiteButton>
             </div>
           )}
           <div className="flex flex-col">
