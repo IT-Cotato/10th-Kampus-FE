@@ -52,7 +52,6 @@ export const API_DOMAINS = {
   TRANSLATE_POST: '/translations/:postId',
   TRANSLATE_TEXT: '/translations/texts',
 
-
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
@@ -68,6 +67,8 @@ export const API_DOMAINS = {
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
 
   ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
+  ADMIN_VERIFICATION_REJECT: '/admin/student-verifications/:verificationRecordId/reject',
+  ADMIN_VERIFICATION_APPROVE: '/admin/student-verifications/:verificationRecordId/approve',
 };
 
 export const QUERY_KEYS = {
@@ -108,5 +109,7 @@ export const QUERY_KEYS = {
   USER_INFO: 'userInfo',
 
   ADMIN_GET_VERIFICATIOIN_LIST: 'getVerficationList',
+  ADMIN_GET_VERIFICATION: 'getVerficationList',
+  ADMIN_POST_VERIFICATION: 'getVerficationList',
 };
 

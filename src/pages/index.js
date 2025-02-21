@@ -55,7 +55,7 @@ export { CreateCardnews } from './admin/cardnews/CreateCardnews';
 export { Dashboard } from './admin/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
 export { SignupManagement } from './admin/signup/SignupManagement';
-export { StudentVertifications } from './admin/signup/StudentVertifications';
+export { StudentVerifications } from './admin/signup/StudentVerifications';
 export { Statistics } from './admin/Statistics';
 export { UserManagement } from './admin/UserManagement';
 export { NoticeManagement } from './admin/notice/NoticeManagement';
