@@ -1,8 +1,9 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { path } from '@/routes/path';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
+import kampus from '@/assets/imgs/kampusPost.svg';
 import Like from '@/assets/imgs/like.svg?react';
 import FillLike from '@/assets/imgs/fillLike.svg?react';
 import Comment from '@/assets/imgs/comment.svg?react';
@@ -26,7 +27,7 @@ import { translatePost } from '@/apis/translate/translatePost.api';
 import { Translating } from '@/components/common/Translating';
 export const Post = () => {
   const queryClient = useQueryClient();
-  const { postId } = useParams();
+  const { postId, boardId } = useParams();
   const { data: postData, isLoading: postLoading, error: postError } = useQuery({
     queryFn: () => getPostDetail({ postId: postId }),
     queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId]
@@ -74,6 +75,9 @@ export const Post = () => {
       setTranslateState(true);
       setTranslatedPost(translatedPost)
     }
+  })
+  useEffect(() => {
+    console.log(commentData)
   })
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
@@ -126,14 +130,14 @@ export const Post = () => {
           <div className="flex flex-col pt-5">
             <div className="flex items-center justify-between px-4">
               <div className="flex gap-2">
-                <img src={anonymous} alt="anonymous icon" className="h-10 w-10" />
+                <img src={boardId === "5" ? kampus : anonymous} alt="anonymous icon" className="h-10 w-10" />
                 <div className="flex flex-col gap-[.125rem] leading-tight">
-                  <h1 className="text-base text-neutral-title">Anonymity</h1>
+                  <h1 className="text-base text-neutral-title">{boardId === "5" ? "Kampus" : "Anonymity"}</h1>
                   <h2 className="text-small text-neutral-border-50">{formatTime(postData.createdTime)}</h2>
                 </div>
               </div>
               <ScrapComponent
-                state={postData.isScrapped}
+                state={postData?.isScrapped}
                 width="1.75rem"
                 height="1.75rem"
               />
@@ -179,19 +183,19 @@ export const Post = () => {
                       handleLike({ type: postData.isLiked })
                     }}
                   >
-                    {postData && postData.isLiked ? (
+                    {postData && postData?.isLiked ? (
                       <FillLike className="h-8 w-8" />
                     ) : (
                       <Like className="h-8 w-8" />
                     )}
                   </button>
-                  {postData && postData.likes}
+                  {postData && postData?.likes}
                 </div>
                 <div className="flex items-center gap-1">
                   <button onClick={() => console.log('comment')}>
                     <Comment className="h-8 w-8" />
                   </button>
-                  {commentData && commentData.comments.length}
+                  {postData && postData?.comments}
                 </div>
               </div>
               <button onClick={() => {

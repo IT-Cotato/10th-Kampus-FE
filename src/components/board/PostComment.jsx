@@ -28,7 +28,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                 <div className="flex  justify-between">
                     <div className="flex items-center gap-2">
                         <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                        <p>{data.author}</p>
+                        <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
                         <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                     </div>
                     <div className="flex gap-1 text-neutral-base">
@@ -82,7 +82,7 @@ const ReplyComment = ({ data, focusedComment, handleComment, handleCommentLike }
             <div className="flex  justify-between" >
                 <div className="flex items-center gap-2">
                     <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                    <p>{data.author}</p>
+                    <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
                     <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                 </div>
                 <button className="flex gap-[0.125rem] cursor-pointer"
