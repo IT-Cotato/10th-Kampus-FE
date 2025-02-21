@@ -150,7 +150,7 @@ export const BoardManagement = () => {
   return (
     <div className="flex flex-col flex-1 gap-5 px-5">
       <div className="flex flex-col w-full gap-5 p-8 bg-white h-fit rounded-2xl">
-        <h1 className="text-pageTitle">게시판 상태</h1>
+        <h1 className="text-pageTitle">가입 요청</h1>
         <Dropdown
           selectedDropdown={selectedDropdown}
           dropdownOptions={BoardOptions}
