@@ -15,6 +15,10 @@ export const API_DOMAINS = {
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
 
   DUPLICATE_CHECK: '/users/check-nickname',
+  VERIFY_SCHOOL_PHOTO:'/users/verify/document',
+  SEND_SCHOOL_EMAIL_CODE:'/users/verify/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE:'/users/verify/mail/confirm',
+  GET_SCHOOL_STATUS: 'users/verify/status',
 
   PRODUCTS: '/products',
 
@@ -65,6 +69,8 @@ export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
+  GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
+  GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
   GET_CHAT_LIST: 'getChatList',
   POST_CHAT_ROOM: 'postChatroom',
   GET_CHAT_ROOM: 'getChatroom',

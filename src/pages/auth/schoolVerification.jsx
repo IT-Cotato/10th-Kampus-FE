@@ -2,20 +2,38 @@ import Prev from '@/assets/imgs/previous.svg?react';
 import { SkipButton } from '@/components/join/skipButtonShadow';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { path } from '@/routes/path';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SkipHeader } from '@/components/join/SkipHeader';
+import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 
 export const SchoolVerification = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const university = location.state;
+  const [status, setStatus] = useState('');
+
+  const { mutate } = useCheckSchoolStatus();
 
   useEffect(() => {
+    mutate(undefined, {
+      onSuccess: (data) => {
+        setStatus(data.status);
+      },
+      onError: (error) => {
+        alert(error);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    if (status === 'APPROVED' || status === 'PENDING') {
+      navigate(`../../${path.home}`);
+    }
     if (university === undefined) {
       navigate(`../${path.signup.school}`);
     }
-  }, [university]);
+  }, [status, university]);
 
   return (
     <div className="flex flex-col w-full h-full">
