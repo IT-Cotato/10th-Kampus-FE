@@ -54,6 +54,7 @@ import {
   CreateBoard,
   NoticeManagement,
   CreateNotice,
+  Market
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -235,6 +236,12 @@ const AppRouter = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
+    children: [
+      {
+        path: '',
+        element: <Market />
+      }
+    ]
   },
   {
     path: path.chatList.base,

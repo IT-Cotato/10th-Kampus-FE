@@ -44,6 +44,7 @@ export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
 export { NotificationList } from './notification/notificationList';
+export { Market } from './market/Market';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
