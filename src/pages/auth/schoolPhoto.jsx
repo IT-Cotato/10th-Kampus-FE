@@ -32,7 +32,7 @@ export const SchoolPhoto = () => {
   const {
     mutate: sendPhoto,
   } = useMutation({
-    mutationFn: (image) => postSchoolPhoto({ data: image, universityId: university }),
+    mutationFn: (image) => postSchoolPhoto({ data: image, universityName: university }),
     onSuccess: (response) => {
       setShowModal(true);
     },

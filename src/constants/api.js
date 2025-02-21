@@ -11,7 +11,9 @@ export const API_DOMAINS = {
   MYPAGE: '/mypage',
 
   DUPLICATE_CHECK: '/users/check-nickname',
-  VERIFY_SCHOOL_PHOTO:'/verify/document',
+  VERIFY_SCHOOL_PHOTO:'/users/verify/document',
+  SEND_SCHOOL_EMAIL_CODE:'/users/verify/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE:'/users/verify/mail/confirm',
 
   PRODUCTS: '/products',
 
@@ -45,6 +47,8 @@ export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_USER_ME: 'me',
+  GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
+  GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
   GET_CHAT_LIST: 'chatList',
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
   GET_BOARD_DETAIL: 'boardData',

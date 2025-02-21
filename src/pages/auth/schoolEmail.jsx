@@ -1,7 +1,10 @@
+import { postSchoolEmailCodeSend, postSchoolEmailCodeVerify } from '@/apis/auth/postSchoolEmailCode.api';
 import { MainButton } from '@/components/common/MainButton';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { VerificationCodeModal } from '@/components/join/VerificationCodeModal';
+import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -19,10 +22,30 @@ export const SchoolEmail = () => {
     sendVerificationCode();
   };
 
+  const { mutate: sendSchoolEmailCode } = useMutation({
+    mutationFn: (data) => postSchoolEmailCodeSend({ data: data }),
+    mutationKey: [QUERY_KEYS.GET_SCHOOL_EMAIL_CODE_SEND],
+    onSuccess: (response) => {
+      setShowModal(true);
+    },
+  });
+
   const sendVerificationCode = () => {
-    // 백 연동
-    console.log('코드 전송');
+    const data = {
+      email: email,
+      universityName: university,
+    }
+    sendSchoolEmailCode(data);
   };
+
+  const handleClickValidate = (code) => {
+    const data = {
+      email: email,
+      universityName: university,
+      code: code,
+    }
+    return data;
+  }
 
   useEffect(() => {
     if (university === undefined) {
@@ -59,6 +82,7 @@ export const SchoolEmail = () => {
                 leftButton="Cancel"
                 rightButton="Validate"
                 onClickLeft={() => setShowModal(false)}
+                onClickRight={handleClickValidate}
                 resend={sendVerificationCode}
               />,
               document.getElementById('modal-root'),
