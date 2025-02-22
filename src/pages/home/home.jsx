@@ -1,6 +1,4 @@
 import Logo from "@/assets/imgs/kampusLogo.svg?react"
-import notification from "@/assets/imgs/notification.svg"
-import notification_true from "@/assets/imgs/notification_true.svg"
 import search from "@/assets/imgs/search.svg"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +10,8 @@ import { getFavorite } from "@/apis/home/getFavorite.api";
 import { getTrend } from "@/apis/home/getTrend.api";
 import { getUser } from "@/apis/user/userDetail.api";
 import { getCardNewsList } from "@/apis/board/getPostList.api";
+import { getUniversity } from "@/apis/home/getUniversity.api";
+import { NotificationButton } from "@/components/common/NotificationButton";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -21,6 +21,10 @@ export const Home = () => {
     month: 'long',
     day: 'numeric',
   }); // "May 5, 2025" 형식
+  const { data: univeristyList, isLoading: universityLoading, error: universityError } = useQuery({
+    queryKey: [QUERY_KEYS.GET_HOME_UNIVERISTY],
+    queryFn: getUniversity,
+  })
   const { data: favoriteList, isLoading: favoriteLoading, error: favoriteError } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_FAVORITE],
     queryFn: getFavorite,
@@ -37,88 +41,14 @@ export const Home = () => {
     queryKey: [QUERY_KEYS.GET_USER_ME],
     queryFn: getUser,
   })
-  const [isNotification, setIsNotification] = useState(true);
-  const [homeBoard, setHomeBoard] = useState({
-    // board + postID로 navigate 만들기
-    userUnivState: true,
-    univ: [
-      {
-        board: 'Free Talk',
-        title: 'Title',
-        postID: 1,
-      },
-      {
-        board: 'Free Talk',
-        title: 'Title',
-        postID: 1,
-      },
-    ],
-    favorites: [
-      {
-        board: 'Free Talk',
-        title: 'TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle',
-        postID: 1,
-      },
-      {
-        board: 'Free Talk',
-        title: 'Title',
-        postID: 1,
-      },
-    ],
-    trending: [
-      {
-        board: 'Free Talk',
-        title: 'Title',
-        postID: 1,
-      },
-      {
-        board: 'Free Talk',
-        title: 'Title',
-        postID: 1,
-      },
-    ],
-    howtoliveinKorea: [
-      {
-        board: 'Tips for living in Korea',
-        title: 'Title',
-        postID: 1,
-      },
-      {
-        board: 'Tips for living in Korea',
-        title: 'Title TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle',
-        postID: 2,
-      },
-      {
-        board: 'Tips for living in Korea',
-        title: 'Title',
-        postID: 3,
-      },
-      {
-        board: 'Tips for living in Korea',
-        title: 'Title',
-        postID: 4,
-      },
-      {
-        board: 'Tips for living in Korea',
-        title: 'Title',
-        postID: 5,
-      },
-    ],
-  });
+  const [isNotification, setIsNotification] = useState(false);
+  
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
       <div className="flex items-start justify-between pb-[.625rem]">
         <Logo className="w-[6rem] h-auto text-primary-base" />
         <div className="flex gap-[0.875rem]">
-          <button
-            className="cursor-pointer"
-            onClick={() => navigate(path.notificationList)}>
-            <img
-              src={isNotification ? notification_true : notification}
-              alt="notification button"
-              className="w-5 h-6"
-            />
-          </button>
+        <NotificationButton isNotification={isNotification} />
           <button
             className="cursor-pointer"
             onClick={() => navigate(path.search)}
@@ -138,15 +68,14 @@ export const Home = () => {
           {/*  <h2 className="text-base text-primary-red">Holiday-KR</h2> */}
         </div>
         {userDetail?.universityId !== -1 && (
-          <BoardBox data={homeBoard.univ} boardTitle="My univ" path={path} />
+          <BoardBox data={univeristyList} boardTitle="My univ" university={true} />
         )}
         <BoardBox
           data={favoriteList?.previewList}
           boardTitle="Favorites"
-          path={path}
         />
-        <BoardBox data={trendingList?.previewList} boardTitle="Trending" path={path} />
-        <CardPostBox data={cardNewsList?.posts} path={path} />
+        <BoardBox data={trendingList?.previewList} boardTitle="Trending" />
+        <CardPostBox data={cardNewsList?.posts} />
       </div>
     </div>
   );

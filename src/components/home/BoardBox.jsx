@@ -1,12 +1,13 @@
 import { BoxList } from './BoxList';
 import { BoardHeader } from './BoardHeader';
 import { CardPost } from './BoxList';
-export const BoardBox = ({ boardTitle, data }) => {
+export const BoardBox = ({ boardTitle, data, university = false }) => {
   return (
     <div className="flex flex-col gap-5">
       <BoardHeader title={boardTitle} />
       <div className="flex h-fit w-full flex-col rounded-[.625rem] bg-primary-5 px-5 py-[.625rem]">
-        {data?.map((text, index) => (
+        {university ? <BoxList text={data} />
+          : data?.map((text, index) => (
           <BoxList key={index} text={text} />
         ))}
       </div>

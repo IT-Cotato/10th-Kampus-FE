@@ -63,6 +63,7 @@ export const API_DOMAINS = {
   ADMIN_CARDNEWS: '/admin/cardNews',
   ADMIN_CARDNEWS_DETAIL: '/admin/cardNews/:postId',
 
+  HOME_UNIVERSITY: '/boards/university',
   HOME_TRENDING: '/boards/trending',
   HOME_FAVORITE: '/boards/favorite',
 
@@ -105,6 +106,7 @@ export const QUERY_KEYS = {
   GET_SEARCH_KEYWORD: 'searchKeyword',
   GET_SEARCH_RESULT: 'searchResult',
 
+  GET_HOME_UNIVERISTY: 'homeUniversity',
   GET_HOME_TRENDING: 'homeTrend',
   GET_HOME_FAVORITE: 'homeFavorite',
   GET_HOME_CARDNEWS: 'homeCardNews',

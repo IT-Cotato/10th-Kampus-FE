@@ -1,4 +1,3 @@
-import { generateBoardTitle } from '@/utils/boardTitleUtils';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 import postCardIcon from '@/assets/imgs/postCardIcon.svg';
@@ -15,7 +14,7 @@ export const BoxList = ({ text }) => {
       }
     >
       <h1 className="text-subTitle text-neutral-title">{text?.boardName}</h1>
-      <h2 className="truncate text-base text-neutral-base">{text?.postTitle}</h2>
+      <h2 className="text-base truncate text-neutral-base">{text?.postTitle}</h2>
     </div>
   );
 };
