@@ -9,7 +9,7 @@ export const TipsPostList = ({ data, boardId }) => {
 
   return (
     <div
-      className="flex justify-between pb-3 pt-5"
+      className="flex justify-between gap-4 pt-5 pb-3"
       onClick={() => navigate(`${data.postId}`)}
     >
       <div className="flex flex-col justify-between">
@@ -28,7 +28,7 @@ export const TipsPostList = ({ data, boardId }) => {
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-7">
+      <div className="flex items-center gap-6">
         <div className="min-h-[5.75rem] min-w-[5.75rem]">
           {data.thumbnailUrl && (
             <img
