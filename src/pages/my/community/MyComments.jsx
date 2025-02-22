@@ -19,15 +19,14 @@ export const MyComments = () => {
   });
 
   const handleNavigate = (data) => {
-    navigate(`../../../${path.board.base}/${data.boardId}/${data.id}`);
+    navigate(`../../../${path.board.base}/${data.boardId}/${data.postId}`);
   };
 
   return (
     <div className="flex flex-col w-full h-full">
       {isLoading ? (
         <Loading />
-      ) : !postList ? (
-        // data.inquiry.length === 0
+      ) : !postList.post ? (
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
