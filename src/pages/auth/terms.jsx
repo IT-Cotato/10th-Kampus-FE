@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainButton } from '../../components/common/MainButton';
 import { Term } from '../../components/join/term';
-import PreviousButton from '@/assets/imgs/previous.svg';
 import Check from '@/assets/imgs/check.svg?react';
 import detailedTerms from '@/constants/detailedTerms';
 import { TitleHeader } from '@/components/common/titleHeader';

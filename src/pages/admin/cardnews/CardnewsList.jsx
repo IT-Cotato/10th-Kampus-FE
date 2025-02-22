@@ -1,8 +1,4 @@
 import { useEffect, useState } from 'react';
-import bg1 from '@/assets/imgs/bg1.png';
-import bg2 from '@/assets/imgs/bg2.png';
-import bg3 from '@/assets/imgs/bg3.png';
-import bg4 from '@/assets/imgs/bg4.png';
 import menubar from '@/assets/imgs/menubar.svg';
 import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';

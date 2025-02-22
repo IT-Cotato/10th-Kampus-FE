@@ -1,6 +1,5 @@
 import {
   postSchoolEmailCodeSend,
-  postSchoolEmailCodeVerify,
 } from '@/apis/auth/postSchoolEmailCode.api';
 import { MainButton } from '@/components/common/MainButton';
 import { SkipHeader } from '@/components/join/SkipHeader';

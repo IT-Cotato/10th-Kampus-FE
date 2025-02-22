@@ -3,8 +3,7 @@ import { Loading } from '@/components/common/Loading';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const NoticeDetail = () => {
   const { noticeId } = useParams();

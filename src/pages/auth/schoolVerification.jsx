@@ -1,5 +1,3 @@
-import Prev from '@/assets/imgs/previous.svg?react';
-import { SkipButton } from '@/components/join/skipButtonShadow';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';

@@ -1,4 +1,3 @@
-import notification from '@/assets/imgs/notification.svg';
 import arrow from '@/assets/imgs/arrowRight.svg';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';

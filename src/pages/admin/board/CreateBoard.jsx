@@ -7,7 +7,6 @@ import { MainButton } from '@/components/common/MainButton';
 import { ShortInput } from '@/components/admin/ShortInput';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { postCreateBoard } from '@/apis/admin/postCreateBoard.api';
-import { toast } from 'react-toastify';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
 import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
