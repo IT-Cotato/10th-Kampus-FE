@@ -15,6 +15,18 @@ export const CreateCardnews = () => {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
 
+  const MAX_TITLE_LENGTH = 50;
+
+  /**
+   * 제목 글자수 제한
+   */
+  const handleOnChange = (e) => {
+    if (MAX_TITLE_LENGTH && e.target.value.length > MAX_TITLE_LENGTH) {
+      e.target.value = e.target.value.slice(0, MAX_TITLE_LENGTH);
+    }
+    setTitle(e.target.value);
+  };
+
   const getImageFiles = async (e) => {
     const newFiles = Array.from(e.target.files);
 
@@ -137,31 +149,39 @@ export const CreateCardnews = () => {
         <div className="grid grid-cols-2 gap-5">
           <div className="flex flex-col gap-5">
             {/* 카드뉴스 제목 입력칸 */}
-            <input
-              type="text"
-              placeholder="카드뉴스 제목"
-              value={title}
-              maxLength={50}
+            <div
               className={cn(
-                'w-full rounded-xl border border-neutral-border-40 px-3 py-2',
+                'box-border flex w-full flex-row gap-2 rounded-lg border border-neutral-border-40 px-3 py-2',
                 {
                   'border-primary-base': title,
                 },
               )}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            >
+              <input
+                type="text"
+                placeholder="카드뉴스 제목"
+                value={title}
+                onChange={handleOnChange}
+                autoComplete="off"
+                className="w-full"
+                required
+              />
+              <span className="flex justify-end text-sm w-fit text-neutral-border-50">
+                {title.length}/{MAX_TITLE_LENGTH}
+              </span>
+            </div>
 
             <textarea
               cols={3}
               rows={10}
               value={content}
-              className="flex w-full h-48 p-4 border resize-none rounded-xl border-neutral-border-40"
+              className="flex w-full h-48 p-4 border resize-none rounded-xl border-neutral-border-30"
               placeholder="카드뉴스 본문을 입력하세요."
               onChange={(e) => setContent(e.target.value)}
             />
 
             {/* 카드뉴스 사진 선택 */}
-            <div className="flex items-center justify-center w-full h-48 px-3 text-center align-middle border">
+            <div className="flex items-center justify-center w-full h-48 px-3 text-center align-middle border border-neutral-border-40">
               {/* 선택한 사진들 파일명 */}
               <div className="flex flex-col items-center w-full h-full gap-3 overflow-x-hidden overflow-y-auto text-center">
                 {files.length !== 0 ? (
@@ -226,11 +246,11 @@ export const CreateCardnews = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col items-center h-full gap-4 p-5 text-center border rounded-lg">
+          <div className="relative flex flex-col items-center h-full gap-4 p-5 text-center border rounded-lg">
             <h1 className="text-neutral-base">미리보기</h1>
             <div className="flex flex-col w-full align-top h-fit text-start">
               <h2
-                className={cn('flex min-h-10 h-fit text-pageTitle', {
+                className={cn('flex h-fit min-h-10 text-pageTitle', {
                   'text-neutral-border-50': !title,
                 })}
               >
@@ -247,49 +267,51 @@ export const CreateCardnews = () => {
                 {content ? content : '본문이 없습니다.'}
               </h2>
             </div>
-            <div className="relative flex justify-center h-60 w-60 lg:h-80 lg:w-80">
-              {previewIndex > 0 && (
-                <button
-                  type="button"
-                  className="absolute z-50 px-2 py-1 bg-white border left-3 top-1/2 rounded-xl border-primary-base text-primary-base"
-                  onClick={() => setPreviewIndex(previewIndex - 1)}
-                >
-                  이전
-                </button>
-              )}
-              {previewImages.length !== 0 &&
-                previewImages.map(
-                  (src, index) =>
-                    // 추후 사용자가 보는 카드뉴스 컴포넌트로 대체
-                    previewIndex === index && (
-                      <div
-                        className="flex justify-center w-full h-full border"
-                        key={index}
-                      >
-                        <img
-                          src={src}
-                          alt={`Preview ${index}`}
-                          className="object-cover"
-                        />
-                      </div>
-                    ),
+            <div className="flex items-center flex-1 align-middle">
+              <div className="relative flex justify-center h-60 w-60 lg:h-80 lg:w-80">
+                {previewIndex > 0 && (
+                  <button
+                    type="button"
+                    className="absolute z-50 px-2 py-1 bg-white border left-3 top-1/2 rounded-xl border-primary-base text-primary-base"
+                    onClick={() => setPreviewIndex(previewIndex - 1)}
+                  >
+                    이전
+                  </button>
                 )}
-              {previewIndex < files.length - 1 && (
-                <button
-                  type="button"
-                  className="absolute z-50 px-2 py-1 bg-white border right-3 top-1/2 rounded-xl border-primary-base text-primary-base"
-                  onClick={() => setPreviewIndex(previewIndex + 1)}
-                >
-                  다음
-                </button>
-              )}
+                {previewImages.length !== 0 &&
+                  previewImages.map(
+                    (src, index) =>
+                      // 추후 사용자가 보는 카드뉴스 컴포넌트로 대체
+                      previewIndex === index && (
+                        <div
+                          className="flex justify-center w-full h-full border"
+                          key={index}
+                        >
+                          <img
+                            src={src}
+                            alt={`Preview ${index}`}
+                            className="object-cover"
+                          />
+                        </div>
+                      ),
+                  )}
+                {previewIndex < files.length - 1 && (
+                  <button
+                    type="button"
+                    className="absolute z-50 px-2 py-1 bg-white border right-3 top-1/2 rounded-xl border-primary-base text-primary-base"
+                    onClick={() => setPreviewIndex(previewIndex + 1)}
+                  >
+                    다음
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* 카드뉴스 업로드 버튼 */}
             <button
               type="button"
               className={cn(
-                'w-full rounded-md bg-primary-base p-3 text-subTitle text-white',
+                'bottom-2 w-full rounded-md bg-primary-base p-3 text-subTitle text-white',
                 {
                   'bg-neutral-border-30': isUploadButtonDisabled,
                 },
