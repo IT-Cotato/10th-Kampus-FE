@@ -32,7 +32,7 @@ export const NoticeManagement = () => {
   };
 
   return (
-    <div className="flex flex-col flex-1 gap-5 px-5">
+    <div className="flex flex-col flex-1 gap-5">
       <div className="flex flex-col w-full gap-5 p-8 bg-white h-fit rounded-2xl">
         <h1 className="text-pageTitle">공지사항 작성</h1>
         <ButtonRound

@@ -66,7 +66,7 @@ export const CardnewsList = () => {
   }, [cardnewsListData]);
   
   return (
-    <div className="flex flex-col flex-1 gap-5 px-5">
+    <div className="flex flex-col flex-1 gap-5">
       <div className="flex flex-col w-full h-full gap-5 p-8 bg-white rounded-2xl">
         <h1 className="text-pageTitle">카드뉴스</h1>
         <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
