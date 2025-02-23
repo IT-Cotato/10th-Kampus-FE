@@ -87,10 +87,10 @@ export const Notification = () => {
                   onChange={handleClickAdvertisingNotificationToggle}
                 />
               </div>
-              <button type="button" className="flex">
+              <button type="button" className="flex" onClick={() => window.open("https://cedar-macaw-381.notion.site/Kampus-Community-Guidelines-193669a99d4780d7888ed1257d409589?pvs=4")}>
                 Terms of use
               </button>
-              <button type="button" className="flex">
+              <button type="button" className="flex" onClick={() => window.open("https://cedar-macaw-381.notion.site/Kampus-Community-Guidelines-193669a99d4780d7888ed1257d409589?pvs=4")}>
                 Privacy Policy
               </button>
               <div>v 0.0.0</div>
