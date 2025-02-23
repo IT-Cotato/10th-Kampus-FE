@@ -8,6 +8,7 @@ import { Translating } from '../common/Translating';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { translatePost } from '@/apis/translate/translatePost.api';
 import { QUERY_KEYS } from '@/constants/api';
+import { cn } from '@/utils/cn';
 export const PostList = ({ data, isActive, ...props }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -42,7 +43,7 @@ export const PostList = ({ data, isActive, ...props }) => {
   };
   return (
     <div
-      className="flex flex-col gap-3 pt-4 pb-3 cursor-pointer"
+      className="flex flex-col w-full gap-3 pt-4 pb-3 cursor-pointer"
       onClick={() => handleOnClick(data)}
     >
       {isActive /** 인기 게시판 레이아웃 */ && (
@@ -50,31 +51,43 @@ export const PostList = ({ data, isActive, ...props }) => {
           {data.boardName}
         </div>
       )}
-      <div className="flex justify-between gap-3">
-        <div className="relative flex flex-col line-clamp-3">
-          <h1 className="truncate text-subTitle text-neutral-title">
-            <span className={translatePending ? 'opacity-0' : 'opacity-100'}>
-              {translateState ? translatedPost.title : data?.title}
-            </span>
-          </h1>
-          <h2 className="line-clamp-2 text-neutral-base">
-            <span className={translatePending ? 'opacity-0' : 'opacity-100'}>
-              {translateState ? translatedPost.content : data?.content}
-            </span>
-          </h2>
+      <div className="flex justify-between w-full gap-3">
+        <div className="flex flex-col w-full">
+          <div className="flex w-full gap-3">
+            <div className="flex flex-col w-full">
+              <h1 className="flex w-full text-subTitle text-neutral-title">
+                <span
+                  className={cn('line-clamp-1', {
+                    'hidden': translatePending,
+                  })}
+                >
+                  {translateState ? translatedPost.title : data?.title}
+                </span>
+              </h1>
+              <h2 className="flex w-full line-clamp-2 text-neutral-base">
+              <span
+                  className={cn('line-clamp-2', {
+                    'hidden': translatePending,
+                  })}
+                >
+                  {translateState ? translatedPost.content : data?.content}
+                </span>
+              </h2>
+            </div>
+            {data.thumbnailUrl && (
+              <div className="flex flex-shrink-0 w-20 h-20">
+                <img
+                  src={data.thumbnailUrl}
+                  alt="post image"
+                  className="object-cover w-20 h-20"
+                />
+              </div>
+            )}
+          </div>
           {translatePending && (
             <div className="absolute left-0 -translate-y-1/2 top-1/2">
               <Translating width={'3rem'} height={'3rem'} />
             </div>
-          )}
-        </div>
-        <div className="min-h-20 min-w-20">
-          {data.thumbnailUrl && (
-            <img
-              src={data.thumbnailUrl}
-              alt="post image"
-              className="object-cover w-20 h-20"
-            />
           )}
         </div>
       </div>
