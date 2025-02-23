@@ -52,13 +52,13 @@ export const PostList = ({ data, isActive, ...props }) => {
         </div>
       )}
       <div className="flex justify-between w-full gap-3">
-        <div className="flex flex-col w-full">
+        <div className="relative flex flex-col w-full">
           <div className="flex w-full gap-3">
             <div className="flex flex-col w-full">
               <h1 className="flex w-full text-subTitle text-neutral-title">
                 <span
                   className={cn('line-clamp-1', {
-                    'hidden': translatePending,
+                    'opacity-0': translatePending,
                   })}
                 >
                   {translateState ? translatedPost.title : data?.title}
@@ -67,7 +67,7 @@ export const PostList = ({ data, isActive, ...props }) => {
               <h2 className="flex w-full line-clamp-2 text-neutral-base">
               <span
                   className={cn('line-clamp-2', {
-                    'hidden': translatePending,
+                    'opacity-0': translatePending,
                   })}
                 >
                   {translateState ? translatedPost.content : data?.content}
