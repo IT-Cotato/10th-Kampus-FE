@@ -59,7 +59,7 @@ export const StudentVerifications = () => {
     !selectedStatus || (selectedStatus === 'reject' && reason === '');
 
   return (
-    <div className="flex flex-col flex-1 gap-5 px-5">
+    <div className="flex flex-col flex-1 gap-5">
       {isLoading ? (
         <Loading />
       ) : (

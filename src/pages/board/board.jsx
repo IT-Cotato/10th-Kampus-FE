@@ -56,9 +56,9 @@ export const Board = () => {
     }
   }, [boardDetail])
   return (
-    <div className="w-full h-full">
+    <div className="flex flex-1">
       <PostHeader path={path} />
-      <div className="flex flex-col w-full h-full pt-14">
+      <div className="flex flex-col flex-1 pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
           <div className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-primary-10 py-2 text-small text-neutral-base"
             onClick={() => navigate(path.boardGuide)}>
@@ -67,7 +67,7 @@ export const Board = () => {
           {isActive.filter && <FilterBox />}
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
-        <div className="flex flex-col flex-1 w-full px-4 bg-white divide-y">
+        <div className="flex flex-col w-full px-4 bg-white divide-y">
           {isPostLoading &&
             <Loading />
           }

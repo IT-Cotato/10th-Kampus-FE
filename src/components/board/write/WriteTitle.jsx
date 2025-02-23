@@ -1,7 +1,9 @@
-import { TranslateButton } from '@/components/common/TranslateButton';
+export const WriteTitle = ({ title, setTitle, placeholder, maxLength = 0 }) => {
 
-export const WriteTitle = ({ title, setTitle, placeholder }) => {
   const handleOnChange = (e) => {
+    if(maxLength && e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
     setTitle(e.target.value);
   };
 
@@ -10,7 +12,7 @@ export const WriteTitle = ({ title, setTitle, placeholder }) => {
       <label htmlFor="writeTitle" className="text-subTitle">
         Title
       </label>
-      <div className="box-border flex w-full flex-row rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]">
+      <div className="box-border flex w-full flex-row rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem] gap-2">
         <input
           id="writeTitle"
           type="text"
@@ -21,6 +23,7 @@ export const WriteTitle = ({ title, setTitle, placeholder }) => {
           className="w-full leading-none placeholder-neutral-border-50"
           required
         />
+        {maxLength !== 0 && <span className="flex justify-end text-sm w-fit text-neutral-border-50">{title.length}/{maxLength}</span>}
       </div>
     </div>
   );

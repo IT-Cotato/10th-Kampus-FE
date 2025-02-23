@@ -110,6 +110,7 @@ export const Write = () => {
           title={title}
           setTitle={setTitle}
           placeholder="Please add a title."
+          maxLength={50}
         />
         {boardName && (boardName === 'Question' || boardName === 'Information') && (
           <SelectCategory

@@ -81,7 +81,7 @@ export const CreateNotice = () => {
   const disabled = !title || !content;
 
   return (
-    <div className="flex flex-col flex-1 gap-5 px-5">
+    <div className="flex flex-col flex-1 gap-5">
       <div className="flex flex-col h-full gap-5 p-8 bg-white rounded-2xl">
         <div className="flex h-10 gap-5">
           <div className="flex items-center gap-2 text-subTitle"></div>

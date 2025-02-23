@@ -7,7 +7,6 @@ import { MainButton } from '@/components/common/MainButton';
 import { ShortInput } from '@/components/admin/ShortInput';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { postCreateBoard } from '@/apis/admin/postCreateBoard.api';
-import { toast } from 'react-toastify';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
 import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
@@ -138,7 +137,7 @@ export const CreateBoard = () => {
     (isCategoryChecked && categoryList.length === 0);
 
   return (
-    <div className="flex flex-col flex-1 gap-5 px-5">
+    <div className="flex flex-col flex-1 gap-5">
       <div className="flex flex-col h-full gap-5 p-8 bg-white rounded-2xl">
         <div className="flex h-10 gap-5">
           <div className="flex items-center gap-2 text-subTitle">

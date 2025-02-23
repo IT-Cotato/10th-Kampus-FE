@@ -27,7 +27,7 @@ export const BoardManagement = () => {
   };
 
   const { mutate: inactivateBoard } = useMutation({
-    mutationFn: (boardId) => postInactivateBoard({ boardId : boardId }),
+    mutationFn: (boardId) => postInactivateBoard({ boardId: boardId }),
     onSuccess: () => {
       alert('게시판이 보관되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
@@ -46,7 +46,7 @@ export const BoardManagement = () => {
   };
 
   const { mutate: deleteBoard } = useMutation({
-    mutationFn: (boardId) => deleteAdminBoard({ boardId : boardId }),
+    mutationFn: (boardId) => deleteAdminBoard({ boardId: boardId }),
     onSuccess: () => {
       alert('게시판이 삭제되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
@@ -71,7 +71,7 @@ export const BoardManagement = () => {
   };
 
   const { mutate: activateBoard } = useMutation({
-    mutationFn: (boardId) => postActivateBoard({ boardId : boardId }),
+    mutationFn: (boardId) => postActivateBoard({ boardId: boardId }),
     onSuccess: () => {
       alert('게시판이 활성화되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
@@ -148,9 +148,9 @@ export const BoardManagement = () => {
   }, [boardData]);
 
   return (
-    <div className="flex flex-col flex-1 gap-5 px-5">
+    <div className="flex flex-col flex-1 gap-5">
       <div className="flex flex-col w-full gap-5 p-8 bg-white h-fit rounded-2xl">
-        <h1 className="text-pageTitle">가입 요청</h1>
+        <h1 className="text-pageTitle">게시판 관리</h1>
         <Dropdown
           selectedDropdown={selectedDropdown}
           dropdownOptions={BoardOptions}
@@ -164,7 +164,7 @@ export const BoardManagement = () => {
           boardList.map((board, index) => (
             <div
               key={board.boardId}
-              className="relative flex h-40 min-h-fit w-60 min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-[18.75rem]"
+              className="relative flex h-40 min-h-fit w-full min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-full"
             >
               <div className="relative flex flex-row items-center gap-3 text-center align-middle">
                 {selectedBoardMenu === board.boardId && (
@@ -181,7 +181,10 @@ export const BoardManagement = () => {
                 )}
                 <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
                   {selectedDropdown === '삭제 대기'
-                    ? 'D-' + (board.deletionCountdown === 0 ? 'day' : board.deletionCountdown)
+                    ? 'D-' +
+                      (board.deletionCountdown === 0
+                        ? 'day'
+                        : board.deletionCountdown)
                     : index + 1}
                 </span>
                 <h2 className="whitespace-nowrap">
@@ -191,16 +194,26 @@ export const BoardManagement = () => {
                   <img
                     src={menubar}
                     alt="menu"
-                    className="absolute px-2 -top-2 lg:top-0 -right-4 lg:right-0"
+                    className="absolute px-2 -right-4 -top-2 lg:right-0 lg:top-0"
                   />
                 </button>
               </div>
               {board.description}
+              {board.boardStatus === 'PENDING_DELETION' && selectedDropdown !== '삭제 대기' && (
+                  <span className="absolute bottom-3 right-5 text-primary-red">
+                    삭제 D-{board.deletionCountdown}
+                  </span>
+                )}
+              {board.boardStatus === 'INACTIVE' && selectedDropdown !== '보관' && (
+                <span className="absolute bottom-3 right-5 text-primary-red">
+                  비활성화
+                </span>
+              )}
             </div>
           ))}
         <button
           type="button"
-          className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-[18.75rem] lg:text-[10rem]"
+          className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-full lg:text-[10rem]"
           onClick={() => navigate(path.admin.boardManagement.create)}
         >
           <img src={Plus} />

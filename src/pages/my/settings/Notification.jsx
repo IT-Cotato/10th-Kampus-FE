@@ -3,6 +3,9 @@ import { TitleHeader } from '@/components/common/titleHeader';
 import { Toggle } from '@/components/common/toggle';
 
 export const Notification = () => {
+  const URL =
+    'https://cedar-macaw-381.notion.site/Kampus-Community-Guidelines-193669a99d4780d7888ed1257d409589?pvs=4';
+
   const [isToggled1, setIsToggled1] = useState(false); // 고정값 수정해야함
   const [isToggled2, setIsToggled2] = useState(false); // 고정값 수정해야함
   const [isToggled3, setIsToggled3] = useState(false); // 고정값 수정해야함
@@ -36,7 +39,7 @@ export const Notification = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <TitleHeader text="Notification & Information Agreements"></TitleHeader>
-      <div className="flex flex-col w-full h-full gap-12 px-4 py-[.625rem]">
+      <div className="flex h-full w-full flex-col gap-12 px-4 py-[.625rem]">
         <div className="flex text-neutral-base">
           Turn on the notification, you can check the popularity right away!
         </div>
@@ -87,10 +90,18 @@ export const Notification = () => {
                   onChange={handleClickAdvertisingNotificationToggle}
                 />
               </div>
-              <button type="button" className="flex">
+              <button
+                type="button"
+                className="flex"
+                onClick={() => window.open(URL)}
+              >
                 Terms of use
               </button>
-              <button type="button" className="flex">
+              <button
+                type="button"
+                className="flex"
+                onClick={() => window.open(URL)}
+              >
                 Privacy Policy
               </button>
               <div>v 0.0.0</div>

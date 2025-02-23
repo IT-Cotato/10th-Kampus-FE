@@ -22,7 +22,7 @@ export const WriteContent = ({ content, setContent, placeholder, maxLength = 0 }
             className="w-full leading-none resize-none placeholder-neutral-border-50"
             required
           />
-          {maxLength !== 0 && <span className="flex justify-end w-full text-sm text-neutral-border-50">{content.length}/1000</span>}
+          {maxLength !== 0 && <span className="flex justify-end w-full text-sm text-neutral-border-50">{content.length}/{maxLength}</span>}
         </div>
       </div>
     </div>

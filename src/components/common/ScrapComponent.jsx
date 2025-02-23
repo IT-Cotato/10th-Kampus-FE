@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addPostScrap, deletePostScrap } from '@/apis/board/togglePostScrap.api';
+import {
+  addPostScrap,
+  deletePostScrap,
+} from '@/apis/board/togglePostScrap.api';
 import { QUERY_KEYS } from '@/constants/api';
 export const ScrapComponent = ({
   state,
   width,
   height,
   id = undefined,
-  boardId = undefined
+  boardId = undefined,
 }) => {
   const queryClient = useQueryClient();
   const { postId } = useParams();
@@ -26,21 +29,31 @@ export const ScrapComponent = ({
       let previousPostList = null;
       if (postId !== id) {
         // 게시글 뷰
-        await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId] });
-        previousPostDetail = queryClient.getQueryData([QUERY_KEYS.GET_POST_DETAIL, postId]);
+        await queryClient.cancelQueries({
+          queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
+        });
+        previousPostDetail = queryClient.getQueryData([
+          QUERY_KEYS.GET_POST_DETAIL,
+          postId,
+        ]);
         queryClient.setQueryData([QUERY_KEYS.GET_POST_DETAIL, postId], (old) =>
-          old ? { ...old, isScrapped: !state } : old
+          old ? { ...old, isScrapped: !state } : old,
         );
       } else {
         // 카드뉴스 뷰
-        await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST, boardId] });
-        previousPostList = queryClient.getQueryData([QUERY_KEYS.GET_POST_LIST, boardId]);
+        await queryClient.cancelQueries({
+          queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
+        });
+        previousPostList = queryClient.getQueryData([
+          QUERY_KEYS.GET_POST_LIST,
+          boardId,
+        ]);
         queryClient.setQueryData([QUERY_KEYS.GET_POST_LIST, boardId], (old) => {
           if (!old?.posts) return old;
           return {
             ...old,
             posts: old.posts.map((post) =>
-              post.postId === postId ? { ...post, isScrapped: !state } : post
+              post.postId === postId ? { ...post, isScrapped: !state } : post,
             ),
           };
         });
@@ -50,27 +63,36 @@ export const ScrapComponent = ({
     },
     onError: (err, { postId }, context) => {
       if (postId !== id) {
-        queryClient.setQueryData([QUERY_KEYS.GET_POST_DETAIL, postId], context.previousPostDetail);
+        queryClient.setQueryData(
+          [QUERY_KEYS.GET_POST_DETAIL, postId],
+          context.previousPostDetail,
+        );
       } else {
-        queryClient.setQueryData([QUERY_KEYS.GET_POST_LIST, boardId], context.previousPostList);
+        queryClient.setQueryData(
+          [QUERY_KEYS.GET_POST_LIST, boardId],
+          context.previousPostList,
+        );
       }
     },
-    onSuccess: () => startAnimation(setScrapAni)
-    ,
+    onSuccess: () => startAnimation(setScrapAni),
     onSettled: (_, __, { postId }) => {
       if (postId !== id) {
-        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId] });
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
+        });
       } else {
-        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST, boardId] });
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
+        });
       }
-    }
+    },
   });
 
   const handleScrapClick = () => {
     handleScrap({ postId: actualId });
   };
   return (
-    <div>
+    <div style={{ width: `${width}`, height: `${height}` }}>
       {scrapAni && (
         <StateChangeAnimate
           state={!state}
