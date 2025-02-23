@@ -74,7 +74,7 @@ export const Home = () => {
           data={favoriteList?.previewList}
           boardTitle="Favorites"
         />
-        <BoardBox data={trendingList?.previewList} boardTitle="Trending" />
+        {trendingList.previewList.length !== 0 && <BoardBox data={trendingList?.previewList} boardTitle="Trending" />}
         <CardPostBox data={cardNewsList?.posts} />
       </div>
     </div>
