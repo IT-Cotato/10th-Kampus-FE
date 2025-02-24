@@ -25,6 +25,7 @@ import { addPostLike, deletePostLike } from '@/apis/board/togglePostLike.api';
 import { addCommentLike, deleteCommentLike } from '@/apis/comment/toggleCommentLike.api';
 import { translatePost } from '@/apis/translate/translatePost.api';
 import { Translating } from '@/components/common/Translating';
+import { TranslateButton } from '@/components/common/TranslateButton';
 export const Post = () => {
   const queryClient = useQueryClient();
   const { postId, boardId } = useParams();
@@ -195,11 +196,9 @@ export const Post = () => {
                   {postData && postData?.comments}
                 </div>
               </div>
-              <button onClick={() => {
-                translateState ? setTranslateState(false) : handleTranslate()
-              }}>
-                <Translate className="h-6 w-6 text-neutral-base" />
-              </button>
+              <TranslateButton handleTranslate={handleTranslate} size='large' color='base'
+                state={translateState} setState={setTranslateState}
+              />
             </div>
           </div>}
       </div>
