@@ -1,38 +1,20 @@
 import Like from '../../assets/imgs/like.svg?react';
 import Comment from '../../assets/imgs/comment.svg?react';
-import Translate from '../../assets/imgs/translate.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
-import { useState } from 'react';
 import { Translating } from '../common/Translating';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { translatePost } from '@/apis/translate/translatePost.api';
-import { QUERY_KEYS } from '@/constants/api';
 import { cn } from '@/utils/cn';
+import { TranslateButton } from '../common/TranslateButton';
+import { usePostTranslate } from '@/hooks/usePostTranslate';
 export const PostList = ({ data, isActive, ...props }) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [translateState, setTranslateState] = useState(false);
-  const [translatedPost, setTranslatedPost] = useState(null);
-  const { mutate: postTranslate, isPending: translatePending } = useMutation({
-    mutationFn: async (postId) => {
-      return await translatePost({ postId: postId });
-    },
-    onSuccess: (response, postId) => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_TRANSLATE_POST_LIST, postId],
-      });
-      setTranslatedPost(response);
-      setTranslateState(true);
-    },
-  });
-  const handleTranslate = () => {
-    if (translatedPost) {
-      setTranslateState(true);
-    } else {
-      postTranslate(data.id);
-    }
-  };
+  const {
+    translateState,
+    setTranslateState,
+    translatedPost,
+    translatePending,
+    handleTranslate
+  } = usePostTranslate(data.id)
 
   const handleOnClick = (data) => {
     if (props.onClick) {
@@ -65,7 +47,7 @@ export const PostList = ({ data, isActive, ...props }) => {
                 </span>
               </h1>
               <h2 className="flex w-full line-clamp-2 text-neutral-base">
-              <span
+                <span
                   className={cn('line-clamp-2', {
                     'opacity-0': translatePending,
                   })}
@@ -105,15 +87,10 @@ export const PostList = ({ data, isActive, ...props }) => {
             {formatTime(data.createdTime)}
           </p>
         </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            translateState ? setTranslateState(false) : handleTranslate();
-          }}
-        >
-          <Translate className="text-neutral-title" />
-        </button>
+        <TranslateButton handleTranslate={handleTranslate}
+          state={translateState} setState={setTranslateState}
+          size='small' color='title' />
       </div>
-    </div>
+    </div >
   );
 };
