@@ -5,7 +5,7 @@ import { formatTime } from '@/utils/formatTime';
 import { Translating } from '../common/Translating';
 import { cn } from '@/utils/cn';
 import { TranslateButton } from '../common/TranslateButton';
-import { usePostTranslate } from '@/hooks/use-PostTranslate';
+import { usePostTranslate } from '@/hooks/usePostTranslate';
 export const PostList = ({ data, isActive, ...props }) => {
   const navigate = useNavigate();
   const {

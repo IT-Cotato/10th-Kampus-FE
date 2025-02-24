@@ -10,7 +10,7 @@ export const BoardListBox = ({ list, listKey, togglePin }) => {
       {list.map((data, index) => (
         <BoardList
           data={data}
-          key={index}
+          key={data.order}
           listKey={listKey}
           index={index}
           togglePin={togglePin}

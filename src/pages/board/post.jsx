@@ -24,7 +24,7 @@ import { addPostLike, deletePostLike } from '@/apis/board/togglePostLike.api';
 import { addCommentLike, deleteCommentLike } from '@/apis/comment/toggleCommentLike.api';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
-import { usePostTranslate } from '@/hooks/use-PostTranslate';
+import { usePostTranslate } from '@/hooks/usePostTranslate';
 export const Post = () => {
   const queryClient = useQueryClient();
   const { postId, boardId } = useParams();
@@ -192,7 +192,7 @@ export const Post = () => {
       {/** 댓글 부분 */}
       <div className='flex flex-col pb-16'>
         {commentData && commentData.comments && commentData.comments.map((item, index) => (
-          <PostComment data={item} key={index} setInputFocus={setInputFocus}
+          <PostComment data={item} key={item.commentId} setInputFocus={setInputFocus}
             focusedComment={focusedComment} setFocusedComment={setFocusedComment}
             handleCommentLike={handleCommentLike} />
         ))}

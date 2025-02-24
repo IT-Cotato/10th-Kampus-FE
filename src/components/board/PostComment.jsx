@@ -7,7 +7,7 @@ import { useRef } from "react"
 import { cn } from "@/utils/cn"
 import { TranslateButton } from "../common/TranslateButton"
 import { Translating } from "../common/Translating"
-import { useCommentTranslate } from "@/hooks/use-CommentTranslate"
+import { useCommentTranslate } from "@/hooks/useCommentTranslate"
 export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment, handleCommentLike }) => {
     const commentRef = useRef(null);
     const {
@@ -39,7 +39,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                 <div className="flex  justify-between">
                     <div className="flex items-center gap-2">
                         <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                        <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
+                        <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonymity(Author)</span> : data.author}</p>
                         <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                     </div>
                     <div className="flex gap-1 text-neutral-base">
@@ -86,8 +86,8 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
 
             </div>
             {data.replies &&
-                data.replies.map((item, index) => (
-                    <ReplyComment reply={data.author} data={item} key={index} focusedComment={focusedComment} handleComment={handleComment}
+                data.replies.map((item) => (
+                    <ReplyComment reply={data.author} data={item} key={item.commentId} focusedComment={focusedComment} handleComment={handleComment}
                         handleCommentLike={handleCommentLike} />
                 ))
             }
@@ -113,7 +113,7 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
             <div className="flex  justify-between" >
                 <div className="flex items-center gap-2">
                     <img src={anonymous} className="w-[1.375rem] h-[1.375rem]" />
-                    <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonimity(Author)</span> : data.author}</p>
+                    <p>{data.author === "Author" ? <span className="text-[#2768FF]">Anonymity(Author)</span> : data.author}</p>
                     <p className="text-neutral-border-50">{formatTime(data.createdTime)}</p>
                 </div>
                 <button className="flex gap-[0.125rem] cursor-pointer"
@@ -133,7 +133,7 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
                     })}
                 >
                     <span className="text-primary-base">
-                        @{reply === "Author" ? "Anontmity(Author)" : reply}&nbsp;
+                        @{reply === "Author" ? "Anonymity(Author)" : reply}&nbsp;
                     </span>
                     {translateState ? translatedContent : data?.content}
                 </span>
