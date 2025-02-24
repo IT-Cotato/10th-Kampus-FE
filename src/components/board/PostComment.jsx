@@ -11,11 +11,16 @@ import { translateText } from "@/apis/translate/translateText.api"
 import { QUERY_KEYS } from "@/constants/api"
 import { TranslateButton } from "../common/TranslateButton"
 import { Translating } from "../common/Translating"
+import { useCommentTranslate } from "@/hooks/use-CommentTranslate"
 export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment, handleCommentLike }) => {
     const commentRef = useRef(null);
-    const queryClient = useQueryClient();
-    const [translateState, setTranslateState] = useState(false);
-    const [translatedContent, setTranslatedContent] = useState(null);
+    const {
+        translateState,
+        setTranslateState,
+        translatedContent,
+        translatePending,
+        handleTranslate
+    } = useCommentTranslate(data.commentId)
     const handleComment = (ref, commentId, parentId) => {
         ref.current?.scrollIntoView({
             behavior: "smooth",
@@ -27,23 +32,6 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
         })
         setInputFocus(true)
     }
-    const { mutate: commentTranslate, isPending: translatePending } = useMutation({
-        mutationFn: async (content) => {
-            return await translateText({ content: content })
-        },
-        onSuccess: (translatedContent) => {
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_TEXT, data.commentId] });
-            setTranslateState(true);
-            setTranslatedContent(translatedContent.content)
-        }
-    })
-    const handleTranslate = () => {
-        if (translatedContent) {
-            setTranslateState(true);
-        } else {
-            commentTranslate(data.content);
-        }
-    };
     return (
         <>
             <div ref={commentRef}
@@ -97,7 +85,7 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         Reply
                     </div>
                     <TranslateButton size="small" color="base" state={translateState} setState={setTranslateState}
-                        handleTranslate={handleTranslate} />
+                        handleTranslate={() => handleTranslate(data.content)} />
                 </div>
 
             </div>
@@ -112,26 +100,13 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
 }
 const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommentLike }) => {
     const commentRef = useRef(null);
-    const queryClient = useQueryClient();
-    const [translateState, setTranslateState] = useState(false);
-    const [translatedContent, setTranslatedContent] = useState(null);
-    const { mutate: commentTranslate, isPending: translatePending } = useMutation({
-        mutationFn: async (content) => {
-            return await translateText({ content: content })
-        },
-        onSuccess: (translatedContent) => {
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_TEXT, data.commentId] });
-            setTranslateState(true);
-            setTranslatedContent(translatedContent.content)
-        }
-    })
-    const handleTranslate = () => {
-        if (translatedContent) {
-            setTranslateState(true);
-        } else {
-            commentTranslate(data.content);
-        }
-    };
+    const {
+        translateState,
+        setTranslateState,
+        translatedContent,
+        translatePending,
+        handleTranslate
+    } = useCommentTranslate(data.commentId)
     return (
         <div ref={commentRef}
             className={cn("flex flex-col gap-2 pl-[2.8125rem] pr-4 py-[0.9375rem] text-base",
@@ -181,7 +156,7 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
                     Reply
                 </div>
                 <TranslateButton size="small" color="base" state={translateState} setState={setTranslateState}
-                    handleTranslate={handleTranslate} />
+                    handleTranslate={() => handleTranslate(data.content)} />
             </div>
         </div >
     )
