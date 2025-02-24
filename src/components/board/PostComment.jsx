@@ -4,10 +4,18 @@ import FillLike from "@/assets/imgs/fillLike.svg?react"
 import Comment from "@/assets/imgs/comment.svg?react"
 import Translate from "@/assets/imgs/translate.svg?react"
 import { formatTime } from "@/utils/formatTime"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { cn } from "@/utils/cn"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { translateText } from "@/apis/translate/translateText.api"
+import { QUERY_KEYS } from "@/constants/api"
+import { TranslateButton } from "../common/TranslateButton"
+import { Translating } from "../common/Translating"
 export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedComment, handleCommentLike }) => {
     const commentRef = useRef(null);
+    const queryClient = useQueryClient();
+    const [translateState, setTranslateState] = useState(false);
+    const [translatedContent, setTranslatedContent] = useState(null);
     const handleComment = (ref, commentId, parentId) => {
         ref.current?.scrollIntoView({
             behavior: "smooth",
@@ -19,7 +27,23 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
         })
         setInputFocus(true)
     }
-
+    const { mutate: commentTranslate, isPending: translatePending } = useMutation({
+        mutationFn: async (content) => {
+            return await translateText({ content: content })
+        },
+        onSuccess: (translatedContent) => {
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_TEXT, data.commentId] });
+            setTranslateState(true);
+            setTranslatedContent(translatedContent.content)
+        }
+    })
+    const handleTranslate = () => {
+        if (translatedContent) {
+            setTranslateState(true);
+        } else {
+            commentTranslate(data.content);
+        }
+    };
     return (
         <>
             <div ref={commentRef}
@@ -50,8 +74,19 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         </button>
                     </div>
                 </div>
-                <p className="text-neutral-base leading-normal whitespace-pre-line">
-                    {data.content}
+                <p className="relative text-neutral-base leading-normal whitespace-pre-line">
+                    <span
+                        className={cn({
+                            'opacity-0': translatePending,
+                        })}
+                    >
+                        {translateState ? translatedContent : data?.content}
+                    </span>
+                    {translatePending && (
+                        <div className="absolute left-0 -translate-y-1/2 top-1/2">
+                            <Translating width={'1.75rem'} height={'1.75rem'} />
+                        </div>
+                    )}
                 </p>
                 <div className="flex justify-between">
                     <div className="text-neutral-border-50"
@@ -61,8 +96,10 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
                         }}>
                         Reply
                     </div>
-                    <Translate className="w-[1.125rem] h-[1.125rem] text-neutral-base" />
+                    <TranslateButton size="small" color="base" state={translateState} setState={setTranslateState}
+                        handleTranslate={handleTranslate} />
                 </div>
+
             </div>
             {data.replies &&
                 data.replies.map((item, index) => (
@@ -75,6 +112,26 @@ export const PostComment = ({ data, setInputFocus, focusedComment, setFocusedCom
 }
 const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommentLike }) => {
     const commentRef = useRef(null);
+    const queryClient = useQueryClient();
+    const [translateState, setTranslateState] = useState(false);
+    const [translatedContent, setTranslatedContent] = useState(null);
+    const { mutate: commentTranslate, isPending: translatePending } = useMutation({
+        mutationFn: async (content) => {
+            return await translateText({ content: content })
+        },
+        onSuccess: (translatedContent) => {
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_TEXT, data.commentId] });
+            setTranslateState(true);
+            setTranslatedContent(translatedContent.content)
+        }
+    })
+    const handleTranslate = () => {
+        if (translatedContent) {
+            setTranslateState(true);
+        } else {
+            commentTranslate(data.content);
+        }
+    };
     return (
         <div ref={commentRef}
             className={cn("flex flex-col gap-2 pl-[2.8125rem] pr-4 py-[0.9375rem] text-base",
@@ -98,9 +155,22 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
                     <p className="min-w-[.625rem] text-neutral-base">{data.likes}</p>
                 </button>
             </div>
-            <p className="text-neutral-base leading-normal whitespace-pre-line">
-                <span className="text-primary-base">@{reply === "Author" ? "Anontmity(Author)" : reply}&nbsp;</span>
-                {data.content}
+            <p className="relative text-neutral-base leading-normal whitespace-pre-line">
+                <span
+                    className={cn({
+                        'opacity-0': translatePending,
+                    })}
+                >
+                    <span className="text-primary-base">
+                        @{reply === "Author" ? "Anontmity(Author)" : reply}&nbsp;
+                    </span>
+                    {translateState ? translatedContent : data?.content}
+                </span>
+                {translatePending && (
+                    <div className="absolute left-0 -translate-y-1/2 top-1/2">
+                        <Translating width={'1.75rem'} height={'1.75rem'} />
+                    </div>
+                )}
             </p>
             <div className="flex justify-between">
                 <div className="text-neutral-border-50"
@@ -110,7 +180,8 @@ const ReplyComment = ({ reply, data, focusedComment, handleComment, handleCommen
                     }}>
                     Reply
                 </div>
-                <Translate className="w-[1.125rem] h-[1.125rem] text-neutral-base" />
+                <TranslateButton size="small" color="base" state={translateState} setState={setTranslateState}
+                    handleTranslate={handleTranslate} />
             </div>
         </div >
     )
