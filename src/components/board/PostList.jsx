@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { translatePost } from '@/apis/translate/translatePost.api';
 import { QUERY_KEYS } from '@/constants/api';
 import { cn } from '@/utils/cn';
+import { TranslateButton } from '../common/TranslateButton';
 export const PostList = ({ data, isActive, ...props }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -65,7 +66,7 @@ export const PostList = ({ data, isActive, ...props }) => {
                 </span>
               </h1>
               <h2 className="flex w-full line-clamp-2 text-neutral-base">
-              <span
+                <span
                   className={cn('line-clamp-2', {
                     'opacity-0': translatePending,
                   })}
@@ -105,6 +106,7 @@ export const PostList = ({ data, isActive, ...props }) => {
             {formatTime(data.createdTime)}
           </p>
         </div>
+        <TranslateButton />
         <button
           onClick={(e) => {
             e.stopPropagation();

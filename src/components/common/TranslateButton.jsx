@@ -1,4 +1,4 @@
-import TranslateImg from '@/assets/imgs/translate.svg';
+import TranslateImg from '@/assets/imgs/translate.svg?react';
 
 /** 번역 컴포넌트
  * @param {Object} props - 컴포넌트의 props
@@ -6,7 +6,7 @@ import TranslateImg from '@/assets/imgs/translate.svg';
  * @param {number | string} props.value - post 번역 시 number, 작성 중인 글 본문이나 단순 text 번역 시 string
  * @param {function} props.setValue - 해당 함수로 번역된 텍스트 전달
  */
-export const TranslateButton = ({ translateType, value, setValue }) => {
+export const TranslateButton = ({ translateType, value, setValue, state, setState, width, height, color }) => {
   const translate = () => {
     if (value || value === 0) {
       if (translateType === 'post') {
@@ -26,7 +26,7 @@ export const TranslateButton = ({ translateType, value, setValue }) => {
 
   return (
     <button type="button" onClick={translate}>
-      <img src={TranslateImg} alt="" className="h-[1.375rem] w-[1.375rem]" />
+      <TranslateImg alt="Translate" className={`w-[${width}] h-[${height}] text-[${color}]`} />
     </button>
   );
 };

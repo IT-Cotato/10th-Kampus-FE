@@ -21,10 +21,12 @@ export const Home = () => {
     month: 'long',
     day: 'numeric',
   }); // "May 5, 2025" 형식
-  const { data: univeristyList, isLoading: universityLoading, error: universityError } = useQuery({
+  // 현재 백엔드에서 학교 게시판을 자동적으로 못 만들어서 세종대학교 인증하고 오류 떠서 막아 놨습니다
+  /*const { data: univeristyList, isLoading: universityLoading, error: universityError } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_UNIVERISTY],
     queryFn: getUniversity,
-  })
+    throwOnError: true,
+  })*/
   const { data: favoriteList, isLoading: favoriteLoading, error: favoriteError } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_FAVORITE],
     queryFn: getFavorite,
@@ -42,13 +44,13 @@ export const Home = () => {
     queryFn: getUser,
   })
   const [isNotification, setIsNotification] = useState(false);
-  
+
   return (
     <div className="flex w-full flex-col px-4 py-3 gap-[.625rem]">
       <div className="flex items-start justify-between pb-[.625rem]">
         <Logo className="w-[6rem] h-auto text-primary-base" />
         <div className="flex gap-[0.875rem]">
-        <NotificationButton isNotification={isNotification} />
+          <NotificationButton isNotification={isNotification} />
           <button
             className="cursor-pointer"
             onClick={() => navigate(path.search)}
@@ -67,9 +69,9 @@ export const Home = () => {
           </h1>
           {/*  <h2 className="text-base text-primary-red">Holiday-KR</h2> */}
         </div>
-        {userDetail?.universityId !== -1 && (
+        {/*{userDetail?.universityId !== -1 && !universityError && (
           <BoardBox data={univeristyList} boardTitle="My univ" university={true} />
-        )}
+        )}*/}
         <BoardBox
           data={favoriteList?.previewList}
           boardTitle="Favorites"
