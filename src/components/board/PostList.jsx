@@ -106,16 +106,10 @@ export const PostList = ({ data, isActive, ...props }) => {
             {formatTime(data.createdTime)}
           </p>
         </div>
-        <TranslateButton />
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            translateState ? setTranslateState(false) : handleTranslate();
-          }}
-        >
-          <Translate className="text-neutral-title" />
-        </button>
+        <TranslateButton handleTranslate={handleTranslate}
+          state={translateState} setState={setTranslateState}
+          size='small' color='title' />
       </div>
-    </div>
+    </div >
   );
 };

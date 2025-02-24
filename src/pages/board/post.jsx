@@ -95,9 +95,6 @@ export const Post = () => {
     };
     handleComment({ type: true, param: postId, data: buildComment });
   }
-  useEffect(() => {
-    console.log(commentData)
-  })
   const handleTranslate = () => {
     if (translatedPost) {
       setTranslateState(true);
