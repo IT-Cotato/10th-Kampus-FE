@@ -1,13 +1,12 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { path } from '@/routes/path';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
 import kampus from '@/assets/imgs/kampusPost.svg';
 import Like from '@/assets/imgs/like.svg?react';
 import FillLike from '@/assets/imgs/fillLike.svg?react';
 import Comment from '@/assets/imgs/comment.svg?react';
-import Translate from '@/assets/imgs/translate.svg?react';
 import { ImageSlider } from '@/components/common/ImageSlider';
 import { UserInput } from '@/components/common/userInput';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
@@ -23,12 +22,19 @@ import { addComment } from '@/apis/comment/addComment.api';
 import { deleteComment } from '@/apis/comment/deleteComment.api';
 import { addPostLike, deletePostLike } from '@/apis/board/togglePostLike.api';
 import { addCommentLike, deleteCommentLike } from '@/apis/comment/toggleCommentLike.api';
-import { translatePost } from '@/apis/translate/translatePost.api';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
+import { usePostTranslate } from '@/hooks/use-PostTranslate';
 export const Post = () => {
   const queryClient = useQueryClient();
   const { postId, boardId } = useParams();
+  const {
+    translateState,
+    setTranslateState,
+    translatedPost,
+    translatePending,
+    handleTranslate
+  } = usePostTranslate(postId)
   const { data: postData, isLoading: postLoading, error: postError } = useQuery({
     queryFn: () => getPostDetail({ postId: postId }),
     queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId]
@@ -67,21 +73,10 @@ export const Post = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId] });
     }
   })
-  const { mutate: postTranslate, isPending: translatePending } = useMutation({
-    mutationFn: async () => {
-      return await translatePost({ postId: postId })
-    },
-    onSuccess: (translatedPost) => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRANSLATE_POST, postId] });
-      setTranslateState(true);
-      setTranslatedPost(translatedPost)
-    }
-  })
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
   const [input, setInput] = useState('');
-  const [translateState, setTranslateState] = useState(false);
-  const [translatedPost, setTranslatedPost] = useState(null);
+
   const [imageFocus, setImageFocus] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [style, setStyle] = useState({
@@ -95,14 +90,6 @@ export const Post = () => {
       targetId: focusedComment?.targetId
     };
     handleComment({ type: true, param: postId, data: buildComment });
-  }
-  const handleTranslate = () => {
-    if (translatedPost) {
-      setTranslateState(true);
-    }
-    else {
-      postTranslate();
-    }
   }
   return (
     <div className='w-full h-full' onClick={() => {
