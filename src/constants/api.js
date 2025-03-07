@@ -76,6 +76,7 @@ export const API_DOMAINS = {
   INQUIRY: '/support/inquiry',
   GET_INQUIRY_DETAILS: '/support/inquiry/:inquiryId',
 
+  ADMIN_USER: '/admin/users/details',
   ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
   ADMIN_VERIFICATION_DETAILS: '/admin/student-verifications/:verificationRecordId',
   ADMIN_VERIFICATION_REJECT: '/admin/student-verifications/:verificationRecordId/reject',
@@ -85,7 +86,7 @@ export const API_DOMAINS = {
 export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
-  GET_USER_ME: 'me',
+  GET_ADMIN_USER_ME: 'adminUser',
   GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
   GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
   CHAT_LIST: 'chatList',

@@ -1,5 +1,13 @@
+import { getUser } from '@/apis/user/userDetail.api';
 import User from '@/assets/imgs/admin/User.svg?react';
+import { QUERY_KEYS } from '@/constants/api';
+import { useQuery } from '@tanstack/react-query';
 export const Dashboard = () => {
+  const { data: userData } = useQuery({
+    queryKey: [QUERY_KEYS.GET_ADMIN_USER_ME],
+    queryFn: () => getUser(),
+  });
+
   const handleAdministratorPermissionSettings = () => {
     //  관리자 권한 설정 페이지로 이동
   };
@@ -20,10 +28,13 @@ export const Dashboard = () => {
         <div className="flex flex-col items-center justify-center gap-6 rounded-xl bg-white px-10 pb-5 pt-6 text-center align-middle lg:px-14 lg:pb-6 lg:pt-10">
           <User className="w-24 lg:w-32" />
           <div>
-            <h1 className="text-pageTitle lg:text-title">
-              김감자<span className="text-subTitle lg:text-pageTitle">님</span>
+            <h1 className="flex flex-row items-end justify-center text-pageTitle lg:text-title">
+              {userData?.nickname}
+              <span className="text-subTitle lg:text-pageTitle">님</span>
             </h1>
             <div className="text-subTitle">관리자</div>
+            <div className="text-subTitle">id: {userData?.id}</div>
+            <div className="text-subTitle">{userData?.email}</div>
           </div>
           <div></div>
         </div>
