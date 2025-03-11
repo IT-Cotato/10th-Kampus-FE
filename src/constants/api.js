@@ -39,6 +39,8 @@ export const API_DOMAINS = {
   BOARD_FAVORITE: '/boards/favorite',
 
   POST_CREATE: '/posts',
+  POST_SAVE_DRAFT: '/posts/draft',
+  POST_EDIT_DRAFT: '/posts/draft/:postDraftId',
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
   POST_WRITE: '/posts',
@@ -76,6 +78,7 @@ export const API_DOMAINS = {
   INQUIRY: '/support/inquiry',
   GET_INQUIRY_DETAILS: '/support/inquiry/:inquiryId',
 
+  ADMIN_USER: '/admin/users/details',
   ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
   ADMIN_VERIFICATION_DETAILS: '/admin/student-verifications/:verificationRecordId',
   ADMIN_VERIFICATION_REJECT: '/admin/student-verifications/:verificationRecordId/reject',
@@ -85,7 +88,7 @@ export const API_DOMAINS = {
 export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
-  GET_USER_ME: 'me',
+  GET_ADMIN_USER_ME: 'adminUser',
   GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
   GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
   CHAT_LIST: 'chatList',
@@ -97,6 +100,7 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
+  GET_POST_DRAFT_ID: 'postDraftId',
 
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',

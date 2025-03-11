@@ -14,25 +14,40 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
+import { Loading } from '@/components/common/Loading';
+import { postSaveDraft } from '@/apis/board/postSaveDraft.api';
+
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId } = useParams();
   const { state } = useLocation();
-  const { mutate: addPost, isPending: postPending, isError: postError } = useMutation({
+
+  const {
+    mutate: addPost,
+    isPending: postPending,
+    isError: postError,
+  } = useMutation({
     mutationFn: (newPost) => postWritePost({ data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`${path.board.base}/${boardId}/${createdPostId}`, { replace: true })
-    }
-  })
-  const { mutate: setTranslate, isPending: translatePending, isError: translateError } = useMutation({
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
+        replace: true,
+      });
+    },
+  });
+
+  const {
+    mutate: setTranslate,
+    isPending: translatePending,
+    isError: translateError,
+  } = useMutation({
     mutationFn: (data) => writePostTranslate(data),
     onSuccess: (response) => {
-      setTranslatedTitle(response.title)
-      setTranslatedContent(response.content)
-    }
-  })
+      setTranslatedTitle(response.title);
+      setTranslatedContent(response.content);
+    },
+  });
 
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -42,7 +57,10 @@ export const Write = () => {
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
+  const [postDraftId, setPostDraftId] = useState(null);
   const disabled = !title || !content;
+  const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
+
   const handleUpload = async () => {
     const formData = new FormData();
 
@@ -61,49 +79,93 @@ export const Write = () => {
     }
     addPost(formData);
   };
+
   const handleCancelTranslatePopup = () => {
     setIsPopup(false);
     setTranslatedTitle(null);
     setTranslatedContent(null);
-  }
+  };
+
   const handleTranslateAndUpload = () => {
-    setIsPopup(true)
+    setIsPopup(true);
     const buildData = () => {
       return {
         title: title,
         content: content,
-        targetLanguageCode: "EN-US"
-      }
-    }
-    setTranslate({ data: buildData() })
+        targetLanguageCode: 'EN-US',
+      };
+    };
+    setTranslate({ data: buildData() });
   };
+
+  const {
+    mutate: saveDraft,
+    isPending: saveDraftPending,
+    isError: saveDraftError,
+  } = useMutation({
+    mutationFn: (draft) => postSaveDraft({ data: draft }),
+    onSuccess: (response) => {
+      const postDraftId = response.postDraftId;
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_DRAFT_ID],
+      });
+    },
+  });
+
+  const handleSaveDraft = async () => {
+    const formData = new FormData();
+
+    formData.append('boardId', boardId);
+    formData.append('title', title);
+    formData.append('content', content);
+
+    if (selectedCategory) {
+      formData.append('postCategory', selectedCategory);
+    }
+
+    if (uploadedFiles.length > 0) {
+      uploadedFiles.forEach((file) => {
+        formData.append(`images`, file); // 각 파일을 개별적으로 추가
+      });
+    }
+
+    saveDraft(formData);
+  };
+
   useEffect(() => {
-    if (!state) { // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
+    if (!state) {
+      // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
       navigate(-1);
     }
-  }, [state, navigate])
+  }, [state, navigate]);
 
   if (!state) return null;
-  const { boardName } = state
+  const { boardName } = state;
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className="grid items-center w-full grid-cols-3 px-4 pt-4 pb-3">
+    <div className="flex h-full w-full flex-col">
+      <div className="grid w-full grid-cols-3 items-center px-4 pb-3 pt-4">
         <button type="button">
           <X
-            className="w-6 h-6 p-1 text-neutral-title"
+            className="h-6 w-6 p-1 text-neutral-title"
             onClick={() => navigate(-1)}
           />
         </button>
         <span className="flex justify-center text-pageTitle text-neutral-title">
           Write
         </span>
-        {/* 임시저장 추후 구현 */}
-        {/* <span className="flex items-center justify-end gap-2 text-neutral-border-50">
-          <button type="button">Save Draft</button>
+        {/* 임시저장 */}
+        <span className="flex items-center justify-end gap-2 text-neutral-border-50">
+          <button
+            type="button"
+            onClick={handleSaveDraft}
+            disabled={saveDraftDisabled}
+          >
+            Save Draft
+          </button>
           <span>|</span>
           <button type="button">00</button>
-        </span> */}
+        </span>
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         <WriteTitle
@@ -112,12 +174,13 @@ export const Write = () => {
           placeholder="Please add a title."
           maxLength={50}
         />
-        {boardName && (boardName === 'Question' || boardName === 'Information') && (
-          <SelectCategory
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
-        )}
+        {boardName &&
+          (boardName === 'Question' || boardName === 'Information') && (
+            <SelectCategory
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+          )}
         <WriteContent
           content={content}
           setContent={setContent}
@@ -134,7 +197,6 @@ export const Write = () => {
           </MainButton>
         </div>
       </div>
-      {/** props의 isLoading은 useQuery 이용 예정 */}
       {isPopup &&
         createPortal(
           <TranslatePopup
@@ -144,7 +206,7 @@ export const Write = () => {
             onClickRight={() => handleUpload()}
             isLoading={translatePending}
           />,
-          document.getElementById('modal-root')
+          document.getElementById('modal-root'),
         )}
     </div>
   );
