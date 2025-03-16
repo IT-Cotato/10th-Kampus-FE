@@ -120,7 +120,7 @@ export const Board = () => {
                 />
               ),
             )}
-          {isPostPending ? <Loading /> : <div ref={ref} />}
+          {isPostPending && hasNextPostList ? <Loading /> : <div ref={ref} />}
         </div>
         {boardDetail &&
           boardDetail.boardName !== 'Trending' &&
