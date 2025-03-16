@@ -13,8 +13,10 @@ import {
 } from '@/apis/board/getPostList.api';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
+import { useInView } from 'react-intersection-observer';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
+import { PostListSkeleton } from '@/components/board/PostListSkeleton';
 
 export const Board = () => {
   const { boardId } = useParams();
@@ -22,6 +24,7 @@ export const Board = () => {
   const {
     data: postList,
     isLoading: isPostLoading,
+    isPending: isPostPending,
     error: isPostError,
   } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
@@ -84,6 +87,7 @@ export const Board = () => {
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
         <div className="flex w-full flex-col divide-y bg-white px-4">
+          <PostListSkeleton />
           {isPostLoading && <Loading />}
           {isPostError && <p>Error Data Loading</p>}
           {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
