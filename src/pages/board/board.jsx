@@ -21,21 +21,28 @@ import { PostListSkeleton } from '@/components/board/PostListSkeleton';
 export const Board = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const { ref, inView } = useInView();
   const {
     data: postList,
+    fetchNextPage: fetchNextPostList,
+    hasNextPage: hasNextPostList,
     isLoading: isPostLoading,
     isPending: isPostPending,
     error: isPostError,
-  } = useQuery({
+  } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
-    queryFn: () => {
+    queryFn: ({ pageParam = 1 }) => {
       if (boardId === '5') {
-        return getCardNewsList({ page: 1 });
+        return getCardNewsList({ page: pageParam });
       } else if (boardId === '4') {
-        return getTrendingList({ page: 1 });
+        return getTrendingList({ page: pageParam });
       } else {
-        return getPostList({ boardId: boardId, page: 1 });
+        return getPostList({ boardId: boardId, page: pageParam });
       }
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.hasNext ? allPages.length + 1 : undefined;
     },
   });
   const {
@@ -72,6 +79,13 @@ export const Board = () => {
       checkIsActive();
     }
   }, [boardDetail]);
+  useEffect(() => {
+    if (inView && hasNextPostList) {
+      fetchNextPostList();
+    }
+  }, [inView, hasNextPostList, fetchNextPostList]);
+
+  const posts = postList?.pages?.map((page) => page.posts).flat() || [];
   return (
     <div className="flex flex-1">
       <PostHeader path={path} />
@@ -87,15 +101,15 @@ export const Board = () => {
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
         <div className="flex w-full flex-col divide-y bg-white px-4">
-          <PostListSkeleton />
-          {isPostLoading && <Loading />}
+          {isPostLoading &&
+            [...Array(8)].map((_, index) => <PostListSkeleton key={index} />)}
           {isPostError && <p>Error Data Loading</p>}
           {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
           {!isPostLoading &&
             !isPostError &&
-            postList.posts &&
-            postList.posts.length > 0 &&
-            postList.posts.map((item, index) =>
+            posts &&
+            posts.length > 0 &&
+            posts.map((item, index) =>
               isActive.scrap ? (
                 <TipsPostList key={index} data={item} boardId={boardId} />
               ) : (
@@ -106,6 +120,7 @@ export const Board = () => {
                 />
               ),
             )}
+          {isPostPending ? <Loading /> : <div ref={ref} />}
         </div>
         {boardDetail &&
           boardDetail.boardName !== 'Trending' &&
