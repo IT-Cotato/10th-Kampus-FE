@@ -1,16 +1,5 @@
 import Close from '@/assets/imgs/x.svg?react';
 export const RecentSearch = ({ startSearch, data, deleteKeyword }) => {
-  const recentData = [
-    'Hospital',
-    'Food',
-    'Food',
-    'Universityeeeeeeeee',
-    'Universityeeeeeeeee',
-    'Hospital',
-    'University',
-    'Food',
-  ];
-  const emptyData = [];
   const RecordBox = ({ data }) => {
     return (
       <div className="flex cursor-pointer items-center gap-[0.625rem] rounded-full border border-neutral-border-30 px-3 py-[0.3125rem]">
@@ -37,9 +26,11 @@ export const RecentSearch = ({ startSearch, data, deleteKeyword }) => {
           Recent searches
         </h1>
         {/** 아래 삭제 누를 시, 서버와 통신하여 최근 검색 기록 전체 삭제 */}
-        <h2 className="text-base text-neutral-border-40">Delete all</h2>
+        <button onClick={() => deleteKeyword(null)}>
+          <h2 className="text-base text-neutral-border-40">Delete all</h2>
+        </button>
       </div>
-      {recentData.length ? (
+      {data?.keywords?.length ? (
         <div className="flex max-h-24 flex-wrap gap-3 overflow-hidden">
           {data?.keywords.map((item, index) => (
             <RecordBox data={item} key={index} />
