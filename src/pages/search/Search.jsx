@@ -11,26 +11,40 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getSearcTotalResult } from '@/apis/search/searchTotal.api';
 import { getSearchKeywords } from '@/apis/search/searchKeywords.api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { path } from '@/routes/path';
 import {
   deleteAllSearchKeyword,
   deleteSearchKeyword,
 } from '@/apis/search/searchDeleteKeyword.api';
+import { getSearcBoardResult } from '@/apis/search/searchBoard.api';
 export const Search = () => {
+  const { boardId } = useParams();
   const [isSearch, setIsSearch] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const [isAnimate, setIsAnimate] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const searchQueryKey = boardId
+    ? [QUERY_KEYS.GET_POST_LIST, boardId, searchValue]
+    : [QUERY_KEYS.GET_POST_LIST, searchValue];
   const {
     data: searchResult,
     isLoading: searchLoading,
     error: searchError,
   } = useQuery({
-    queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, searchValue],
-    queryFn: () => getSearcTotalResult({ keyword: searchValue, page: 1 }),
+    queryKey: searchQueryKey,
+    queryFn: () => {
+      if (boardId) {
+        return getSearcBoardResult({
+          keyword: searchValue,
+          page: 1,
+          boardId: boardId,
+        });
+      }
+      return getSearcTotalResult({ keyword: searchValue, page: 1 });
+    },
     enabled: searchValue.length >= 2 && searchValue.length <= 10,
   });
   const {
@@ -63,7 +77,7 @@ export const Search = () => {
     }
   };
   const handleNavigate = (data) => {
-    navigate(path.board.base + '/' + data.boardId + '/' + data.id);
+    navigate(`${path.board.base}/${data.boardId}/${data.id}`);
   };
   return (
     <div className="container flex flex-col gap-[0.875rem] px-4 pt-[0.625rem]">
