@@ -6,25 +6,30 @@ import { Loading } from '../common/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
-import { cn } from '@/utils/cn';
+
 export const PostHeader = ({ path, isAuthor = false }) => {
   const navigate = useNavigate();
   const { boardId } = useParams();
-  const { data: boardDetail, isLoading: isBoardLoading, error: isBoardError } = useQuery({
+  const {
+    data: boardDetail,
+    isLoading: isBoardLoading,
+    error: isBoardError,
+  } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
-    queryFn: () => getBoardDetail({ boardId: boardId })
-  })
+    queryFn: () => getBoardDetail({ boardId: boardId }),
+  });
   return (
     <div className="fixed z-10 flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
-      {!isBoardLoading && !isBoardError && boardDetail.boardName &&
-        <p className={`absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-pageTitle font-semibold text-neutral-title 
-          ${boardDetail?.boardName?.length < 12 ? "text-pageTitle" : "text-subTitle"}`} >
+      {!isBoardLoading && !isBoardError && boardDetail.boardName && (
+        <p
+          className={`absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-pageTitle font-semibold text-neutral-title ${boardDetail?.boardName?.length < 12 ? 'text-pageTitle' : 'text-subTitle'}`}
+        >
           {boardDetail.boardName}
         </p>
-      }
+      )}
       <div className="flex items-center gap-2">
         <button onClick={() => navigate(path.search)}>
           <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
