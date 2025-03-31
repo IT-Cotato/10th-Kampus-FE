@@ -1,4 +1,3 @@
-// 더미 데이터
 const University = [
   { name: '가야대학교', code: 'Kaya University' },
   { name: '가천길대학교', code: 'Gachon-gil University' },
@@ -25,7 +24,10 @@ const University = [
     code: 'Gyeonggi University of Science and Technology',
   },
   { name: '경기대학교', code: 'Kyonggi University' },
-  { name: '경남과학기술대학교', code: 'Gyeongsang National University' },
+  {
+    name: '경남과학기술대학교',
+    code: 'Gyeongnam National University of Science and Technology',
+  },
   { name: '경남대학교', code: 'Kyungnam University' },
   { name: '경남도립거창대학교', code: 'Gyeongnam Provincial Geochang College' },
   { name: '경남도립남해대학교', code: 'Gyeongnam Provincial Namhae College' },

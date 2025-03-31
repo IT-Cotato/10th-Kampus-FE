@@ -31,18 +31,15 @@ export const SchoolSearch = () => {
     if (status === 'APPROVED' || status === 'PENDING') {
       navigate(`../../${path.home}`);
     }
-    if (university === undefined) {
-      navigate(`../${path.signup.school}`);
-    }
   }, [status, university]);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <SkipHeader />
-      <div className="flex flex-col flex-1 gap-10 px-4 py-5">
+      <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-[3.125rem]">
-            <div className="flex justify-center w-full gap-7 text-pageTitle">
+            <div className="flex w-full justify-center gap-7 text-pageTitle">
               What is your school name?
             </div>
             <SearchDropdown
