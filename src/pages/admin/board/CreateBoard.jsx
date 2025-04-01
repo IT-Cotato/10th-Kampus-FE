@@ -10,6 +10,7 @@ import { postCreateBoard } from '@/apis/admin/postCreateBoard.api';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
 import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
+import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
@@ -29,9 +30,17 @@ export const CreateBoard = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  // 카테고리 제외한 게시판 정보 가져오기
   const { data: boardDetailsData } = useQuery({
     queryKey: [QUERY_KEYS.ADMIN_BOARD_DETAIL, boardId],
     queryFn: () => getAdminBoardDetail({ boardId: boardId }),
+    enabled: !!boardId,
+  });
+
+  // 게시판에 적용되는 카테고리 조회
+  const { data: boardCategories } = useQuery({
+    queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
+    queryFn: () => getBoardCategories({ boardId: boardId }),
     enabled: !!boardId,
   });
 
@@ -49,23 +58,33 @@ export const CreateBoard = () => {
         setUniversity(boardDetailsData.universityName);
         setIsUniversitySelected(true);
       }
-      setIsCategoryChecked(boardDetailsData.isCategoryRequired);
+
       // 카테고리 선택되어있을 경우
-      // if (data.categories && data.categories.length > 0) {
-      //   setIsCategoryChecked(true);
-      //   setCategoryList(data.categories);
-      // }
+      if (boardDetailsData.usesCategories) {
+        setIsCategoryChecked(true);
+        setCategoryList((prev) => [...prev, ...boardCategories.categories]);
+      }
     }
   }, [boardDetailsData]);
 
+  // 카테고리 엔터 입력 받기
   const handleKeyDown = (e) => {
+    // 수정 시 카테고리 못 바꿈
+    if (isEditMode) {
+      return;
+    }
     if (e.key === 'Enter' && categoryValue.trim() !== '') {
       setCategoryList((prev) => [...prev, categoryValue.trim()]);
       setCategoryValue('');
     }
   };
 
+  // 카테고리 지우기
   const removeItem = (index) => {
+    // 수정 시 카테고리 못 지움
+    if (isEditMode) {
+      return;
+    }
     const updatedList = [...categoryList];
     updatedList.splice(index, 1);
     setCategoryList(updatedList);
