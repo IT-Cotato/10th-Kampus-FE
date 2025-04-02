@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import React, { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 export const SearchDropdown = ({
   keyword,
@@ -24,7 +24,7 @@ export const SearchDropdown = ({
     } else {
       return list.filter(
         (d) =>
-          d.name.includes(keyword) ||
+          d.name.toLowerCase().includes(keyword.toLowerCase()) ||
           d.code.toLowerCase().includes(keyword.toLowerCase()),
       );
     }
@@ -99,12 +99,12 @@ export const SearchDropdown = ({
             >
               {filteredList.map((d) => (
                 <div
-                  onClick={() => handleSelectItem(d.code)}
-                  key={d.code}
+                  onClick={() => handleSelectItem(d.name)}
+                  key={d.name}
                   className="flex h-full cursor-pointer bg-white px-[.375rem] hover:bg-neutral-bg-5"
                 >
                   <div className="flex h-full w-full items-center border-b py-[.125rem] text-center align-middle">
-                    {d.code}
+                    {d.name}
                   </div>
                 </div>
               ))}
