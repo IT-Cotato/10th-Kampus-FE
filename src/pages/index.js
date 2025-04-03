@@ -19,6 +19,7 @@ export { Board } from './board/board';
 export { Write } from './board/write';
 export { Post } from './board/post';
 export { PostReport } from './board/postReport';
+export { Draft } from './board/Draft';
 
 export { Inquiry } from './my/service/inquiry/inquiry';
 export { FAQ } from './my/service/faq';

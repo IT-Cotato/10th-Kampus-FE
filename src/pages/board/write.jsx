@@ -132,6 +132,11 @@ export const Write = () => {
     saveDraft(formData);
   };
 
+  // 임시저장 목록 페이지로 이동
+  const handleClickSavedDrafts = () => {
+    navigate(`../../${path.board.specific.draft}`);
+  };
+
   useEffect(() => {
     if (!state) {
       // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
@@ -164,7 +169,9 @@ export const Write = () => {
             Save Draft
           </button>
           <span>|</span>
-          <button type="button">00</button>
+          <button type="button" onClick={handleClickSavedDrafts}>
+            00
+          </button>
         </span>
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
