@@ -1,3 +1,29 @@
 export const DraftBox = () => {
-  return <li>게시글</li>;
+  return (
+    <li className="flex w-full flex-col gap-2 py-4">
+      {/* 게시판명 */}
+      <span className="w-fit rounded-[5px] bg-primary-10 px-[10px] py-[6px] text-small text-neutral-base">
+        Board Name
+      </span>
+      <span className="flex w-full justify-between gap-20">
+        <span className="flex w-full flex-col gap-5 truncate">
+          <div className="flex w-full flex-col">
+            {/* 제목 */}
+            <h1 className="text-subTitle text-neutral-title">Title</h1>
+            {/* 본문 */}
+            <div className="min-w-0 truncate text-base text-neutral-base">
+              contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent
+            </div>
+          </div>
+          {/* 임시저장 시각 */}
+          <div className="flex gap-[10px] text-small text-neutral-border-50">
+            <span>Jan 20, 2025</span>
+            <span>00:00</span>
+          </div>
+        </span>
+        {/* 사진 */}
+        <span className="flex h-20 w-20 flex-shrink-0">사진</span>
+      </span>
+    </li>
+  );
 };
