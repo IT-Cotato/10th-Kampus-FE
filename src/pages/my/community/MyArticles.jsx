@@ -23,18 +23,18 @@ export const MyArticles = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
-      ) : !postList.post ? (
-        <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
+      ) : !postList.posts ? (
+        <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-neutral-border-40">
             You haven't written anything yet! Share your story:)
           </span>
         </div>
       ) : (
-        <div className="flex flex-col flex-1 w-full bg-white divide-y">
+        <div className="flex w-full flex-1 flex-col divide-y bg-white">
           {postList.posts.map((item, index) => (
             <PostList
               key={index}
