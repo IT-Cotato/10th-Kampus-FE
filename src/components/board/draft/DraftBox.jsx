@@ -1,10 +1,10 @@
+import { BoardName } from '../BoardName';
+
 export const DraftBox = () => {
   return (
     <li className="flex w-full flex-col gap-2 py-4">
       {/* 게시판명 */}
-      <span className="w-fit rounded-[5px] bg-primary-10 px-[10px] py-[6px] text-small text-neutral-base">
-        Board Name
-      </span>
+      <BoardName>Board Name</BoardName>
       <span className="flex w-full justify-between gap-20">
         <span className="flex w-full flex-col gap-5 truncate">
           <div className="flex w-full flex-col">
