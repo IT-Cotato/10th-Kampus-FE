@@ -6,6 +6,7 @@ export const Dashboard = () => {
   const { data: userData } = useQuery({
     queryKey: [QUERY_KEYS.GET_ADMIN_USER_ME],
     queryFn: () => getUser(),
+    staleTime: 1000 * 60 * 5,
   });
 
   const handleAdministratorPermissionSettings = () => {
