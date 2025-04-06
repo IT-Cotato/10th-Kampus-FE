@@ -37,6 +37,7 @@ export const Draft = () => {
                 key={draft.draftId}
                 title={draft.title}
                 content={draft.content}
+                thumbnailUrl={draft.thumbnailUrl}
                 createdTime={draft.createdTime}
               />
             ))}

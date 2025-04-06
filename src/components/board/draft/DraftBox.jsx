@@ -1,6 +1,6 @@
 import { BoardName } from '../BoardName';
 
-export const DraftBox = ({ title, content, createdTime }) => {
+export const DraftBox = ({ title, content, thumbnailUrl, createdTime }) => {
   return (
     <li className="flex w-full flex-col gap-2 py-4">
       {/* 게시판명 */}
@@ -23,7 +23,12 @@ export const DraftBox = ({ title, content, createdTime }) => {
           </div>
         </span>
         {/* 사진 */}
-        <span className="flex h-20 w-20 flex-shrink-0">사진</span>
+        {thumbnailUrl && (
+          <img
+            className="flex h-20 w-20 flex-shrink-0 object-cover"
+            src={thumbnailUrl}
+          />
+        )}
       </span>
     </li>
   );
