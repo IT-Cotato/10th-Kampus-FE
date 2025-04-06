@@ -14,8 +14,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
-import { Loading } from '@/components/common/Loading';
-import { postSaveDraft } from '@/apis/board/postSaveDraft.api';
+import {
+  patchSaveDraft,
+  postSaveDraft,
+} from '@/apis/board/handleSaveDraft.api';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -105,13 +107,29 @@ export const Write = () => {
   } = useMutation({
     mutationFn: (draft) => postSaveDraft({ data: draft }),
     onSuccess: (response) => {
-      const postDraftId = response.postDraftId;
+      setPostDraftId(response.postDraftId);
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_DRAFT_ID],
       });
     },
   });
 
+  const {
+    mutate: patchDraft,
+    isPending: patchDraftPending,
+    isError: patchDraftError,
+  } = useMutation({
+    mutationFn: (draft) =>
+      patchSaveDraft({ data: draft, postDraftId: postDraftId }),
+    onSuccess: (response) => {
+      setPostDraftId(response.postDraftId);
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_DRAFT_ID],
+      });
+    },
+  });
+
+  // 임시저장 버튼 클릭 시
   const handleSaveDraft = async () => {
     const formData = new FormData();
 
@@ -129,7 +147,13 @@ export const Write = () => {
       });
     }
 
-    saveDraft(formData);
+    if (!postDraftId) {
+      // 임시저장
+      saveDraft(formData);
+    } else {
+      // 임시저장 덮어쓰기
+      patchDraft(formData);
+    }
   };
 
   // 임시저장 목록 페이지로 이동

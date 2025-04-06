@@ -17,7 +17,6 @@ export const API_DOMAINS = {
 
   POST_INQUIRY: '/support/inquiry',
 
-
   DUPLICATE_CHECK: '/users/check-nickname',
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
   SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
@@ -41,6 +40,8 @@ export const API_DOMAINS = {
   POST_CREATE: '/posts',
   POST_SAVE_DRAFT: '/posts/draft',
   POST_EDIT_DRAFT: '/posts/draft/:postDraftId',
+  POST_GET_DRAFTS: '/posts/draft',
+  PATCH_SAVE_DRAFT: '/posts/draft/:postDraftId',
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
   POST_WRITE: '/posts',
@@ -80,9 +81,12 @@ export const API_DOMAINS = {
 
   ADMIN_USER: '/admin/users/details',
   ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
-  ADMIN_VERIFICATION_DETAILS: '/admin/student-verifications/:verificationRecordId',
-  ADMIN_VERIFICATION_REJECT: '/admin/student-verifications/:verificationRecordId/reject',
-  ADMIN_VERIFICATION_APPROVE: '/admin/student-verifications/:verificationRecordId/approve',
+  ADMIN_VERIFICATION_DETAILS:
+    '/admin/student-verifications/:verificationRecordId',
+  ADMIN_VERIFICATION_REJECT:
+    '/admin/student-verifications/:verificationRecordId/reject',
+  ADMIN_VERIFICATION_APPROVE:
+    '/admin/student-verifications/:verificationRecordId/approve',
 };
 
 export const QUERY_KEYS = {
@@ -100,7 +104,8 @@ export const QUERY_KEYS = {
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
-  GET_POST_DRAFT_ID: 'postDraftId',
+  GET_DRAFT_ID: 'draftId',
+  GET_DRAFT_LIST: 'draftList',
 
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
