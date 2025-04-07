@@ -1,6 +1,8 @@
 import { BoardName } from '../BoardName';
+import { formatISO } from '@/utils/formatTime';
 
 export const DraftBox = ({ title, content, thumbnailUrl, createdTime }) => {
+  const [date, time] = formatISO(createdTime);
   return (
     <li className="flex w-full flex-col gap-2 py-4">
       {/* 게시판명 */}
@@ -17,9 +19,8 @@ export const DraftBox = ({ title, content, thumbnailUrl, createdTime }) => {
           </div>
           {/* 임시저장 시각 */}
           <div className="flex gap-[10px] text-small text-neutral-border-50">
-            <span>{createdTime}</span>
-            <span>Jan 20, 2025</span>
-            <span>00:00</span>
+            <span>{date}</span>
+            <span>{time}</span>
           </div>
         </span>
         {/* 사진 */}
