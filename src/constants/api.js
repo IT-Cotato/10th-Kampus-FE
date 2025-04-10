@@ -42,6 +42,8 @@ export const API_DOMAINS = {
   POST_EDIT_DRAFT: '/posts/draft/:postDraftId',
   POST_GET_DRAFTS: '/posts/draft',
   PATCH_SAVE_DRAFT: '/posts/draft/:postDraftId',
+  DELETE_ALL_DRAFT: '/posts/draft/all',
+  DELETE_SELECTED_DRAFT: '/posts/draft/select',
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
   POST_WRITE: '/posts',
