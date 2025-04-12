@@ -10,7 +10,7 @@ import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
 import { postWritePost } from '@/apis/board/postWritePost.api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
@@ -18,6 +18,7 @@ import {
   patchSaveDraft,
   postSaveDraft,
 } from '@/apis/board/handleSaveDraft.api';
+import { ReloadModal } from '@/components/board/draft/ReloadModal';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -59,9 +60,9 @@ export const Write = () => {
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
-  const [postDraftId, setPostDraftId] = useState(null);
   const disabled = !title || !content;
   const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
+  const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
 
   const handleUpload = async () => {
     const formData = new FormData();
@@ -156,6 +157,15 @@ export const Write = () => {
     }
   };
 
+  // 작성 중이던 글 있을 경우 경고, 아닐 경우 임시저장 목록 페이지로 바로 이동
+  const handleClickReloadDrafts = () => {
+    if (title !== '' || content !== '' || uploadedFiles.length !== 0) {
+      setIsReloadModalOpen((prev) => !prev);
+    } else {
+      handleClickSavedDrafts();
+    }
+  };
+
   // 임시저장 목록 페이지로 이동
   const handleClickSavedDrafts = () => {
     navigate(`../../${path.board.specific.draft}`);
@@ -193,10 +203,16 @@ export const Write = () => {
             Save Draft
           </button>
           <span>|</span>
-          <button type="button" onClick={handleClickSavedDrafts}>
+          <button type="button" onClick={handleClickReloadDrafts}>
             00
           </button>
         </span>
+        {isReloadModalOpen && (
+          <ReloadModal
+            onClose={() => setIsReloadModalOpen(false)}
+            handleReload={handleClickSavedDrafts}
+          />
+        )}
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         <WriteTitle

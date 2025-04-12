@@ -35,7 +35,7 @@ export const Modal = ({
             {title}
           </h2>
           {children && (
-            <div className="flex flex-col w-full text-center">
+            <div className="flex w-full flex-col whitespace-pre text-center">
               {children}
             </div>
           )}
