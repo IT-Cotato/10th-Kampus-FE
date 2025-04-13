@@ -3,7 +3,6 @@ export const SelectCategory = ({
   selectedCategory,
   setSelectedCategory,
 }) => {
-  const CategoryList = [...categories];
   const handleOnChange = (e) => {
     if (e.target.checked) {
       setSelectedCategory((prev) => [...prev, e.target.id]);
@@ -17,7 +16,7 @@ export const SelectCategory = ({
     <div className="flex flex-col gap-3">
       <div className="text-subTitle">Category</div>
       <div className="flex w-full gap-3">
-        {CategoryList.map((category) => (
+        {categories.map((category) => (
           <div className="box-border flex" key={category}>
             <input
               type="checkbox"

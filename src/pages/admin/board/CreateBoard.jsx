@@ -62,7 +62,7 @@ export const CreateBoard = () => {
       // 카테고리 선택되어있을 경우
       if (boardDetailsData.usesCategories) {
         setIsCategoryChecked(true);
-        setCategoryList((prev) => [...prev, ...boardCategories.categories]);
+        setCategoryList((prev) => [...prev, ...boardCategories?.categories]);
       }
     }
   }, [boardDetailsData]);
@@ -73,7 +73,11 @@ export const CreateBoard = () => {
     if (isEditMode) {
       return;
     }
-    if (e.key === 'Enter' && categoryValue.trim() !== '') {
+    if (
+      e.key === 'Enter' &&
+      categoryValue.trim() !== '' &&
+      !e.nativeEvent.isComposing
+    ) {
       setCategoryList((prev) => [...prev, categoryValue.trim()]);
       setCategoryValue('');
     }
