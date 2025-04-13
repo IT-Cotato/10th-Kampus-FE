@@ -29,6 +29,7 @@ export const Search = () => {
   const searchQueryKey = boardId
     ? [QUERY_KEYS.GET_POST_LIST, boardId, searchValue]
     : [QUERY_KEYS.GET_POST_LIST, searchValue];
+
   const {
     data: searchResult,
     isLoading: searchLoading,
@@ -45,8 +46,9 @@ export const Search = () => {
       }
       return getSearcTotalResult({ keyword: searchValue, page: 1 });
     },
-    enabled: searchValue.length >= 2 && searchValue.length <= 10,
+    enabled: searchValue.length >= 2,
   });
+
   const {
     data: searchKeywords,
     isLoading: keywordLoading,
@@ -55,6 +57,7 @@ export const Search = () => {
     queryKey: [QUERY_KEYS.GET_SEARCH_KEYWORD],
     queryFn: getSearchKeywords,
   });
+
   const { mutate: deleteKeyword } = useMutation({
     mutationFn: async (keywordId) => {
       if (keywordId === null) {
@@ -68,28 +71,27 @@ export const Search = () => {
       });
     },
   });
+
   const startSearch = async (text) => {
-    if (text.length >= 2 && text.length <= 10) {
+    if (text.length >= 2) {
       setIsSearch(false);
       setSearchValue(text);
     } else {
       startAnimation(setIsAnimate);
     }
   };
+
   const handleNavigate = (data) => {
     navigate(`${path.board.base}/${data.boardId}/${data.id}`);
   };
+
   return (
     <div className="container flex flex-col gap-[0.875rem] px-4 pt-[0.625rem]">
       {isAnimate && (
         <StateChangeAnimate
           state={true}
-          changeToTrueText={
-            'The keyword must be between 2 and 10 characters long.'
-          }
-          changeToFalseText={
-            'The keyword must be between 2 and 10 characters long.'
-          }
+          changeToTrueText={'Keywords must be at least 2 characters long.'}
+          changeToFalseText={'Keywords must be at least 2 characters long.'}
         />
       )}
       <SearchBar
@@ -104,9 +106,14 @@ export const Search = () => {
           startSearch={startSearch}
           data={searchKeywords}
           deleteKeyword={deleteKeyword}
+          error={keywordError}
         />
       ) : searchLoading ? (
         <Loading />
+      ) : searchError ? (
+        <p className="pt-4 text-base text-neutral-border-50">
+          ❌ Search failed. Please try again later. ❌
+        </p>
       ) : (
         <div className="divide-y">
           {searchResult?.posts.map((data, index) => (
