@@ -25,7 +25,7 @@ export const PostHeader = ({ path, isAuthor = false }) => {
       {isBoardError && <p>Error Data Loading</p>}
       {!isBoardLoading && !isBoardError && boardDetail.boardName && (
         <p
-          className={`absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-pageTitle font-semibold text-neutral-title ${boardDetail?.boardName?.length < 12 ? 'text-pageTitle' : 'text-subTitle'}`}
+          className={`absolute left-1/2 top-1/2 line-clamp-1 w-full max-w-[65%] -translate-x-1/2 -translate-y-1/2 text-center font-semibold text-neutral-title ${boardDetail?.boardName?.length < 12 ? 'text-pageTitle' : 'text-subTitle'}`}
         >
           {boardDetail.boardName}
         </p>
