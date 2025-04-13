@@ -34,6 +34,7 @@ export const API_DOMAINS = {
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
   BOARD_UNIV: '/boards/university',
+  BOARD_CATEGORIES: '/boards/boards/:boardId/categories',
   BOARD_DETAIL: '/boards/:boardId',
   BOARD_FAVORITE: '/boards/favorite',
 
@@ -116,6 +117,7 @@ export const QUERY_KEYS = {
 
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
+  GET_BOARD_CATEGORIES: 'boardCategories',
   POST_NOTICE: 'postNotice',
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',

@@ -1,24 +1,30 @@
-import { Categories } from '@/constants/categories';
-
-export const SelectCategory = ({ selectedCategory, setSelectedCategory }) => {
-  const CategoryList = [...Categories];
+export const SelectCategory = ({
+  categories = [],
+  selectedCategory,
+  setSelectedCategory,
+}) => {
   const handleOnChange = (e) => {
-    setSelectedCategory(e.target.id);
+    if (e.target.checked) {
+      setSelectedCategory((prev) => [...prev, e.target.id]);
+    } else {
+      setSelectedCategory([
+        ...selectedCategory.filter((category) => category !== e.target.id),
+      ]);
+    }
   };
-
   return (
     <div className="flex flex-col gap-3">
       <div className="text-subTitle">Category</div>
       <div className="flex w-full gap-3">
-        {CategoryList.map((category) => (
+        {categories.map((category) => (
           <div className="box-border flex" key={category}>
             <input
-              type="radio"
+              type="checkbox"
               name="category"
               id={category}
               className="peer hidden"
               onChange={handleOnChange}
-              checked={selectedCategory === category}
+              checked={selectedCategory.includes(category)}
             />
             <label
               htmlFor={category}
