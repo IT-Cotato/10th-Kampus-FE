@@ -55,7 +55,7 @@ import {
   NoticeManagement,
   CreateNotice,
   Market,
-  StudentVerifications
+  StudentVerifications,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -209,6 +209,10 @@ const AppRouter = createBrowserRouter([
             element: <Board />,
           },
           {
+            path: path.board.specific.search,
+            element: <Search />,
+          },
+          {
             path: path.board.specific.write,
             element: <Write />,
           },
@@ -240,9 +244,9 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Market />
-      }
-    ]
+        element: <Market />,
+      },
+    ],
   },
   {
     path: path.chatList.base,
@@ -438,7 +442,7 @@ const AppRouter = createBrowserRouter([
             path: path.admin.signupManagement.studentVertifications,
             element: <StudentVerifications />,
           },
-        ]
+        ],
       },
       {
         path: path.admin.boardManagement.base,

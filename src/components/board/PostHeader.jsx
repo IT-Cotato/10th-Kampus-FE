@@ -31,7 +31,13 @@ export const PostHeader = ({ path, isAuthor = false }) => {
         </p>
       )}
       <div className="flex items-center gap-2">
-        <button onClick={() => navigate(path.search)}>
+        <button
+          onClick={() =>
+            navigate(
+              `${path.board.base}/${boardId}/${path.board.specific.search}`,
+            )
+          }
+        >
           <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
         </button>
         <BoardMenuBar isAuthor={isAuthor} data={boardDetail} />

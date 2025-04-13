@@ -18,7 +18,8 @@ export const path = {
       base: ':boardId',
       write: 'write',
       post: ':postId',
-      report: 'report'
+      report: 'report',
+      search: 'search',
     },
   },
   home: '/home',
@@ -98,6 +99,6 @@ export const path = {
       create: 'create',
       noticeId: ':noticeId',
       edit: 'edit',
-    }
-  }
+    },
+  },
 };
