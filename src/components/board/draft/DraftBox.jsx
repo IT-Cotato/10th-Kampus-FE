@@ -2,10 +2,12 @@ import { BoardName } from '../BoardName';
 import { formatISO } from '@/utils/formatTime';
 import Checkbox from '@/assets/imgs/Checkbox_checked.svg?react';
 import CheckboxUnchecked from '@/assets/imgs/Checkbox_unchecked.svg?react';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { path } from '@/routes/path';
 
 export const DraftBox = ({
-  id,
+  draftId,
+  boardId,
   title,
   content,
   thumbnailUrl,
@@ -15,22 +17,30 @@ export const DraftBox = ({
   setSelectedDrafts,
 }) => {
   const [date, time] = formatISO(createdTime);
+  const navigate = useNavigate();
 
   const handleSelectDraft = () => {
-    if (selectedDrafts.includes(id)) {
-      setSelectedDrafts((prev) => prev.filter((draft) => draft !== id));
+    if (selectedDrafts.includes(draftId)) {
+      setSelectedDrafts((prev) => prev.filter((draft) => draft !== draftId));
     } else {
-      setSelectedDrafts((prev) => [...prev, id]);
+      setSelectedDrafts((prev) => [...prev, draftId]);
     }
   };
 
-  const checked = selectedDrafts.includes(id);
+  const handleClickDraft = () => {
+    if (isEditMode) {
+      return;
+    }
+    navigate(`../${boardId}/${path.board.specific.write}`, { state: draftId });
+  };
+
+  const checked = selectedDrafts.includes(draftId);
 
   return (
     <li className="flex w-full gap-4 py-4">
       {isEditMode && (
         <div className="flex items-center">
-          <label htmlFor={id} className="cursor-pointer">
+          <label htmlFor={draftId} className="cursor-pointer">
             {checked ? (
               <Checkbox className="text-primary-base" aria-label="checked" />
             ) : (
@@ -39,14 +49,17 @@ export const DraftBox = ({
           </label>
           <input
             type="checkbox"
-            id={id}
+            id={draftId}
             className="hidden"
             onChange={handleSelectDraft}
             checked={checked}
           />
         </div>
       )}
-      <div className="flex w-full flex-col gap-2">
+      <div
+        className="flex w-full cursor-pointer flex-col gap-2"
+        onClick={handleClickDraft}
+      >
         {/* 게시판명 */}
         <BoardName>Board Name</BoardName>
         <span className="flex w-full justify-between gap-20">

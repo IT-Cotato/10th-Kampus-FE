@@ -81,7 +81,8 @@ export const Draft = () => {
             {getDrafts?.draftPosts.map((draft) => (
               <DraftBox
                 key={draft.draftId}
-                id={draft.draftId}
+                draftId={draft.draftId}
+                boardId={draft.boardId}
                 title={draft.title}
                 content={draft.content}
                 thumbnailUrl={draft.thumbnailUrl}
@@ -96,7 +97,7 @@ export const Draft = () => {
       )}
       {/* Delete */}
       {isEditMode && (
-        <article className="shadow- fixed bottom-[32px] flex w-full max-w-[512px] px-4">
+        <article className="fixed bottom-[32px] flex w-full max-w-[512px] px-4">
           <div className="flex w-full divide-x divide-neutral-border-30 rounded-[.625rem] border border-neutral-border-30 bg-white py-3 text-small text-neutral-title shadow-base">
             <button
               type="button"

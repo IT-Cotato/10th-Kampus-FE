@@ -47,6 +47,7 @@ export const API_DOMAINS = {
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
   POST_WRITE: '/posts',
+  POST_WRITE_DRAFT: '/posts/draft/:postDraftId',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
   POST_LIKE_TOGGLE: '/posts/:postId/likes',
   POST_GET_CARDNEWS: '/posts/cardNews',

@@ -9,7 +9,7 @@ import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
-import { postWritePost } from '@/apis/board/postWritePost.api';
+import { postWriteDraft, postWritePost } from '@/apis/board/postWritePost.api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
@@ -31,6 +31,23 @@ export const Write = () => {
     isError: postError,
   } = useMutation({
     mutationFn: (newPost) => postWritePost({ data: newPost }),
+    onSuccess: (response) => {
+      const createdPostId = response.postId;
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
+        replace: true,
+      });
+    },
+  });
+
+  // 작동 안함. 백 변경 후 수정해야함!!
+  const {
+    mutate: postDraft,
+    isPending: postDraftPending,
+    isError: postDraftError,
+  } = useMutation({
+    mutationFn: (newPost) =>
+      postWriteDraft({ postDraftId: postDraftId, data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
@@ -64,6 +81,9 @@ export const Write = () => {
   const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
   const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
 
+  const location = useLocation();
+  const [postDraftId, setPostDraftId] = useState(location.state || null); // 있을 경우 내용 불러오기 필요(추가 예정)
+
   const handleUpload = async () => {
     const formData = new FormData();
 
@@ -80,7 +100,13 @@ export const Write = () => {
         formData.append(`images`, file); // 각 파일을 개별적으로 추가
       });
     }
-    addPost(formData);
+
+    if (!postDraftId) {
+      addPost(formData);
+    } else {
+      // 임시저장 게시물 발행
+      postDraft(formData);
+    }
   };
 
   const handleCancelTranslatePopup = () => {
@@ -157,7 +183,6 @@ export const Write = () => {
     }
   };
 
-  // 작성 중이던 글 있을 경우 경고, 아닐 경우 임시저장 목록 페이지로 바로 이동
   const handleClickReloadDrafts = () => {
     if (title !== '' || content !== '' || uploadedFiles.length !== 0) {
       setIsReloadModalOpen((prev) => !prev);
