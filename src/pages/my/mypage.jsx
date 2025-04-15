@@ -150,17 +150,13 @@ export const MyPage = () => {
               >
                 FAQ
               </button>
-              <button
-                type="button"
+              <a
+                aria-label="1:1 Inquiry button"
                 className="text-left"
-                onClick={() =>
-                  navigate(
-                    `${path.mypage.service.base}/${path.mypage.service.inquiry}`,
-                  )
-                }
+                href="mailto:kampus.contact@gmail.com"
               >
                 1:1 Inquiry
-              </button>
+              </a>
               <button
                 type="button"
                 className="text-left"
