@@ -1,8 +1,9 @@
 import Prev from '@/assets/imgs/previous.svg?react';
 import Search from '@/assets/imgs/search.svg?react';
 import Intro from '@/assets/imgs/boardIntro.svg';
+import { AnimatePresence, motion } from 'motion/react';
 import { BoardMenuBar } from '../common/MenuBar';
-import { data, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '../common/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
@@ -12,7 +13,9 @@ import { useEffect, useRef, useState } from 'react';
 export const PostHeader = ({ path, isAuthor = false }) => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
-  const [openModal, setOpenModal] = useState(true);
+  const btnRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [yLocation, setYLocation] = useState(0);
   const { boardId, postId } = useParams();
   const {
     data: boardDetail,
@@ -28,6 +31,10 @@ export const PostHeader = ({ path, isAuthor = false }) => {
         setOpenModal(false);
       }
     };
+    if (btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setYLocation(rect.bottom + 4);
+    }
     if (openModal) {
       document.addEventListener('touchmove', handleOutSide);
       document.addEventListener('mousedown', handleOutSide);
@@ -50,17 +57,39 @@ export const PostHeader = ({ path, isAuthor = false }) => {
             {boardDetail.boardName}
           </p>
           {postId === undefined && (
-            <div className="relative flex">
-              <button type="button">
+            <div ref={modalRef} className="relative flex">
+              <button
+                ref={btnRef}
+                type="button"
+                onClick={() => setOpenModal(!openModal)}
+              >
                 <img src={Intro} className="h-[1.625rem] w-[1.625rem]" />
               </button>
-              {openModal && (
-                <div className="absolute left-1/2 top-full mt-1 h-0 w-0 -translate-x-1/2 border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent">
-                  <div className="absolute top-full mt-4 flex max-w-[13rem] -translate-x-1/2 whitespace-normal break-words rounded-[.625rem] bg-primary-base p-4 text-base text-white">
-                    {boardDetail.description}
-                  </div>
-                </div>
-              )}
+              <AnimatePresence>
+                {openModal && (
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: { opacity: 1 },
+                    }}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    transition={{ duration: 0.3 }}
+                  >
+                    {/* 꼬리 부분 */}
+                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent" />
+
+                    {/* 본문 부분 */}
+                    <div
+                      style={{ top: yLocation }}
+                      className="fixed left-1/2 w-[80vw] -translate-x-1/2 whitespace-normal break-words rounded-[.625rem] bg-primary-base p-4 text-base text-white"
+                    >
+                      {boardDetail.description}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )}
         </div>
