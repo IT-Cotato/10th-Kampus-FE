@@ -12,36 +12,43 @@ export default {
       title: [
         '2.25rem', // 36px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '600',
         },
       ],
       pageTitle: [
         '1.5rem', // 24px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '600',
         },
       ],
       subTitle: [
         '1.25rem', // 20px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '500',
         },
       ],
       base: [
         '1rem', // 16px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '400',
         },
       ],
       small: [
         '0.875rem', // 14px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '400',
+        },
+      ],
+      'title-bold-16': [
+        '16px', // 16px
+        {
+          letterSpacing: '0em',
+          fontWeight: '700',
         },
       ],
     },
