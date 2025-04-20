@@ -1,4 +1,5 @@
 export const path = {
+  accountPermanentSuspended: '/account-permanent-suspended',
   login: '/login',
   signup: {
     base: '/signup',
@@ -18,7 +19,7 @@ export const path = {
       base: ':boardId',
       write: 'write',
       post: ':postId',
-      report: 'report'
+      report: 'report',
     },
   },
   home: '/home',
@@ -98,6 +99,6 @@ export const path = {
       create: 'create',
       noticeId: ':noticeId',
       edit: 'edit',
-    }
-  }
+    },
+  },
 };

@@ -55,7 +55,8 @@ import {
   NoticeManagement,
   CreateNotice,
   Market,
-  StudentVerifications
+  StudentVerifications,
+  AccountPermanentSuspendedNotice,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -69,6 +70,14 @@ const AppRouter = createBrowserRouter([
       </Layout>
     ),
     errorElement: <NotFound />,
+  },
+  {
+    path: path.accountPermanentSuspended,
+    element: (
+      <Layout>
+        <AccountPermanentSuspendedNotice />
+      </Layout>
+    ),
   },
   {
     path: path.login,
@@ -240,9 +249,9 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Market />
-      }
-    ]
+        element: <Market />,
+      },
+    ],
   },
   {
     path: path.chatList.base,
@@ -438,7 +447,7 @@ const AppRouter = createBrowserRouter([
             path: path.admin.signupManagement.studentVertifications,
             element: <StudentVerifications />,
           },
-        ]
+        ],
       },
       {
         path: path.admin.boardManagement.base,
