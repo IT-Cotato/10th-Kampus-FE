@@ -18,20 +18,16 @@ export const Layout = ({ children }) => {
 
   return (
     <div className="layout">
+      <div id="modal-root" />
       {/* 사용자 정보 존재 시 render 개선 */}
       {renderNav ? (
-        <div
-          id="modal-root"
-          className="container relative flex flex-col justify-between"
-        >
+        <div className="container relative flex flex-col justify-between">
           <div className="flex w-full h-full">{children}</div>
           <div className="flex h-[4rem] w-full"></div>
           <Navbar />
         </div>
       ) : (
-        <div id="modal-root" className="container relative flex">
-          {children}
-        </div>
+        <div className="container relative flex">{children}</div>
       )}
     </div>
   );
