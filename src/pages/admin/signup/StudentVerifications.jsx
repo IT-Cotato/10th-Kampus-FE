@@ -3,7 +3,7 @@ import {
   postApproveStudentVerifications,
   postRejectStudentVerifications,
 } from '@/apis/admin/postStudentVerifications.api';
-import { ButtonRound } from '@/components/common/ButtonRound';
+import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { Loading } from '@/components/common/Loading';
 import { QUERY_KEYS } from '@/constants/api';
 import { cn } from '@/utils/cn';
@@ -27,7 +27,10 @@ export const StudentVerifications = () => {
 
   const { mutate: rejectVerification } = useMutation({
     mutationFn: ({ verificationRecordId, rejectionReason }) =>
-      postRejectStudentVerifications({ verificationRecordId, data: rejectionReason }),  
+      postRejectStudentVerifications({
+        verificationRecordId,
+        data: rejectionReason,
+      }),
     onSuccess: () => {
       navigate(-1);
     },
@@ -75,12 +78,20 @@ export const StudentVerifications = () => {
             <div className="flex justify-center gap-6">
               <ButtonRound
                 text="승인"
-                theme={selectedStatus === 'approve' ? 'APPROVED' : 'border'}
+                theme={
+                  selectedStatus === BUTTON_THEMES.APPROVED
+                    ? BUTTON_THEMES.APPROVED
+                    : BUTTON_THEMES.BORDER
+                }
                 onClick={() => setSelectedStatus('approve')}
               />
               <ButtonRound
                 text="반려"
-                theme={selectedStatus === 'reject' ? 'REJECTED' : 'border'}
+                theme={
+                  selectedStatus === BUTTON_THEMES.REJECTED
+                    ? BUTTON_THEMES.REJECTED
+                    : BUTTON_THEMES.BORDER
+                }
                 onClick={() => setSelectedStatus('reject')}
               />
             </div>
@@ -96,7 +107,7 @@ export const StudentVerifications = () => {
             />
             <ButtonRound
               text="저장"
-              theme={disabled ? 'disabled' : 'primary'}
+              theme={disabled ? BUTTON_THEMES.DISABLED : BUTTON_THEMES.PRIMARY}
               disabled={disabled}
               onClick={() => {
                 handleClickSave(verificationRecordId);

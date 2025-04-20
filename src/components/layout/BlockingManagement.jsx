@@ -1,4 +1,4 @@
-import { ButtonRound } from '@/components/common/ButtonRound';
+import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { path } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TitleHeader } from '../common/titleHeader';
@@ -17,16 +17,16 @@ export const BlockingManagement = ({ children }) => {
   return (
     <div className="flex flex-col w-full">
       <TitleHeader text="Blocking Management" />
-      <div className="flex flex-row w-full px-4 pt-12 pb-6 gap-[0.625rem] justify-start">
-          {menu.map((item) => (
-            <ButtonRound
-              key={item.id}
-              theme={`${pathname.includes(item.path) ? 'primary' : 'disabled'}`}
-              text={item.text}
-              size="short"
-              onClick={() => navigate(`./${item.path}`, { replace: true })}
-            />
-          ))}
+      <div className="flex w-full flex-row justify-start gap-[0.625rem] px-4 pb-6 pt-12">
+        {menu.map((item) => (
+          <ButtonRound
+            key={item.id}
+            theme={`${pathname.includes(item.path) ? BUTTON_THEMES.PRIMARY : BUTTON_THEMES.DISABLED}`}
+            text={item.text}
+            size="short"
+            onClick={() => navigate(`./${item.path}`, { replace: true })}
+          />
+        ))}
       </div>
       <div className="flex flex-col flex-1 w-full p-4">{children}</div>
     </div>
