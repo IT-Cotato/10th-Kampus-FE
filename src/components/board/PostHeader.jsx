@@ -9,13 +9,16 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { useEffect, useRef, useState } from 'react';
+import { useFloating, offset, shift, flip } from '@floating-ui/react-dom';
 
 export const PostHeader = ({ path, isAuthor = false }) => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
-  const btnRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
-  const [yLocation, setYLocation] = useState(0);
+  const { refs, floatingStyles } = useFloating({
+    placement: 'top',
+    middleware: [offset(12), flip(), shift({ padding: 12 })],
+  });
   const { boardId, postId } = useParams();
   const {
     data: boardDetail,
@@ -31,10 +34,6 @@ export const PostHeader = ({ path, isAuthor = false }) => {
         setOpenModal(false);
       }
     };
-    if (btnRef.current) {
-      const rect = btnRef.current.getBoundingClientRect();
-      setYLocation(rect.bottom + 4);
-    }
     if (openModal) {
       document.addEventListener('touchmove', handleOutSide);
       document.addEventListener('mousedown', handleOutSide);
@@ -44,6 +43,8 @@ export const PostHeader = ({ path, isAuthor = false }) => {
       document.removeEventListener('mousedown', handleOutSide);
     };
   }, [openModal]);
+  const test =
+    '와 이 애니메이션 구현하는데 6시간 넘게 썼는데 더이상 수정사항 없겠죠? 제발 없어야 해요 ㅠㅠㅠㅠㅠㅠㅠ';
   return (
     <div className="fixed z-10 flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
@@ -59,7 +60,7 @@ export const PostHeader = ({ path, isAuthor = false }) => {
           {postId === undefined && (
             <div ref={modalRef} className="relative flex">
               <button
-                ref={btnRef}
+                ref={refs.setReference}
                 type="button"
                 onClick={() => setOpenModal(!openModal)}
               >
@@ -69,23 +70,28 @@ export const PostHeader = ({ path, isAuthor = false }) => {
                 {openModal && (
                   <motion.div
                     variants={{
-                      hidden: { opacity: 0 },
-                      visible: { opacity: 1 },
+                      hidden: { opacity: 0, x: '-50%', scale: 0, y: -10 },
+                      visible: { opacity: 1, x: '-50%', scale: 1, y: 0 },
                     }}
                     initial="hidden"
                     animate="visible"
                     exit="hidden"
-                    transition={{ duration: 0.3 }}
+                    transition={{
+                      visualDuration: 0.2,
+                      type: 'spring',
+                      bounce: 0.2,
+                      damping: 15,
+                      stiffness: 100,
+                    }}
+                    className="absolute left-1/2 top-full border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent"
                   >
-                    {/* 꼬리 부분 */}
-                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent" />
-
                     {/* 본문 부분 */}
                     <div
-                      style={{ top: yLocation }}
-                      className="fixed left-1/2 w-[80vw] -translate-x-1/2 whitespace-normal break-words rounded-[.625rem] bg-primary-base p-4 text-base text-white"
+                      ref={refs.setFloating}
+                      style={{ ...floatingStyles }}
+                      className="absolute w-[80vw] max-w-[350px] break-normal rounded-[.625rem] bg-primary-base p-4 text-base text-white"
                     >
-                      {boardDetail.description}
+                      {test}
                     </div>
                   </motion.div>
                 )}
