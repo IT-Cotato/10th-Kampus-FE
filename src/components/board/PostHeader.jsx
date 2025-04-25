@@ -77,11 +77,8 @@ export const PostHeader = ({ path, isAuthor = false }) => {
                     animate="visible"
                     exit="hidden"
                     transition={{
-                      visualDuration: 0.2,
-                      type: 'spring',
-                      bounce: 0.2,
-                      damping: 15,
-                      stiffness: 100,
+                      visualDuration: 0.3,
+                      type: 'tween',
                     }}
                     className="absolute left-1/2 top-full border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent"
                   >
