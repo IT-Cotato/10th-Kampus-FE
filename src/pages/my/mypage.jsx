@@ -9,6 +9,7 @@ import { getUser } from '@/apis/user/userDetail.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
 import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 import { Loading } from '@/components/common/Loading';
+import OfficialMail from '@/constants/OfficialMail.json';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -153,7 +154,7 @@ export const MyPage = () => {
               <a
                 aria-label="1:1 Inquiry button"
                 className="text-left"
-                href="mailto:kampus.contact@gmail.com"
+                href={`mailto:${OfficialMail.mail}`}
               >
                 1:1 Inquiry
               </a>
