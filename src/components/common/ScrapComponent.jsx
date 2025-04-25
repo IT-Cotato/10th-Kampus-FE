@@ -9,13 +9,13 @@ import {
   deletePostScrap,
 } from '@/apis/board/togglePostScrap.api';
 import { QUERY_KEYS } from '@/constants/api';
+import { cn } from '@/utils/cn';
 
 export const ScrapComponent = ({
   state,
-  width = 30,
-  height = 30,
   id = undefined,
   boardId = undefined,
+  ...props
 }) => {
   const queryClient = useQueryClient();
   const { postId } = useParams();
@@ -105,17 +105,17 @@ export const ScrapComponent = ({
       )}
       {state ? (
         <ActiveScrap
-          className="cursor-pointer text-neutral-border-40"
-          style={{ width: `${width}`, height: `${height}` }}
+          className={cn('cursor-pointer text-neutral-border-40')}
           onClick={handleScrapClick}
           aria-label="Scrap button"
+          {...props}
         />
       ) : (
         <Scrap
-          className="cursor-pointer text-neutral-border-40"
-          style={{ width: `${width}`, height: `${height}` }}
+          className={cn('cursor-pointer text-neutral-border-40')}
           onClick={handleScrapClick}
           aria-label="Unscrap button"
+          {...props}
         />
       )}
     </>
