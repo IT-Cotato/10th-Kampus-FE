@@ -6,7 +6,7 @@ import { Translating } from '../common/Translating';
 import { cn } from '@/utils/cn';
 import { TranslateButton } from '../common/TranslateButton';
 import { usePostTranslate } from '@/hooks/usePostTranslate';
-export const PostList = ({ data, isActive, ...props }) => {
+export const PostList = ({ data, isTrendingBoard, ...props }) => {
   const navigate = useNavigate();
   const {
     translateState,
@@ -27,7 +27,7 @@ export const PostList = ({ data, isActive, ...props }) => {
       className="flex w-full cursor-pointer flex-col gap-3 pb-3 pt-4"
       onClick={() => handleOnClick(data)}
     >
-      {isActive /** 인기 게시판 레이아웃 */ && (
+      {isTrendingBoard /** 인기 게시판 레이아웃 */ && (
         <div className="w-fit rounded-md bg-primary-10 px-[0.625rem] py-[0.3125rem] text-small text-neutral-base">
           {data?.boardName}
         </div>

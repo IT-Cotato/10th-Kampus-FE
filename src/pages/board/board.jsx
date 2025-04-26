@@ -11,40 +11,44 @@ import {
   getPostList,
   getTrendingList,
 } from '@/apis/board/getPostList.api';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { useInView } from 'react-intersection-observer';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
-import { BOARD_NAME_CONSTANTS } from '@/constants/boardName';
+import { MarketList } from '@/components/board/MarketList';
+
+const CARDNEWS = 'Card News';
+const MARKET = 'Market';
+const TRENDING = 'Trending';
+const QUESTION = 'Question';
+const INFORMATION = 'Information';
 
 export const Board = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { ref, inView } = useInView();
+
   const {
     data: postList,
-    fetchNextPage: fetchNextPostList,
-    hasNextPage: hasNextPostList,
     isLoading: isPostLoading,
-    isPending: isPostPending,
     error: isPostError,
-  } = useInfiniteQuery({
+  } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
-    queryFn: ({ pageParam = 1 }) => {
-      if (boardId === '5') {
-        return getCardNewsList({ page: pageParam });
+    queryFn: () => {
+      if (boardId === '1') {
+        // boardName = CARDNEWS
+        return getCardNewsList({ page: 1 });
       } else if (boardId === '4') {
-        return getTrendingList({ page: pageParam });
+        // boardName = TRENDING
+        return getTrendingList({ page: 1 });
+      } else if (boardId === '5') {
+        // boardName = MARKET
+        return getTrendingList({ page: 1 }); // Market으로 수정해야함
       } else {
-        return getPostList({ boardId: boardId, page: pageParam });
+        return getPostList({ boardId: boardId, page: 1 });
       }
     },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.hasNext ? allPages.length + 1 : undefined;
-    },
   });
+
   const {
     data: boardDetail,
     isLoading: isBoardLoading,
@@ -53,32 +57,39 @@ export const Board = () => {
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
     queryFn: () => getBoardDetail({ boardId: boardId }),
   });
-  const [isActive, setIsActive] = useState({
+
+  const [boardType, setBoardType] = useState({
     trending: false,
-    scrap: false,
+    cardnews: false,
+    market: false,
     filter: false,
   });
-  const checkIsActive = () => {
-    setIsActive({
-      trending: boardDetail.boardName === BOARD_NAME_CONSTANTS.TRENDING.TREND,
-      scrap: boardDetail.boardName === BOARD_NAME_CONSTANTS.SCRAP.CARD_NEWS,
+
+  const checkBoardType = () => {
+    setBoardType({
+      trending: boardDetail.boardName === TRENDING,
+      cardnews: boardDetail.boardName === CARDNEWS,
+      market: boardDetail.boardName === MARKET,
       filter:
-        boardDetail.boardName === BOARD_NAME_CONSTANTS.FILTER.QUESTION ||
-        boardDetail.boardName === BOARD_NAME_CONSTANTS.FILTER.INFORMATION,
+        boardDetail.boardName === QUESTION ||
+        boardDetail.boardName === INFORMATION,
     });
   };
+
+  const sortPostByScrap = (posts) => {
+    return [...posts].sort((a, b) => {
+      if (b.scrap !== a.scrap) return b.scrap - a.scrap;
+      return b.postId - a.postId; // postID 정렬 추가
+    }); // scrap 우선 정렬
+    // 여기에 백에서 보내주는 양식 보고 시간 기준 정렬 추가해야함
+  };
+
   useEffect(() => {
     if (boardDetail) {
-      checkIsActive();
+      checkBoardType();
     }
   }, [boardDetail]);
-  useEffect(() => {
-    if (inView && hasNextPostList) {
-      fetchNextPostList();
-    }
-  }, [inView, hasNextPostList, fetchNextPostList]);
 
-  const posts = postList?.pages?.map((page) => page.posts).flat() || [];
   return (
     <div className="flex flex-1">
       <PostHeader path={path} />
@@ -90,34 +101,33 @@ export const Board = () => {
           >
             Board guide
           </div>
-          {isActive.filter && <FilterBox />}
+          {boardType.filter && <FilterBox />}
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
         <div className="flex w-full flex-col divide-y bg-white px-4">
-          {/** 회의 결과 짧은 로딩 시간으로 스켈레톤 말고 로딩 스피너로 변경하였습니다 */}
           {isPostLoading && <Loading />}
           {isPostError && <p>Error Data Loading</p>}
-          {/** 카드 뉴스 리스트 뷰와 포스트 리스트 뷰가 구조가 달라서 따로 컴포넌트로 만들었습니다*/}
+          {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰, Market 리스트 뷰의 UI가 다름 */}
           {!isPostLoading &&
             !isPostError &&
-            posts &&
-            posts.length > 0 &&
-            posts.map((item, index) =>
-              isActive.scrap ? (
-                <TipsPostList key={index} data={item} boardId={boardId} />
+            postList.posts?.length > 0 &&
+            postList.posts.map((item) =>
+              boardType.cardnews ? (
+                <TipsPostList key={item} data={item} boardId={boardId} />
+              ) : boardType.market ? (
+                <MarketList key={item} data={item} />
               ) : (
                 <PostList
-                  key={index}
+                  key={item}
                   data={item}
-                  isActive={isActive.trending}
+                  isTrendingBoard={boardType.trending}
                 />
               ),
             )}
-          {isPostPending && hasNextPostList ? <Loading /> : <div ref={ref} />}
         </div>
         {boardDetail &&
-          boardDetail.boardName !== BOARD_NAME_CONSTANTS.TRENDING.TREND &&
-          boardDetail.boardName !== BOARD_NAME_CONSTANTS.SCRAP.CARD_NEWS && (
+          boardDetail.boardName !== TRENDING &&
+          boardDetail.boardName !== CARDNEWS && (
             <WriteButton boardName={boardDetail.boardName} />
           )}
       </div>
