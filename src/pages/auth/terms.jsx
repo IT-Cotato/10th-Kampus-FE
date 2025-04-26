@@ -5,6 +5,7 @@ import { Term } from '../../components/join/term';
 import Check from '@/assets/imgs/check.svg?react';
 import detailedTerms from '@/constants/detailedTerms';
 import { TitleHeader } from '@/components/common/titleHeader';
+import { cn } from '@/utils/cn';
 
 export const Terms = () => {
   const navigate = useNavigate();
@@ -59,25 +60,31 @@ export const Terms = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <TitleHeader
-        text="Terms and Conditions"
-      />
-      <div className='flex flex-col px-4 py-[.625rem]'>
+    <div className="flex h-full w-full flex-col">
+      <TitleHeader text="Terms and Conditions" />
+      <div className="flex flex-col gap-12 px-4 py-[.625rem]">
         <div className="text-neutral-base">
           To complete your subscription, you must agree to the Terms and
           Conditions
         </div>
         <button
           onClick={handleClickAgreeWithAll}
-          className={`h-[3.4375rem] w-full rounded-[.625rem] bg-white text-subTitle ${isAllAgreed ? 'border-2 border-primary-30' : 'shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]'} mb-[2.375rem] mt-[3.1875rem] flex flex-row items-center justify-center space-x-3`}
+          className={`h-[3.4375rem] w-full rounded-[.625rem] bg-white text-subTitle ${isAllAgreed ? 'border-[1px] border-primary-30' : 'shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]'} flex flex-row items-center justify-center space-x-3`}
         >
-          <div className="flex h-[1.875rem] w-[1.875rem] items-center justify-center rounded-[.3125rem] border border-neutral-border-40">
-            {isAllAgreed ? <Check className="text-primary-base" /> : ''}
+          <div
+            className={cn(
+              'flex h-6 w-6 items-center justify-center rounded-[.3125rem]',
+              {
+                'bg-primary-base': isAllAgreed,
+                'border border-neutral-border-40': !isAllAgreed,
+              },
+            )}
+          >
+            {isAllAgreed ? <Check className="h-3 w-3 text-white" /> : ''}
           </div>
           <div className="text-subTitle text-neutral-title">Agree with all</div>
         </button>
-        <div className="flex flex-col justify-between h-64">
+        <div className="flex flex-col gap-14">
           <Term
             onClick={() => handleClickAgree('term1')}
             isChecked={terms.term1}
@@ -107,14 +114,12 @@ export const Terms = () => {
             {detailedTerms.term4.title}
           </Term>
         </div>
-        <div className="mb-5 mt-7">
-          <MainButton
-            onClick={handleSignInButtonClick}
-            disabled={!isSignInActive}
-          >
-            Sign Up
-          </MainButton>
-        </div>
+        <MainButton
+          onClick={handleSignInButtonClick}
+          disabled={!isSignInActive}
+        >
+          Sign Up
+        </MainButton>
       </div>
     </div>
   );
