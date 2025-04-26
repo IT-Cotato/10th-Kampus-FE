@@ -122,7 +122,7 @@ export const Write = () => {
   const { boardName } = state;
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="relative flex h-full w-full flex-col pb-[5.6875rem]">
       <div className="grid w-full grid-cols-3 items-center px-4 pb-3 pt-4">
         <button type="button">
           <X
@@ -140,7 +140,7 @@ export const Write = () => {
           <button type="button">00</button>
         </span> */}
       </div>
-      <div className="flex h-full w-full flex-col gap-[40px] px-4 py-[20px]">
+      <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         <WriteTitle
           title={title}
           setTitle={setTitle}
@@ -161,15 +161,18 @@ export const Write = () => {
           maxLength={1000}
         />
         <UploadPics onChange={setUploadedFiles} />
-        <div className="flex gap-2">
-          <MainWhiteButton onClick={handleUpload} disabled={disabled}>
-            Upload
-          </MainWhiteButton>
-          <MainButton onClick={handleTranslateAndUpload} disabled={disabled}>
-            Upload in English
-          </MainButton>
-        </div>
       </div>
+
+      {/* 업로드 버튼 */}
+      <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 text-title-bold-16 text-neutral-80 shadow-base">
+        <MainWhiteButton onClick={handleUpload} disabled={disabled}>
+          Upload
+        </MainWhiteButton>
+        <MainButton onClick={handleTranslateAndUpload} disabled={disabled}>
+          Upload in English
+        </MainButton>
+      </div>
+
       {/** props의 isLoading은 useQuery 이용 예정 */}
       {isPopup &&
         createPortal(

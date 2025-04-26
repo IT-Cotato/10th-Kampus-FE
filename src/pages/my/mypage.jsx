@@ -9,6 +9,7 @@ import { getUser } from '@/apis/user/userDetail.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
 import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
 import { Loading } from '@/components/common/Loading';
+import OfficialMail from '@/constants/OfficialMail.json';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -150,17 +151,13 @@ export const MyPage = () => {
               >
                 FAQ
               </button>
-              <button
-                type="button"
+              <a
+                aria-label="1:1 Inquiry button"
                 className="text-left"
-                onClick={() =>
-                  navigate(
-                    `${path.mypage.service.base}/${path.mypage.service.inquiry}`,
-                  )
-                }
+                href={`mailto:${OfficialMail.mail}`}
               >
                 1:1 Inquiry
-              </button>
+              </a>
               <button
                 type="button"
                 className="text-left"

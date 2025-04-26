@@ -7,9 +7,9 @@ export const MainButton = (props) => {
       onClick={props.onClick}
       disabled={props.disabled}
       className={cn(
-        'h-[3.6875rem] w-full rounded-[.625rem] bg-primary-base text-white',
+        'h-[3.6875rem] w-full rounded-[.625rem] bg-primary-base px-[1.125rem] text-white',
         {
-          'bg-neutral-disabled cursor-default': props.disabled,
+          'cursor-default bg-neutral-disabled': props.disabled,
         },
       )}
     >

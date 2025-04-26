@@ -11,27 +11,26 @@ export const ContactUs = ({ children }) => {
 
   const menu = [
     { id: 0, text: 'FAQ', path: path.mypage.service.faq },
-    { id: 1, text: '1:1 Inquiry', path: path.mypage.service.inquiry },
-    { id: 2, text: 'Notice', path: path.mypage.service.notice },
+    { id: 1, text: 'Notice', path: path.mypage.service.notice },
   ];
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <TitleHeader text="Contact Us" />
-      <div className="flex flex-col w-full px-4 pt-12 pb-3">
+      <div className="flex w-full flex-col px-4 pb-3 pt-12">
         <div className="flex justify-center gap-[0.625rem]">
           {menu.map((item) => (
             <ButtonRound
               key={item.id}
               theme={`${pathname.includes(item.path) ? 'primary' : 'disabled'}`}
               text={item.text}
-              size='long'
+              size="long"
               onClick={() => navigate(`./${item.path}`, { replace: true })}
             />
           ))}
         </div>
       </div>
-      <div className="flex flex-col flex-1 w-full p-4">{children}</div>
+      <div className="flex w-full flex-1 flex-col p-4">{children}</div>
     </div>
   );
 };
