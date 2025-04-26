@@ -23,7 +23,7 @@ import { ReloadModal } from '@/components/board/draft/ReloadModal';
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId } = useParams();
-  const { state } = useLocation();
+  const location = useLocation();
 
   const {
     mutate: addPost,
@@ -81,8 +81,9 @@ export const Write = () => {
   const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
   const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
 
-  const location = useLocation();
-  const [postDraftId, setPostDraftId] = useState(location.state || null); // 있을 경우 내용 불러오기 필요(추가 예정)
+  const [postDraftId, setPostDraftId] = useState(
+    location.state.postDraftId || null,
+  ); // 있을 경우 내용 불러오기 필요(추가 예정)
 
   const handleUpload = async () => {
     const formData = new FormData();
@@ -197,14 +198,14 @@ export const Write = () => {
   };
 
   useEffect(() => {
-    if (!state) {
+    if (!location.state.boardName) {
       // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
       navigate(-1);
     }
-  }, [state, navigate]);
+  }, [location.state.boardName, navigate]);
 
-  if (!state) return null;
-  const { boardName } = state;
+  if (!location.state.boardName) return null;
+  const { boardName } = location.state.boardName;
 
   return (
     <div className="flex h-full w-full flex-col">
