@@ -3,26 +3,14 @@ import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SkipHeader } from '@/components/join/SkipHeader';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 
 export const SchoolVerification = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const university = location.state;
-  const [status, setStatus] = useState('');
 
-  const { mutate } = useCheckSchoolStatus();
-
-  useEffect(() => {
-    mutate(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
     if (status === 'APPROVED' || status === 'PENDING') {
@@ -34,11 +22,11 @@ export const SchoolVerification = () => {
   }, [status, university]);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <SkipHeader />
-      <div className="flex flex-col flex-1 gap-10 px-4 py-5">
+      <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-[3.125rem]">
-          <div className="flex justify-center w-full text-pageTitle">
+          <div className="flex w-full justify-center text-pageTitle">
             How will you verify your school?
           </div>
           <div className="flex flex-col gap-[1.875rem]">

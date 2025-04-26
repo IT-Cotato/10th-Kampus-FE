@@ -5,27 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { SkipHeader } from '@/components/join/SkipHeader';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 
 export const SchoolSearch = () => {
   const UniversityList = University;
   const [university, setUniversity] = useState('');
   const [isUniversitySelected, setIsUniversitySelected] = useState(false);
-  const [status, setStatus] = useState('');
+
   const navigate = useNavigate();
 
-  const { mutate } = useCheckSchoolStatus();
-
-  useEffect(() => {
-    mutate(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
     if (status === 'APPROVED' || status === 'PENDING') {

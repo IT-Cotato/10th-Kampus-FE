@@ -3,7 +3,7 @@ import { MainButton } from '@/components/common/MainButton';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { VerificationCodeModal } from '@/components/join/VerificationCodeModal';
 import { QUERY_KEYS } from '@/constants/api';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { path } from '@/routes/path';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,6 @@ export const SchoolEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [status, setStatus] = useState('');
 
   const university = location.state;
 
@@ -49,18 +48,7 @@ export const SchoolEmail = () => {
     return data;
   };
 
-  const { mutate } = useCheckSchoolStatus();
-
-  useEffect(() => {
-    mutate(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
     if (status === 'APPROVED' || status === 'PENDING') {

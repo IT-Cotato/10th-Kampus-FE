@@ -7,14 +7,13 @@ import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/apis/user/userDetail.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { Loading } from '@/components/common/Loading';
 
 export const MyPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [university, setUniversity] = useState('');
-  const [status, setStatus] = useState(''); // 학교 인증 상태
 
   const { data: userData, isLoading: isUserDetailsLoading } = useQuery({
     queryKey: [QUERY_KEYS.USER_INFO],
@@ -28,19 +27,11 @@ export const MyPage = () => {
     }
   }, [userData]);
 
-  const { mutate: checkSchoolStatus, isLoading: isSchoolStatusLoading } =
-    useCheckSchoolStatus();
-
-  useEffect(() => {
-    checkSchoolStatus(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const {
+    data: status,
+    isLoading: isSchoolStatusLoading,
+    isError: isSchoolStatusError,
+  } = useCheckSchoolStatus();
 
   const handleLogout = async () => {
     await removeTokens();
@@ -67,11 +58,13 @@ export const MyPage = () => {
               <div className="flex h-full w-full flex-col justify-between gap-1 text-white">
                 <div className="text-pageTitle">{username}</div>
                 <div className="text-neutral-disabled">
-                  {university
-                    ? university
-                    : status === 'PENDING'
-                      ? 'School verification is in progress.'
-                      : "What's the name of your school?"}
+                  {isSchoolStatusError
+                    ? 'An error occurred while loading data.'
+                    : university
+                      ? university
+                      : status === 'PENDING'
+                        ? 'School verification is in progress.'
+                        : "What's the name of your school?"}
                 </div>
               </div>
               <div className="right-0 h-full">

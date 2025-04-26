@@ -9,7 +9,7 @@ export const MainButton = (props) => {
       className={cn(
         'h-[3.6875rem] w-full rounded-[.625rem] bg-primary-base text-white',
         {
-          'bg-neutral-disabled cursor-default': props.disabled,
+          'cursor-default bg-neutral-disabled': props.disabled,
         },
       )}
     >

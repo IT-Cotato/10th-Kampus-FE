@@ -9,7 +9,7 @@ import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
 import { useMutation } from '@tanstack/react-query';
 import { postSchoolPhoto } from '@/apis/auth/postSchoolPhoto.api';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
@@ -17,22 +17,10 @@ export const SchoolPhoto = () => {
   const [file, setFile] = useState(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [status, setStatus] = useState('');
 
   const university = location.state;
 
-  const { mutate } = useCheckSchoolStatus();
-
-  useEffect(() => {
-    mutate(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
     if (status === 'APPROVED' || status === 'PENDING') {
