@@ -3,13 +3,14 @@ import XIcon from '@/assets/imgs/x.svg?react';
 import { MainButton } from '@/components/common/MainButton';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { replace, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
 import { useMutation } from '@tanstack/react-query';
 import { postSchoolPhoto } from '@/apis/auth/postSchoolPhoto.api';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
+import { UNIV_STATUS } from '@/constants/universityStatus';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
@@ -18,16 +19,16 @@ export const SchoolPhoto = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const university = location.state;
+  const { university, isFirst } = location.state || {};
 
   const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
-    if (status === 'APPROVED' || status === 'PENDING') {
-      navigate(`../../${path.home}`);
+    if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
+      navigate(path.home, { replace: true });
     }
     if (university === undefined) {
-      navigate(`../${path.signup.school}`);
+      navigate(path.signup.base + '/' + path.signup.school, { replace: true });
     }
   }, [status, university]);
 
@@ -57,7 +58,7 @@ export const SchoolPhoto = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SkipHeader />
+      <SkipHeader isFirst={isFirst} />
       <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-[1.875rem]">
           <div className="flex flex-col gap-6">

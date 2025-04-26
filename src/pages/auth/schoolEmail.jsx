@@ -3,6 +3,7 @@ import { MainButton } from '@/components/common/MainButton';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { VerificationCodeModal } from '@/components/join/VerificationCodeModal';
 import { QUERY_KEYS } from '@/constants/api';
+import { UNIV_STATUS } from '@/constants/universityStatus';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { path } from '@/routes/path';
 import { useMutation } from '@tanstack/react-query';
@@ -16,7 +17,7 @@ export const SchoolEmail = () => {
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const university = location.state;
+  const { university, isFirst } = location.state;
 
   const handleVerify = () => {
     setShowModal(true);
@@ -51,17 +52,17 @@ export const SchoolEmail = () => {
   const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
-    if (status === 'APPROVED' || status === 'PENDING') {
-      navigate(`../../${path.home}`);
+    if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
+      navigate(path.home, { replace: true });
     }
     if (university === undefined) {
-      navigate(`../${path.signup.school}`);
+      navigate(path.signup.base + '/' + path.signup.school, { replace: true });
     }
   }, [status, university]);
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SkipHeader />
+      <SkipHeader isFirst={isFirst} />
       <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-6">
           <div className="flex w-full justify-center text-pageTitle">

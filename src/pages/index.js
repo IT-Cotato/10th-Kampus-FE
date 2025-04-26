@@ -34,6 +34,7 @@ export { CommunityScrap } from './my/community/CommunityScrap';
 export { MyArticle } from '../components/layout/MyArticle';
 export { MyComments } from './my/community/MyComments';
 export { MyArticles } from './my/community/MyArticles';
+export { FailedVerify } from './my/verify/FailedVerify';
 
 export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
@@ -43,7 +44,7 @@ export { MyInfo } from './my/settings/MyInfo';
 export { Notification } from './my/settings/Notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
-export { NotificationList } from './notification/notificationList';
+export { NotificationList } from './notification/NotificationList';
 export { Market } from './market/market';
 
 export { Admin } from '../components/layout/Admin';

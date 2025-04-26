@@ -18,6 +18,7 @@ import { path } from '@/routes/path';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
 import { ERR_MSG } from '@/constants/errorMessage';
+import { UNIV_STATUS } from '@/constants/universityStatus';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
@@ -133,7 +134,7 @@ export const MyInfo = () => {
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
           {info.universityCode ? (
             <DisabledInput name="School" defaultValue={info.universityCode} />
-          ) : schoolStatusError || status === 'PENDING' ? (
+          ) : schoolStatusError || status === UNIV_STATUS.PENDING ? (
             <div className="text-primary-base">
               {schoolStatusError
                 ? ERR_MSG

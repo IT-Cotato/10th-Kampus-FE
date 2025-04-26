@@ -1,30 +1,34 @@
 import University from '@/constants/university';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
+import { UNIV_STATUS } from '@/constants/universityStatus';
 
 export const SchoolSearch = () => {
   const UniversityList = University;
   const [university, setUniversity] = useState('');
   const [isUniversitySelected, setIsUniversitySelected] = useState(false);
 
+  const location = useLocation();
   const navigate = useNavigate();
+  const { isFirst } = location.state || false;
+  console.log(isFirst);
 
   const { data: status } = useCheckSchoolStatus();
 
   useEffect(() => {
-    if (status === 'APPROVED' || status === 'PENDING') {
-      navigate(`../../${path.home}`);
+    if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
+      navigate(path.home, { replace: true });
     }
   }, [status, university]);
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SkipHeader />
+      <SkipHeader isFirst={isFirst} />
       <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-[3.125rem]">
@@ -45,7 +49,9 @@ export const SchoolSearch = () => {
           </div>
           <MainButton
             onClick={() =>
-              navigate(`../${path.signup.verify.base}`, { state: university })
+              navigate(`../${path.signup.verify.base}`, {
+                state: { university: university, isFirst: isFirst },
+              })
             }
             disabled={!isUniversitySelected}
           >
