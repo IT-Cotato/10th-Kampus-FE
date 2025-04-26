@@ -72,6 +72,7 @@ export const MarketList = ({ data, ...props }) => {
             state={true}
             id="1"
             boardId="1"
+            market={true}
             className="h-[1.875rem] w-[1.875rem]"
           />
         </div>
