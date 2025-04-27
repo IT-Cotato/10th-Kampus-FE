@@ -55,7 +55,7 @@ export const SchoolPhoto = () => {
 
   const { mutate: sendPhoto } = useMutation({
     mutationFn: (image) =>
-      postSchoolPhoto({ data: image, universityName: university }),
+      postSchoolPhoto({ data: image, universityCode: university }),
     onSuccess: (response) => {
       setShowModal(true);
     },
@@ -68,12 +68,12 @@ export const SchoolPhoto = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <SkipHeader />
-      <div className="flex flex-col flex-1 gap-10 px-4 py-5">
+      <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-[1.875rem]">
           <div className="flex flex-col gap-6">
-            <div className="flex justify-center w-full text-pageTitle">
+            <div className="flex w-full justify-center text-pageTitle">
               Verify your school
             </div>
             <div className="flex justify-center text-center text-neutral-base">

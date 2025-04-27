@@ -20,10 +20,7 @@ import {
   SchoolVerification,
   Notification,
   FAQ,
-  Inquiry,
   Notice,
-  InquiryDetail,
-  WriteInquiry,
   NoticeDetail,
   Post,
   PostReport,
@@ -218,6 +215,10 @@ const AppRouter = createBrowserRouter([
             element: <Board />,
           },
           {
+            path: path.board.specific.search,
+            element: <Search />,
+          },
+          {
             path: path.board.specific.write,
             element: <Write />,
           },
@@ -316,10 +317,6 @@ const AppRouter = createBrowserRouter([
             element: <FAQ />,
           },
           {
-            path: path.mypage.service.inquiry,
-            element: <Inquiry />,
-          },
-          {
             path: path.mypage.service.notice,
             element: <Notice />,
           },
@@ -399,14 +396,6 @@ const AppRouter = createBrowserRouter([
         path: path.mypage.service.base,
         element: <Outlet />,
         children: [
-          {
-            path: `${path.mypage.service.inquiry}/${path.mypage.service.inquiryDetails}`,
-            element: <InquiryDetail />,
-          },
-          {
-            path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
-            element: <WriteInquiry />,
-          },
           {
             path: `${path.mypage.service.notice}/${path.mypage.service.noticeDetails}`,
             element: <NoticeDetail />,

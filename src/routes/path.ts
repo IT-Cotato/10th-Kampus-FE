@@ -20,6 +20,7 @@ export const path = {
       write: 'write',
       post: ':postId',
       report: 'report',
+      search: 'search',
     },
   },
   home: '/home',

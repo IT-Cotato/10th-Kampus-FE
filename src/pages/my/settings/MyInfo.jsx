@@ -21,14 +21,14 @@ import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
 export const MyInfo = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState({
-    universityName: '',
+    universityCode: '',
     nickname: '',
     preferredLanguage: '',
     nationality: '',
   });
 
   const [savedInfo, setSavedInfo] = useState({
-    universityName: '',
+    universityCode: '',
     nickname: '',
     preferredLanguage: '',
     nationality: '',
@@ -139,12 +139,12 @@ export const MyInfo = () => {
   }, [userData]);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="My Information" onClick={handleBackClick} />
-      <div className="flex flex-col w-full h-full px-4">
+      <div className="flex h-full w-full flex-col px-4">
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
-          {info.universityName ? (
-            <DisabledInput name="School" defaultValue={info.universityName} />
+          {info.universityCode ? (
+            <DisabledInput name="School" defaultValue={info.universityCode} />
           ) : status === 'PENDING' ? (
             <div className="text-primary-base">
               School verification is in progress.
@@ -191,7 +191,7 @@ export const MyInfo = () => {
           </div>
           <DisabledInput name="Nationality" defaultValue={info.nationality} />
         </div>
-        <div className="flex mt-8 mb-5">
+        <div className="mb-5 mt-8 flex">
           <MainButton onClick={handleClickSave} disabled={disabled}>
             Save
           </MainButton>

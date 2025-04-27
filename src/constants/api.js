@@ -17,7 +17,6 @@ export const API_DOMAINS = {
 
   POST_INQUIRY: '/support/inquiry',
 
-
   DUPLICATE_CHECK: '/users/check-nickname',
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
   SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
@@ -35,6 +34,7 @@ export const API_DOMAINS = {
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
   BOARD_UNIV: '/boards/university',
+  BOARD_CATEGORIES: '/boards/boards/:boardId/categories',
   BOARD_DETAIL: '/boards/:boardId',
   BOARD_FAVORITE: '/boards/favorite',
 
@@ -68,6 +68,7 @@ export const API_DOMAINS = {
   HOME_FAVORITE: '/boards/favorite',
 
   SEARCH_TOTAL: '/posts/search',
+  SEARCH_BOARD: '/posts/search/:boardId',
   SEARCH_KEYWORD: '/posts/search/keywords',
   SEARCH_DELETE: '/posts/search/keywords/:keywordId',
 
@@ -77,9 +78,12 @@ export const API_DOMAINS = {
   GET_INQUIRY_DETAILS: '/support/inquiry/:inquiryId',
 
   ADMIN_STUDENT_VERIFICATIONS: '/admin/student-verifications',
-  ADMIN_VERIFICATION_DETAILS: '/admin/student-verifications/:verificationRecordId',
-  ADMIN_VERIFICATION_REJECT: '/admin/student-verifications/:verificationRecordId/reject',
-  ADMIN_VERIFICATION_APPROVE: '/admin/student-verifications/:verificationRecordId/approve',
+  ADMIN_VERIFICATION_DETAILS:
+    '/admin/student-verifications/:verificationRecordId',
+  ADMIN_VERIFICATION_REJECT:
+    '/admin/student-verifications/:verificationRecordId/reject',
+  ADMIN_VERIFICATION_APPROVE:
+    '/admin/student-verifications/:verificationRecordId/approve',
 };
 
 export const QUERY_KEYS = {
@@ -104,6 +108,7 @@ export const QUERY_KEYS = {
 
   GET_SEARCH_KEYWORD: 'searchKeyword',
   GET_SEARCH_RESULT: 'searchResult',
+  GET_SEARCH_RESULT_BOARD: 'searchBoardResult',
 
   GET_HOME_UNIVERISTY: 'homeUniversity',
   GET_HOME_TRENDING: 'homeTrend',
@@ -112,6 +117,7 @@ export const QUERY_KEYS = {
 
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
+  GET_BOARD_CATEGORIES: 'boardCategories',
   POST_NOTICE: 'postNotice',
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',
