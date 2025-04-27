@@ -68,17 +68,13 @@ export const ChatRoom = ({
   };
 
   //메시지 전송
-  const handleSendMessage = (text) => {
-    if (!text && files.length === 0) return;
+  const handleSendMessage = () => {
+    if (!input.trim() && files.length === 0) return;
 
     //웹소켓 사용 - 이미지 : 서버 반영 후 구현
-    if (input && input.trim()) {
-      // sendMessage(chatroomId, input.trim());
-      // files 데이터 전송
-      sendMessage(chatroomId, text, files);
-      setFiles([]);
-      setInput('');
-    }
+    sendMessage(chatroomId, input.trim(), files);
+    setInput('');
+    setFiles([]);
   };
 
   const handleClickMessage = (senderId) => {

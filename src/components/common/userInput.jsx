@@ -95,15 +95,6 @@ export const UserInput = ({
     }
   };
 
-  const handleSend = () => {
-    if (input.trim() || previewImages.length > 0) {
-      handleSend(input.trim());
-      setInput('');
-      setPreviewImages([]);
-      setShowImagePreview(false);
-    }
-  };
-
   return (
     <div className="fixed bottom-0 left-0 right-0 max-w-lg px-4 py-4 mx-auto bg-white">
       {/* 이미지파일 미리보기 */}
