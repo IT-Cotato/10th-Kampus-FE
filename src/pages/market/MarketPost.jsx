@@ -36,6 +36,7 @@ export const MarketPost = () => {
   // });
 
   const postData = {
+    postId: 1,
     postPhotoUrls: ['/bg2.png', '/bg1.png', '/bg2.png'],
     author: 'Kampus',
     state: 'RESERVED',

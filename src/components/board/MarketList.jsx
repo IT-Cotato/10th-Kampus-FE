@@ -74,7 +74,7 @@ export const MarketList = ({ data, ...props }) => {
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
             <Chatting className="h-[.75rem] w-[.75rem]" />
-            <p>{data?.comments}</p>
+            <p>{data?.chats}</p>
           </div>
         </div>
       </div>
