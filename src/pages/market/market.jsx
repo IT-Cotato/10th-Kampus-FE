@@ -45,7 +45,7 @@ export const Market = () => {
 
   return (
     <div className="flex flex-1">
-      {/* <PostHeader path={path} /> */}
+      <PostHeader />
       <div className="relative flex flex-1 flex-col pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
           {boardDetail.filter && <FilterBox />}
