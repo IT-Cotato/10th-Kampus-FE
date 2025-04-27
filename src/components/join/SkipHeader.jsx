@@ -3,7 +3,6 @@ import { SkipButton } from '@/components/join/skipButton.jsx';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 export const SkipHeader = ({ isFirst }) => {
-  console.log(isFirst);
   const navigate = useNavigate();
   return (
     <div className="flex h-16 items-center justify-between px-4">
