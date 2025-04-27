@@ -13,6 +13,7 @@ import { formatTime } from '@/utils/formatTime';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { formatPrice } from '@/utils/formatPrice';
+import { ProductState } from '@/components/market/ProductState';
 
 export const MarketPost = () => {
   // const queryClient = useQueryClient();
@@ -37,6 +38,7 @@ export const MarketPost = () => {
   const postData = {
     postPhotoUrls: ['/public/bg2.png', '/public/bg1.png', '/public/bg2.png'],
     author: 'Kampus',
+    state: 'RESERVED',
     title: '인형',
     content:
       '인형 팝니다. texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttetexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttextte',
@@ -117,14 +119,31 @@ export const MarketPost = () => {
               {/* 제목, 본문 */}
               <article className="relative flex w-full whitespace-pre-line break-words pb-6 pt-8">
                 <div className="flex w-full flex-col gap-4">
-                  {/* 제목 */}
-                  <h1 className="flex text-pageTitle text-neutral-title">
-                    <span
-                      className={translatePending ? 'opacity-0' : 'opacity-100'}
-                    >
-                      {translateState ? translatedPost?.title : postData?.title}
+                  <div className="flex w-full flex-col gap-2">
+                    {/* 상태 */}
+                    {postData?.state === 'RESERVED' && (
+                      <ProductState>Reserved</ProductState>
+                    )}
+                    {postData?.state === 'SOLD_OUT' && (
+                      <ProductState>Sold Out</ProductState>
+                    )}
+                    {/* 제목 */}
+                    <h1 className="flex text-pageTitle text-neutral-title">
+                      <span
+                        className={
+                          translatePending ? 'opacity-0' : 'opacity-100'
+                        }
+                      >
+                        {translateState
+                          ? translatedPost?.title
+                          : postData?.title}
+                      </span>
+                    </h1>
+                    {/* 카테고리 */}
+                    <span className="text-small text-neutral-border-50">
+                      Book
                     </span>
-                  </h1>
+                  </div>
                   {/* 본문 */}
                   <p className="w-full whitespace-break-spaces text-base">
                     <span
