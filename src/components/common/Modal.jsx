@@ -86,7 +86,7 @@ export const Modal = ({
   return (
     <ModalPortal>
       <div
-        className="justsify-center fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center bg-[rgba(11,11,11,0.6)] px-4 align-middle"
+        className="fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center justify-center bg-[rgba(11,11,11,0.6)] px-4 align-middle"
         onClick={onClose}
       >
         <div className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]">

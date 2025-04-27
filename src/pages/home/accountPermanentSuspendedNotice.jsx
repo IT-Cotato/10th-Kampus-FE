@@ -5,7 +5,10 @@ export const AccountPermanentSuspendedNotice = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-8 p-4 text-base text-center text-nuetral-base">
       <div className="flex flex-col items-center justify-center gap-6">
-        <ReportIcon className="h-14 w-14 text-primary-red" />
+        <ReportIcon
+          className="h-14 w-14 text-primary-red"
+          aria-label="Report"
+        />
         <p className="text-subTitle text-neutral-title">
           You can no longer use Kampus
         </p>
@@ -14,9 +17,9 @@ export const AccountPermanentSuspendedNotice = () => {
         <p>
           At Kampus, we are committed to maintaining a safe and respectful
           community for all users. After reviewing your activity, we have
-          determined that it violates our{' '}
-          <span className="text-primary-red">Community Guidelines</span> and
-          <span className="text-primary-red">Terms of Service</span>. As a
+          determined that it violates our
+          <span className="text-primary-red"> Community Guidelines</span> and
+          <span className="text-primary-red"> Terms of Service</span>. As a
           result, we are permanently restricting your access to Kampus services.
         </p>
         <p className="text-left">
@@ -41,7 +44,7 @@ export const AccountPermanentSuspendedNotice = () => {
         <p>
           If you believe this decision was made in error, please contact our
           support team through the official
-          <span className="text-primary-red">Contact Kampus</span> for further
+          <span className="text-primary-red"> Contact Kampus</span> for further
           assistance.
         </p>
       </div>

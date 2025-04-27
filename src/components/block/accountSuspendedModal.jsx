@@ -2,6 +2,7 @@ import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import lockIcon from '@/assets/imgs/lock.svg';
 import unlockIcon from '@/assets/imgs/unlock.svg';
 import checkIcon from '@/assets/imgs/check.svg?react';
+import OfficialMail from '@/constants/OfficialMail.json';
 
 export const AccountTemporarilySuspendedModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -16,8 +17,14 @@ export const AccountTemporarilySuspendedModal = ({ isOpen, onClose }) => {
     >
       Your Kampus account has been suspended. This means that you can no longer
       enter Kampus. Please use{' '}
-      <span className="text-primary-red">Contact Kampus</span> for more
-      information.
+      <a
+        aria-label="Contact Kampus button"
+        className="text-primary-red"
+        href={`mailto:${OfficialMail.mail}`}
+      >
+        Contact Kampus
+      </a>{' '}
+      for more information.
     </Modal>
   );
 };
@@ -39,10 +46,10 @@ export const AccountActiveModal = ({ isOpen, onClose }) => {
         Good news! Your Kampus account suspension has been lifted. You can now
         access Kampus and use all its features as usual.
         <br />
-        Please ensure that your future activity complies with our{' '}
-        <span className="text-primary-blue">Community Guidelines</span> and
-        <span className="text-primary-blue">Terms of Service</span> to avoid any
-        further restrictions.
+        Please ensure that your future activity complies with our
+        <span className="text-primary-blue"> Community Guidelines</span> and
+        <span className="text-primary-blue"> Terms of Service</span> to avoid
+        any further restrictions.
         <br />
         If you have any questions or need assistance, feel free to reach out
         through Contact Kampus.
