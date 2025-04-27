@@ -12,26 +12,26 @@ import { MarketList } from '@/components/board/MarketList';
 export const Market = () => {
   const postList = {
     posts: [
-      //   {
-      //     postId: 1,
-      //     title: '인형',
-      //     price: 30000,
-      //     likes: 10,
-      //     comments: 0,
-      //     thumbnailUrl: 'src/assets/imgs/bg1.png',
-      //     isScrapped: true,
-      //     createdTime: '2025-04-27 02:56:52',
-      //   },
-      //   {
-      //     postId: 2,
-      //     title: '인형',
-      //     price: 20000,
-      //     likes: 10,
-      //     comments: 0,
-      //     thumbnailUrl: 'src/assets/imgs/bg2.png',
-      //     isScrapped: false,
-      //     createdTime: '2025-04-27 02:56:52',
-      //   },
+      {
+        postId: 1,
+        title: '인형',
+        price: 30000,
+        likes: 10,
+        comments: 0,
+        thumbnailUrl: 'src/assets/imgs/bg1.png',
+        isScrapped: true,
+        createdTime: '2025-04-27 02:56:52',
+      },
+      {
+        postId: 2,
+        title: '인형',
+        price: 20000,
+        likes: 10,
+        comments: 0,
+        thumbnailUrl: 'src/assets/imgs/bg2.png',
+        isScrapped: false,
+        createdTime: '2025-04-27 02:56:52',
+      },
     ],
   };
 

@@ -1,5 +1,5 @@
 import Like from '../../assets/imgs/like.svg?react';
-import Comment from '../../assets/imgs/comment.svg?react';
+import Chatting from '../../assets/imgs/ChattingIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
 import { ScrapComponent } from '../common/ScrapComponent';
@@ -69,11 +69,11 @@ export const MarketList = ({ data, ...props }) => {
       <div className="flex items-center justify-between">
         <div className="flex gap-[0.375rem]">
           <div className="flex items-center gap-1 text-small text-primary-red">
-            <Like />
+            <Like className="h-[.875rem] w-[.875rem]" />
             <p>{data?.likes}</p>
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
-            <Comment />
+            <Chatting className="h-[.75rem] w-[.75rem]" />
             <p>{data?.comments}</p>
           </div>
         </div>

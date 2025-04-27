@@ -36,7 +36,7 @@ export const MarketPost = () => {
   // });
 
   const postData = {
-    postPhotoUrls: ['/public/bg2.png', '/public/bg1.png', '/public/bg2.png'],
+    postPhotoUrls: ['/bg2.png', '/bg1.png', '/bg2.png'],
     author: 'Kampus',
     state: 'RESERVED',
     title: '인형',
@@ -177,7 +177,7 @@ export const MarketPost = () => {
                   <div className="flex items-center gap-1">
                     <ChattingIcon
                       aria-label="chats"
-                      className="h-[.875rem] w-[.875rem] text-neutral-border-50"
+                      className="h-[.75rem] w-[.75rem] text-neutral-border-50"
                     />
                     {postData && postData?.chats}
                   </div>
