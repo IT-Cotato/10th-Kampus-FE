@@ -1,8 +1,8 @@
 import { ArticleInfo } from '@/components/chat/articleInfo';
 import { NoticeBox } from '@/components/common/noticeBox';
-import { UserInput } from '@/components/common/userInput';
+import { UserInput, InputTypes } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { RoomHeader } from '@/components/chat/roomHeader';
 import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -20,8 +20,9 @@ export const ChatRoom = ({
 }) => {
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
-  const [page, setPage] = useState(1);
   const [dataDelete, setDataDelete] = useState(false);
+  const [files, setFiles] = useState([]);
+  const messagesEndRef = useRef(null);
 
   //방 정보
   const { data: roomData, isLoading: isRoomLoading } = useQuery({
@@ -29,6 +30,7 @@ export const ChatRoom = ({
     queryFn: () => getChatRoom({ chatroomId }),
     enabled: !!chatroomId,
   });
+
   //읽음처리
   const { mutate: chatsRead } = useMutation({
     mutationKey: [QUERY_KEYS.POST_CHAT_READ],
@@ -52,10 +54,29 @@ export const ChatRoom = ({
     chatsRead();
   }, [chatroomId, roomData, setMessages]);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // 파일 데이터 변경 핸들러
+  const handleImagesChange = (newFiles) => {
+    setFiles(newFiles);
+  };
+
   //메시지 전송
-  const handleSendMessage = () => {
+  const handleSendMessage = (text) => {
+    if (!text && files.length === 0) return;
+
+    //웹소켓 사용 - 이미지 : 서버 반영 후 구현
     if (input && input.trim()) {
-      sendMessage(chatroomId, input.trim());
+      // sendMessage(chatroomId, input.trim());
+      // files 데이터 전송
+      sendMessage(chatroomId, text, files);
+      setFiles([]);
       setInput('');
     }
   };
@@ -69,7 +90,7 @@ export const ChatRoom = ({
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="flex flex-col h-screen">
       <RoomHeader
         text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
         setChatroomId={setChatroomId}
@@ -82,9 +103,9 @@ export const ChatRoom = ({
         boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
         dataDelete={dataDelete}
       />
-      <div className="mt-4 px-4">
+      <div className="flex-1 p-4 overflow-y-auto">
         <NoticeBox />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col flex-1">
           {messages.length > 0 ? (
             messages
               .slice()
@@ -92,28 +113,36 @@ export const ChatRoom = ({
               .map((message, index) => (
                 <div
                   key={index}
-                  className={cn('mb-2 max-w-60 select-none rounded-lg p-2', {
-                    'self-end rounded-tr-none bg-primary-base text-white':
-                      message.isMine,
-                    'self-start rounded-bl-none bg-neutral-bg-10 text-neutral-title':
-                      !message.isMine,
+                  className={cn('mb-4 flex', {
+                    'justify-end': message.isMine,
+                    'justify-start': !message.isMine,
                   })}
-                  onClick={() => handleClickMessage(message.senderId)}
                 >
-                  {message.content}
+                  <div
+                    className={cn('max-w-[70%] rounded-lg p-3', {
+                      'bg-primary-30 text-white': message.isMine,
+                      'bg-neutral-bg-5': !message.isMine,
+                    })}
+                    onClick={() => handleClickMessage(message.senderId)}
+                  >
+                    {message.content}
+                    {/* 시간 필요함 */}
+                  </div>
                 </div>
               ))
           ) : (
             <p className="mx-auto text-neutral-border-40">Empty</p>
           )}
         </div>
+        <div ref={messagesEndRef} />
       </div>
       <UserInput
-        placeholder={'Type a message'}
+        type={InputTypes.CHAT}
+        placeholder="메시지를 입력하세요"
         input={input}
         setInput={setInput}
         handleSend={handleSendMessage}
-        type={'chat'}
+        onImagesChange={handleImagesChange}
       />
       {selectedMessage && (
         <MessageModal

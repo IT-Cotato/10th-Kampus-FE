@@ -53,6 +53,7 @@ import {
   CreateNotice,
   Market,
   StudentVerifications,
+  AccountPermanentSuspendedNotice,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -66,6 +67,14 @@ const AppRouter = createBrowserRouter([
       </Layout>
     ),
     errorElement: <NotFound />,
+  },
+  {
+    path: path.accountPermanentSuspended,
+    element: (
+      <Layout>
+        <AccountPermanentSuspendedNotice />
+      </Layout>
+    ),
   },
   {
     path: path.login,

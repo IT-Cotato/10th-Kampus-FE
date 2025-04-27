@@ -1,4 +1,5 @@
 export { NotFound } from './notFound';
+export { AccountPermanentSuspendedNotice } from './home/accountPermanentSuspendedNotice';
 export { Home } from './home/home';
 export { SplashScreen } from './SplashScreen';
 
@@ -40,7 +41,7 @@ export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
-export { Notification } from './my/settings/Notification';
+export { Notification } from './my/settings/notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
 export { NotificationList } from './notification/notificationList';
