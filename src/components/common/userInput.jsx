@@ -1,6 +1,6 @@
 import Send from '@/assets/imgs/send.svg?react';
 import Camera from '@/assets/imgs/camera.svg?react';
-import XIcon from '@/assets/imgs/imgX.svg?react';
+import XIcon from '@/assets/imgs/ImgX.svg?react';
 import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
 
@@ -31,7 +31,6 @@ export const UserInput = ({
       const scrollHeight = textareaRef.current.scrollHeight;
       textareaRef.current.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
 
-      //div
       if (containerRef.current) {
         containerRef.current.style.height = `${Math.min(scrollHeight, maxHeight) + 20}px'`;
       }
