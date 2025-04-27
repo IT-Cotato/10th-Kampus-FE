@@ -29,7 +29,7 @@ export const Market = () => {
         likes: 10,
         comments: 0,
         thumbnailUrl: 'src/assets/imgs/bg2.png',
-        isScrapped: true,
+        isScrapped: false,
         createdTime: '2025-04-27 02:56:52',
       },
     ],

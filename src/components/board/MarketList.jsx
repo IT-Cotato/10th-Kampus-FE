@@ -18,7 +18,7 @@ export const MarketList = ({ data, ...props }) => {
     if (props.onClick) {
       props.onClick(data);
     } else {
-      navigate(data?.id);
+      navigate(`${data?.postId}`);
     }
   };
 
@@ -58,8 +58,8 @@ export const MarketList = ({ data, ...props }) => {
             </div>
           </div>
           <ScrapComponent
-            state={true}
-            id="1"
+            state={data?.isScrapped}
+            id={data?.postId}
             boardId="1"
             market={true}
             className="h-[1.875rem] w-[1.875rem]"

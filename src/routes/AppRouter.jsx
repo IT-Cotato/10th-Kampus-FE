@@ -52,6 +52,7 @@ import {
   NoticeManagement,
   CreateNotice,
   Market,
+  MarketPost,
   StudentVerifications,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
@@ -242,6 +243,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Market />,
+      },
+      {
+        path: path.market.post,
+        element: <MarketPost />,
       },
     ],
   },

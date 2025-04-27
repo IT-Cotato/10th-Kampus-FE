@@ -68,11 +68,11 @@ export const FocusImageSlider = ({
     });
   };
   return (
-    <div className="fixed z-50 flex h-full w-full max-w-[512px]  bg-black">
-      <div className='relative w-full h-full flex flex-col justify-center'>
-        <div className="absolute w-full top-5 flex items-center justify-center text-subTitle text-white">
+    <div className="fixed z-50 flex h-full w-full max-w-[512px] bg-black">
+      <div className="relative flex h-full w-full flex-col justify-center">
+        <div className="absolute top-5 flex w-full items-center justify-center text-subTitle text-white">
           <h1>
-            {currentImgIndex + 1}/{images && (images.length)}
+            {currentImgIndex + 1}/{images && images.length}
           </h1>
           <button
             className="absolute left-5 text-white"
@@ -89,14 +89,15 @@ export const FocusImageSlider = ({
         >
           <div className="max-h-[60vh] w-full overflow-hidden">
             <div ref={flexRef} className="flex" style={style}>
-              {images && images.map((image, index) => (
-                <div key={index} className="flex-none w-full aspect-square">
-                  <img
-                    src={image}
-                    className="inset-0 h-full w-full object-contain"
-                  />
-                </div>
-              ))}
+              {images &&
+                images.map((image, index) => (
+                  <div key={index} className="aspect-square w-full flex-none">
+                    <img
+                      src={image}
+                      className="inset-0 h-full w-full object-contain"
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         </div>
