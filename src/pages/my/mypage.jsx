@@ -75,7 +75,7 @@ export const MyPage = () => {
           )}
         </div>
         {/* 학교 인증 시 반려 시, 실패 네비게이트 페이지 버튼 */}
-        {status === UNIV_STATUS.REJECT && (
+        {true && (
           <button
             onClick={() =>
               navigate(path.mypage.base + '/' + path.mypage.verify.fail)
