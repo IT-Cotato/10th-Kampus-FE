@@ -76,7 +76,7 @@ export const MarketPost = () => {
           setStyle={setStyle}
         />
       )}
-      {/* {postData && <PostHeader path={path} isAuthor={postData.isAuthor} />} */}
+      {postData && <PostHeader path={path} isAuthor={postData.isAuthor} />}
       <div className="flex h-full w-full flex-col pt-14">
         {isPostLoading && <Loading />}
         {isPostError && <p>Error Data Loading</p>}

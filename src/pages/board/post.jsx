@@ -1,6 +1,5 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
-import { path } from '@/routes/path';
 import { useState } from 'react';
 import anonymous from '@/assets/imgs/anonymous.svg';
 import kampus from '@/assets/imgs/kampusPost.svg';
@@ -129,7 +128,7 @@ export const Post = () => {
           setStyle={setStyle}
         />
       )}
-      {postData && <PostHeader path={path} isAuthor={postData.isAuthor} />}
+      {postData && <PostHeader isAuthor={postData.isAuthor} />}
       <div className="flex h-full w-full flex-col pt-14">
         {postLoading && <Loading />}
         {postError && <p>Error Data Loading</p>}
