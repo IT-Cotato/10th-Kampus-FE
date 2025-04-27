@@ -15,7 +15,6 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
-import { MarketList } from '@/components/board/MarketList';
 
 const CARDNEWS = 'Card News';
 const MARKET = 'Market';
@@ -107,15 +106,13 @@ export const Board = () => {
         <div className="flex w-full flex-col divide-y bg-white px-4">
           {isPostLoading && <Loading />}
           {isPostError && <p>Error Data Loading</p>}
-          {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰, Market 리스트 뷰의 UI가 다름 */}
+          {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰의 UI가 다름 */}
           {!isPostLoading &&
             !isPostError &&
             postList.posts?.length > 0 &&
             postList.posts.map((item) =>
               boardType.cardnews ? (
                 <TipsPostList key={item} data={item} boardId={boardId} />
-              ) : boardType.market ? (
-                <MarketList key={item} data={item} />
               ) : (
                 <PostList
                   key={item}
@@ -127,7 +124,7 @@ export const Board = () => {
         </div>
         {boardDetail &&
           boardDetail.boardName !== TRENDING &&
-          boardDetail.boardName !== CARDNEWS && (
+          boardDetail.boardName == CARDNEWS && (
             <WriteButton boardName={boardDetail.boardName} />
           )}
       </div>

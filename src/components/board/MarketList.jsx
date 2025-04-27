@@ -22,30 +22,19 @@ export const MarketList = ({ data, ...props }) => {
     }
   };
 
-  const dummyData = {
-    postId: 6,
-    title: '인형',
-    price: 30000,
-    likes: 10,
-    comments: 0,
-    thumbnailUrl: '/src/assets/imgs/bg1.png',
-    isScrapped: false,
-    createdTime: '2025-04-27 02:56:52',
-  };
-
   return (
     <div
       className="flex w-full cursor-pointer flex-col gap-3 pb-3 pt-4"
-      onClick={() => handleOnClick(dummyData)}
+      onClick={() => handleOnClick(data)}
     >
       <div className="flex w-full justify-between gap-3">
         <div className="flex w-full justify-between">
           <div className="flex w-full gap-4">
             {/* 썸네일 */}
-            {dummyData?.thumbnailUrl && (
+            {data?.thumbnailUrl && (
               <div className="flex h-[5.75rem] w-[5.75rem] flex-shrink-0">
                 <img
-                  src={dummyData?.thumbnailUrl}
+                  src={data?.thumbnailUrl}
                   alt="Product Image"
                   className="h-[5.75rem] w-[5.75rem] object-cover"
                 />
@@ -54,16 +43,16 @@ export const MarketList = ({ data, ...props }) => {
             <div className="flex w-full flex-col gap-2">
               {/* 상품명 */}
               <h1 className="flex w-full text-subTitle text-neutral-title">
-                <span className="line-clamp-1">{dummyData?.title}</span>
+                <span className="line-clamp-1">{data?.title}</span>
               </h1>
               {/* 게시물 작성 시간 */}
               <p className="text-small text-neutral-border-50">
-                {formatTime(dummyData?.createdTime)}
+                {formatTime(data?.createdTime)}
               </p>
               {/* 가격 */}
               <h2 className="line-clamp-2 flex w-full">
                 <span className="line-clamp-2">
-                  {formatPrice(dummyData?.price)} won
+                  {formatPrice(data?.price)} won
                 </span>
               </h2>
             </div>
@@ -81,11 +70,11 @@ export const MarketList = ({ data, ...props }) => {
         <div className="flex gap-[0.375rem]">
           <div className="flex items-center gap-1 text-small text-primary-red">
             <Like />
-            <p>{dummyData?.likes}</p>
+            <p>{data?.likes}</p>
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
             <Comment />
-            <p>{dummyData?.comments}</p>
+            <p>{data?.comments}</p>
           </div>
         </div>
       </div>

@@ -23,11 +23,11 @@ export const PostHeader = ({ path, isAuthor = false }) => {
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
-      {!isBoardLoading && !isBoardError && boardDetail.boardName && (
+      {!isBoardLoading && !isBoardError && boardDetail?.boardName && (
         <p
           className={`absolute left-1/2 -translate-x-1/2 transform whitespace-nowrap text-pageTitle font-semibold text-neutral-title ${boardDetail?.boardName?.length < 12 ? 'text-pageTitle' : 'text-subTitle'}`}
         >
-          {boardDetail.boardName}
+          {boardDetail?.boardName}
         </p>
       )}
       <div className="flex items-center gap-2">
