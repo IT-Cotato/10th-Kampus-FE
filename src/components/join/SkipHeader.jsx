@@ -1,5 +1,5 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
-import { SkipButton } from '@/components/join/skipButtonShadow';
+import { SkipButton } from '@/components/join/skipButton.jsx';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 export const SkipHeader = ({ isFirst }) => {
