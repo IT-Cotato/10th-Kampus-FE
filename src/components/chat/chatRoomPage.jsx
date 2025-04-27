@@ -21,6 +21,7 @@ export const ChatRoom = ({
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [dataDelete, setDataDelete] = useState(false);
+  const [files, setFiles] = useState([]);
   const messagesEndRef = useRef(null);
 
   //방 정보
@@ -61,15 +62,20 @@ export const ChatRoom = ({
     scrollToBottom();
   }, [messages]);
 
+  // 파일 데이터 변경 핸들러
+  const handleImagesChange = (newFiles) => {
+    setFiles(newFiles);
+  };
+
   //메시지 전송
-  const handleSendMessage = (text, files = []) => {
+  const handleSendMessage = (text) => {
     if (!text && files.length === 0) return;
 
     //웹소켓 사용 - 이미지 : 서버 반영 후 구현
     if (input && input.trim()) {
-      sendMessage(chatroomId, input.trim());
+      // sendMessage(chatroomId, input.trim());
       // files 데이터 전송
-      // sendMessage(chatroomId, text, files);
+      sendMessage(chatroomId, text, files);
       setFiles([]);
       setInput('');
     }
@@ -135,9 +141,8 @@ export const ChatRoom = ({
         placeholder="메시지를 입력하세요"
         input={input}
         setInput={setInput}
-        files={files}
-        setFiles={setFiles}
         handleSend={handleSendMessage}
+        onImagesChange={handleImagesChange}
       />
       {selectedMessage && (
         <MessageModal

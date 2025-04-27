@@ -14,16 +14,14 @@ export const UserInput = ({
   input,
   setInput,
   handleSend,
-  files,
-  setFiles,
   type,
   inputFocus = false,
+  onImagesChange,
 }) => {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
   const maxHeight = 4 * 26;
   const [previewImages, setPreviewImages] = useState([]);
-  const [files, setFiles] = useState([]);
   const [showImagePreview, setShowImagePreview] = useState(false);
 
   const handleInput = () => {
@@ -53,7 +51,7 @@ export const UserInput = ({
   const handlePhoto = (e) => {
     const newFiles = Array.from(e.target.files);
 
-    if (newFiles.length + files.length > 10) {
+    if (newFiles.length > 10) {
       alert('최대 10개의 이미지만 업로드할 수 있습니다.');
       return;
     }
@@ -67,17 +65,11 @@ export const UserInput = ({
       const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
 
       if (validFiles.length > 0) {
-        const updatedFiles = [...files, ...validFiles];
-        const updatedPreviews = [...previewImages, ...newPreviews];
-
-        setFiles(updatedFiles);
-        setPreviewImages(updatedPreviews);
+        setPreviewImages(newPreviews);
         setShowImagePreview(true);
 
-        // 부모 컴포넌트에 파일 전달
-        if (onImagesChange) {
-          onImagesChange(updatedFiles);
-        }
+        // 부모 컴포넌트에 파일 데이터 전달
+        onImagesChange?.(validFiles);
 
         e.target.value = ''; // input 초기화
       }
@@ -89,71 +81,24 @@ export const UserInput = ({
 
   const removeImage = (index) => {
     const urlToRevoke = previewImages[index];
-
-    const updatedFiles = files.filter((_, i) => i !== index);
     const updatedPreviews = previewImages.filter((_, i) => i !== index);
 
-    setFiles(updatedFiles);
     setPreviewImages(updatedPreviews);
 
-    // 부모 컴포넌트에 파일 전달
-    if (onImagesChange) {
-      onImagesChange(updatedFiles);
-    }
+    // 부모 컴포넌트에 업데이트된 파일 데이터 전달
+    onImagesChange?.([]); // 파일 삭제 시 빈 배열 전달
 
-    URL.revokeObjectURL(urlToRevoke); // URL 해제
+    URL.revokeObjectURL(urlToRevoke);
 
-    if (updatedFiles.length === 0) {
+    if (updatedPreviews.length === 0) {
       setShowImagePreview(false);
     }
   };
 
-  const handleImageUpload = (e) => {
-    const newFiles = Array.from(e.target.files);
-
-    // 파일 개수 제한
-    if (newFiles.length + files.length > 10) {
-      alert('최대 10개의 이미지만 업로드할 수 있습니다.');
-      return;
-    }
-
-    // 파일 크기 제한 (5MB)
-    const maxSize = 5 * 1024 * 1024;
-    const validFiles = newFiles.filter((file) => {
-      const isValidSize = file.size <= maxSize;
-      const isValidType = file.type.match('image/.*');
-      return isValidSize && isValidType;
-    });
-
-    if (validFiles.length !== newFiles.length) {
-      alert(
-        '일부 파일이 크기 제한(5MB)을 초과하거나 이미지 파일이 아닌 파일이 제외되었습니다.',
-      );
-    }
-
-    try {
-      const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
-
-      if (validFiles.length > 0) {
-        const updatedFiles = [...files, ...validFiles];
-        const updatedPreviews = [...previewImages, ...newPreviews];
-
-        setFiles(updatedFiles);
-        setPreviewImages(updatedPreviews);
-        setShowImagePreview(true);
-        e.target.value = ''; // input 초기화
-      }
-    } catch (error) {
-      console.error('파일 처리 중 오류 발생:', error);
-      alert('파일 처리 중 오류가 발생했습니다.');
-    }
-  };
-
   const handleSend = () => {
-    if (input.trim() || files.length > 0) {
-      handleSend(input.trim(), files);
+    if (input.trim() || previewImages.length > 0) {
+      handleSend(input.trim());
       setInput('');
-      setFiles([]);
       setPreviewImages([]);
       setShowImagePreview(false);
     }
@@ -190,22 +135,20 @@ export const UserInput = ({
             htmlFor="imageUpload"
             aria-label="Upload Image"
             className={cn('left-6 h-8 w-8 cursor-pointer', {
-              'text-primary-30': input || files.length > 0,
-              'text-neutral-border-30': !input && files.length === 0,
+              'text-primary-30': input || previewImages.length > 0,
+              'text-neutral-border-30': !input && previewImages.length === 0,
             })}
           >
             <Camera className="w-full h-full text-neutral-icon" />
+            <input
+              type="file"
+              id="imageUpload"
+              className="hidden"
+              accept="image/*"
+              multiple
+              onChange={handlePhoto}
+            />
           </label>
-        )}
-        {type === InputTypes.CHAT && (
-          <input
-            type="file"
-            id="imageUpload"
-            className="hidden"
-            accept="image/*"
-            multiple
-            onChange={handleImageUpload}
-          />
         )}
         <textarea
           ref={textareaRef}
@@ -223,8 +166,8 @@ export const UserInput = ({
           onClick={handleSend}
           aria-label="Send Message"
           className={cn('right-6 h-8 w-8', {
-            'text-primary-30': input || files.length > 0,
-            'text-neutral-border-30': !input && files.length === 0,
+            'text-primary-30': input || previewImages.length > 0,
+            'text-neutral-border-30': !input && previewImages.length === 0,
           })}
         >
           <Send className="w-full h-full" />
