@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { ButtonRound } from './ButtonRound';
 
-const ModalPortal = ({ children }) => {
+export const ModalPortal = ({ children }) => {
   const root = document.getElementById('portal-root');
   if (!root) return null;
   return ReactDOM.createPortal(children, root);

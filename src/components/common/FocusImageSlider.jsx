@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Close from '@/assets/imgs/x.svg?react';
+import { ModalPortal } from './Modal';
+
 export const FocusImageSlider = ({
   images,
   setImageFocus,
@@ -16,17 +18,21 @@ export const FocusImageSlider = ({
       document.body.style.overflow = 'auto';
     };
   }, []);
+
   const [touch, setTouch] = useState({
     start: 0,
     end: 0,
   });
+
   const flexRef = useRef(null);
+
   const touchStart = (e) => {
     setTouch({
       ...touch,
       start: e.touches[0].pageX,
     });
   };
+
   const touchMove = (e) => {
     if (flexRef.current) {
       const current = flexRef.current.clientWidth * currentImgIndex;
@@ -42,6 +48,7 @@ export const FocusImageSlider = ({
       }
     }
   };
+
   const touchEnd = (e) => {
     const end = e.changedTouches[0].pageX;
     if (touch.start > end) {
@@ -67,19 +74,19 @@ export const FocusImageSlider = ({
       end,
     });
   };
+
   return (
-    <div className="fixed z-50 flex h-full w-full max-w-[512px] bg-black">
-      <div className="relative flex h-full w-full flex-col justify-center">
+    <ModalPortal>
+      <div className="justsify-center fixed z-[200] mx-auto flex h-full min-h-dvh w-full max-w-lg flex-col justify-center bg-black">
         <div className="absolute top-5 flex w-full items-center justify-center text-subTitle text-white">
           <h1>
             {currentImgIndex + 1}/{images && images.length}
           </h1>
-          <button
-            className="absolute left-5 text-white"
+          <Close
+            aria-label="Close button"
+            className="absolute left-5 h-5 w-5 text-white"
             onClick={() => setImageFocus(false)}
-          >
-            <Close className="h-5 w-5" />
-          </button>
+          />
         </div>
         <div
           className="relative"
@@ -102,6 +109,6 @@ export const FocusImageSlider = ({
           </div>
         </div>
       </div>
-    </div>
+    </ModalPortal>
   );
 };

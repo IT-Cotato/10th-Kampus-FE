@@ -116,7 +116,7 @@ export const MarketPost = () => {
 
   return (
     <div className="relative w-full flex-1 pb-[5.375rem] scrollbar-hide">
-      {/* 상품 이미지들 */}
+      {/* 이미지 클릭 시 이미지 슬라이더 */}
       {imageFocus && postData?.postPhotoUrls?.length > 0 && (
         <FocusImageSlider
           images={postData.postPhotoUrls}
