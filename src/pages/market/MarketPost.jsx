@@ -43,7 +43,7 @@ export const MarketPost = () => {
     postId: 1,
     postPhotoUrls: ['/bg2.png', '/bg1.png', '/bg2.png'],
     author: 'Kampus',
-    isAuthor: true,
+    isAuthor: false,
     state: 'RESERVED',
     title: '인형',
     content:

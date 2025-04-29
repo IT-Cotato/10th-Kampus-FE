@@ -264,6 +264,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
           state={!data.isFavorite}
           changeToTrueText="Pinned to the board"
           changeToFalseText="Unpinned from the board"
+          onClose={() => setPinAni(false)}
         />
       )}
       {urlAni && (
@@ -271,6 +272,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
           state={!copyState}
           changeToTrueText="URL copied successfully"
           changeToFalseText="URL copy failed"
+          onClose={() => setUrlAni(false)}
         />
       )}
       {Object.entries(popupState).map(
