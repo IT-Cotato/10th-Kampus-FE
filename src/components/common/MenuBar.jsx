@@ -179,7 +179,8 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
         <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
       </button>
       {openModal &&
-        !postId && ( // 게시글 리스트 부분
+        !postId &&
+        !isMarket && ( // 게시글 리스트 부분
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
             onClick={() => toggleFavorite()}
