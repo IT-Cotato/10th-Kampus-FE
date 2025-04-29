@@ -9,8 +9,6 @@ import { deletePost } from '@/apis/board/handlePost.api';
 import { useState, useRef, useEffect } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createPortal } from 'react-dom';
-import { Popup } from './popup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
@@ -19,6 +17,7 @@ import {
   deleteBoardFavorite,
 } from '@/apis/board/toggleBoardFavorite.api';
 import { postChat } from '@/apis/chat/chatRoom.api';
+import { Modal } from './Modal';
 export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -276,18 +275,18 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
       )}
       {Object.entries(popupState).map(
         ([key, isOpen]) =>
-          isOpen &&
-          createPortal(
-            <Popup
+          isOpen && (
+            <Modal
               key={key}
               title={popupData[key].title}
-              text={popupData[key].text}
               onClickLeft={() => togglePopup(key)}
               leftButton={popupData[key].leftButton}
               onClickRight={() => handleRightButton(key)}
               rightButton={popupData[key].rightButton}
-            />,
-            document.getElementById('modal-root'),
+              onClose={() => togglePopup(key)}
+            >
+              {popupData[key].text}
+            </Modal>
           ),
       )}
     </div>

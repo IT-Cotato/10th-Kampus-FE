@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import { ButtonRound } from './ButtonRound';
 
 const ModalPortal = ({ children }) => {
-  const root = document.getElementById('modal-root');
-  return ReactDom.createPortal(children, root);
+  const root = document.getElementById('portal-root');
+  if (!root) return null;
+  return ReactDOM.createPortal(children, root);
 };
 
 export const Modal = ({
@@ -27,17 +28,18 @@ export const Modal = ({
   return (
     <ModalPortal>
       <div
-        className="justsify-center fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center bg-[rgba(11,11,11,0.6)] px-4 align-middle"
+        className="justsify-center fixed mx-auto flex h-full min-h-dvh w-full max-w-lg items-center bg-[rgba(11,11,11,0.6)] px-4 align-middle"
         onClick={onClose}
       >
-        <div className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]">
+        <div
+          className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]"
+          onClick={(e) => e.stopPropagation()}
+        >
           <h2 className="flex text-center text-subTitle text-neutral-title">
             {title}
           </h2>
           {children && (
-            <div className="flex flex-col w-full text-center">
-              {children}
-            </div>
+            <div className="flex w-full flex-col text-center">{children}</div>
           )}
           {(leftButton || rightButton) && (
             <div className="flex flex-row gap-4 whitespace-nowrap">
