@@ -17,7 +17,6 @@ import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
 
 const CARDNEWS = 'Card News';
-const MARKET = 'Market';
 const TRENDING = 'Trending';
 const QUESTION = 'Question';
 const INFORMATION = 'Information';
@@ -39,9 +38,6 @@ export const Board = () => {
       } else if (boardId === '4') {
         // boardName = TRENDING
         return getTrendingList({ page: 1 });
-      } else if (boardId === '5') {
-        // boardName = MARKET
-        return getTrendingList({ page: 1 }); // Market으로 수정해야함
       } else {
         return getPostList({ boardId: boardId, page: 1 });
       }
@@ -60,7 +56,6 @@ export const Board = () => {
   const [boardType, setBoardType] = useState({
     trending: false,
     cardnews: false,
-    market: false,
     filter: false,
   });
 
@@ -68,7 +63,6 @@ export const Board = () => {
     setBoardType({
       trending: boardDetail.boardName === TRENDING,
       cardnews: boardDetail.boardName === CARDNEWS,
-      market: boardDetail.boardName === MARKET,
       filter:
         boardDetail.boardName === QUESTION ||
         boardDetail.boardName === INFORMATION,
