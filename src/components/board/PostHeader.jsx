@@ -36,7 +36,7 @@ export const PostHeader = ({ isAuthor = false }) => {
   };
 
   return (
-    <div className="fixed z-10 flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
+    <div className="fixed z-[100] flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
       {/* 중고거래 메인페이지는 뒤로가기 없음 */}
       {!isMarket || postId ? (
         <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />

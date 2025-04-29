@@ -1,9 +1,11 @@
-import Like from '../../assets/imgs/like.svg?react';
-import Chatting from '../../assets/imgs/ChattingIcon.svg?react';
+import Like from '@/assets/imgs/like.svg?react';
+import Chatting from '@/assets/imgs/ChattingIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
-import { ScrapComponent } from '../common/ScrapComponent';
+import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { formatPrice } from '@/utils/formatPrice';
+import { ProductState } from '@/components/market/ProductState';
+
 export const MarketList = ({ data, ...props }) => {
   const navigate = useNavigate();
   // const {
@@ -49,12 +51,20 @@ export const MarketList = ({ data, ...props }) => {
               <p className="text-small text-neutral-border-50">
                 {formatTime(data?.createdTime)}
               </p>
-              {/* 가격 */}
-              <h2 className="line-clamp-2 flex w-full">
-                <span className="line-clamp-2">
-                  {formatPrice(data?.price)} won
-                </span>
-              </h2>
+              <span className="flex items-center gap-2">
+                {/* 상품 상태 */}
+                {data?.state !== 'ACTIVE' && (
+                  <h2 className="line-clamp-1 flex w-fit flex-shrink-0">
+                    <ProductState>{data?.state}</ProductState>
+                  </h2>
+                )}
+                {/* 가격 */}
+                <h2 className="line-clamp-2 flex w-full">
+                  <span className="line-clamp-1">
+                    ₩ {formatPrice(data?.price)}
+                  </span>
+                </h2>
+              </span>
             </div>
           </div>
           <ScrapComponent

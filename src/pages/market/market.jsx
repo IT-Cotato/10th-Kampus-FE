@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { FilterBox } from '@/components/board/FilterBox';
 import { PostHeader } from '@/components/board/PostHeader';
-import { path } from '@/routes/path';
 import { WriteButton } from '@/components/board/write/WriteButton';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/board/MarketList';
 
@@ -18,6 +13,7 @@ export const Market = () => {
         price: 30000,
         likes: 10,
         chats: 0,
+        state: 'RESERVED',
         thumbnailUrl: 'src/assets/imgs/bg1.png',
         isScrapped: true,
         createdTime: '2025-04-27 02:56:52',
@@ -28,6 +24,7 @@ export const Market = () => {
         price: 20000,
         likes: 10,
         chats: 0,
+        state: 'ACTIVE',
         thumbnailUrl: 'src/assets/imgs/bg2.png',
         isScrapped: false,
         createdTime: '2025-04-27 02:56:52',
