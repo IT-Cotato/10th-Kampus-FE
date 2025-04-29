@@ -2,7 +2,7 @@ import { FilterBox } from '@/components/board/FilterBox';
 import { PostHeader } from '@/components/board/PostHeader';
 import { WriteButton } from '@/components/board/write/WriteButton';
 import { Loading } from '@/components/common/Loading';
-import { MarketList } from '@/components/board/MarketList';
+import { MarketList } from '@/components/market/MarketList';
 
 export const Market = () => {
   const postList = {

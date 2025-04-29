@@ -5,16 +5,18 @@ import { formatTime } from '@/utils/formatTime';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { formatPrice } from '@/utils/formatPrice';
 import { ProductState } from '@/components/market/ProductState';
+import { TranslateButton } from '../common/TranslateButton';
+import { usePostTranslate } from '@/hooks/usePostTranslate';
 
 export const MarketList = ({ data, ...props }) => {
   const navigate = useNavigate();
-  // const {
-  //   translateState,
-  //   setTranslateState,
-  //   translatedPost,
-  //   translatePending,
-  //   handleTranslate,
-  // } = usePostTranslate(data?.id);
+  const {
+    translateState,
+    setTranslateState,
+    translatedPost,
+    translatePending,
+    handleTranslate,
+  } = usePostTranslate(data?.id);
 
   const handleOnClick = (data) => {
     if (props.onClick) {
@@ -45,7 +47,9 @@ export const MarketList = ({ data, ...props }) => {
             <div className="flex w-full flex-col gap-2">
               {/* 상품명 */}
               <h1 className="flex w-full text-subTitle text-neutral-title">
-                <span className="line-clamp-1">{data?.title}</span>
+                <span className="line-clamp-1">
+                  {translateState ? translatedPost.title : data?.title}
+                </span>
               </h1>
               {/* 게시물 작성 시간 */}
               <p className="text-small text-neutral-border-50">
@@ -87,6 +91,14 @@ export const MarketList = ({ data, ...props }) => {
             <p>{data?.chats}</p>
           </div>
         </div>
+
+        <TranslateButton
+          handleTranslate={handleTranslate}
+          state={translateState}
+          setState={setTranslateState}
+          size="small"
+          color="title"
+        />
       </div>
     </div>
   );
