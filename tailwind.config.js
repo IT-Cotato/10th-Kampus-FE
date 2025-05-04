@@ -124,11 +124,11 @@ export default {
     plugin(({ addUtilities }) =>
       addUtilities({
         '.layout': {
-          '@apply max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh':
+          '@apply flex max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh':
             '',
         },
         '.modal-layout': {
-          '@apply max-w-lg mx-auto h-full inset-0 flex justify-center items-center overflow-x-hidden min-h-dvh fixed mx-auto flex h-full min-h-dvh w-full max-w-lg items-center bg-[rgba(11,11,11,0.6)] px-4 align-middle':
+          '@apply max-w-lg h-full inset-0 flex justify-center items-center overflow-x-hidden min-h-dvh fixed mx-auto flex h-full min-h-dvh w-full max-w-lg items-center bg-[rgba(11,11,11,0.6)] px-4 align-middle':
             '',
         },
         '.admin-layout': {
