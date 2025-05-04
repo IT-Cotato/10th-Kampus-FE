@@ -79,7 +79,7 @@ export const MyPage = () => {
         {true && (
           <button
             onClick={() =>
-              navigate(path.mypage.base + '/' + path.mypage.verify.fail)
+              navigate(`${path.mypage.base}/${path.mypage.verify.fail}`)
             }
             className="w-full rounded-[.625rem] border border-primary-red px-[1.125rem] py-[1.25rem] text-base leading-none text-primary-red"
           >

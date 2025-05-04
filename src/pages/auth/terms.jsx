@@ -6,6 +6,7 @@ import Check from '@/assets/imgs/check.svg?react';
 import detailedTerms from '@/constants/detailedTerms';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { cn } from '@/utils/cn';
+import { path } from '@/routes/path';
 
 export const Terms = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export const Terms = () => {
 
   const handleSignInButtonClick = () => {
     const term = terms.term4;
-    navigate('/signup/profile', { state: { term } });
+    navigate(`${path.signup.base}/${path.signup.profile}`, { state: { term } });
   };
 
   return (

@@ -28,7 +28,7 @@ export const SchoolPhoto = () => {
       navigate(path.home, { replace: true });
     }
     if (university === undefined) {
-      navigate(path.signup.base + '/' + path.signup.school, { replace: true });
+      navigate(`${path.signup.base}/${path.signup.school}`, { replace: true });
     }
   }, [status, university]);
 
