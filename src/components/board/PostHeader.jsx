@@ -7,6 +7,7 @@ import { Loading } from '../common/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
+import { cn } from '@/utils/cn';
 
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();
@@ -35,12 +36,15 @@ export const PostHeader = ({ isAuthor = false }) => {
   };
 
   return (
-    <div className="fixed z-[100] flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
+    <div
+      className={cn(
+        'fixed z-[100] flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4',
+        { 'justify-end': isMarket && !postId },
+      )}
+    >
       {/* 중고거래 메인페이지는 뒤로가기 없음 */}
-      {!isMarket || postId ? (
+      {(!isMarket || postId) && (
         <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
-      ) : (
-        <span></span>
       )}
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
@@ -54,7 +58,7 @@ export const PostHeader = ({ isAuthor = false }) => {
       <div className="flex items-center gap-2">
         {/* 게시글 내에는 검색 기능 없음 */}
         {postId === undefined && (
-          <button onClick={handleSearch}>
+          <button type="button" onClick={handleSearch}>
             <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
           </button>
         )}
