@@ -59,12 +59,13 @@ export const Dropdown = ({
           })}
         />
       </button>
+      {/* 드롭다운 항목들 */}
       <div
         id="dropdown"
         className={cn(
-          'absolute bottom-0 left-full z-10 w-fit min-w-28 translate-x-2 gap-2 rounded-[.625rem] bg-white py-2 pl-4 pr-14 shadow-navbar',
+          'absolute bottom-0 left-full z-10 w-fit min-w-28 translate-x-2 gap-2 rounded-[.625rem] bg-white py-2 pl-4 pr-14 shadow-navbar transition-all duration-150 ease-in-out',
           {
-            hidden: !isDropdownOpen,
+            'pointer-events-none invisible opacity-0': !isDropdownOpen,
           },
         )}
       >
