@@ -12,36 +12,43 @@ export default {
       title: [
         '2.25rem', // 36px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '600',
         },
       ],
       pageTitle: [
         '1.5rem', // 24px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '600',
         },
       ],
       subTitle: [
         '1.25rem', // 20px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '500',
         },
       ],
       base: [
         '1rem', // 16px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '400',
         },
       ],
       small: [
         '0.875rem', // 14px
         {
-          letterSpacing: '2.5%',
+          letterSpacing: '0em',
           fontWeight: '400',
+        },
+      ],
+      'title-bold-16': [
+        '16px', // 16px
+        {
+          letterSpacing: '0em',
+          fontWeight: '700',
         },
       ],
     },
@@ -49,11 +56,11 @@ export default {
       colors: {
         primary: {
           5: 'var(--purple-5)', // FAF9FF
-          10: 'var(--purple-10)', // F2F0FF
+          10: 'var(--purple-10)', // EBE7FE
           20: 'var(--purple-20)', // DFD6FD
-          30: 'var(--purple-30)', // AA93EF
+          30: 'var(--purple-30)', // BA9DF9
           40: 'var(--purple-40)', //7C63C8
-          base: 'var(--purple-50)', // 5E44AC
+          base: 'var(--purple-50)', // 7F37FA
           60: 'var(--purple-60)', // 543D98
           70: 'var(--purple-70)', // 4F3D87
           80: 'var(--purple-80)', //3C2E67
@@ -125,7 +132,7 @@ export default {
         },
         '.admin-layout': {
           '@apply flex overflow-auto min-h-dvh bg-primary-10 scrollbar-hide':
-          '',
+            '',
         },
         '.animate-bottom-sheet-up': {
           animation: 'bottom-sheet-up 0.2s ease-in-out',
