@@ -52,6 +52,7 @@ import {
   NoticeManagement,
   CreateNotice,
   Market,
+  MarketPost,
   StudentVerifications,
   AccountPermanentSuspendedNotice,
 } from '@/pages';
@@ -251,6 +252,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Market />,
+      },
+      {
+        path: path.market.post,
+        element: <MarketPost />,
       },
     ],
   },

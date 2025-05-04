@@ -9,15 +9,16 @@ import { deletePost } from '@/apis/board/handlePost.api';
 import { useState, useRef, useEffect } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createPortal } from 'react-dom';
-import { Popup } from './popup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
-import { addBoardFavorite, deleteBoardFavorite } from '@/apis/board/toggleBoardFavorite.api';
+import {
+  addBoardFavorite,
+  deleteBoardFavorite,
+} from '@/apis/board/toggleBoardFavorite.api';
 import { postChat } from '@/apis/chat/chatRoom.api';
-export const BoardMenuBar = ({ isAuthor = false, data }) => {
-
+import { Modal } from './Modal';
+export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { boardId } = useParams();
@@ -55,34 +56,53 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
   const { mutate: removePost } = useMutation({
     mutationFn: () => deletePost({ postId: postId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST, boardId] })
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
+      });
       navigate(-1);
-    }
-  })
+    },
+  });
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: async () =>
-      data.isFavorite ? deleteBoardFavorite({ boardId }) : addBoardFavorite({ boardId }),
+      data.isFavorite
+        ? deleteBoardFavorite({ boardId })
+        : addBoardFavorite({ boardId }),
     onMutate: async () => {
-      startMenuAni(setPinAni)
-      await queryClient.cancelQueries({ queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId] });
-      const previousBoardDetail = queryClient.getQueryData([QUERY_KEYS.GET_BOARD_DETAIL, boardId]);
-      // 낙관적 업데이트 적용
-      queryClient.setQueryData([QUERY_KEYS.GET_BOARD_DETAIL, boardId], (oldData) => {
-        if (!oldData) return oldData;
-        return { ...oldData, isFavorite: !oldData.isFavorite };
+      startMenuAni(setPinAni);
+      await queryClient.cancelQueries({
+        queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
       });
+      const previousBoardDetail = queryClient.getQueryData([
+        QUERY_KEYS.GET_BOARD_DETAIL,
+        boardId,
+      ]);
+      // 낙관적 업데이트 적용
+      queryClient.setQueryData(
+        [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
+        (oldData) => {
+          if (!oldData) return oldData;
+          return { ...oldData, isFavorite: !oldData.isFavorite };
+        },
+      );
       return { previousBoardDetail }; // 에러 시 롤백 값 주기
     },
     onError: (err, variables, context) => {
-      // 에러시 롤백 
+      // 에러시 롤백
       if (context?.previousBoardDetail) {
-        queryClient.setQueryData([QUERY_KEYS.GET_BOARD_DETAIL, boardId], context.previousBoardDetail);
+        queryClient.setQueryData(
+          [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
+          context.previousBoardDetail,
+        );
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId] });
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] })
-    }
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST],
+      });
+    },
   });
 
   const { mutate: createChatRoom } = useMutation({
@@ -98,7 +118,6 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
     },
   });
 
-
   const startMenuAni = (setAni) => {
     // 애니메이션
     setOpenModal(false);
@@ -110,9 +129,10 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
       ...prev,
       [type]: !prev[type],
     }));
-  }
-  const handleRightButton = (type) => { // 팝업 오른쪽 버튼
-    if (type === "delete") {
+  };
+  const handleRightButton = (type) => {
+    // 팝업 오른쪽 버튼
+    if (type === 'delete') {
       removePost();
     }
     if (type === 'chat') {
@@ -124,14 +144,14 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
     await navigator.clipboard
       .writeText(nowUrl)
       .then(() => {
-        setCopyState(true)
-        startMenuAni(setUrlAni)
+        setCopyState(true);
+        startMenuAni(setUrlAni);
       })
       .catch(() => {
-        setCopyState(false)
-        startMenuAni(setUrlAni)
-      })
-  }
+        setCopyState(false);
+        startMenuAni(setUrlAni);
+      });
+  };
   useEffect(() => {
     const handleOutSide = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -149,56 +169,68 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
   }, [openModal]);
   return (
     <div ref={modalRef} className="h-5 w-5 cursor-pointer text-neutral-title">
-      <button onClick={(e) => {
-        e.stopPropagation()
-        setOpenModal(!openModal)
-      }}>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpenModal(!openModal);
+        }}
+      >
         <img src={menubar} alt="Menu Bar" className="h-5 w-5" />
       </button>
       {openModal &&
-        !postId && ( // 게시글 리스트 부분
+        !postId &&
+        !isMarket && ( // 게시글 리스트 부분
           <div
             className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
             onClick={() => toggleFavorite()}
           >
             <p className="text-base">
-              {data && !data.isFavorite ? 'Add to Bookmark' : 'Remove the Bookmark'}
+              {data && !data.isFavorite
+                ? 'Add to Bookmark'
+                : 'Remove the Bookmark'}
             </p>
             {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
-            <img src={pin} className="w-5 h-5 -rotate-90" />
+            <img src={pin} className="h-5 w-5 -rotate-90" />
           </div>
         )}
       {openModal &&
         postId &&
         !isAuthor && ( // 상세 게시글 중 다른 사람 게시글
           <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
-            <div
-              className="flex items-center justify-between pb-1"
-              onClick={() => togglePopup('chat')}
-            >
-              <p>Send a message</p>
-              <img src={chat} alt="Start a Chat" className="w-4 h-4" />
-            </div>
+            {/* 중고거래는 메뉴바에 채팅 보내기 항목 없음 */}
+            {!isMarket && (
+              <div
+                className="flex items-center justify-between pb-1"
+                onClick={() => togglePopup('chat')}
+              >
+                <p>Send a message</p>
+                <img src={chat} alt="Start a Chat" className="h-4 w-4" />
+              </div>
+            )}
             <div
               className="flex items-center justify-between py-1"
               onClick={() => copyUrl()}
             >
               <p>Copy URL</p>
-              <img src={link} alt="Copy URL" className="w-4 h-4" />
+              <img src={link} alt="Copy URL" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between py-1"
-              onClick={() => navigate(path.board.specific.report, { state: { postId: postId } })} // 신고 페이지로 이동
+              onClick={() =>
+                navigate(path.board.specific.report, {
+                  state: { postId: postId },
+                })
+              } // 신고 페이지로 이동
             >
               <p>Report</p>
-              <img src={report} alt="Report" className="w-4 h-4" />
+              <img src={report} alt="Report" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
               onClick={() => togglePopup('block')}
             >
               <p>Block</p>
-              <img src={block} alt="Block" className="w-4 h-4" />
+              <img src={block} alt="Block" className="h-4 w-4" />
             </div>
           </div>
         )}
@@ -211,7 +243,7 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
               onClick={() => copyUrl()}
             >
               <p className="text-neutral-title">Copy URL</p>
-              <img src={link} alt="Copy URL" className="w-4 h-4" />
+              <img src={link} alt="Copy URL" className="h-4 w-4" />
             </div>
             <div
               className="flex items-center justify-between pt-1"
@@ -232,6 +264,7 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
           state={!data.isFavorite}
           changeToTrueText="Pinned to the board"
           changeToFalseText="Unpinned from the board"
+          onClose={() => setPinAni(false)}
         />
       )}
       {urlAni && (
@@ -239,22 +272,23 @@ export const BoardMenuBar = ({ isAuthor = false, data }) => {
           state={!copyState}
           changeToTrueText="URL copied successfully"
           changeToFalseText="URL copy failed"
+          onClose={() => setUrlAni(false)}
         />
       )}
       {Object.entries(popupState).map(
         ([key, isOpen]) =>
-          isOpen &&
-          createPortal(
-            <Popup
+          isOpen && (
+            <Modal
               key={key}
               title={popupData[key].title}
-              text={popupData[key].text}
               onClickLeft={() => togglePopup(key)}
               leftButton={popupData[key].leftButton}
               onClickRight={() => handleRightButton(key)}
               rightButton={popupData[key].rightButton}
-            />,
-            document.getElementById('modal-root'),
+              onClose={() => togglePopup(key)}
+            >
+              {popupData[key].text}
+            </Modal>
           ),
       )}
     </div>

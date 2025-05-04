@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import { BUTTON_THEMES, ButtonRound } from './ButtonRound';
 
-const ModalPortal = ({ children }) => {
-  const root = document.getElementById('modal-root');
-  return ReactDom.createPortal(children, root);
+export const ModalPortal = ({ children }) => {
+  const root = document.getElementById('portal-root');
+  if (!root) return null;
+  return ReactDOM.createPortal(children, root);
 };
 
 export const MODAL_TYPES = {
@@ -47,7 +48,7 @@ export const Modal = ({
               text={leftButton || 'Cancel'}
             />
             <ButtonRound
-              theme={BUTTON_THEMES.BORDER}
+              theme={BUTTON_THEMES.PRIMARY}
               size="modal"
               onClick={onClickRight}
               text={rightButton || 'Ok'}
@@ -85,21 +86,21 @@ export const Modal = ({
 
   return (
     <ModalPortal>
-      <div
-        className="fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center justify-center bg-[rgba(11,11,11,0.6)] px-4 align-middle"
-        onClick={onClose}
-      >
-        <div className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]">
+      <div className="modal-layout" onClick={onClose}>
+        <div
+          className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]"
+          onClick={(e) => e.stopPropagation()}
+        >
           {titleIcon && (
             <div className="mb-2">
-              <img src={titleIcon} alt="Icon" className="w-16 h-16" />
+              <img src={titleIcon} alt="Icon" className="h-16 w-16" />
             </div>
           )}
           <h2 className="flex text-center text-subTitle text-neutral-title">
             {title}
           </h2>
           {children && (
-            <div className="flex flex-col w-full text-center">{children}</div>
+            <div className="flex w-full flex-col text-center">{children}</div>
           )}
           {renderButtons()}
         </div>

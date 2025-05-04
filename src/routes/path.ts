@@ -66,7 +66,8 @@ export const path = {
   },
   market: {
     base: '/market',
-    writeId: ':writeId',
+    write: 'write',
+    post: ':postId',
   },
   chatList: {
     base: '/chat',

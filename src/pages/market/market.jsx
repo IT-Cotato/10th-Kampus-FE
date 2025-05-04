@@ -1,13 +1,70 @@
-import Logo from "@/assets/imgs/kampusLogo.svg?react"
+import { FilterBox } from '@/components/board/FilterBox';
+import { PostHeader } from '@/components/board/PostHeader';
+import { WriteButton } from '@/components/board/write/WriteButton';
+import { Loading } from '@/components/common/Loading';
+import { MarketList } from '@/components/market/MarketList';
+
 export const Market = () => {
-    const text = "No products have been listed yet!\n Share your product:)"
-    return (
-        <div className="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 flex flex-col 
-        justify-center items-center gap-4 overflow-hidden text-center whitespace-pre-line">
-            <Logo className="text-neutral-disabled" />
-            <p className="w-96 text-neutral-border-40">
-                {text}
-            </p>
+  const postList = {
+    posts: [
+      {
+        postId: 1,
+        title: '인형',
+        price: 30000,
+        likes: 10,
+        chats: 0,
+        state: 'RESERVED',
+        thumbnailUrl: 'src/assets/imgs/bg1.png',
+        isScrapped: true,
+        createdTime: '2025-04-27 02:56:52',
+      },
+      {
+        postId: 2,
+        title: '인형',
+        price: 20000,
+        likes: 10,
+        chats: 0,
+        state: 'ACTIVE',
+        thumbnailUrl: 'src/assets/imgs/bg2.png',
+        isScrapped: false,
+        createdTime: '2025-04-27 02:56:52',
+      },
+    ],
+  };
+
+  const boardDetail = {
+    boardName: 'Market',
+    filter: true,
+  };
+
+  const isPostLoading = false;
+  const isPostError = false;
+
+  return (
+    <div className="flex flex-1">
+      <PostHeader />
+      <div className="relative flex flex-1 flex-col pt-14">
+        <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
+          {boardDetail.filter && <FilterBox />}
+          {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
-    )
-}
+        <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+          {isPostLoading && <Loading />}
+          {isPostError && <p>Error Data Loading</p>}
+          {!isPostLoading &&
+            !isPostError &&
+            (postList.posts?.length > 0 ? (
+              postList.posts.map((item) => (
+                <MarketList key={item.postId} data={item} />
+              ))
+            ) : (
+              <p className="flex flex-1 items-center justify-center text-small text-neutral-disabled">
+                An empty page, waiting for your words!
+              </p>
+            ))}
+        </div>
+        {boardDetail && <WriteButton boardName={boardDetail.boardName} />}
+      </div>
+    </div>
+  );
+};

@@ -1,5 +1,7 @@
 import ActiveScrap from '@/assets/imgs/activeScrap.svg?react';
 import Scrap from '@/assets/imgs/scrap.svg?react';
+import ActiveHeartBookmark from '@/assets/imgs/ActiveHeartBookmark.svg?react';
+import HeartBookmark from '@/assets/imgs/HeartBookmark.svg?react';
 import { useState } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useParams } from 'react-router-dom';
@@ -9,12 +11,12 @@ import {
   deletePostScrap,
 } from '@/apis/board/togglePostScrap.api';
 import { QUERY_KEYS } from '@/constants/api';
-import { cn } from '@/utils/cn';
 
 export const ScrapComponent = ({
   state,
   id = undefined,
   boardId = undefined,
+  market = false, // market의 경우 스크랩 컴포넌트 모양이 다름
   ...props
 }) => {
   const queryClient = useQueryClient();
@@ -94,6 +96,23 @@ export const ScrapComponent = ({
     handleScrap({ postId: actualId });
   };
 
+  const isActive = state;
+  const isMarket = market;
+
+  const Component = isMarket
+    ? isActive
+      ? ActiveHeartBookmark
+      : HeartBookmark
+    : isActive
+      ? ActiveScrap
+      : Scrap;
+
+  const ariaLabel = isActive ? 'Unscrap button' : 'Scrap button';
+  const className =
+    isMarket && isActive
+      ? 'cursor-pointer text-primary-red'
+      : 'cursor-pointer text-neutral-border-40';
+
   return (
     <>
       {scrapAni && (
@@ -103,21 +122,11 @@ export const ScrapComponent = ({
           changeToFalseText={'Removed from Scrap'}
         />
       )}
-      {state ? (
-        <ActiveScrap
-          className={cn('cursor-pointer text-neutral-border-40')}
-          onClick={handleScrapClick}
-          aria-label="Scrap button"
-          {...props}
-        />
-      ) : (
-        <Scrap
-          className={cn('cursor-pointer text-neutral-border-40')}
-          onClick={handleScrapClick}
-          aria-label="Unscrap button"
-          {...props}
-        />
-      )}
+      <Component
+        className={`${className} ${props.className ?? ''}`}
+        onClick={handleScrapClick}
+        aria-label={ariaLabel}
+      />
     </>
   );
 };
