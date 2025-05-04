@@ -1,4 +1,4 @@
-import { ButtonRound } from '@/components/common/ButtonRound';
+import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { path } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TitleHeader } from '../common/titleHeader';
@@ -21,7 +21,7 @@ export const Scrap = ({ children }) => {
         {menu.map((item) => (
           <ButtonRound
             key={item.id}
-            theme={`${pathname.includes(item.path) ? 'primary' : 'disabled'}`}
+            theme={`${pathname.includes(item.path) ? BUTTON_THEMES.PRIMARY : BUTTON_THEMES.DISABLED}`}
             text={item.text}
             size="short"
             onClick={() => navigate(`./${item.path}`, { replace: true })}

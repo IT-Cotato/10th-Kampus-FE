@@ -20,10 +20,7 @@ import {
   SchoolVerification,
   Notification,
   FAQ,
-  Inquiry,
   Notice,
-  InquiryDetail,
-  WriteInquiry,
   NoticeDetail,
   Post,
   PostReport,
@@ -57,6 +54,7 @@ import {
   Market,
   StudentVerifications,
   FailedVerify,
+  AccountPermanentSuspendedNotice,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -70,6 +68,14 @@ const AppRouter = createBrowserRouter([
       </Layout>
     ),
     errorElement: <NotFound />,
+  },
+  {
+    path: path.accountPermanentSuspended,
+    element: (
+      <Layout>
+        <AccountPermanentSuspendedNotice />
+      </Layout>
+    ),
   },
   {
     path: path.login,
@@ -316,10 +322,6 @@ const AppRouter = createBrowserRouter([
             element: <FAQ />,
           },
           {
-            path: path.mypage.service.inquiry,
-            element: <Inquiry />,
-          },
-          {
             path: path.mypage.service.notice,
             element: <Notice />,
           },
@@ -399,14 +401,6 @@ const AppRouter = createBrowserRouter([
         path: path.mypage.service.base,
         element: <Outlet />,
         children: [
-          {
-            path: `${path.mypage.service.inquiry}/${path.mypage.service.inquiryDetails}`,
-            element: <InquiryDetail />,
-          },
-          {
-            path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
-            element: <WriteInquiry />,
-          },
           {
             path: `${path.mypage.service.notice}/${path.mypage.service.noticeDetails}`,
             element: <NoticeDetail />,
