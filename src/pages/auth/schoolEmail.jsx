@@ -17,7 +17,7 @@ export const SchoolEmail = () => {
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const { university, isFirst } = location.state;
+  const { university, isInitialAuthFlow } = location.state;
 
   const handleVerify = () => {
     setShowModal(true);
@@ -62,7 +62,7 @@ export const SchoolEmail = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SkipHeader isFirst={isFirst} />
+      <SkipHeader isInitialAuthFlow={isInitialAuthFlow} />
       <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-6">
           <div className="flex w-full justify-center text-pageTitle">

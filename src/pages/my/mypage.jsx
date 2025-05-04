@@ -10,6 +10,7 @@ import { NotificationButton } from '@/components/common/NotificationButton';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { Loading } from '@/components/common/Loading';
 import { UNIV_STATUS } from '@/constants/universityStatus';
+import { ERR_MSG } from '@/constants/errorMessage';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ export const MyPage = () => {
                 <div className="text-pageTitle">{username}</div>
                 <div className="text-neutral-disabled">
                   {isSchoolStatusError
-                    ? 'An error occurred while loading data.'
+                    ? ERR_MSG
                     : university
                       ? university
                       : status === UNIV_STATUS.PENDING

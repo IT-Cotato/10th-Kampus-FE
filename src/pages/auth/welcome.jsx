@@ -16,7 +16,9 @@ export const Welcome = () => {
       <div className="flex w-full flex-col items-center gap-5 pb-10">
         <MainButton
           onClick={() =>
-            navigate(`../${path.signup.school}`, { state: { isFirst: true } })
+            navigate(`../${path.signup.school}`, {
+              state: { isInitialAuthFlow: true },
+            })
           }
         >
           Search your school

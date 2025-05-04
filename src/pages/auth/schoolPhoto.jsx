@@ -19,7 +19,7 @@ export const SchoolPhoto = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const { university, isFirst } = location.state || {};
+  const { university, isInitialAuthFlow } = location.state || {};
 
   const { data: status } = useCheckSchoolStatus();
 
@@ -58,7 +58,7 @@ export const SchoolPhoto = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SkipHeader isFirst={isFirst} />
+      <SkipHeader isInitialAuthFlow={isInitialAuthFlow} />
       <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-[1.875rem]">
           <div className="flex flex-col gap-6">

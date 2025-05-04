@@ -15,8 +15,7 @@ export const SchoolSearch = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { isFirst } = location.state || false;
-  console.log(isFirst);
+  const { isInitialAuthFlow } = location.state || false;
 
   const { data: status } = useCheckSchoolStatus();
 
@@ -28,7 +27,7 @@ export const SchoolSearch = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SkipHeader isFirst={isFirst} />
+      <SkipHeader isInitialAuthFlow={isInitialAuthFlow} />
       <div className="flex flex-1 flex-col gap-10 px-4 py-5">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-[3.125rem]">
@@ -50,7 +49,7 @@ export const SchoolSearch = () => {
           <MainButton
             onClick={() =>
               navigate(`../${path.signup.verify.base}`, {
-                state: { university: university, isFirst: isFirst },
+                state: { university, isInitialAuthFlow },
               })
             }
             disabled={!isUniversitySelected}
