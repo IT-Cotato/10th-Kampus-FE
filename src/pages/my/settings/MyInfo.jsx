@@ -15,8 +15,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
 import { path } from '@/routes/path';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
+import { ERR_MSG } from '@/constants/errorMessage';
+import { UNIV_STATUS } from '@/constants/universityStatus';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
@@ -39,21 +41,8 @@ export const MyInfo = () => {
   const [isLanguageSelected, setIsLanguageSelected] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const [status, setStatus] = useState(''); // 학교 인증 상태
-
   // 학교 인증 여부에 따라 학교 인증 버튼/학교 이름으로 보임
-  const { mutate: checkSchoolStatus } = useCheckSchoolStatus();
-
-  useEffect(() => {
-    checkSchoolStatus(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const { data: status, isError: schoolStatusError } = useCheckSchoolStatus();
 
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;
@@ -145,9 +134,11 @@ export const MyInfo = () => {
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
           {info.universityCode ? (
             <DisabledInput name="School" defaultValue={info.universityCode} />
-          ) : status === 'PENDING' ? (
+          ) : schoolStatusError || status === UNIV_STATUS.PENDING ? (
             <div className="text-primary-base">
-              School verification is in progress.
+              {schoolStatusError
+                ? ERR_MSG
+                : 'School verification is in progress.'}
             </div>
           ) : (
             <div className="flex flex-col gap-[.625rem]">

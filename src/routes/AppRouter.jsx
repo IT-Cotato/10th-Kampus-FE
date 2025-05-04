@@ -54,6 +54,7 @@ import {
   Market,
   MarketPost,
   StudentVerifications,
+  FailedVerify,
   AccountPermanentSuspendedNotice,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
@@ -288,6 +289,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <MyPage />,
+      },
+      {
+        path: path.mypage.verify.fail,
+        element: <FailedVerify />,
       },
       {
         path: path.mypage.settings.info,

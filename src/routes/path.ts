@@ -29,6 +29,9 @@ export const path = {
   notificationList: '/notificationList',
   mypage: {
     base: '/my',
+    verify: {
+      fail: 'verify/fail',
+    },
     settings: {
       info: 'settings/info',
       verification: 'settings/verification',

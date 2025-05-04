@@ -124,6 +124,7 @@ export const QUERY_KEYS = {
   GET_INQUIRY: 'getInquiry',
   GET_INQUIRY_DETAILS: 'getInquiryDetails',
 
+  GET_MY_SCHOOL_VERIFICATION: 'mySchoolVerification',
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
