@@ -11,8 +11,7 @@ import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { boardId } = useParams();
-  const { postId } = useParams();
+  const { boardId, postId } = useParams();
 
   const MARKET = path.market.base;
   const isMarket = pathname.startsWith(MARKET);

@@ -14,11 +14,27 @@ import { TranslateButton } from '@/components/common/TranslateButton';
 import { formatPrice } from '@/utils/formatPrice';
 import { ProductState } from '@/components/market/ProductState';
 import { Dropdown } from '@/components/market/Dropdown';
+import {
+  SERVER_PRODUCT_STATE,
+  CLIENT_PRODUCT_STATE,
+} from '@/constants/ProductState';
 
 export const MarketPost = () => {
   // const queryClient = useQueryClient();
   const { postId } = useParams();
-  const PRODUCT_STATE = ['Active', 'Reserved', 'Sold Out'];
+
+  // 백 <-> 프론트 매핑 객체
+  const stateMapClientToServer = {
+    [SERVER_PRODUCT_STATE.active]: CLIENT_PRODUCT_STATE.active,
+    [SERVER_PRODUCT_STATE.reserved]: CLIENT_PRODUCT_STATE.reserved,
+    [SERVER_PRODUCT_STATE.soldOut]: CLIENT_PRODUCT_STATE.soldOut,
+  };
+  const stateMapServerToClient = {
+    [SERVER_PRODUCT_STATE.active]: CLIENT_PRODUCT_STATE.active,
+    [SERVER_PRODUCT_STATE.reserved]: CLIENT_PRODUCT_STATE.reserved,
+    [SERVER_PRODUCT_STATE.soldOut]: CLIENT_PRODUCT_STATE.soldOut,
+  };
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // const {
@@ -43,7 +59,7 @@ export const MarketPost = () => {
     postId: 1,
     postPhotoUrls: ['/bg2.png', '/bg1.png', '/bg2.png'],
     author: 'Kampus',
-    isAuthor: false,
+    isAuthor: true,
     state: 'RESERVED',
     title: '인형',
     content:
@@ -56,35 +72,15 @@ export const MarketPost = () => {
   };
 
   // 프론트 -> 백 통신 전 사용
-  const chageStateToUpperCase = (dropdown) => {
-    switch (dropdown) {
-      case 'Active':
-        return 'ACTIVE';
-      case 'Reserved':
-        return 'RESERVED';
-      case 'Sold Out':
-        return 'SOLD_OUT';
-      default:
-        return dropdown;
-    }
-  };
+  const changeStateToUpperCase = (state) =>
+    stateMapServerToClient[state] || state;
 
   // 백 -> 프론트 통신 후 사용
-  const chageStateToLowerCase = (dropdown) => {
-    switch (dropdown) {
-      case 'ACTIVE':
-        return 'Active';
-      case 'RESERVED':
-        return 'Reserved';
-      case 'SOLD_OUT':
-        return 'Sold Out';
-      default:
-        return dropdown;
-    }
-  };
+  const changeStateToLowerCase = (state) =>
+    stateMapClientToServer[state] || state;
 
   const [selectedDropdown, setSelectedDropdown] = useState(
-    chageStateToLowerCase(postData?.state) || 'Active',
+    changeStateToLowerCase(postData?.state) || 'Active',
   );
 
   // 이미지 관련 state
@@ -180,7 +176,7 @@ export const MarketPost = () => {
                     {postData?.isAuthor && (
                       <Dropdown
                         selectedDropdown={selectedDropdown}
-                        dropdownOptions={PRODUCT_STATE}
+                        dropdownOptions={Object.values(CLIENT_PRODUCT_STATE)}
                         isDropdownOpen={isDropdownOpen}
                         setIsDropdownOpen={setIsDropdownOpen}
                         handleDropdownClick={(state) =>
