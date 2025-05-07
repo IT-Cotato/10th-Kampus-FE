@@ -29,7 +29,7 @@ export const FilterBox = () => {
     setIsSortOpen(false);
   };
   return (
-    <div className="flex gap-[0.875rem] z-50">
+    <div className="z-40 flex gap-[0.875rem]">
       <DropBox
         dropList={categoriesWithAll}
         state={isCategoryOpen}

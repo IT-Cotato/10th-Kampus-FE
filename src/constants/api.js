@@ -34,7 +34,7 @@ export const API_DOMAINS = {
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
   BOARD_UNIV: '/boards/university',
-  BOARD_CATEGORIES: '/boards/boards/:boardId/categories',
+  BOARD_CATEGORIES: '/boards/:boardId/categories',
   BOARD_DETAIL: '/boards/:boardId',
   BOARD_FAVORITE: '/boards/favorite',
 

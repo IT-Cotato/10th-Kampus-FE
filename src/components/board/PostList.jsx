@@ -76,11 +76,11 @@ export const PostList = ({ data, isActive, ...props }) => {
         <div className="flex gap-[0.375rem]">
           <div className="flex items-center gap-1 text-small text-primary-red">
             <Like />
-            <p>{data?.likes}</p>
+            <p>{data?.likeCount}</p>
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
             <Comment />
-            <p>{data?.comments}</p>
+            <p>{data?.commentCount}</p>
           </div>
           <p className="text-small text-neutral-border-50">
             {formatTime(data?.createdTime)}

@@ -45,6 +45,7 @@ export const Board = () => {
       return lastPage.hasNext ? allPages.length + 1 : undefined;
     },
   });
+
   const {
     data: boardDetail,
     isLoading: isBoardLoading,
@@ -53,32 +54,35 @@ export const Board = () => {
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
     queryFn: () => getBoardDetail({ boardId: boardId }),
   });
+
   const [isActive, setIsActive] = useState({
     trending: false,
-    scrap: false,
+    cardNews: false,
     filter: false,
   });
+
   const checkIsActive = () => {
     setIsActive({
-      trending: boardDetail.boardName === BOARD_NAME_CONSTANTS.TRENDING.TREND,
-      scrap: boardDetail.boardName === BOARD_NAME_CONSTANTS.SCRAP.CARD_NEWS,
-      filter:
-        boardDetail.boardName === BOARD_NAME_CONSTANTS.FILTER.QUESTION ||
-        boardDetail.boardName === BOARD_NAME_CONSTANTS.FILTER.INFORMATION,
+      trending: false,
+      cardNews:
+        boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.CARD,
+      filter: boardDetail.boardWithFavoriteStatus.usesCategories,
     });
   };
+
   useEffect(() => {
     if (boardDetail) {
       checkIsActive();
     }
   }, [boardDetail]);
+
   useEffect(() => {
     if (inView && hasNextPostList) {
       fetchNextPostList();
     }
   }, [inView, hasNextPostList, fetchNextPostList]);
 
-  const posts = postList?.pages?.map((page) => page.posts).flat() || [];
+  const posts = postList?.pages?.map((page) => page.items).flat() || [];
   return (
     <div className="flex flex-1">
       <PostHeader path={path} />
@@ -103,7 +107,7 @@ export const Board = () => {
             posts &&
             posts.length > 0 &&
             posts.map((item, index) =>
-              isActive.scrap ? (
+              isActive.cardNews ? (
                 <TipsPostList key={index} data={item} boardId={boardId} />
               ) : (
                 <PostList
@@ -115,11 +119,10 @@ export const Board = () => {
             )}
           {isPostPending && hasNextPostList ? <Loading /> : <div ref={ref} />}
         </div>
-        {boardDetail &&
-          boardDetail.boardName !== BOARD_NAME_CONSTANTS.TRENDING.TREND &&
-          boardDetail.boardName !== BOARD_NAME_CONSTANTS.SCRAP.CARD_NEWS && (
-            <WriteButton boardName={boardDetail.boardName} />
-          )}
+        {/* 추후에 Trending 게시판인지 여부도 추가 해야합니다 */}
+        {boardDetail && !isActive.cardNews && (
+          <WriteButton boardName={boardDetail.boardName} />
+        )}
       </div>
     </div>
   );
