@@ -11,6 +11,8 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
 import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
+import { BOARD_TYPE } from '@/constants/boardType';
+import { useGetCategory } from '@/hooks/admin/useGetCategory';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
@@ -29,6 +31,8 @@ export const CreateBoard = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const { data: publicCategory } = useGetCategory();
 
   // 카테고리 제외한 게시판 정보 가져오기
   const { data: boardDetailsData } = useQuery({
@@ -66,22 +70,6 @@ export const CreateBoard = () => {
       }
     }
   }, [boardDetailsData]);
-
-  // 카테고리 엔터 입력 받기
-  const handleKeyDown = (e) => {
-    // 수정 시 카테고리 못 바꿈
-    if (isEditMode) {
-      return;
-    }
-    if (
-      e.key === 'Enter' &&
-      categoryValue.trim() !== '' &&
-      !e.nativeEvent.isComposing
-    ) {
-      setCategoryList((prev) => [...prev, categoryValue.trim()]);
-      setCategoryValue('');
-    }
-  };
 
   // 카테고리 지우기
   const removeItem = (index) => {
@@ -225,22 +213,12 @@ export const CreateBoard = () => {
           {/* 카테고리 입력칸 */}
           {isCategoryChecked && (
             <div className="flex flex-wrap gap-2">
-              <input
-                type="text"
-                value={categoryValue}
-                onChange={(e) => setCategoryValue(e.target.value)}
-                placeholder="카테고리 입력"
-                className="box-border w-32 rounded-3xl border border-neutral-border-40 px-4 placeholder:text-center placeholder:text-base"
-                onKeyDown={handleKeyDown}
-              />
-              {categoryList.map((category, index) => (
+              {publicCategory.map((category, index) => (
                 <div
-                  key={index}
+                  key={`category-${category.id}`}
                   className="box-border flex flex-shrink-0 cursor-pointer items-center justify-center gap-2 rounded-3xl border border-primary-30 bg-primary-5 pl-4 pr-3"
-                  onClick={() => removeItem(index)}
                 >
-                  {category}
-                  <XIcon className="flex h-3 w-3 flex-shrink-0 cursor-pointer text-neutral-border-50" />
+                  {category.categoryName}
                 </div>
               ))}
             </div>

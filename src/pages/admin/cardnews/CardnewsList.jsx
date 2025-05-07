@@ -23,7 +23,7 @@ export const CardnewsList = () => {
   const queryClient = useQueryClient();
 
   const { mutate: deletePost } = useMutation({
-    mutationFn: (postId) => deleteCardnews({ postId : postId }),
+    mutationFn: (postId) => deleteCardnews({ postId: postId }),
     onSuccess: () => {
       alert('카드뉴스가 삭제되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] }); // 삭제 후 리스트 다시 불러오기
@@ -54,52 +54,57 @@ export const CardnewsList = () => {
     }
   };
 
-  const { data: cardnewsListData, isLoading: isPostLoading, error: isPostError } = useQuery({
+  const {
+    data: cardnewsListData,
+    isLoading: isPostLoading,
+    error: isPostError,
+  } = useQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST],
-    queryFn: () => getAdminCardnewsList({ page: 1 })
-  })
+    queryFn: () => getAdminCardnewsList({ page: 1 }),
+  });
 
   useEffect(() => {
-    if(cardnewsListData) {
-      setCardnewsList(cardnewsListData?.posts);
+    if (cardnewsListData) {
+      setCardnewsList(cardnewsListData?.items);
     }
   }, [cardnewsListData]);
-  
+
   return (
-    <div className="flex flex-col flex-1 gap-5">
-      <div className="flex flex-col w-full h-full gap-5 p-8 bg-white rounded-2xl">
+    <div className="flex flex-1 flex-col gap-5">
+      <div className="flex h-full w-full flex-col gap-5 rounded-2xl bg-white p-8">
         <h1 className="text-pageTitle">카드뉴스</h1>
         <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
-          {cardnewsList && cardnewsList.map((cardnews) => (
-            <div
-              key={cardnews.postId}
-              className="relative h-60 w-60 overflow-hidden lg:h-[18.75rem] lg:w-[18.75rem]"
-            >
-              <h2 className="absolute p-2 text-base bg-white left-2 top-2 max-w-36 rounded-xl lg:max-w-64 lg:text-subTitle">
-                {cardnews.title}
-              </h2>
-              <img
-                src={cardnews.thumbnailUrl}
-                className="object-contain w-full h-full"
-              />
-              <button onClick={() => handleMenuBarClick(cardnews.postId)}>
+          {cardnewsList &&
+            cardnewsList.map((cardnews) => (
+              <div
+                key={cardnews.postId}
+                className="relative h-60 w-60 overflow-hidden lg:h-[18.75rem] lg:w-[18.75rem]"
+              >
+                <h2 className="absolute left-2 top-2 max-w-36 rounded-xl bg-white p-2 text-base lg:max-w-64 lg:text-subTitle">
+                  {cardnews.title}
+                </h2>
                 <img
-                  src={menubar}
-                  alt="menu"
-                  className="absolute px-2 right-1 top-3"
+                  src={cardnews.thumbnailUrl}
+                  className="h-full w-full object-contain"
                 />
-                {selectedCardNewsMenu === cardnews.postId && (
-                  <MenuBar
-                    menuOptions={menuOptions(cardnews.postId)}
-                    onClose={() => setSelectedCardNewsMenu(null)}
+                <button onClick={() => handleMenuBarClick(cardnews.postId)}>
+                  <img
+                    src={menubar}
+                    alt="menu"
+                    className="absolute right-1 top-3 px-2"
                   />
-                )}
-              </button>
-              <span className="absolute px-1 bg-white rounded-lg bottom-2 right-2 text-small text-neutral-base opacity-70">
-                {cardnews.createdTime}
-              </span>
-            </div>
-          ))}
+                  {selectedCardNewsMenu === cardnews.postId && (
+                    <MenuBar
+                      menuOptions={menuOptions(cardnews.postId)}
+                      onClose={() => setSelectedCardNewsMenu(null)}
+                    />
+                  )}
+                </button>
+                <span className="absolute bottom-2 right-2 rounded-lg bg-white px-1 text-small text-neutral-base opacity-70">
+                  {cardnews.createdTime}
+                </span>
+              </div>
+            ))}
           <button
             className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
             onClick={() => navigate(path.admin.cardnews.create)}

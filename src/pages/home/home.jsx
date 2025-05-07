@@ -99,7 +99,7 @@ export const Home = () => {
         {trendingList?.previewList.length !== 0 && (
           <BoardBox data={trendingList?.previewList} boardTitle="Trending" />
         )}
-        <CardPostBox data={cardNewsList?.posts} />
+        {/* 추후 홈과 보드 관련으로 리팩토링 예정 <CardPostBox data={cardNewsList?.posts} />*/}
       </div>
     </div>
   );

@@ -1,0 +1,5 @@
+export const BOARD_TYPE = {
+  NORMAL: 'NORMAL',
+  UNIV: 'UNIVERSITY',
+  CARD: 'CARDNEWS',
+};

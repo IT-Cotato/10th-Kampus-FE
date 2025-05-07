@@ -56,6 +56,7 @@ import {
   CreateNotice,
   Market,
   StudentVerifications,
+  ManageCategory,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -425,6 +426,10 @@ const AppRouter = createBrowserRouter([
       {
         path: path.admin.dashboard,
         element: <Dashboard />,
+      },
+      {
+        path: path.admin.category,
+        element: <ManageCategory />,
       },
       {
         path: path.admin.userManagement,
