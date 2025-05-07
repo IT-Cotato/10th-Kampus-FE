@@ -11,6 +11,7 @@ import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
 import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
 import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
 import { postInactivateBoard } from '@/apis/admin/postInactivateBoard.api';
+import { BOARD_STATE } from '@/constants/boardConstant';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
@@ -124,11 +125,11 @@ export const BoardManagement = () => {
   const getStateFromDropdown = (dropdown) => {
     switch (dropdown) {
       case '활성화':
-        return 'ACTIVE';
+        return BOARD_STATE.ACTIVE;
       case '보관':
-        return 'INACTIVE';
+        return BOARD_STATE.INACTIVE;
       case '삭제 대기':
-        return 'PENDING_DELETION';
+        return BOARD_STATE.PENDING;
       default:
         return null;
     }

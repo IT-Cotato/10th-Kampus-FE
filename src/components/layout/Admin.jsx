@@ -11,6 +11,7 @@ import Report from '@/assets/imgs/admin/Report.svg?react';
 import Setting from '@/assets/imgs/admin/Setting.svg?react';
 import User from '@/assets/imgs/admin/User.svg?react';
 import Volume from '@/assets/imgs/admin/Volume.svg?react';
+import Edit from '@/assets/imgs/admin/Edit.svg?react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
@@ -41,7 +42,7 @@ export const Admin = ({ children }) => {
       id: 3,
       text: '카테고리 관리',
       path: path.admin.category,
-      img: Board,
+      img: Edit,
     },
     {
       id: 4,

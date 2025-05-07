@@ -16,7 +16,7 @@ import { QUERY_KEYS } from '@/constants/api';
 import { useInView } from 'react-intersection-observer';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
-import { BOARD_TYPE } from '@/constants/boardType';
+import { BOARD_TYPE } from '@/constants/boardConstant';
 
 export const Board = () => {
   const { boardId } = useParams();

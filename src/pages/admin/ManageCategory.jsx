@@ -25,7 +25,7 @@ export const ManageCategory = () => {
             categoryList?.map((category) => (
               <div
                 key={`category-${category.id}`}
-                className="box-border flex flex-shrink-0 cursor-pointer items-center justify-center gap-2 rounded-3xl border border-primary-30 bg-primary-5 pl-4 pr-3"
+                className="box-border flex flex-shrink-0 items-center justify-center gap-2 rounded-3xl border border-primary-30 bg-primary-5 pl-4 pr-3"
               >
                 {category.categoryName}
               </div>
