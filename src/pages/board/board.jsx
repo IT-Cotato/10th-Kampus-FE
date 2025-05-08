@@ -38,7 +38,7 @@ export const Board = () => {
 
   // enable 속성으로 카테고리를 사용하지 않으면 쿼리가 실행되지 않음
   const { data: categoryData, isError: categoryError } = useGetBoardCategory(
-    boardDetail.boardWithFavoriteStatus.usesCategories,
+    boardDetail?.boardWithFavoriteStatus?.usesCategories === true,
   );
 
   const {
@@ -68,6 +68,7 @@ export const Board = () => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.hasNext ? allPages.length + 1 : undefined;
     },
+    enabled: boardDetail !== undefined,
   });
 
   const getSortKey = (option) => {
@@ -103,7 +104,7 @@ export const Board = () => {
             Board guide
           </div>
           <div className="z-40 flex gap-[0.875rem]">
-            {boardDetail.boardWithFavoriteStatus.usesCategories && (
+            {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
               <FilterBox
                 content={'Category'}
                 dropList={categoryData}
@@ -130,7 +131,7 @@ export const Board = () => {
             posts &&
             posts.length > 0 &&
             posts.map((item, index) =>
-              boardDetail.boardWithFavoriteStatus.boardType ===
+              boardDetail?.boardWithFavoriteStatus?.boardType ===
               BOARD_TYPE.CARD ? (
                 <TipsPostList key={index} data={item} boardId={boardId} />
               ) : (
