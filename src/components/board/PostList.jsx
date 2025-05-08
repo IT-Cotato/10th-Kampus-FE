@@ -8,18 +8,20 @@ import { TranslateButton } from '../common/TranslateButton';
 import { usePostTranslate } from '@/hooks/usePostTranslate';
 export const PostList = ({ data, isActive, ...props }) => {
   const navigate = useNavigate();
+
   const {
     translateState,
     setTranslateState,
     translatedPost,
     translatePending,
     handleTranslate,
-  } = usePostTranslate(data?.id);
+  } = usePostTranslate(data?.postId);
+
   const handleOnClick = (data) => {
     if (props.onClick) {
       props.onClick(data);
     } else {
-      navigate(`${data?.id}`);
+      navigate(`${data?.postId}`);
     }
   };
   return (

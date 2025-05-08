@@ -27,6 +27,8 @@ export const PostHeader = ({ path, isAuthor = false }) => {
   } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
     queryFn: () => getBoardDetail({ boardId: boardId }),
+    staleTime: 5 * 60 * 1000, // 5분
+    gcTime: 10 * 60 * 1000, // 10분
   });
   useEffect(() => {
     const handleOutSide = (e) => {
