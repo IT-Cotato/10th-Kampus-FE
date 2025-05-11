@@ -3,7 +3,7 @@ import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { MainWhiteButton } from '@/components/common/MainWhiteButton';
@@ -26,8 +26,17 @@ export const MarketWrite = () => {
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
-  const disabled =
-    !title || !content || !price || selectedCategory.length === 0;
+
+  // 유효성 검사를 위한 ref
+  const titleRef = useRef(null);
+  const priceRef = useRef(null);
+  const categoryRef = useRef(null);
+  const contentRef = useRef(null);
+
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false);
+  const [isPriceInvalid, setIsPriceInvalid] = useState(false);
+  const [isContentInvalid, setIsContentInvalid] = useState(false);
+  const [isCategoryInvalid, setIsCategoryInvalid] = useState(false);
 
   useEffect(() => {
     setCategoryList([
@@ -80,6 +89,43 @@ export const MarketWrite = () => {
     },
   });
 
+  const handleFocus = (ref) => {
+    ref.current?.focus();
+    ref.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  };
+
+  // 업로드 버튼 클릭 시 유효성 검증
+  const validateBeforeUpload = () => {
+    setIsTitleInvalid(!title);
+    setIsPriceInvalid(!price);
+    setIsCategoryInvalid(selectedCategory.length === 0);
+    setIsContentInvalid(!content);
+
+    if (!title) {
+      handleFocus(titleRef);
+      return;
+    } else if (!price) {
+      handleFocus(priceRef);
+      return;
+    } else if (selectedCategory.length === 0) {
+      handleFocus(categoryRef);
+      return;
+    } else if (!content) {
+      handleFocus(contentRef);
+      return;
+    }
+  };
+
+  const handleUploadWithoutTranslation = () => {
+    validateBeforeUpload();
+    if (!title || !price || selectedCategory.length === 0 || !content) {
+      handleUpload();
+    }
+  };
+
   const handleUpload = async () => {
     const formData = new FormData();
 
@@ -107,15 +153,18 @@ export const MarketWrite = () => {
   };
 
   const handleTranslateAndUpload = () => {
-    setIsPopup(true);
-    const buildData = () => {
-      return {
-        title: title,
-        content: content,
-        targetLanguageCode: 'EN-US',
+    validateBeforeUpload();
+    if (!title || !price || selectedCategory.length === 0 || !content) {
+      setIsPopup(true);
+      const buildData = () => {
+        return {
+          title: title,
+          content: content,
+          targetLanguageCode: 'EN-US',
+        };
       };
-    };
-    setTranslate({ data: buildData() });
+      setTranslate({ data: buildData() });
+    }
   };
 
   return (
@@ -130,12 +179,6 @@ export const MarketWrite = () => {
         <span className="flex justify-center text-pageTitle text-neutral-title">
           Write
         </span>
-        {/* 임시저장 추후 구현 */}
-        <span className="flex items-center justify-end gap-2 text-neutral-border-50">
-          <button type="button">Save Draft</button>
-          <span>|</span>
-          <button type="button">00</button>
-        </span>
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         <UploadPics onChange={setUploadedFiles} />
@@ -144,33 +187,48 @@ export const MarketWrite = () => {
           setTitle={setTitle}
           placeholder="Add a title."
           maxLength={50}
+          titleRef={titleRef}
+          invalid={isTitleInvalid}
+          setInvalid={setIsTitleInvalid}
         />
         <WritePrice
           price={price}
           setPrice={setPrice}
           placeholder="Write the price."
+          priceRef={priceRef}
+          invalid={isPriceInvalid}
+          setInvalid={setIsPriceInvalid}
         />
         {categoryList?.length !== 0 && (
           <SelectCategory
             categories={categoryList}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            categoryRef={categoryRef}
+            invalid={isCategoryInvalid}
+            setInvalid={setIsCategoryInvalid}
           />
         )}
         <WriteContent
           content={content}
           setContent={setContent}
           placeholder="Add a content."
-          maxLength={1000}
+          contentRef={contentRef}
+          invalid={isContentInvalid}
+          setInvalid={setIsContentInvalid}
+          maxLength={700}
         />
       </div>
 
       {/* 업로드 버튼 */}
-      <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 text-title-bold-16 text-neutral-80 shadow-base">
-        <MainWhiteButton onClick={handleUpload} disabled={disabled}>
+      <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 shadow-base">
+        <MainWhiteButton
+          onClick={handleUploadWithoutTranslation}
+          disabled={false}
+        >
           Upload
         </MainWhiteButton>
-        <MainButton onClick={handleTranslateAndUpload} disabled={disabled}>
+        <MainButton onClick={handleTranslateAndUpload} disabled={false}>
           Upload in English
         </MainButton>
       </div>
