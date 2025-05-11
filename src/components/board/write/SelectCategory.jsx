@@ -8,11 +8,14 @@ export const SelectCategory = ({
   categoryRef,
   invalid = false,
   setInvalid = null,
+  max = 9999,
 }) => {
   const handleOnChange = (e) => {
     if (e.target.checked) {
-      setSelectedCategory((prev) => [...prev, e.target.id]);
-      setInvalid(false);
+      if (selectedCategory.length < max) {
+        setSelectedCategory((prev) => [...prev, e.target.id]);
+        setInvalid(false);
+      }
     } else {
       setSelectedCategory([
         ...selectedCategory.filter((category) => category !== e.target.id),

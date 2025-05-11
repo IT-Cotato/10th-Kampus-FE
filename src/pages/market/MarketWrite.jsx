@@ -207,6 +207,7 @@ export const MarketWrite = () => {
             categoryRef={categoryRef}
             invalid={isCategoryInvalid}
             setInvalid={setIsCategoryInvalid}
+            max={3}
           />
         )}
         <WriteContent
