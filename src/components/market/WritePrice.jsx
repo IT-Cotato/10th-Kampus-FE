@@ -36,7 +36,7 @@ export const WritePrice = ({
           </span>
           <input
             className={cn(
-              'box-border flex h-full w-full flex-row gap-2 rounded-lg border border-neutral-border-30 py-[1.125rem] pl-10 pr-[.875rem] leading-none placeholder-neutral-border-50',
+              'box-border flex h-full w-full flex-row gap-2 rounded-lg border border-neutral-border-30 py-[1.125rem] pl-10 pr-[.875rem] leading-none placeholder-neutral-border-50 focus:border-primary-base',
               {
                 'border-primary-red': invalid,
               },

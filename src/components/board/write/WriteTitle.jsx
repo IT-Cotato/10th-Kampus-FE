@@ -27,7 +27,7 @@ export const WriteTitle = ({
         <div className="relative h-fit w-full text-neutral-title">
           <input
             className={cn(
-              'box-border flex w-full flex-row gap-2 rounded-lg border border-neutral-border-30 py-[1.125rem] pl-[.875rem] pr-16 leading-none placeholder-neutral-border-50',
+              'box-border flex w-full flex-row gap-2 rounded-lg border border-neutral-border-30 py-[1.125rem] pl-[.875rem] pr-16 leading-none placeholder-neutral-border-50 focus:border-primary-base',
               {
                 'border-primary-red': invalid,
               },

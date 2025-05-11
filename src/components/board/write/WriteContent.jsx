@@ -1,5 +1,6 @@
 import { InputWarningText } from '@/components/common/InputWarningText';
 import { cn } from '@/utils/cn';
+import { useState } from 'react';
 
 export const WriteContent = ({
   content,
@@ -10,6 +11,8 @@ export const WriteContent = ({
   invalid = false,
   setInvalid = null,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
   const handleOnChange = (e) => {
     if (maxLength && e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
@@ -30,11 +33,15 @@ export const WriteContent = ({
       {invalid && <InputWarningText />}
       <div
         className={cn(
-          'box-border flex w-full flex-col items-start rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]',
+          'box-border flex w-full cursor-text flex-col items-start rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem]',
           {
             'border-primary-red': invalid,
+            'border-primary-base': !invalid && isFocused,
           },
         )}
+        onClick={() => {
+          contentRef.current?.focus();
+        }}
       >
         <textarea
           id="contentInput"
@@ -43,8 +50,9 @@ export const WriteContent = ({
           value={content}
           onChange={handleOnChange}
           ref={contentRef}
-          className="w-full resize-none leading-none placeholder-neutral-border-50"
-          invalid={invalid}
+          className="w-full resize-none leading-none placeholder-neutral-border-50 scrollbar-hide"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           required
         />
         {maxLength !== 0 && (
