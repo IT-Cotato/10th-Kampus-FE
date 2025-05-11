@@ -48,6 +48,7 @@ export { BoardGuide } from './boardGuide/boardGuide';
 export { NotificationList } from './notification/NotificationList';
 export { Market } from './market/market';
 export { MarketPost } from './market/MarketPost';
+export { MarketWrite } from './market/MarketWrite';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';

@@ -14,7 +14,7 @@ export const SelectCategory = ({
   };
   return (
     <div className="flex flex-col gap-3">
-      <div className="text-subTitle">Category</div>
+      <div className="text-title-bold-16">Category</div>
       <div className="flex w-full flex-wrap gap-3">
         {categories.map((category) => (
           <div className="box-border flex" key={category}>

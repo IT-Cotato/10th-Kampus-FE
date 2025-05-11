@@ -8,10 +8,10 @@ export const WriteTitle = ({ title, setTitle, placeholder, maxLength = 0 }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <label htmlFor="writeTitle" className="text-subTitle">
+      <label htmlFor="writeTitle" className="text-title-bold-16">
         Title
       </label>
-      <div className="relative h-fit w-full">
+      <div className="relative h-fit w-full text-neutral-title">
         <input
           className="box-border flex w-full flex-row gap-2 rounded-lg border border-neutral-border-30 py-[1.125rem] pl-[.875rem] pr-16 leading-none placeholder-neutral-border-50"
           id="writeTitle"
@@ -23,7 +23,7 @@ export const WriteTitle = ({ title, setTitle, placeholder, maxLength = 0 }) => {
           required
         />
         {maxLength !== 0 && (
-          <span className="text-sm absolute right-[.875rem] top-[1.125rem] flex w-fit text-neutral-border-50">
+          <span className="text-sm pointer-events-none absolute right-[.875rem] top-[1.125rem] flex w-fit text-neutral-border-50">
             {title.length}/{maxLength}
           </span>
         )}

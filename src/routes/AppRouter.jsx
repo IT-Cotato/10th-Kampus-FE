@@ -56,6 +56,7 @@ import {
   StudentVerifications,
   FailedVerify,
   AccountPermanentSuspendedNotice,
+  MarketWrite,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -257,6 +258,10 @@ const AppRouter = createBrowserRouter([
       {
         path: path.market.post,
         element: <MarketPost />,
+      },
+      {
+        path: path.market.write,
+        element: <MarketWrite />,
       },
     ],
   },

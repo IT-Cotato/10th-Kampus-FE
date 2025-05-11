@@ -63,7 +63,7 @@ export const Market = () => {
               </p>
             ))}
         </div>
-        {boardDetail && <WriteButton boardName={boardDetail.boardName} />}
+        {boardDetail && <WriteButton />}
       </div>
     </div>
   );
