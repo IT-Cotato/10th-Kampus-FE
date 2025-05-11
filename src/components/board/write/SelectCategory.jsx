@@ -44,7 +44,7 @@ export const SelectCategory = ({
             />
             <label
               htmlFor={category}
-              className="border-box flex cursor-pointer items-center rounded-full border border-neutral-border-30 px-3 py-[.375rem] text-neutral-border-50 peer-checked:border-primary-30 peer-checked:bg-primary-30 peer-checked:text-white"
+              className="border-box flex cursor-pointer items-center rounded-full border border-neutral-border-30 px-3 py-[.375rem] text-neutral-border-50 peer-checked:border-primary-30 peer-checked:bg-primary-30 peer-checked:text-title-bold-16 peer-checked:text-white"
             >
               {category}
             </label>
