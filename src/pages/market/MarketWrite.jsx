@@ -223,9 +223,9 @@ export const MarketWrite = () => {
 
       {/* 업로드 버튼 */}
       <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 shadow-base">
-        <MainWhiteButton onClick={handleUploadWithoutTranslation}>
+        <MainButton onClick={handleUploadWithoutTranslation} color="white">
           Upload
-        </MainWhiteButton>
+        </MainButton>
         <MainButton onClick={handleTranslateAndUpload}>
           Upload in English
         </MainButton>

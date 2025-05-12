@@ -1,20 +1,26 @@
 import { cn } from '@/utils/cn';
 
-export const MainButton = (props) => {
-  const disabled = props.disabled ?? false; // undefined일 경우 false
+export const MainButton = ({
+  onClick,
+  disabled = false,
+  color = 'base', // 'base', 'white'
+  children,
+}) => {
   return (
     <button
       type="button"
-      onClick={props.onClick}
+      onClick={onClick}
       disabled={disabled}
       className={cn(
-        'h-[3.6875rem] w-full cursor-pointer rounded-[.625rem] bg-primary-base px-[1.125rem] !text-title-bold-16 text-white',
+        'box-border h-[3.6875rem] w-full cursor-pointer rounded-[.625rem] bg-primary-base px-[1.125rem] !text-title-bold-16 text-white',
         {
-          'cursor-default bg-neutral-disabled': disabled,
+          'border border-primary-base bg-white text-primary-base':
+            !disabled && color === 'white',
+          'cursor-default border-0 bg-neutral-border-50': disabled,
         },
       )}
     >
-      {props.children}
+      {children}
     </button>
   );
 };
