@@ -150,7 +150,7 @@ export const MarketPost = () => {
                 <div className="flex gap-2">
                   <img
                     src={Anonymous}
-                    alt="anonymous icon"
+                    alt="Profile Image"
                     className="h-10 w-10"
                   />
                   <div className="flex flex-col gap-1 leading-tight">

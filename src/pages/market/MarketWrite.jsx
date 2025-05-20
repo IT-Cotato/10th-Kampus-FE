@@ -106,22 +106,22 @@ export const MarketWrite = () => {
 
     if (!title) {
       handleFocus(titleRef);
-      return;
+      return false;
     } else if (!price) {
       handleFocus(priceRef);
-      return;
+      return false;
     } else if (selectedCategory.length === 0) {
       handleFocus(categoryRef);
-      return;
+      return false;
     } else if (!content) {
       handleFocus(contentRef);
-      return;
+      return false;
     }
+    return true;
   };
 
   const handleUploadWithoutTranslation = () => {
-    validateBeforeUpload();
-    if (!title || !price || selectedCategory.length === 0 || !content) {
+    if (validateBeforeUpload()) {
       handleUpload();
     }
   };
@@ -153,8 +153,7 @@ export const MarketWrite = () => {
   };
 
   const handleTranslateAndUpload = () => {
-    validateBeforeUpload();
-    if (!title || !price || selectedCategory.length === 0 || !content) {
+    if (validateBeforeUpload()) {
       setIsPopup(true);
       const buildData = () => {
         return {
