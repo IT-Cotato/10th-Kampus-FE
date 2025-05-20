@@ -45,7 +45,7 @@ export default {
         },
       ],
       'title-bold-16': [
-        '16px', // 16px
+        '1rem', // 16px
         {
           letterSpacing: '0em',
           fontWeight: '700',

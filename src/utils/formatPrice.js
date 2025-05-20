@@ -1,3 +1,4 @@
 export const formatPrice = (price) => {
-  return price.toLocaleString('ko-KR');
+  if (price === '' || price === undefined) return '';
+  return Number(price).toLocaleString('ko-KR');
 };
