@@ -8,18 +8,20 @@ import { TranslateButton } from '../common/TranslateButton';
 import { usePostTranslate } from '@/hooks/usePostTranslate';
 export const PostList = ({ data, isTrendingBoard, ...props }) => {
   const navigate = useNavigate();
+
   const {
     translateState,
     setTranslateState,
     translatedPost,
     translatePending,
     handleTranslate,
-  } = usePostTranslate(data?.id);
+  } = usePostTranslate(data?.postId);
+
   const handleOnClick = (data) => {
     if (props.onClick) {
       props.onClick(data);
     } else {
-      navigate(`${data?.id}`);
+      navigate(`${data?.postId}`);
     }
   };
   return (
@@ -76,11 +78,11 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
         <div className="flex gap-[0.375rem]">
           <div className="flex items-center gap-1 text-small text-primary-red">
             <Like />
-            <p>{data?.likes}</p>
+            <p>{data?.likeCount}</p>
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
             <Comment />
-            <p>{data?.comments}</p>
+            <p>{data?.commentCount}</p>
           </div>
           <p className="text-small text-neutral-border-50">
             {formatTime(data?.createdTime)}

@@ -34,7 +34,7 @@ export const API_DOMAINS = {
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
   BOARD_UNIV: '/boards/university',
-  BOARD_CATEGORIES: '/boards/boards/:boardId/categories',
+  BOARD_CATEGORIES: '/boards/:boardId/categories',
   BOARD_DETAIL: '/boards/:boardId',
   BOARD_FAVORITE: '/boards/favorite',
 
@@ -55,6 +55,7 @@ export const API_DOMAINS = {
   TRANSLATE_POST: '/translations/:postId',
   TRANSLATE_TEXT: '/translations/texts',
 
+  ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
@@ -133,4 +134,5 @@ export const QUERY_KEYS = {
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',
   ADMIN_POST_VERIFICATION: 'postVerficationList',
+  ADMIN_GET_CATEGORY: 'getCategory',
 };

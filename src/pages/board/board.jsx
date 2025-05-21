@@ -11,38 +11,21 @@ import {
   getPostList,
   getTrendingList,
 } from '@/apis/board/getPostList.api';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
-
-const CARDNEWS = 'Card News';
-const TRENDING = 'Trending';
-const QUESTION = 'Question';
-const INFORMATION = 'Information';
+import { BOARD_TYPE } from '@/constants/boardConstant';
+import { useInView } from 'react-intersection-observer';
+import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
 
 export const Board = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
-
-  const {
-    data: postList,
-    isLoading: isPostLoading,
-    error: isPostError,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
-    queryFn: () => {
-      if (boardId === '1') {
-        // boardName = CARDNEWS
-        return getCardNewsList({ page: 1 });
-      } else if (boardId === '4') {
-        // boardName = TRENDING
-        return getTrendingList({ page: 1 });
-      } else {
-        return getPostList({ boardId: boardId, page: 1 });
-      }
-    },
-  });
+  const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
+  const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
+  const [category, setCategory] = useState('All'); // 선택된 카테고리 값
+  const { ref, inView } = useInView();
 
   const {
     data: boardDetail,
@@ -53,36 +36,62 @@ export const Board = () => {
     queryFn: () => getBoardDetail({ boardId: boardId }),
   });
 
-  const [boardType, setBoardType] = useState({
-    trending: false,
-    cardnews: false,
-    filter: false,
+  // enable 속성으로 카테고리를 사용하지 않으면 쿼리가 실행되지 않음
+  const { data: categoryData, isError: categoryError } = useGetBoardCategory(
+    boardDetail?.boardWithFavoriteStatus?.usesCategories === true,
+  );
+
+  const {
+    data: postList,
+    fetchNextPage: fetchNextPostList,
+    hasNextPage: hasNextPostList,
+    isLoading: isPostLoading,
+    isPending: isPostPending,
+    error: isPostError,
+  } = useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_POST_LIST, boardId, sortOrder, category],
+    queryFn: ({ pageParam = 1 }) => {
+      if (boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.CARD) {
+        return getCardNewsList({ page: pageParam });
+      } else if (false) {
+        return getTrendingList({ page: pageParam });
+      } else {
+        return getPostList({
+          boardId: boardId,
+          page: pageParam,
+          sort: getSortKey(sortOrder),
+          category: category === 'All' ? '' : category,
+        });
+      }
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.hasNext ? allPages.length + 1 : undefined;
+    },
+    enabled: boardDetail !== undefined,
   });
 
-  const checkBoardType = () => {
-    setBoardType({
-      trending: boardDetail.boardName === TRENDING,
-      cardnews: boardDetail.boardName === CARDNEWS,
-      filter:
-        boardDetail.boardName === QUESTION ||
-        boardDetail.boardName === INFORMATION,
-    });
-  };
-
-  const sortPostByScrap = (posts) => {
-    return [...posts].sort((a, b) => {
-      if (b.scrap !== a.scrap) return b.scrap - a.scrap;
-      return b.postId - a.postId; // postID 정렬 추가
-    }); // scrap 우선 정렬
-    // 여기에 백에서 보내주는 양식 보고 시간 기준 정렬 추가해야함
+  const getSortKey = (option) => {
+    switch (option) {
+      case 'All':
+      case 'Newest':
+        return 'recent';
+      case 'Registered':
+        return 'old';
+      case 'Popularity':
+        return 'likeCount';
+      default:
+        return 'recent';
+    }
   };
 
   useEffect(() => {
-    if (boardDetail) {
-      checkBoardType();
+    if (inView && hasNextPostList) {
+      fetchNextPostList();
     }
-  }, [boardDetail]);
+  }, [inView, hasNextPostList, fetchNextPostList]);
 
+  const posts = postList?.pages?.map((page) => page.items).flat() || [];
   return (
     <div className="flex flex-1">
       <PostHeader />
@@ -94,8 +103,23 @@ export const Board = () => {
           >
             Board guide
           </div>
-          {boardType.filter && <FilterBox />}
-          {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
+          <div className="z-10 flex gap-[0.875rem]">
+            {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
+              <FilterBox
+                content={'Category'}
+                dropList={categoryData}
+                select={(selected) => setCategory(selected)}
+                selected={category}
+              />
+            )}
+            <FilterBox
+              content={'Sort by'}
+              dropList={sortOptions}
+              select={(selected) => setSortOrder(selected)}
+              selected={sortOrder}
+            />
+            {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
+          </div>
         </div>
         <div className="flex w-full flex-col divide-y bg-white px-4">
           {isPostLoading && <Loading />}
@@ -103,22 +127,20 @@ export const Board = () => {
           {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰의 UI가 다름 */}
           {!isPostLoading &&
             !isPostError &&
-            postList.posts?.length > 0 &&
-            postList.posts.map((item) =>
-              boardType.cardnews ? (
-                <TipsPostList key={item} data={item} boardId={boardId} />
+            posts &&
+            posts.length > 0 &&
+            posts.map((item, index) =>
+              boardDetail?.boardWithFavoriteStatus?.boardType ===
+              BOARD_TYPE.CARD ? (
+                <TipsPostList key={index} data={item} boardId={boardId} />
               ) : (
-                <PostList
-                  key={item}
-                  data={item}
-                  isTrendingBoard={boardType.trending}
-                />
+                <PostList key={index} data={item} isActive={false} />
               ),
             )}
         </div>
+        {/* 추후에 Trending 게시판인지 여부도 추가 해야합니다 */}
         {boardDetail &&
-          boardDetail.boardName !== TRENDING &&
-          boardDetail.boardName == CARDNEWS && (
+          boardDetail.boardWithFavoriteStatus.boardType !== BOARD_TYPE.CARD && (
             <WriteButton boardName={boardDetail.boardName} />
           )}
       </div>

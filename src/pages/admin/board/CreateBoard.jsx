@@ -11,6 +11,9 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
 import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
+import { BOARD_TYPE } from '@/constants/boardConstant';
+import { useGetCategory } from '@/state/query/admin/useGetCategory';
+import { cn } from '@/utils/cn';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
@@ -24,11 +27,12 @@ export const CreateBoard = () => {
   const [isUniversitySelected, setIsUniversitySelected] = useState(false);
 
   const [isCategoryChecked, setIsCategoryChecked] = useState(false);
-  const [categoryValue, setCategoryValue] = useState('');
   const [categoryList, setCategoryList] = useState([]);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const { data: publicCategory } = useGetCategory();
 
   // 카테고리 제외한 게시판 정보 가져오기
   const { data: boardDetailsData } = useQuery({
@@ -67,43 +71,31 @@ export const CreateBoard = () => {
     }
   }, [boardDetailsData]);
 
-  // 카테고리 엔터 입력 받기
-  const handleKeyDown = (e) => {
-    // 수정 시 카테고리 못 바꿈
-    if (isEditMode) {
-      return;
-    }
-    if (
-      e.key === 'Enter' &&
-      categoryValue.trim() !== '' &&
-      !e.nativeEvent.isComposing
-    ) {
-      setCategoryList((prev) => [...prev, categoryValue.trim()]);
-      setCategoryValue('');
-    }
-  };
-
-  // 카테고리 지우기
-  const removeItem = (index) => {
-    // 수정 시 카테고리 못 지움
-    if (isEditMode) {
-      return;
-    }
-    const updatedList = [...categoryList];
-    updatedList.splice(index, 1);
-    setCategoryList(updatedList);
-  };
-
   const { mutate: createBoard } = useMutation({
     mutationFn: postCreateBoard,
   });
 
+  const handleToggleCategory = (categoryName) => {
+    // 카테고리 토글 함수
+    setCategoryList(
+      (prev) =>
+        prev.includes(categoryName)
+          ? prev.filter((item) => item !== categoryName) // 이미 있으면 제거
+          : [...prev, categoryName], // 없으면 추가
+    );
+  };
+
   const handleCreateBoard = () => {
-    const universityCode = boardType === 'UNIVERSITY' ? university : null;
+    const universityCode = boardType === BOARD_TYPE.UNIV ? university : null;
     const formData = new FormData();
     formData.append('boardName', title);
     formData.append('description', description);
-    if (universityCode) formData.append('universityCode', universityCode);
+    if (universityCode) {
+      formData.append('universityCode', universityCode);
+      formData.append('boardType', BOARD_TYPE.UNIV);
+    } else {
+      formData.append('boardType', BOARD_TYPE.NORMAL);
+    }
 
     if (isCategoryChecked) {
       categoryList.forEach((category) =>
@@ -225,22 +217,18 @@ export const CreateBoard = () => {
           {/* 카테고리 입력칸 */}
           {isCategoryChecked && (
             <div className="flex flex-wrap gap-2">
-              <input
-                type="text"
-                value={categoryValue}
-                onChange={(e) => setCategoryValue(e.target.value)}
-                placeholder="카테고리 입력"
-                className="box-border w-32 rounded-3xl border border-neutral-border-40 px-4 placeholder:text-center placeholder:text-base"
-                onKeyDown={handleKeyDown}
-              />
-              {categoryList.map((category, index) => (
+              {publicCategory.map((category) => (
                 <div
-                  key={index}
-                  className="box-border flex flex-shrink-0 cursor-pointer items-center justify-center gap-2 rounded-3xl border border-primary-30 bg-primary-5 pl-4 pr-3"
-                  onClick={() => removeItem(index)}
+                  onClick={() => handleToggleCategory(category.categoryName)}
+                  key={`category-${category.id}`}
+                  className={cn(
+                    'box-border flex flex-shrink-0 cursor-pointer items-center justify-center gap-2 rounded-3xl border pl-4 pr-3',
+                    categoryList.includes(category.categoryName)
+                      ? 'border-primary-base bg-primary-base text-white'
+                      : 'border-neutral-border-50 bg-primary-5',
+                  )}
                 >
-                  {category}
-                  <XIcon className="flex h-3 w-3 flex-shrink-0 cursor-pointer text-neutral-border-50" />
+                  {category.categoryName}
                 </div>
               ))}
             </div>

@@ -64,3 +64,4 @@ export { Statistics } from './admin/Statistics';
 export { UserManagement } from './admin/UserManagement';
 export { NoticeManagement } from './admin/notice/NoticeManagement';
 export { CreateNotice } from './admin/notice/CreateNotice';
+export { ManageCategory } from './admin/ManageCategory';

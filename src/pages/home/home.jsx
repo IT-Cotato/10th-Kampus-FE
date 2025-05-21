@@ -46,14 +46,16 @@ export const Home = () => {
     queryFn: getTrend,
   });
 
-  const {
+  {
+    /* const {
     data: cardNewsList,
     isLoading: cardNewsLoading,
     error: cardNewsError,
   } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_CARDNEWS],
     queryFn: () => getCardNewsList({ page: 1 }),
-  });
+  });*/
+  }
 
   const {
     data: userDetail,
@@ -95,11 +97,17 @@ export const Home = () => {
         {/*{userDetail?.universityId !== -1 && !universityError && (
           <BoardBox data={univeristyList} boardTitle="My univ" university={true} />
         )}*/}
-        <BoardBox data={favoriteList?.previewList} boardTitle="Favorites" />
-        {trendingList?.previewList.length !== 0 && (
-          <BoardBox data={trendingList?.previewList} boardTitle="Trending" />
+        <BoardBox
+          data={favoriteList?.homePostThumbnailList}
+          boardTitle="Favorites"
+        />
+        {trendingList?.homePostThumbnailList.length !== 0 && (
+          <BoardBox
+            data={trendingList?.homePostThumbnailList}
+            boardTitle="Trending"
+          />
         )}
-        <CardPostBox data={cardNewsList?.posts} />
+        {/* 추후 홈과 보드 관련으로 리팩토링 예정 <CardPostBox data={cardNewsList?.posts} />*/}
       </div>
     </div>
   );

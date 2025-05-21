@@ -6,7 +6,7 @@ export const BoardListBox = ({ list, listKey, togglePin }) => {
   if (boardNum === 0) return null;
 
   return (
-    <div className="flex w-full flex-col rounded-lg bg-white border-[0.5px] border-primary-base">
+    <div className="flex w-full flex-col rounded-lg border-[0.5px] border-primary-base bg-white p-2">
       {list.map((data, index) => (
         <BoardList
           data={data}

@@ -44,7 +44,11 @@ export const Post = () => {
   } = useQuery({
     queryFn: () => getPostDetail({ postId: postId }),
     queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
+    select: (res) => res.postDetails,
+    staleTime: 2 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
   });
+
   const {
     data: commentData,
     isLoading: commentLoading,
@@ -52,7 +56,9 @@ export const Post = () => {
   } = useQuery({
     queryFn: () => getComment({ postId: postId }),
     queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId],
+    select: (res) => res.comments,
   });
+
   const { mutate: handleComment } = useMutation({
     //  true -> 댓글 추가 , false -> 댓글 삭제
     mutationFn: ({ type, param, data = null }) =>
@@ -80,6 +86,7 @@ export const Post = () => {
       });
     },
   });
+
   const { mutate: handleCommentLike } = useMutation({
     //  true -> 스크랩 추가 , false -> 스크랩 삭제
     mutationFn: ({ type, commentId }) =>
@@ -92,6 +99,7 @@ export const Post = () => {
       });
     },
   });
+
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
   const [input, setInput] = useState('');
@@ -102,6 +110,7 @@ export const Post = () => {
     transform: `translateX(-${currentImgIndex}00%)`,
     transition: `all 0.4s ease-in-out`,
   });
+
   const submitComment = () => {
     const buildComment = {
       content: input,
@@ -138,7 +147,7 @@ export const Post = () => {
               <div className="flex gap-2">
                 <img
                   src={boardId === '5' ? kampus : anonymous}
-                  alt="anonymous icon"
+                  alt="Profile Image"
                   className="h-10 w-10"
                 />
                 <div className="flex flex-col gap-[.125rem] leading-tight">

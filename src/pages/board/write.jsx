@@ -31,7 +31,9 @@ export const Write = () => {
 
   useEffect(() => {
     if (isBoardCategoriesSuccess) {
-      setCategoryList([...boardCategories?.categories]);
+      boardCategories.categories.map((item) => {
+        setCategoryList((prev) => [...prev, item.categoryName]);
+      });
     }
   }, [isBoardCategoriesSuccess]);
 
