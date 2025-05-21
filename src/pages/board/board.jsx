@@ -17,7 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { Loading } from '@/components/common/Loading';
 import { BOARD_TYPE } from '@/constants/boardConstant';
-import { useGetBoardCategory } from '@/hooks/board/useGetBoardCategory';
+import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
 
 export const Board = () => {
   const { boardId } = useParams();
@@ -103,7 +103,7 @@ export const Board = () => {
           >
             Board guide
           </div>
-          <div className="z-40 flex gap-[0.875rem]">
+          <div className="z-10 flex gap-[0.875rem]">
             {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
               <FilterBox
                 content={'Category'}

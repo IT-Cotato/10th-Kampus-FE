@@ -7,7 +7,7 @@ export const useGetBoardCategory = (state) => {
   const { boardId } = useParams();
   const query = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
-    queryFn: async () => getBoardCategories({ boardId }),
+    queryFn: () => getBoardCategories({ boardId }),
     select: (res) => [
       'All',
       ...res.categories.map((category) => category.categoryName),

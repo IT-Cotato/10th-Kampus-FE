@@ -150,7 +150,7 @@ export const Post = () => {
               <div className="flex gap-2">
                 <img
                   src={boardId === '5' ? kampus : anonymous}
-                  alt="anonymous icon"
+                  alt="Profile Image"
                   className="h-10 w-10"
                 />
                 <div className="flex flex-col gap-[.125rem] leading-tight">

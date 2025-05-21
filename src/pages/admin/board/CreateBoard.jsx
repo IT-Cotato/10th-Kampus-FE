@@ -12,7 +12,7 @@ import { getAdminBoardDetail } from '@/apis/admin/getAdminBoardDetail.api';
 import { putAdminBoard } from '@/apis/admin/putAdminBoard.api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 import { BOARD_TYPE } from '@/constants/boardConstant';
-import { useGetCategory } from '@/hooks/admin/useGetCategory';
+import { useGetCategory } from '@/state/query/admin/useGetCategory';
 import { cn } from '@/utils/cn';
 
 export const CreateBoard = () => {

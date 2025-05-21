@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetCategory = () => {
   const query = useQuery({
     queryKey: [QUERY_KEYS.ADMIN_GET_CATEGORY],
-    queryFn: async () => getAdminCategory(),
+    queryFn: () => getAdminCategory(),
     select: (res) => res.categories,
     staleTime: 5 * 60 * 1000, // 5분
     gcTime: 10 * 60 * 1000, // 10분

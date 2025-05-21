@@ -1,6 +1,6 @@
 // @ts-ignore
-import { useGetCategory } from '@/hooks/admin/useGetCategory';
-import { usePostCategory } from '@/hooks/admin/usePostCategory';
+import { useGetCategory } from '@/state/query/admin/useGetCategory';
+import { usePostCategory } from '@/state/mutation/admin/usePostCategory';
 import { useState } from 'react';
 import { Toast } from '@/components/common/Toast';
 import { toast } from 'react-toastify';
@@ -10,6 +10,11 @@ export const ManageCategory = () => {
 
   const { data: categoryList, isError: categoryError } = useGetCategory();
   const { mutate: createCategory } = usePostCategory();
+
+  const handleAddCategory = () => {
+    setCategoryValue('');
+    createCategory(categoryValue);
+  };
 
   return (
     <div className="flex h-full w-full flex-col gap-5">
@@ -42,11 +47,8 @@ export const ManageCategory = () => {
           className="box-border w-32 rounded-md border border-neutral-border-50 px-4 py-1 placeholder:text-center placeholder:text-base placeholder:text-neutral-border-50"
         />
         <button
-          onClick={() => {
-            toast.success('카테고리를 추가하였습니다!');
-            setCategoryValue('');
-            createCategory(categoryValue);
-          }}
+          type="button"
+          onClick={handleAddCategory}
           disabled={categoryValue.trim() === ''}
           className="box-border w-32 rounded-md bg-primary-base py-1 font-semibold text-white"
         >

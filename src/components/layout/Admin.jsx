@@ -82,6 +82,7 @@ export const Admin = ({ children }) => {
                   <div className="h-full w-1 rounded-r-lg bg-primary-base" />
                 )}
                 <button
+                  type="button"
                   key={item.id}
                   className={cn(
                     'box-border flex h-16 w-72 items-center gap-4 px-7 text-start text-subTitle text-neutral-base',

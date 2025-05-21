@@ -10,6 +10,7 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { useEffect, useRef, useState } from 'react';
 import { useFloating, offset, shift, flip } from '@floating-ui/react-dom';
+import { FloatingBubble } from '../common/FloatingBubble';
 
 export const PostHeader = ({ path, isAuthor = false }) => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export const PostHeader = ({ path, isAuthor = false }) => {
     };
   }, [openModal]);
   return (
-    <div className="fixed z-50 flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
+    <div className="fixed z-20 flex w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4">
       <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       {isBoardLoading && <Loading />}
       {isBoardError && <p>Error Data Loading</p>}
@@ -70,28 +71,13 @@ export const PostHeader = ({ path, isAuthor = false }) => {
                 </button>
                 <AnimatePresence>
                   {openModal && (
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0, x: '-50%', scale: 0, y: -10 },
-                        visible: { opacity: 1, x: '-50%', scale: 1, y: 0 },
-                      }}
-                      initial="hidden"
-                      animate="visible"
-                      exit="hidden"
-                      transition={{
-                        visualDuration: 0.3,
-                      }}
-                      className="absolute left-1/2 top-full border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent"
-                    >
-                      {/* 본문 부분 */}
-                      <div
-                        ref={refs.setFloating}
-                        style={{ ...floatingStyles }}
-                        className="absolute w-[80vw] max-w-[350px] break-normal rounded-[.625rem] bg-primary-base p-4 text-base text-white"
-                      >
-                        {boardDetail.boardWithFavoriteStatus.description}
-                      </div>
-                    </motion.div>
+                    <FloatingBubble
+                      floatingStyles={floatingStyles}
+                      setFloatingRef={refs.setFloating}
+                      descripttion={
+                        boardDetail.boardWithFavoriteStatus.description
+                      }
+                    />
                   )}
                 </AnimatePresence>
               </div>
