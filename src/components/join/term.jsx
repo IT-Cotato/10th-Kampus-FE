@@ -8,14 +8,14 @@ export const Term = (props) => {
       <div
         onClick={props.onClick}
         className={cn(
-          'flex h-6 w-6 cursor-pointer items-center justify-center rounded-[.25rem]',
+          'flex aspect-square h-[1.625rem] w-[1.625rem] cursor-pointer items-center justify-center rounded-full',
           {
             'bg-primary-base': props.isChecked,
             'border border-neutral-border-40': !props.isChecked,
           },
         )}
       >
-        {props.isChecked && <Check className="h-3 w-3 text-white" />}
+        {props.isChecked && <Check className="h-3.5 w-3.5 text-white" />}
       </div>
       <div className="flex w-full justify-between gap-x-3">
         <span className="inline-block">
