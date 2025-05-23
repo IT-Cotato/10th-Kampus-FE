@@ -12,6 +12,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
+import { BOARD_TYPE } from '@/constants/boardConstant';
 export const AllBoard = () => {
   const queryClient = useQueryClient();
   const {
@@ -41,7 +42,7 @@ export const AllBoard = () => {
   const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
   const parseBoardData = (dataList) => {
-    const boardList = { first: [], second: [], third: [] };
+    const boardList = { univ: [], first: [], second: [], third: [] };
     dataList?.forEach((data) => {
       const formatData = {
         title: data.boardName,
@@ -49,15 +50,21 @@ export const AllBoard = () => {
         pin: data.isFavorite,
         order: data.boardId,
       };
-      if (data.boardId >= 1 && data.boardId <= 4) {
+      if (data.boardType === BOARD_TYPE.UNIV) {
+        boardList.univ.push(formatData);
+      } else if (
+        data.boardType === BOARD_TYPE.FIXED ||
+        data.boardType === BOARD_TYPE.TRENDING
+      ) {
         boardList.first.push(formatData);
-      } else if (data.boardId === 5) {
+      } else if (data.boardType === BOARD_TYPE.CARD) {
         boardList.second.push(formatData);
-      } else {
+      } else if (data.boardType === BOARD_TYPE.NORMAL) {
         boardList.third.push(formatData);
       }
     });
     return {
+      univ: boardList.univ ?? [],
       first: boardList.first ?? [],
       second: boardList.second ?? [],
       third: boardList.third ?? [],

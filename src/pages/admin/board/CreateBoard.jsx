@@ -92,10 +92,8 @@ export const CreateBoard = () => {
     formData.append('description', description);
     if (universityCode) {
       formData.append('universityCode', universityCode);
-      formData.append('boardType', BOARD_TYPE.UNIV);
-    } else {
-      formData.append('boardType', BOARD_TYPE.NORMAL);
     }
+    formData.append('boardType', boardType);
 
     if (isCategoryChecked) {
       categoryList.forEach((category) =>
@@ -153,53 +151,42 @@ export const CreateBoard = () => {
     <div className="flex flex-1 flex-col gap-5">
       <div className="flex h-full flex-col gap-5 rounded-2xl bg-white p-8">
         <div className="flex h-10 gap-5">
-          <div className="flex items-center gap-2 text-subTitle">
-            <input
-              id="GENERAL"
-              type="radio"
-              value="GENERAL"
-              name="boardType"
-              className="h-5 w-5 cursor-pointer"
-              onChange={(e) => setBoardType(e.target.value)}
-              checked={boardType === 'GENERAL'}
-              disabled={isEditMode}
-            />
-            <label htmlFor="GENERAL" className="cursor-pointer">
-              일반 게시판
-            </label>
-          </div>
-          <div className="flex items-center gap-2 text-subTitle">
-            <input
-              id="UNIVERSITY"
-              type="radio"
-              value="UNIVERSITY"
-              name="boardType"
-              className="h-5 w-5 cursor-pointer"
-              onChange={(e) => setBoardType(e.target.value)}
-              checked={boardType === 'UNIVERSITY'}
-              disabled={isEditMode}
-            />
-            <label htmlFor="UNIVERSITY" className="cursor-pointer">
-              학교 게시판
-            </label>
-          </div>
-          <div className="flex">
-            {boardType === 'UNIVERSITY' && (
-              <SearchDropdown
-                keyword={university}
-                name="Language"
-                placeholder="학교 이름"
-                onChange={(value) => setUniversity(value)}
-                setIsSelected={setIsUniversitySelected}
-                selected={isUniversitySelected}
-                list={UniversityList}
-                warn=""
-                label={false}
+          {Object.values(BOARD_TYPE).map((type) => (
+            <div className="flex items-center gap-2 text-subTitle">
+              <input
+                id={type}
+                type="radio"
+                value={type}
+                name="boardType"
+                className="h-5 w-5 cursor-pointer"
+                onChange={(e) => setBoardType(e.target.value)}
+                checked={boardType === type}
                 disabled={isEditMode}
               />
-            )}
-          </div>
+              <label htmlFor={type} className="cursor-pointer">
+                {type}
+              </label>
+            </div>
+          ))}
         </div>
+
+        {boardType === BOARD_TYPE.UNIV && (
+          <div className="flex">
+            <SearchDropdown
+              keyword={university}
+              name="Language"
+              placeholder="학교 이름"
+              onChange={(value) => setUniversity(value)}
+              setIsSelected={setIsUniversitySelected}
+              selected={isUniversitySelected}
+              list={UniversityList}
+              warn=""
+              label={false}
+              disabled={isEditMode}
+            />
+          </div>
+        )}
+
         <div className="flex flex-col gap-2 text-subTitle">
           {/* 카테고리 추가 여부 체크 */}
           <div className="flex items-center gap-2">

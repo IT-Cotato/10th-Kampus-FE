@@ -1,7 +1,9 @@
 export const BOARD_TYPE = {
+  FIXED: 'FIXED',
+  TRENDING: 'TRENDING',
   NORMAL: 'NORMAL',
-  UNIV: 'UNIVERSITY',
   CARD: 'CARDNEWS',
+  UNIV: 'UNIVERSITY',
 };
 export const BOARD_STATE = {
   ACTIVE: 'ACTIVE',

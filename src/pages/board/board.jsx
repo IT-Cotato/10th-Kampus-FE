@@ -51,9 +51,9 @@ export const Board = () => {
   } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId, sortOrder, category],
     queryFn: ({ pageParam = 1 }) => {
-      if (boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.CARD) {
-        return getCardNewsList({ page: pageParam });
-      } else if (false) {
+      if (
+        boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.TRENDING
+      ) {
         return getTrendingList({ page: pageParam });
       } else {
         return getPostList({
