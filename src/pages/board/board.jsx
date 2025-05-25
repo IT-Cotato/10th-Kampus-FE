@@ -96,14 +96,8 @@ export const Board = () => {
     <div className="flex flex-1">
       <PostHeader />
       <div className="flex flex-1 flex-col pt-14">
-        <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-          <div
-            className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-primary-10 py-2 text-small text-neutral-base"
-            onClick={() => navigate(path.boardGuide)}
-          >
-            Board guide
-          </div>
-          <div className="z-10 flex gap-[0.875rem]">
+        <div className="flex w-full px-4 pt-5">
+          <div className="z-10 flex w-full gap-[0.875rem] bg-white">
             {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
               <FilterBox
                 content={'Category'}
