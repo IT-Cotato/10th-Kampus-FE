@@ -127,9 +127,9 @@ export const Post = () => {
         setFocusedComment(null);
       }}
     >
-      {imageFocus && postData?.postPhotoUrls?.length > 0 && (
+      {imageFocus && postData?.postPhotos?.length > 0 && (
         <FocusImageSlider
-          images={postData.postPhotoUrls}
+          images={postData.postPhotos}
           setImageFocus={setImageFocus}
           currentImgIndex={currentImgIndex}
           setCurrentImgIndex={setCurrentImgIndex}
@@ -189,10 +189,10 @@ export const Post = () => {
                 </div>
               )}
             </article>
-            {postData?.postPhotoUrls?.length > 0 && (
+            {postData?.postPhotos?.length > 0 && (
               <div className="pb-3" onClick={() => setImageFocus(true)}>
                 <ImageSlider
-                  images={postData.postPhotoUrls}
+                  images={postData.postPhotos}
                   currentImgIndex={currentImgIndex}
                   setCurrentImgIndex={setCurrentImgIndex}
                   style={style}
