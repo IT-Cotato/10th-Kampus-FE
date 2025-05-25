@@ -45,7 +45,7 @@ export const Market = () => {
       <PostHeader />
       <div className="relative flex flex-1 flex-col pt-14">
         <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-          {boardDetail.filter && <FilterBox />}
+          {/* {boardDetail.filter && <FilterBox />} */}
           {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
         </div>
         <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">

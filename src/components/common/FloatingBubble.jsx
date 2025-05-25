@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 export const FloatingBubble = ({
-  descripttion,
+  description,
   floatingStyles,
   setFloatingRef,
 }) => {
@@ -24,7 +24,7 @@ export const FloatingBubble = ({
         style={{ ...floatingStyles }}
         className="absolute w-[80vw] max-w-[350px] break-normal rounded-[.625rem] bg-primary-base p-4 text-base text-white"
       >
-        {descripttion}
+        {description}
       </div>
     </motion.div>
   );
