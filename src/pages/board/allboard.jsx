@@ -1,46 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { BoardListBox } from '@/components/board/BoardListBox';
-import {
-  StateChangeAnimate,
-  startAnimation,
-} from '@/components/common/StateChangeAnimate';
-import { getBoardList } from '@/apis/board/getBoardList.api';
-import {
-  addBoardFavorite,
-  deleteBoardFavorite,
-} from '@/apis/board/toggleBoardFavorite.api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
+import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { Loading } from '@/components/common/Loading';
 import { BOARD_TYPE } from '@/constants/boardConstant';
+import { useGetBoardList } from '@/state/query/allBoard/useGetBoardList';
+import { useToggleFavorite } from '@/state/mutation/allBoard/useToggleFavorite';
+import { useGetUnivBoard } from '@/state/query/allBoard/useGetUnivBoard';
 export const AllBoard = () => {
-  const queryClient = useQueryClient();
-  const {
-    data: listData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST],
-    queryFn: getBoardList,
-  });
-  const { mutate: toggleFavorite } = useMutation({
-    mutationFn: ({ boardId, isPinned }) =>
-      isPinned
-        ? deleteBoardFavorite({ boardId })
-        : addBoardFavorite({ boardId }),
-    onMutate: ({ isPinned }) => {
-      setPrevState(isPinned);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST],
-      });
-      startAnimation(setIsAni);
-    },
-  });
   const [isAni, setIsAni] = useState(false);
   const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
+
+  const { data: listData, isLoading, error } = useGetBoardList();
+  const { data: univBoardData } = useGetUnivBoard();
+  console.log(univBoardData);
+
+  const { mutate: toggleFavorite } = useToggleFavorite({
+    setPrev: setPrevState,
+    setAnimate: setIsAni,
+  });
+
   const parseBoardData = (dataList) => {
     const boardList = { univ: [], first: [], second: [], third: [] };
     dataList?.forEach((data) => {
@@ -105,11 +84,12 @@ export const AllBoard = () => {
   };
 
   useEffect(() => {
-    if (!listData || !listData.boards) return;
-    const parsedData = parseBoardData(listData.boards);
+    if (!listData || !listData.boards || !univBoardData) return;
+    const mergedBoards = [...listData.boards, univBoardData];
+    const parsedData = parseBoardData(mergedBoards);
     const sortedData = sortList(parsedData);
     setListArray(sortedData);
-  }, [listData]);
+  }, [listData, univBoardData]);
 
   return (
     <div className="relative flex h-full w-full flex-col gap-4 p-4">

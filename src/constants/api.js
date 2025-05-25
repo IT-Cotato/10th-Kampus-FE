@@ -99,6 +99,7 @@ export const QUERY_KEYS = {
   POST_CHAT_READ: 'postChatRead',
 
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
+  GET_UNIV_BOARD: 'univBoard',
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',

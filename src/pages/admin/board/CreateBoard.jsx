@@ -150,6 +150,7 @@ export const CreateBoard = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <div className="flex h-full flex-col gap-5 rounded-2xl bg-white p-8">
+        <h1 className="text-pageTitle">게시판 타입</h1>
         <div className="flex h-10 gap-5">
           {Object.values(BOARD_TYPE).map((type) => (
             <div className="flex items-center gap-2 text-subTitle">
