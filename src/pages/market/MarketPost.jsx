@@ -164,6 +164,12 @@ export const MarketPost = () => {
                     </span>
                   </div>
                 </div>
+                <ScrapComponent
+                  state={postData?.isScrapped}
+                  id={postId}
+                  market={true}
+                  className="h-[1.75rem] w-[1.75rem]"
+                />
               </div>
               {/* 제목, 본문 */}
               <article className="relative flex w-full whitespace-pre-line break-words pb-6 pt-8">
@@ -253,16 +259,8 @@ export const MarketPost = () => {
       </div>
       {/* 하단바 */}
       <div className="fixed bottom-0 z-10 flex h-[5.375rem] w-full max-w-[512px] items-center justify-between bg-white p-4 shadow-base">
-        <span className="flex h-8 items-center gap-[.625rem] divide-x divide-neutral-disabled">
-          <ScrapComponent
-            state={postData?.isScrapped}
-            id={postId}
-            market={true}
-            className="h-[1.75rem] w-[1.75rem]"
-          />
-          <span className="px-[.625rem] text-title-bold-16 text-neutral-80">
-            ₩ {formatPrice(postData?.price)}
-          </span>
+        <span className="px-[.625rem] text-title-bold-16 text-neutral-80">
+          ₩ {formatPrice(postData?.price)}
         </span>
         <button
           type="button"
