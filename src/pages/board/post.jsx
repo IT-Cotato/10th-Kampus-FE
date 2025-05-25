@@ -121,7 +121,7 @@ export const Post = () => {
   };
   return (
     <div
-      className="flex h-full w-full overflow-scroll scrollbar-hide"
+      className="flex h-full w-full flex-col overflow-scroll scrollbar-hide"
       onClick={() => {
         setInputFocus(false);
         setFocusedComment(null);
@@ -235,7 +235,7 @@ export const Post = () => {
         )}
       </div>
       {/** 댓글 부분 */}
-      <div className="flex flex-col pb-16">
+      <div className="flex flex-col pb-20">
         {commentData &&
           commentData.comments &&
           commentData.comments.map((item) => (
