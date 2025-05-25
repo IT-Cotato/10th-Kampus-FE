@@ -1,51 +1,48 @@
+import { cn } from '@/utils/cn';
+import Dropdown from '../../assets/imgs/dropdown.svg?react';
 import { useState } from 'react';
-import { DropBox } from '../common/DropBox';
-import { Categories } from '@/constants/categories';
-export const FilterBox = () => {
-  const [category, setCategory] = useState('All'); // 선택된 카테고리 값
-  const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const categoriesWithAll = ['All', ...Categories];
-  const sortOptions = ['All', 'Newest', 'Registered', 'Popularity'];
-  const toggleCategory_Sort = (type) => {
-    // 카테고리랑 정렬 토글
-    if (type === 'category') {
-      setIsCategoryOpen(!isCategoryOpen);
-      setIsSortOpen(false);
-    } else {
-      setIsSortOpen(!isSortOpen);
-      setIsCategoryOpen(false);
-    }
-  };
-  // 선택된 값 업데이트
-  const handleCategorySelect = (selected) => {
-    setCategory(selected);
-    setIsCategoryOpen(false);
-  };
-
-  const handleSortSelect = (selected) => {
-    setSortOrder(selected);
-    setIsSortOpen(false);
-  };
+export const FilterBox = ({ content, dropList, select, selected }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const isSelected = selected === 'All' && !isOpen;
+  const isSelectedOther = selected !== 'All' || isOpen;
   return (
-    <div className="flex gap-[0.875rem] z-50">
-      <DropBox
-        dropList={categoriesWithAll}
-        state={isCategoryOpen}
-        content={'Category'}
-        toggle={() => toggleCategory_Sort('category')}
-        select={handleCategorySelect}
-        selected={category}
+    <div
+      onClick={() => setIsOpen(!isOpen)}
+      className={cn(
+        'relative flex cursor-pointer items-center justify-center gap-3 rounded-full border px-[1.125rem] py-[0.375rem] leading-tight',
+        {
+          'border-primary-30': isSelectedOther,
+          'shadow-md': isSelected,
+        },
+      )}
+    >
+      <p
+        className={cn('text-base font-normal', {
+          'text-neutral-title': isSelectedOther,
+          'text-neutral-border-50': isSelected,
+        })}
+      >
+        {selected !== 'All' ? selected : content}
+      </p>
+      <Dropdown
+        className={cn('h-3 w-3', {
+          'text-neutral-title': isSelectedOther,
+          'rotate-180 text-neutral-border-50': isSelected,
+        })}
       />
-      <DropBox
-        dropList={sortOptions}
-        state={isSortOpen}
-        content={'Sort by'}
-        toggle={() => toggleCategory_Sort('sortOrder')}
-        select={handleSortSelect}
-        selected={sortOrder}
-      />
+      {isOpen && (
+        <div className="absolute top-[3.125rem] w-full gap-[0.625rem] rounded-[0.625rem] border bg-white px-4 shadow-md">
+          {dropList.map((category) => (
+            <p
+              key={category}
+              onClick={() => select(category)}
+              className="w-full cursor-pointer py-1 text-base text-neutral-title"
+            >
+              {category}
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

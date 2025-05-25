@@ -1,29 +1,53 @@
-export const WriteTitle = ({ title, setTitle, placeholder, maxLength = 0 }) => {
+import { InputWarningText } from '@/components/common/InputWarningText';
+import { cn } from '@/utils/cn';
 
+export const WriteTitle = ({
+  title,
+  setTitle,
+  placeholder,
+  maxLength = 0,
+  titleRef,
+  invalid = false,
+  setInvalid = null,
+}) => {
   const handleOnChange = (e) => {
-    if(maxLength && e.target.value.length > maxLength) {
+    if (maxLength && e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
     setTitle(e.target.value);
+    setInvalid(false);
   };
 
   return (
     <div className="flex flex-col gap-3">
-      <label htmlFor="writeTitle" className="text-subTitle">
+      <label htmlFor="writeTitle" className="text-title-bold-16 text-black">
         Title
       </label>
-      <div className="box-border flex w-full flex-row rounded-lg border border-neutral-border-30 px-[.875rem] py-[1.125rem] gap-2">
-        <input
-          id="writeTitle"
-          type="text"
-          placeholder={placeholder}
-          value={title}
-          onChange={handleOnChange}
-          autoComplete="off"
-          className="w-full leading-none placeholder-neutral-border-50"
-          required
-        />
-        {maxLength !== 0 && <span className="flex justify-end text-sm w-fit text-neutral-border-50">{title.length}/{maxLength}</span>}
+      <div className="flex flex-col gap-2">
+        <div className="relative h-fit w-full text-neutral-title">
+          <input
+            className={cn(
+              'box-border flex w-full flex-row gap-2 rounded-lg border border-neutral-border-30 py-[1.125rem] pl-[.875rem] pr-16 leading-none placeholder-neutral-border-50 focus:border-primary-base',
+              {
+                'border-primary-red': invalid,
+              },
+            )}
+            id="writeTitle"
+            type="text"
+            placeholder={placeholder}
+            value={title}
+            onChange={handleOnChange}
+            ref={titleRef}
+            autoComplete="off"
+            required
+          />
+          {maxLength !== 0 && (
+            <span className="text-sm pointer-events-none absolute right-[.875rem] top-[1.125rem] flex w-fit text-neutral-border-50">
+              {title.length}/{maxLength}
+            </span>
+          )}
+        </div>
+        {invalid && <InputWarningText />}
       </div>
     </div>
   );

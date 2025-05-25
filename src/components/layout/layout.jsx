@@ -22,14 +22,16 @@ export const Layout = ({ children }) => {
       {renderNav ? (
         <div
           id="modal-root"
-          className="container relative flex flex-col justify-between"
+          className="relative flex flex-1 flex-col justify-between"
         >
-          <div className="flex w-full h-full">{children}</div>
+          <div className="flex h-full w-full flex-1 overflow-x-hidden">
+            {children}
+          </div>
           <div className="flex h-[4rem] w-full"></div>
           <Navbar />
         </div>
       ) : (
-        <div id="modal-root" className="container relative flex">
+        <div id="modal-root" className="relative flex flex-1 overflow-x-hidden">
           {children}
         </div>
       )}

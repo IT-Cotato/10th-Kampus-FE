@@ -9,7 +9,7 @@ export const SearchBar = ({
   setValue,
   isSearch,
   setIsSearch,
-  startSearch
+  startSearch,
 }) => {
   const navigate = useNavigate();
   const queryclient = useQueryClient();
@@ -29,10 +29,10 @@ export const SearchBar = ({
           onFocus={() => {
             if (isSearch === false) {
               queryclient.refetchQueries({
-                queryKey: [QUERY_KEYS.GET_SEARCH_KEYWORD]
-              })
-              setIsSearch(true)
-            };
+                queryKey: [QUERY_KEYS.GET_SEARCH_KEYWORD],
+              });
+              setIsSearch(true);
+            }
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.nativeEvent.isComposing) {

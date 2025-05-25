@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import React, { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 export const SearchDropdown = ({
   keyword,
@@ -59,14 +59,14 @@ export const SearchDropdown = ({
       {label && (
         <label
           htmlFor={name}
-          className="text-base pointer-events-none text-neutral-base"
+          className="pointer-events-none text-base text-neutral-base"
         >
           {name}
           <span className="text-primary-red">*</span>
         </label>
       )}
       <div
-        className="relative flex flex-col mt-1"
+        className="relative mt-1 flex flex-col"
         onBlur={handleOnBlur}
         tabIndex={0}
         ref={dropdownRef}
@@ -94,7 +94,7 @@ export const SearchDropdown = ({
         <div className="flex flex-col">
           {isActive && (
             <div
-              className="z-10 flex flex-col overflow-auto border max-h-28"
+              className="z-10 flex max-h-28 flex-col overflow-auto border"
               tabIndex={-1}
             >
               {filteredList.map((d) => (

@@ -1,9 +1,26 @@
 import { cn } from '@/utils/cn';
 
+export const BUTTON_THEMES = {
+  PRIMARY: 'primary',
+  BASE: 'base',
+  DISABLED: 'disabled',
+  APPROVED: 'APPROVED',
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED',
+  BORDER: 'border',
+};
+
+export const BUTTON_SIZES = {
+  LONG: 'long',
+  MODAL: 'modal',
+  BASE: 'base',
+  SHORT: 'short',
+};
+
 export const ButtonRound = ({
-  theme = 'primary',
+  theme = BUTTON_THEMES.PRIMARY,
   text,
-  size = 'base',
+  size = BUTTON_SIZES.BASE,
   ...props
 }) => {
   return (
@@ -12,18 +29,19 @@ export const ButtonRound = ({
       className={cn(
         'flex items-center justify-center rounded-[1.25rem] text-base text-white',
         {
-          'bg-primary-base': theme === 'primary',
-          'bg-neutral-base': theme === 'base',
-          'bg-neutral-disabled': theme === 'disabled',
-          'bg-[#D3F2D3] text-primary-green': theme === 'APPROVED',
-          'bg-[#D1E6FF] text-primary-blue': theme === 'PENDING',
-          'bg-[#F4CCCC] text-primary-red': theme === 'REJECTED',
+          'bg-primary-base': theme === BUTTON_THEMES.PRIMARY,
+          'bg-neutral-base': theme === BUTTON_THEMES.BASE,
+          'bg-neutral-disabled': theme === BUTTON_THEMES.DISABLED,
+          'bg-[#D3F2D3] text-primary-green': theme === BUTTON_THEMES.APPROVED,
+          'bg-[#D1E6FF] text-primary-blue': theme === BUTTON_THEMES.PENDING,
+          'bg-primary-red text-white': theme === BUTTON_THEMES.REJECTED,
           'border border-neutral-border-40 bg-white text-neutral-title':
-            theme === 'border',
-          'w-full py-1': size === 'long',
-          'w-fit min-w-[7.625rem] px-5 py-3 rounded-full': size === 'modal',
-          'w-fit px-7 py-2': size === 'base',
-          'w-fit px-4 py-1': size === 'short',
+            theme === BUTTON_THEMES.BORDER,
+          'w-full py-1': size === BUTTON_SIZES.LONG,
+          'w-fit min-w-[7.625rem] rounded-full px-5 py-3':
+            size === BUTTON_SIZES.MODAL,
+          'w-fit px-7 py-2': size === BUTTON_SIZES.BASE,
+          'w-fit px-4 py-1': size === BUTTON_SIZES.SHORT,
         },
       )}
       {...props}

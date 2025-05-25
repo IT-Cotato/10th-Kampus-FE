@@ -11,6 +11,7 @@ import Report from '@/assets/imgs/admin/Report.svg?react';
 import Setting from '@/assets/imgs/admin/Setting.svg?react';
 import User from '@/assets/imgs/admin/User.svg?react';
 import Volume from '@/assets/imgs/admin/Volume.svg?react';
+import Edit from '@/assets/imgs/admin/Edit.svg?react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
@@ -40,19 +41,25 @@ export const Admin = ({ children }) => {
     },
     {
       id: 3,
+      text: '카테고리 관리',
+      path: path.admin.category,
+      img: Edit,
+    },
+    {
+      id: 4,
       text: '게시판 관리',
       path: path.admin.boardManagement.base,
       img: Board,
     },
     {
-      id: 4,
+      id: 5,
       text: '카드뉴스 제작',
       path: path.admin.cardnews.base,
       img: Cardnews,
     },
-    { id: 5, text: '신고 관리', path: path.admin.reportMangement, img: Report },
-    { id: 6, text: '통계 관리', path: path.admin.statistics, img: Graph },
-    { id: 7, text: '공지 작성', path: path.admin.notice.base, img: Volume },
+    { id: 6, text: '신고 관리', path: path.admin.reportMangement, img: Report },
+    { id: 7, text: '통계 관리', path: path.admin.statistics, img: Graph },
+    { id: 8, text: '공지 작성', path: path.admin.notice.base, img: Volume },
   ];
 
   return (
@@ -71,20 +78,26 @@ export const Admin = ({ children }) => {
         {showMenu && (
           <div className="flex max-h-[37.5rem] min-h-dvh w-72 flex-col justify-center rounded-br-3xl bg-white pt-20 text-start align-middle">
             {menu.map((item) => (
-              <button
-                key={item.id}
-                className={cn(
-                  'box-border flex h-16 w-72 items-center gap-4 px-7 text-start text-subTitle text-neutral-base',
-                  {
-                    'border-l-4 border-primary-base text-primary-base':
-                      pathname.includes(item.path),
-                  },
+              <div className="flex" key={item.id}>
+                {pathname.includes(item.path) && (
+                  <div className="h-full w-1 rounded-r-lg bg-primary-base" />
                 )}
-                onClick={() => navigate(`./${item.path}`, { replace: true })}
-              >
-                <item.img className="flex h-auto w-6" />
-                <span className="flex">{item.text}</span>
-              </button>
+                <button
+                  type="button"
+                  key={item.id}
+                  className={cn(
+                    'box-border flex h-16 w-72 items-center gap-4 px-7 text-start text-subTitle text-neutral-base',
+                    {
+                      'border-primary-base text-primary-base':
+                        pathname.includes(item.path),
+                    },
+                  )}
+                  onClick={() => navigate(`./${item.path}`, { replace: true })}
+                >
+                  <item.img className="flex h-auto w-6" />
+                  <span className="flex">{item.text}</span>
+                </button>
+              </div>
             ))}
           </div>
         )}

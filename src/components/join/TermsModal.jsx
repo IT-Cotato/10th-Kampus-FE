@@ -41,20 +41,20 @@ export const TermsModal = (props) => {
             aria-hidden="true"
           ></div>
           <div className="relative flex h-screen w-full items-center justify-center px-4 pb-5 pt-6">
-            <div className="relative flex max-h-full flex-col justify-center rounded-[.625rem] bg-neutral-bg-10 px-[1.375rem] py-[2.25rem] text-left">
+            <div className="relative flex max-h-full flex-col justify-center rounded-[.625rem] bg-neutral-bg-10 px-5 py-5 text-left">
               <img
                 src={X}
                 alt="close"
                 onClick={closeModal}
-                className="absolute right-[.875rem] top-[.875rem] h-[1.125rem] w-[1.125rem] cursor-pointer text-neutral-title"
+                className="absolute right-5 top-5 h-[1.125rem] w-[1.125rem] cursor-pointer text-neutral-title"
               />
-              <span className="px-[1.0625rem] text-start text-subTitle text-neutral-title">
+              <span className="px-[1.0625rem] pt-[2.125rem] text-start text-subTitle text-neutral-title">
                 <span>
                   {props.detailedTerm.required ? '[Required] ' : '[Optional] '}
                 </span>
                 <span>{props.detailedTerm.title}</span>
               </span>
-              <div className="mb-8 mt-7 flex flex-col overflow-y-auto scrollbar-hide">
+              <div className="my-6 flex flex-col overflow-y-auto scrollbar-hide">
                 <div className="text-neutral-60 flex h-full w-full whitespace-pre-line text-left text-base">
                   {props.detailedTerm.content}
                 </div>

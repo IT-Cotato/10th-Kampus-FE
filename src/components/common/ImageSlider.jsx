@@ -62,6 +62,15 @@ export const ImageSlider = ({
     }
   };
 
+  const handleDotsToDisplay = (e, index) => {
+    e.stopPropagation();
+    setCurrentImgIndex(index);
+    setStyle({
+      transform: `translateX(-${index}00%)`,
+      transition: `all 0.4s ease-in-out`,
+    });
+  };
+
   return (
     <div
       className="relative"
@@ -69,16 +78,12 @@ export const ImageSlider = ({
       onTouchMove={touchMove}
       onTouchEnd={touchEnd}
     >
-      <div className="w-full overflow-hidden rounded-md z-0">
+      <div className="z-0 w-full overflow-hidden">
         <div ref={flexRef} className="flex w-full" style={style}>
           {images.map((image, index) => (
-            <div key={index} className="flex-none w-full aspect-square">
-              <img
-                src={image}
-                className="inset-0 h-full w-full object-cover"
-              />
+            <div key={index} className="aspect-square w-full flex-none">
+              <img src={image} className="inset-0 h-full w-full object-cover" />
             </div>
-
           ))}
         </div>
       </div>
@@ -105,6 +110,7 @@ export const ImageSlider = ({
             return dotsToDisplay.map((index) => (
               <div
                 key={index}
+                onClick={(e) => handleDotsToDisplay(e, index)}
                 className={cn(
                   'h-2 w-2 flex-shrink-0 transform cursor-pointer rounded-full transition-transform duration-300',
                   {

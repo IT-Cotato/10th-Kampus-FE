@@ -1,4 +1,5 @@
 export { NotFound } from './notFound';
+export { AccountPermanentSuspendedNotice } from './home/accountPermanentSuspendedNotice';
 export { Home } from './home/home';
 export { SplashScreen } from './SplashScreen';
 
@@ -34,17 +35,20 @@ export { CommunityScrap } from './my/community/CommunityScrap';
 export { MyArticle } from '../components/layout/MyArticle';
 export { MyComments } from './my/community/MyComments';
 export { MyArticles } from './my/community/MyArticles';
+export { FailedVerify } from './my/verify/FailedVerify';
 
 export { BlockChat } from './my/etc/blockChat';
 export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
-export { Notification } from './my/settings/Notification';
+export { Notification } from './my/settings/notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
-export { NotificationList } from './notification/notificationList';
+export { NotificationList } from './notification/NotificationList';
 export { Market } from './market/market';
+export { MarketPost } from './market/MarketPost';
+export { MarketWrite } from './market/MarketWrite';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
@@ -60,3 +64,4 @@ export { Statistics } from './admin/Statistics';
 export { UserManagement } from './admin/UserManagement';
 export { NoticeManagement } from './admin/notice/NoticeManagement';
 export { CreateNotice } from './admin/notice/CreateNotice';
+export { ManageCategory } from './admin/ManageCategory';

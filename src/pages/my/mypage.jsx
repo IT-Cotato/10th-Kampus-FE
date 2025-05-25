@@ -7,14 +7,16 @@ import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/apis/user/userDetail.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { Loading } from '@/components/common/Loading';
+import { UNIV_STATUS } from '@/constants/universityStatus';
+import { ERR_MSG } from '@/constants/errorMessage';
+import OfficialMail from '@/constants/OfficialMail.json';
 
 export const MyPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [university, setUniversity] = useState('');
-  const [status, setStatus] = useState(''); // 학교 인증 상태
 
   const { data: userData, isLoading: isUserDetailsLoading } = useQuery({
     queryKey: [QUERY_KEYS.USER_INFO],
@@ -24,36 +26,29 @@ export const MyPage = () => {
   useEffect(() => {
     if (userData) {
       setUsername(userData.nickname);
-      setUniversity(userData.universityName);
+      setUniversity(userData.universityCode);
     }
   }, [userData]);
 
-  const { mutate: checkSchoolStatus, isLoading: isSchoolStatusLoading } =
-    useCheckSchoolStatus();
-
-  useEffect(() => {
-    checkSchoolStatus(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const {
+    data: status,
+    isLoading: isSchoolStatusLoading,
+    isError: isSchoolStatusError,
+  } = useCheckSchoolStatus();
 
   const handleLogout = async () => {
     await removeTokens();
     navigate(path.login);
-  }
+  };
+
   return (
     <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
       {/* 알림 영역 */}
-      <div className="flex justify-end w-full h-full">
+      <div className="flex h-full w-full justify-end">
         <NotificationButton isNotification={false} />
       </div>
       {/* 본문 영역 */}
-      <div className="flex h-full w-full flex-col gap-[2.5rem]">
+      <div className="flex h-full w-full flex-col gap-[1.25rem]">
         {/* 마이페이지 메인 버튼 */}
         <div
           className="flex h-full w-full cursor-pointer items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
@@ -63,14 +58,16 @@ export const MyPage = () => {
             <Loading />
           ) : (
             <>
-              <div className="flex flex-col justify-between w-full h-full gap-1 text-white">
+              <div className="flex h-full w-full flex-col justify-between gap-1 text-white">
                 <div className="text-pageTitle">{username}</div>
                 <div className="text-neutral-disabled">
-                  {university
-                    ? university
-                    : status === 'PENDING'
-                      ? 'School verification is in progress.'
-                      : "What's the name of your school?"}
+                  {isSchoolStatusError
+                    ? ERR_MSG
+                    : university
+                      ? university
+                      : status === UNIV_STATUS.PENDING
+                        ? 'School verification is in progress.'
+                        : "What's the name of your school?"}
                 </div>
               </div>
               <div className="right-0 h-full">
@@ -79,11 +76,22 @@ export const MyPage = () => {
             </>
           )}
         </div>
+        {/* 학교 인증 시 반려 시, 실패 네비게이트 페이지 버튼 */}
+        {true && (
+          <button
+            onClick={() =>
+              navigate(`${path.mypage.base}/${path.mypage.verify.fail}`)
+            }
+            className="w-full rounded-[.625rem] border border-primary-red px-[1.125rem] py-[1.25rem] text-base leading-none text-primary-red"
+          >
+            You failed to verify yourself as a student
+          </button>
+        )}
         {/* 마이페이지 항목들 */}
-        <div className="flex h-full w-full flex-col gap-[1.875rem]">
-          <div className="flex flex-col w-full h-full gap-2">
+        <div className="mt-[1.25rem] flex h-full w-full flex-col gap-[1.875rem] leading-tight">
+          <div className="flex h-full w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Service Settings</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-[.625rem]">
               <button
                 type="button"
                 className="text-left"
@@ -109,9 +117,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Community</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -135,9 +143,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Contact Us</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -149,17 +157,13 @@ export const MyPage = () => {
               >
                 FAQ
               </button>
-              <button
-                type="button"
+              <a
+                aria-label="1:1 Inquiry button"
                 className="text-left"
-                onClick={() =>
-                  navigate(
-                    `${path.mypage.service.base}/${path.mypage.service.inquiry}`,
-                  )
-                }
+                href={`mailto:${OfficialMail.mail}`}
               >
                 1:1 Inquiry
-              </button>
+              </a>
               <button
                 type="button"
                 className="text-left"
@@ -173,9 +177,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col w-full h-full gap-2">
+          <div className="flex h-full w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">etc.</div>
-            <div className="flex flex-col w-full h-full gap-2 pt-2 border-t border-primary-base">
+            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"

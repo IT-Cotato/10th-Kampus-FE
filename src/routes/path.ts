@@ -1,4 +1,5 @@
 export const path = {
+  accountPermanentSuspended: '/account-permanent-suspended',
   login: '/login',
   signup: {
     base: '/signup',
@@ -18,7 +19,8 @@ export const path = {
       base: ':boardId',
       write: 'write',
       post: ':postId',
-      report: 'report'
+      report: 'report',
+      search: 'search',
     },
   },
   home: '/home',
@@ -27,6 +29,9 @@ export const path = {
   notificationList: '/notificationList',
   mypage: {
     base: '/my',
+    verify: {
+      fail: 'verify/fail',
+    },
     settings: {
       info: 'settings/info',
       verification: 'settings/verification',
@@ -64,7 +69,8 @@ export const path = {
   },
   market: {
     base: '/market',
-    writeId: ':writeId',
+    write: 'write',
+    post: ':postId',
   },
   chatList: {
     base: '/chat',
@@ -75,6 +81,7 @@ export const path = {
     login: 'login',
     dashboard: 'dashboard',
     userManagement: 'userManagement',
+    category: 'category',
     signupManagement: {
       base: 'signupManagement',
       studentVertifications: ':verificationRecordId',
@@ -98,6 +105,6 @@ export const path = {
       create: 'create',
       noticeId: ':noticeId',
       edit: 'edit',
-    }
-  }
+    },
+  },
 };

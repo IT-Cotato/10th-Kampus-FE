@@ -11,6 +11,7 @@ import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
 import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
 import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
 import { postInactivateBoard } from '@/apis/admin/postInactivateBoard.api';
+import { BOARD_STATE } from '@/constants/boardConstant';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
@@ -124,11 +125,11 @@ export const BoardManagement = () => {
   const getStateFromDropdown = (dropdown) => {
     switch (dropdown) {
       case '활성화':
-        return 'ACTIVE';
+        return BOARD_STATE.ACTIVE;
       case '보관':
-        return 'INACTIVE';
+        return BOARD_STATE.INACTIVE;
       case '삭제 대기':
-        return 'PENDING_DELETION';
+        return BOARD_STATE.PENDING;
       default:
         return null;
     }
@@ -148,8 +149,8 @@ export const BoardManagement = () => {
   }, [boardData]);
 
   return (
-    <div className="flex flex-col flex-1 gap-5">
-      <div className="flex flex-col w-full gap-5 p-8 bg-white h-fit rounded-2xl">
+    <div className="flex flex-1 flex-col gap-5">
+      <div className="flex h-fit w-full flex-col gap-5 rounded-2xl bg-white p-8">
         <h1 className="text-pageTitle">게시판 관리</h1>
         <Dropdown
           selectedDropdown={selectedDropdown}
@@ -159,14 +160,14 @@ export const BoardManagement = () => {
           handleDropdownClick={(state) => handleDropdownClick(state)}
         />
       </div>
-      <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] place-items-center gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
+      <ul className="grid w-full grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] place-items-center gap-7 lg:grid-cols-[repeat(auto-fill,_minmax(18.75rem,_1fr))]">
         {boardList &&
           boardList.map((board, index) => (
-            <div
+            <li
               key={board.boardId}
               className="relative flex h-40 min-h-fit w-full min-w-fit flex-col gap-5 rounded-2xl bg-white p-8 lg:h-[12.5rem] lg:w-full"
             >
-              <div className="relative flex flex-row items-center gap-3 text-center align-middle">
+              <div className="relative flex flex-row items-center gap-3 pr-2 text-center align-middle">
                 {selectedBoardMenu === board.boardId && (
                   <MenuBar
                     menuOptions={
@@ -179,7 +180,7 @@ export const BoardManagement = () => {
                     onClose={() => setSelectedBoardMenu(null)}
                   />
                 )}
-                <span className="px-2 rounded-lg h-fit w-fit whitespace-nowrap bg-primary-10 text-subTitle text-primary-base">
+                <span className="h-fit w-fit whitespace-nowrap rounded-lg bg-primary-10 px-2 text-subTitle text-primary-base">
                   {selectedDropdown === '삭제 대기'
                     ? 'D-' +
                       (board.deletionCountdown === 0
@@ -187,29 +188,34 @@ export const BoardManagement = () => {
                         : board.deletionCountdown)
                     : index + 1}
                 </span>
-                <h2 className="whitespace-nowrap">
+                <h2 className="flex whitespace-break-spaces text-start">
                   {board.boardName} | {board.postCount}개
                 </h2>
-                <button onClick={() => handleMenuBarClick(board.boardId)}>
+                <button
+                  type="button"
+                  onClick={() => handleMenuBarClick(board.boardId)}
+                >
                   <img
                     src={menubar}
                     alt="menu"
-                    className="absolute px-2 -right-4 -top-2 lg:right-0 lg:top-0"
+                    className="absolute -right-4 -top-2 px-2 lg:right-0 lg:top-0"
                   />
                 </button>
               </div>
               {board.description}
-              {board.boardStatus === 'PENDING_DELETION' && selectedDropdown !== '삭제 대기' && (
+              {board.boardStatus === 'PENDING_DELETION' &&
+                selectedDropdown !== '삭제 대기' && (
                   <span className="absolute bottom-3 right-5 text-primary-red">
                     삭제 D-{board.deletionCountdown}
                   </span>
                 )}
-              {board.boardStatus === 'INACTIVE' && selectedDropdown !== '보관' && (
-                <span className="absolute bottom-3 right-5 text-primary-red">
-                  비활성화
-                </span>
-              )}
-            </div>
+              {board.boardStatus === 'INACTIVE' &&
+                selectedDropdown !== '보관' && (
+                  <span className="absolute bottom-3 right-5 text-primary-red">
+                    비활성화
+                  </span>
+                )}
+            </li>
           ))}
         <button
           type="button"
@@ -218,7 +224,7 @@ export const BoardManagement = () => {
         >
           <img src={Plus} />
         </button>
-      </div>
+      </ul>
     </div>
   );
 };

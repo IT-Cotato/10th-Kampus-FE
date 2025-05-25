@@ -14,35 +14,66 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
+import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId } = useParams();
   const { state } = useLocation();
-  const { mutate: addPost, isPending: postPending, isError: postError } = useMutation({
+  const [categoryList, setCategoryList] = useState([]);
+
+  // 게시판에 적용되는 카테고리 조회
+  const { data: boardCategories, isSuccess: isBoardCategoriesSuccess } =
+    useQuery({
+      queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
+      queryFn: () => getBoardCategories({ boardId: boardId }),
+      enabled: !!boardId,
+    });
+
+  useEffect(() => {
+    if (isBoardCategoriesSuccess) {
+      boardCategories.categories.map((item) => {
+        setCategoryList((prev) => [...prev, item.categoryName]);
+      });
+    }
+  }, [isBoardCategoriesSuccess]);
+
+  const {
+    mutate: addPost,
+    isPending: postPending,
+    isError: postError,
+  } = useMutation({
     mutationFn: (newPost) => postWritePost({ data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`${path.board.base}/${boardId}/${createdPostId}`, { replace: true })
-    }
-  })
-  const { mutate: setTranslate, isPending: translatePending, isError: translateError } = useMutation({
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
+        replace: true,
+      });
+    },
+  });
+
+  const {
+    mutate: setTranslate,
+    isPending: translatePending,
+    isError: translateError,
+  } = useMutation({
     mutationFn: (data) => writePostTranslate(data),
     onSuccess: (response) => {
-      setTranslatedTitle(response.title)
-      setTranslatedContent(response.content)
-    }
-  })
+      setTranslatedTitle(response.title);
+      setTranslatedContent(response.content);
+    },
+  });
 
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [content, setContent] = useState('');
   const [translatedTitle, setTranslatedTitle] = useState(null);
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
   const disabled = !title || !content;
+
   const handleUpload = async () => {
     const formData = new FormData();
 
@@ -50,8 +81,10 @@ export const Write = () => {
     formData.append('title', translatedTitle ?? title);
     formData.append('content', translatedContent ?? content);
 
-    if (selectedCategory) {
-      formData.append('postCategory', selectedCategory);
+    if (selectedCategory.length !== 0) {
+      selectedCategory.forEach((category) =>
+        formData.append('categories', category),
+      );
     }
 
     if (uploadedFiles.length > 0) {
@@ -61,37 +94,41 @@ export const Write = () => {
     }
     addPost(formData);
   };
+
   const handleCancelTranslatePopup = () => {
     setIsPopup(false);
     setTranslatedTitle(null);
     setTranslatedContent(null);
-  }
+  };
+
   const handleTranslateAndUpload = () => {
-    setIsPopup(true)
+    setIsPopup(true);
     const buildData = () => {
       return {
         title: title,
         content: content,
-        targetLanguageCode: "EN-US"
-      }
-    }
-    setTranslate({ data: buildData() })
+        targetLanguageCode: 'EN-US',
+      };
+    };
+    setTranslate({ data: buildData() });
   };
+
   useEffect(() => {
-    if (!state) { // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
+    if (!state) {
+      // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
       navigate(-1);
     }
-  }, [state, navigate])
+  }, [state, navigate]);
 
   if (!state) return null;
-  const { boardName } = state
+  const { boardName } = state;
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className="grid items-center w-full grid-cols-3 px-4 pt-4 pb-3">
+    <div className="relative flex h-full w-full flex-col pb-[5.6875rem]">
+      <div className="grid w-full grid-cols-3 items-center px-4 pb-3 pt-4">
         <button type="button">
           <X
-            className="w-6 h-6 p-1 text-neutral-title"
+            className="h-6 w-6 p-1 text-neutral-title"
             onClick={() => navigate(-1)}
           />
         </button>
@@ -112,8 +149,9 @@ export const Write = () => {
           placeholder="Please add a title."
           maxLength={50}
         />
-        {boardName && (boardName === 'Question' || boardName === 'Information') && (
+        {categoryList.length !== 0 && (
           <SelectCategory
+            categories={categoryList}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
@@ -125,15 +163,18 @@ export const Write = () => {
           maxLength={1000}
         />
         <UploadPics onChange={setUploadedFiles} />
-        <div className="flex gap-2">
-          <MainWhiteButton onClick={handleUpload} disabled={disabled}>
-            Upload
-          </MainWhiteButton>
-          <MainButton onClick={handleTranslateAndUpload} disabled={disabled}>
-            Upload in English
-          </MainButton>
-        </div>
       </div>
+
+      {/* 업로드 버튼 */}
+      <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 text-title-bold-16 text-neutral-80 shadow-base">
+        <MainWhiteButton onClick={handleUpload} disabled={disabled}>
+          Upload
+        </MainWhiteButton>
+        <MainButton onClick={handleTranslateAndUpload} disabled={disabled}>
+          Upload in English
+        </MainButton>
+      </div>
+
       {/** props의 isLoading은 useQuery 이용 예정 */}
       {isPopup &&
         createPortal(
@@ -144,7 +185,7 @@ export const Write = () => {
             onClickRight={() => handleUpload()}
             isLoading={translatePending}
           />,
-          document.getElementById('modal-root')
+          document.getElementById('modal-root'),
         )}
     </div>
   );

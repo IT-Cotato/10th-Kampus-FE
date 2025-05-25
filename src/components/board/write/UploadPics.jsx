@@ -69,7 +69,7 @@ export const UploadPics = ({ onChange }) => {
     <div className="flex flex-row items-end gap-2">
       <label
         htmlFor="selectImages"
-        className="mt-[.625rem] flex h-20 w-20 flex-shrink-0 flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30 cursor-pointer"
+        className="mt-[.625rem] flex h-20 w-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30"
       >
         <img src={Camera} alt="" className="h-[2.375rem] w-[2.375rem]" />
         <span className="text-small text-neutral-border-50">
@@ -103,6 +103,7 @@ export const UploadPics = ({ onChange }) => {
       </div>
       {showErrorModal !== '' && (
         <Modal
+          type={MODAL_TYPES.WARNING}
           title={showErrorModal}
           leftButton="Close"
           onClickLeft={() => setShowErrorModal('')}
