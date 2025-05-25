@@ -9,7 +9,7 @@ export const WriteContent = ({
   maxLength = 0,
   contentRef,
   invalid = false,
-  setInvalid = null,
+  setInvalid = () => {},
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 

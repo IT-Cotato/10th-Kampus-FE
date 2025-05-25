@@ -50,7 +50,7 @@ export const UploadPics = ({
         setFiles(updatedFiles);
         setPreviewImages(updatedPreviews);
         onChange(updatedFiles); // 부모 컴포넌트에 전달
-        setInvalid(false);
+        if (setInvalid) setInvalid(false);
         e.target.value = '';
       }
     } catch (error) {

@@ -5,9 +5,9 @@ export const SelectCategory = ({
   categories = [],
   selectedCategory,
   setSelectedCategory,
-  categoryRef,
+  categoryRef = null,
   invalid = false,
-  setInvalid = null,
+  setInvalid = () => {},
   max = 9999,
 }) => {
   const handleOnChange = (e) => {
