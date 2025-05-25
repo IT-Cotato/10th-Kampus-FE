@@ -20,10 +20,12 @@ export const FilterBox = ({ content, dropList, select, selected }) => {
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchdown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchdown', handleClickOutside);
     };
   }, [isOpen]);
 
