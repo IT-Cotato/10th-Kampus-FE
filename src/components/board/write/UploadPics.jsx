@@ -1,9 +1,15 @@
 import Camera from '@/assets/imgs/camera.svg';
 import ImgX from '@/assets/imgs/ImgX.svg?react';
+import { InputWarningText } from '@/components/common/InputWarningText';
 import { Modal } from '@/components/common/Modal';
 import { useState } from 'react';
 
-export const UploadPics = ({ onChange }) => {
+export const UploadPics = ({
+  onChange,
+  imageRef = null,
+  invalid = false,
+  setInvalid = null,
+}) => {
   const [previewImages, setPreviewImages] = useState([]);
   const [files, setFiles] = useState([]);
   const [showErrorModal, setShowErrorModal] = useState('');
@@ -44,6 +50,7 @@ export const UploadPics = ({ onChange }) => {
         setFiles(updatedFiles);
         setPreviewImages(updatedPreviews);
         onChange(updatedFiles); // 부모 컴포넌트에 전달
+        setInvalid(false);
         e.target.value = '';
       }
     } catch (error) {
@@ -66,41 +73,51 @@ export const UploadPics = ({ onChange }) => {
   };
 
   return (
-    <div className="flex flex-row items-end gap-2">
-      <label
-        htmlFor="selectImages"
-        className="mt-[.625rem] flex h-20 w-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30"
-      >
-        <img src={Camera} alt="" className="h-[2.375rem] w-[2.375rem]" />
-        <span className="text-small text-neutral-border-50">
-          {files.length}/10
-        </span>
-      </label>
-      <input
-        type="file"
-        accept="image/*"
-        id="selectImages"
-        className="hidden"
-        multiple
-        onChange={getImageFiles}
-      />
-      <div className="grid grid-flow-col gap-[.875rem] overflow-x-scroll pr-[.625rem] pt-[.625rem] scrollbar-hide">
-        {previewImages.map((src, index) => (
-          <div className="relative w-20 h-20" key={index}>
-            <img
-              src={src}
-              alt={`Preview ${index + 1}`}
-              className="object-cover w-20 h-20"
-            />
-            <button
-              onClick={() => removeImage(index)}
-              className="absolute top-0 right-0 z-10 translate-x-1/2 -translate-y-1/2"
-            >
-              <ImgX className="h-[1.125rem] w-[1.125rem] text-neutral-border-50" />
-            </button>
-          </div>
-        ))}
+    <div className="flex flex-col gap-2">
+      <div className="flex items-end gap-2">
+        <label
+          htmlFor="selectImages"
+          className="mt-[.625rem] flex h-20 w-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30"
+        >
+          <img src={Camera} alt="" className="h-[2.375rem] w-[2.375rem]" />
+          <span className="text-small text-neutral-border-50">
+            {files.length}/10
+          </span>
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          id="selectImages"
+          className="hidden"
+          multiple
+          onChange={getImageFiles}
+        />
+        <div
+          ref={imageRef}
+          className="grid grid-flow-col gap-[.875rem] overflow-x-scroll pr-[.625rem] pt-[.625rem] scrollbar-hide"
+        >
+          {previewImages.map((src, index) => (
+            <div className="relative h-20 w-20" key={index}>
+              <img
+                src={src}
+                alt={`Preview ${index + 1}`}
+                className="h-20 w-20 object-cover"
+              />
+              <button
+                onClick={() => removeImage(index)}
+                className="absolute right-0 top-0 z-10 -translate-y-1/2 translate-x-1/2"
+              >
+                <ImgX className="h-[1.125rem] w-[1.125rem] text-neutral-border-50" />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
+      {invalid && (
+        <InputWarningText>
+          Select at least one image to continue.
+        </InputWarningText>
+      )}
       {showErrorModal !== '' && (
         <Modal
           type={MODAL_TYPES.WARNING}

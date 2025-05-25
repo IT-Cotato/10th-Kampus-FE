@@ -6,7 +6,6 @@ import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
-import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -27,12 +26,14 @@ export const MarketWrite = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
 
-  // 유효성 검사를 위한 ref
+  // 빈칸으로 업로드 버튼 클릭 시 focus를 위한 위한 ref
+  const imageRef = useRef(null);
   const titleRef = useRef(null);
   const priceRef = useRef(null);
   const categoryRef = useRef(null);
   const contentRef = useRef(null);
 
+  const [isImageInvalid, setIsImageInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
   const [isPriceInvalid, setIsPriceInvalid] = useState(false);
   const [isContentInvalid, setIsContentInvalid] = useState(false);
@@ -99,12 +100,16 @@ export const MarketWrite = () => {
 
   // 업로드 버튼 클릭 시 유효성 검증
   const validateBeforeUpload = () => {
+    setIsImageInvalid(uploadedFiles.length === 0);
     setIsTitleInvalid(!title);
     setIsPriceInvalid(!price);
     setIsCategoryInvalid(selectedCategory.length === 0);
     setIsContentInvalid(!content);
 
-    if (!title) {
+    if (uploadedFiles.length === 0) {
+      handleFocus(imageRef);
+      return false;
+    } else if (!title) {
       handleFocus(titleRef);
       return false;
     } else if (!price) {
@@ -180,7 +185,12 @@ export const MarketWrite = () => {
         </span>
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
-        <UploadPics onChange={setUploadedFiles} />
+        <UploadPics
+          onChange={setUploadedFiles}
+          imageRef={imageRef}
+          invalid={isImageInvalid}
+          setInvalid={setIsImageInvalid}
+        />
         <WriteTitle
           title={title}
           setTitle={setTitle}
