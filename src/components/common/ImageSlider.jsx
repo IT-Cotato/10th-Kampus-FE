@@ -80,8 +80,8 @@ export const ImageSlider = ({
     >
       <div className="z-0 w-full overflow-hidden">
         <div ref={flexRef} className="flex w-full" style={style}>
-          {images.map((image) => (
-            <div key={image.order} className="aspect-square w-full flex-none">
+          {images.map((image, index) => (
+            <div key={index} className="aspect-square w-full flex-none">
               <img
                 src={image.photoUrl}
                 className="inset-0 h-full w-full object-cover"
