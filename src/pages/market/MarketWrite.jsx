@@ -9,10 +9,9 @@ import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
 import { WritePrice } from '@/components/market/WritePrice';
+import { useGetMarketCategory } from '@/state/query/market/useGetMarketGategory';
 export const MarketWrite = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -39,29 +38,11 @@ export const MarketWrite = () => {
   const [isContentInvalid, setIsContentInvalid] = useState(false);
   const [isCategoryInvalid, setIsCategoryInvalid] = useState(false);
 
+  const { data: categoryData } = useGetMarketCategory();
+
   useEffect(() => {
-    setCategoryList([
-      'Book',
-      'Electronic',
-      'Fashion',
-      'Furniture',
-      'Living&Kitchen',
-    ]);
-  }, []);
-
-  // 중고거래 게시판에 적용되는 카테고리 조회
-  // const { data: boardCategories, isSuccess: isBoardCategoriesSuccess } =
-  //   useQuery({
-  //     queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
-  //     queryFn: () => getBoardCategories({ boardId: boardId }),
-  //     enabled: !!boardId,
-  //   });
-
-  // useEffect(() => {
-  //   if (isBoardCategoriesSuccess) {
-  //     setCategoryList([...boardCategories?.categories]);
-  //   }
-  // }, [isBoardCategoriesSuccess]);
+    setCategoryList(categoryData);
+  }, [categoryData]);
 
   // const {
   //   mutate: addPost,

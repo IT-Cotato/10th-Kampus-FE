@@ -55,6 +55,8 @@ export const API_DOMAINS = {
   TRANSLATE_POST: '/translations/:postId',
   TRANSLATE_TEXT: '/translations/texts',
 
+  MARKET_CATEGORIES: '/products/categories',
+
   ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
@@ -130,6 +132,8 @@ export const QUERY_KEYS = {
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
+
+  GET_MARKET_CATEGORIES: 'marketCategories',
 
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',

@@ -3,8 +3,13 @@ import { PostHeader } from '@/components/board/PostHeader';
 import { WriteButton } from '@/components/board/write/WriteButton';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
+import { useGetMarketCategory } from '@/state/query/market/useGetMarketGategory';
+import { useState } from 'react';
 
 export const Market = () => {
+  const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
+  const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
+  const [category, setCategory] = useState('All'); // 선택된 카테고리 값
   const postList = {
     posts: [
       {
@@ -32,10 +37,7 @@ export const Market = () => {
     ],
   };
 
-  const boardDetail = {
-    boardName: 'Market',
-    filter: true,
-  };
+  const { data: categoryData } = useGetMarketCategory();
 
   const isPostLoading = false;
   const isPostError = false;
@@ -43,10 +45,22 @@ export const Market = () => {
   return (
     <div className="flex flex-1">
       <PostHeader />
-      <div className="relative flex flex-1 flex-col pt-14">
-        <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-          {/* {boardDetail.filter && <FilterBox />} */}
-          {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
+      <div className="flex flex-1 flex-col pt-14">
+        <div className="z-10 flex w-full gap-[0.875rem] bg-white px-4 pt-5">
+          {categoryData && (
+            <FilterBox
+              content={'Category'}
+              dropList={['All', ...categoryData]}
+              select={(selected) => setCategory(selected)}
+              selected={category}
+            />
+          )}
+          <FilterBox
+            content={'Sort by'}
+            dropList={sortOptions}
+            select={(selected) => setSortOrder(selected)}
+            selected={sortOrder}
+          />
         </div>
         <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
           {isPostLoading && <Loading />}
@@ -63,7 +77,7 @@ export const Market = () => {
               </p>
             ))}
         </div>
-        {boardDetail && <WriteButton />}
+        <WriteButton />
       </div>
     </div>
   );
