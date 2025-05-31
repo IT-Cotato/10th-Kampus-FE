@@ -1,4 +1,4 @@
-import Like from '@/assets/imgs/like.svg?react';
+import Bookmark from '@/assets/imgs/scrap.svg?react';
 import Chatting from '@/assets/imgs/ChattingIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
@@ -22,7 +22,7 @@ export const MarketList = ({ data, ...props }) => {
     if (props.onClick) {
       props.onClick(data);
     } else {
-      navigate(`${data?.postId}`);
+      navigate(`${data?.productId}`);
     }
   };
 
@@ -35,10 +35,10 @@ export const MarketList = ({ data, ...props }) => {
         <div className="flex w-full justify-between">
           <div className="flex w-full gap-4">
             {/* 썸네일 */}
-            {data?.thumbnailUrl && (
+            {data?.photoUrl && (
               <div className="flex h-[5.75rem] w-[5.75rem] flex-shrink-0">
                 <img
-                  src={data?.thumbnailUrl}
+                  src={data?.photoUrl}
                   alt="Product Image"
                   className="h-[5.75rem] w-[5.75rem] object-cover"
                 />
@@ -57,9 +57,9 @@ export const MarketList = ({ data, ...props }) => {
               </p>
               <span className="flex items-center gap-2">
                 {/* 상품 상태 */}
-                {data?.state !== 'ACTIVE' && (
+                {data?.productStatus !== 'ACTIVE' && (
                   <h2 className="line-clamp-1 flex w-fit flex-shrink-0">
-                    <ProductState>{data?.state}</ProductState>
+                    <ProductState>{data?.productStatus}</ProductState>
                   </h2>
                 )}
                 {/* 가격 */}
@@ -73,7 +73,7 @@ export const MarketList = ({ data, ...props }) => {
           </div>
           <ScrapComponent
             state={data?.isScrapped}
-            id={data?.postId}
+            id={data?.productId}
             boardId="1"
             market={true}
             className="h-[1.875rem] w-[1.875rem]"
@@ -83,12 +83,12 @@ export const MarketList = ({ data, ...props }) => {
       <div className="flex items-center justify-between">
         <div className="flex gap-[0.375rem]">
           <div className="flex items-center gap-1 text-small text-primary-red">
-            <Like className="h-[.875rem] w-[.875rem]" />
-            <p>{data?.likes}</p>
+            <Bookmark className="h-[.875rem] w-[.875rem]" />
+            <p>{data?.scrapCount}</p>
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
             <Chatting className="h-[.75rem] w-[.75rem]" />
-            <p>{data?.chats}</p>
+            <p>{data?.chatCount}</p>
           </div>
         </div>
 
