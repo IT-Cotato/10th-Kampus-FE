@@ -18,7 +18,7 @@ import { MARKET_DESCRIPTION } from '@/constants/MarketConstant';
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { boardId, postId } = useParams();
+  const { boardId, postId, productId } = useParams();
 
   const MARKET = path.market.base;
   const isMarket = pathname.startsWith(MARKET);
@@ -70,15 +70,15 @@ export const PostHeader = ({ isAuthor = false }) => {
     <div
       className={cn(
         'fixed z-20 flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4',
-        { 'justify-end': isMarket && !postId },
+        { 'justify-end': isMarket && !productId },
       )}
     >
       {/* 중고거래 메인페이지는 뒤로가기 없음 */}
-      {(!isMarket || postId) && (
+      {(!isMarket || productId) && (
         <Prev className="h-5 w-5 cursor-pointer" onClick={() => navigate(-1)} />
       )}
       {!isMarket && isBoardLoading && <Loading />}
-      {!isMarket && isBoardError && <p>Error Data Loading</p>}
+      {!isMarket && isBoardError && <p>Error</p>}
       {(isMarket ||
         (!isBoardLoading &&
           !isBoardError &&
@@ -119,7 +119,7 @@ export const PostHeader = ({ isAuthor = false }) => {
       )}
       <div className="flex items-center gap-2">
         {/* 게시글 내에는 검색 기능 없음 */}
-        {postId === undefined && (
+        {postId === undefined && productId == undefined && (
           <button type="button" onClick={handleSearch}>
             <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
           </button>

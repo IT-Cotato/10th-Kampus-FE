@@ -4,6 +4,7 @@ import chat from '@/assets/imgs/startChat.svg';
 import block from '@/assets/imgs/postBlock.svg';
 import report from '@/assets/imgs/reportIcon.svg';
 import link from '@/assets/imgs/exportLink.svg';
+import Pencil from '@/assets/imgs/pencil.svg?react';
 import postDelete from '@/assets/imgs/delete.svg';
 import { deletePost } from '@/apis/board/handlePost.api';
 import { useState, useRef, useEffect } from 'react';
@@ -21,8 +22,7 @@ import { Modal } from './Modal';
 export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { boardId } = useParams();
-  const { postId } = useParams();
+  const { boardId, postId, productId } = useParams();
   const modalRef = useRef(null);
   const [openModal, setOpenModal] = useState(false); // 메뉴바 모달 창
   const [pinAni, setPinAni] = useState(false); // 핀 애니메이션 상태
@@ -194,13 +194,13 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
           </div>
         )}
       {openModal &&
-        postId &&
+        (postId || productId) &&
         !isAuthor && ( // 상세 게시글 중 다른 사람 게시글
-          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base text-neutral-title shadow-md">
+          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-1 py-1 text-base shadow-md">
             {/* 중고거래는 메뉴바에 채팅 보내기 항목 없음 */}
-            {!isMarket && (
+            {!productId && (
               <div
-                className="flex items-center justify-between pb-1"
+                className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
                 onClick={() => togglePopup('chat')}
               >
                 <p>Send a message</p>
@@ -208,14 +208,14 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
               </div>
             )}
             <div
-              className="flex items-center justify-between py-1"
+              className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
               onClick={() => copyUrl()}
             >
               <p>Copy URL</p>
               <img src={link} alt="Copy URL" className="h-4 w-4" />
             </div>
             <div
-              className="flex items-center justify-between py-1"
+              className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
               onClick={() =>
                 navigate(path.board.specific.report, {
                   state: { postId: postId },
@@ -226,7 +226,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
               <img src={report} alt="Report" className="h-4 w-4" />
             </div>
             <div
-              className="flex items-center justify-between pt-1"
+              className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
               onClick={() => togglePopup('block')}
             >
               <p>Block</p>
@@ -235,24 +235,31 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
           </div>
         )}
       {openModal &&
-        postId &&
+        (postId || productId) &&
         isAuthor && ( // 상세 게시글 중 내가 작성한 게시글
-          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-2 text-base shadow-md">
+          <div className="absolute right-4 top-12 flex min-w-48 flex-col rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-1 py-1 text-base shadow-md">
             <div
-              className="flex items-center justify-between pb-1"
+              className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
               onClick={() => copyUrl()}
             >
               <p className="text-neutral-title">Copy URL</p>
-              <img src={link} alt="Copy URL" className="h-4 w-4" />
+              <img src={link} alt="" className="h-4 w-4" />
             </div>
             <div
-              className="flex items-center justify-between pt-1"
+              className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
+              onClick={() => {}}
+            >
+              <p className="text-neutral-title">Edit</p>
+              <Pencil className="h-4 w-4 text-black" />
+            </div>
+            <div
+              className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
               onClick={() => togglePopup('delete')}
             >
               <p className="text-primary-red">Delete</p>
               <img
                 src={postDelete}
-                alt="Delete a Post"
+                alt=""
                 className="h-[1.125rem] w-[1.125rem]"
               />
             </div>

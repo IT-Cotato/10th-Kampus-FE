@@ -70,7 +70,7 @@ export const path = {
   market: {
     base: '/market',
     write: 'write',
-    post: ':postId',
+    product: ':productId',
   },
   chatList: {
     base: '/chat',

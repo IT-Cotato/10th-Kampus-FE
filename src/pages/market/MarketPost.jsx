@@ -2,11 +2,10 @@ import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { useEffect, useState } from 'react';
 import Anonymous from '@/assets/imgs/anonymous.svg';
-import Like from '@/assets/imgs/like.svg?react';
+import Bookmark from '@/assets/imgs/scrap.svg?react';
 import ChattingIcon from '@/assets/imgs/ChattingIcon.svg?react';
 import { ImageSlider } from '@/components/common/ImageSlider';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
-import { useParams } from 'react-router-dom';
 import { Loading } from '@/components/common/Loading';
 import { formatTime } from '@/utils/formatTime';
 import { Translating } from '@/components/common/Translating';
@@ -18,11 +17,9 @@ import {
   SERVER_PRODUCT_STATE,
   CLIENT_PRODUCT_STATE,
 } from '@/constants/ProductState';
+import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 
 export const MarketPost = () => {
-  // const queryClient = useQueryClient();
-  const { postId } = useParams();
-
   // 백 <-> 프론트 매핑 객체
   const stateMapClientToServer = {
     [SERVER_PRODUCT_STATE.active]: CLIENT_PRODUCT_STATE.active,
@@ -43,33 +40,11 @@ export const MarketPost = () => {
   //   translatedPost,
   //   translatePending,
   //   handleTranslate,
-  // } = usePostTranslate(postId);
+  // } = usePostTranslate(productId);
 
-  // const {
-  //   data: postData,
-  //   isLoading: postLoading,
-  //   error: postError,
-  // } = useQuery({
-  //   queryFn: () => getPostDetail({ postId: postId }),
-  //   queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
-  // });
-
-  // dummy data
-  const postData = {
-    postId: 1,
-    postPhotoUrls: ['/bg2.png', '/bg1.png', '/bg2.png'],
-    author: 'Kampus',
-    isAuthor: true,
-    state: 'RESERVED',
-    title: '인형',
-    content:
-      '인형 팝니다. texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttetexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttextte',
-    price: 30000,
-    isScrapped: true,
-    likes: 10,
-    chats: 1,
-    createdTime: '2025-04-27 02:56:52',
-  };
+  const { data: productData, isLoading: isProductLoading } =
+    useGetMarketProduct();
+  console.log(productData);
 
   // 프론트 -> 백 통신 전 사용
   const changeStateToUpperCase = (state) =>
@@ -80,7 +55,7 @@ export const MarketPost = () => {
     stateMapClientToServer[state] || state;
 
   const [selectedDropdown, setSelectedDropdown] = useState(
-    changeStateToLowerCase(postData?.state) || 'Active',
+    changeStateToLowerCase(productData?.state) || 'Active',
   );
 
   // 이미지 관련 state
@@ -91,9 +66,6 @@ export const MarketPost = () => {
     transition: `all 0.4s ease-in-out`,
   });
 
-  // 백 연동 전 임시 state
-  const isPostLoading = false;
-  const isPostError = false;
   const [translateState, setTranslateState] = useState(false);
   const translatePending = false;
 
@@ -113,9 +85,9 @@ export const MarketPost = () => {
   return (
     <div className="relative w-full flex-1 pb-[5.375rem] scrollbar-hide">
       {/* 이미지 클릭 시 이미지 슬라이더 */}
-      {imageFocus && postData?.postPhotoUrls?.length > 0 && (
+      {imageFocus && productData?.postPhotoUrls?.length > 0 && (
         <FocusImageSlider
-          images={postData.postPhotoUrls}
+          images={productData.postPhotoUrls}
           setImageFocus={setImageFocus}
           currentImgIndex={currentImgIndex}
           setCurrentImgIndex={setCurrentImgIndex}
@@ -123,20 +95,19 @@ export const MarketPost = () => {
           setStyle={setStyle}
         />
       )}
-      {postData && <PostHeader isAuthor={postData.isAuthor} />}
+      {productData && <PostHeader isAuthor={productData.isAuthor} />}
       <div className="flex h-full w-full flex-col pt-14">
-        {isPostLoading && <Loading />}
-        {isPostError && <p>Error Data Loading</p>}
-        {!isPostLoading && !isPostError && postData && (
+        {isProductLoading && <Loading />}
+        {!isProductLoading && productData && (
           <div className="flex flex-col">
             {/* 이미지 */}
-            {postData?.postPhotoUrls?.length > 0 && (
+            {productData?.photos?.length > 0 && (
               <div
-                className={postData?.postPhotoUrls?.length > 1 && 'pb-3'}
+                className={productData?.photos?.length > 1 && 'pb-3'}
                 onClick={() => setImageFocus(true)}
               >
                 <ImageSlider
-                  images={postData.postPhotoUrls}
+                  images={productData.photos}
                   currentImgIndex={currentImgIndex}
                   setCurrentImgIndex={setCurrentImgIndex}
                   style={style}
@@ -156,17 +127,17 @@ export const MarketPost = () => {
                   <div className="flex flex-col gap-1 leading-tight">
                     {/* 작성자 */}
                     <h1 className="text-base text-neutral-title">
-                      {postData?.author}
+                      {productData?.sellerName}
                     </h1>
                     {/* 게시물 작성 시간 */}
                     <span className="text-small text-neutral-border-50">
-                      {formatTime(postData?.createdTime)}
+                      {formatTime(productData?.createdTime)}
                     </span>
                   </div>
                 </div>
                 <ScrapComponent
-                  state={postData?.isScrapped}
-                  id={postId}
+                  state={productData?.isScrapped}
+                  id={productData?.productId}
                   market={true}
                   className="h-[1.75rem] w-[1.75rem]"
                 />
@@ -176,10 +147,10 @@ export const MarketPost = () => {
                 <div className="flex w-full flex-col gap-4">
                   <div className="flex w-full flex-col gap-2">
                     {/* 상태 */}
-                    {!postData?.isAuthor && (
-                      <ProductState>{postData?.state}</ProductState>
+                    {!productData?.isAuthor && (
+                      <ProductState>{productData?.productStatus}</ProductState>
                     )}
-                    {postData?.isAuthor && (
+                    {productData?.isAuthor && (
                       <Dropdown
                         selectedDropdown={selectedDropdown}
                         dropdownOptions={Object.values(CLIENT_PRODUCT_STATE)}
@@ -199,12 +170,14 @@ export const MarketPost = () => {
                       >
                         {translateState
                           ? translatedPost?.title
-                          : postData?.title}
+                          : productData?.title}
                       </span>
                     </h1>
                     {/* 카테고리 */}
-                    <span className="text-small text-neutral-border-50">
-                      Book
+                    <span className="flex flex-wrap gap-1 text-small text-neutral-border-50">
+                      {productData?.categories.map((category) => (
+                        <span>#{category}</span>
+                      ))}
                     </span>
                   </div>
                   {/* 본문 */}
@@ -213,8 +186,8 @@ export const MarketPost = () => {
                       className={translatePending ? 'opacity-0' : 'opacity-100'}
                     >
                       {translateState
-                        ? translatedPost?.content
-                        : postData?.content}
+                        ? translatedPost?.description
+                        : productData?.description}
                     </span>
                   </p>
                 </div>
@@ -228,13 +201,13 @@ export const MarketPost = () => {
                 <div className="flex items-center gap-[.375rem] text-small text-neutral-border-50">
                   {/* 찜 수 */}
                   <div className="flex items-center gap-1">
-                    {postData && (
-                      <Like
+                    {productData && (
+                      <Bookmark
                         aria-label="Bookmarked"
                         className="h-[.875rem] w-[.875rem]"
                       />
                     )}
-                    {postData && postData?.likes}
+                    {productData && productData?.scrapCount}
                   </div>
                   {/* 채팅 수 */}
                   <div className="flex items-center gap-1">
@@ -242,7 +215,7 @@ export const MarketPost = () => {
                       aria-label="chats"
                       className="h-[.75rem] w-[.75rem] text-neutral-border-50"
                     />
-                    {postData && postData?.chats}
+                    {productData && productData?.chatCount}
                   </div>
                 </div>
                 <TranslateButton
@@ -260,7 +233,7 @@ export const MarketPost = () => {
       {/* 하단바 */}
       <div className="fixed bottom-0 z-10 flex h-[5.375rem] w-full max-w-[512px] items-center justify-between bg-white p-4 shadow-base">
         <span className="px-[.625rem] text-title-bold-16 text-neutral-80">
-          ₩ {formatPrice(postData?.price)}
+          ₩ {formatPrice(productData?.price)}
         </span>
         <button
           type="button"

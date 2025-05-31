@@ -58,6 +58,7 @@ export const API_DOMAINS = {
   MARKET_CATEGORIES: '/products/categories',
   MARKET_PRODUCT_LIST: '/products',
   MARKET_POST_PRODUCT: '/products',
+  MARKET_GET_PRODUCT: '/products/:productId',
 
   ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
@@ -138,6 +139,7 @@ export const QUERY_KEYS = {
   GET_MARKET_CATEGORIES: 'marketCategories',
   GET_MARKET_PRODUCT_LIST: 'marketProductList',
   POST_MARKET_PRODUCTS: 'marketProducts',
+  GET_MARKET_PRODUCT: 'marketProduct',
 
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',

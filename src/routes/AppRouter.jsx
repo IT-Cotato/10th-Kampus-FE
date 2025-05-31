@@ -257,7 +257,7 @@ const AppRouter = createBrowserRouter([
         element: <Market />,
       },
       {
-        path: path.market.post,
+        path: path.market.product,
         element: <MarketPost />,
       },
       {
