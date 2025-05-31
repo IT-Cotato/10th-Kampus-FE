@@ -8,12 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
 import { WritePrice } from '@/components/market/WritePrice';
 import { useGetMarketCategory } from '@/state/query/market/useGetMarketGategory';
+import { usePostMarketProduct } from '@/state/mutation/market/usePostMarketProduct';
 export const MarketWrite = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);
   const [title, setTitle] = useState('');
@@ -44,20 +44,7 @@ export const MarketWrite = () => {
     setCategoryList(categoryData);
   }, [categoryData]);
 
-  // const {
-  //   mutate: addPost,
-  //   isPending: postPending,
-  //   isError: postError,
-  // } = useMutation({
-  //   mutationFn: (newPost) => postWritePost({ data: newPost }),
-  //   onSuccess: (response) => {
-  //     const createdPostId = response.postId;
-  //     queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-  //     navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
-  //       replace: true,
-  //     });
-  //   },
-  // });
+  const { mutate: addPost } = usePostMarketProduct();
 
   const {
     mutate: setTranslate,
@@ -116,17 +103,18 @@ export const MarketWrite = () => {
     const formData = new FormData();
 
     formData.append('title', translatedTitle ?? title);
-    formData.append('content', translatedContent ?? content);
+    formData.append('description', translatedContent ?? content);
+    formData.append('price', price);
 
     if (selectedCategory.length !== 0) {
       selectedCategory.forEach((category) =>
-        formData.append('categories', category),
+        formData.append('categoryNames', category),
       );
     }
 
     if (uploadedFiles.length > 0) {
       uploadedFiles.forEach((file) => {
-        formData.append(`images`, file); // 각 파일을 개별적으로 추가
+        formData.append('images', file); // 각 파일을 개별적으로 추가
       });
     }
     addPost(formData);
@@ -141,14 +129,13 @@ export const MarketWrite = () => {
   const handleTranslateAndUpload = () => {
     if (validateBeforeUpload()) {
       setIsPopup(true);
-      const buildData = () => {
-        return {
+      setTranslate({
+        data: {
           title: title,
-          content: content,
+          description: content,
           targetLanguageCode: 'EN-US',
-        };
-      };
-      setTranslate({ data: buildData() });
+        },
+      });
     }
   };
 

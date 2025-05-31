@@ -56,6 +56,7 @@ export const API_DOMAINS = {
   TRANSLATE_TEXT: '/translations/texts',
 
   MARKET_CATEGORIES: '/products/categories',
+  MARKET_POST_PRODUCT: '/products',
 
   ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
@@ -134,6 +135,7 @@ export const QUERY_KEYS = {
   USER_INFO: 'userInfo',
 
   GET_MARKET_CATEGORIES: 'marketCategories',
+  POST_MARKET_PRODUCTS: 'marketProducts',
 
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',

@@ -115,7 +115,7 @@ export const UploadPics = ({
       </div>
       {invalid && (
         <InputWarningText>
-          Select at least one image to continue.
+          Please select at least one image to continue.
         </InputWarningText>
       )}
       {showErrorModal !== '' && (
