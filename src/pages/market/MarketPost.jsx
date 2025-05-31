@@ -44,7 +44,8 @@ export const MarketPost = () => {
 
   const { data: productData, isLoading: isProductLoading } =
     useGetMarketProduct();
-  console.log(productData);
+
+  const [selectedDropdown, setSelectedDropdown] = useState();
 
   // 프론트 -> 백 통신 전 사용
   const changeStateToUpperCase = (state) =>
@@ -54,9 +55,9 @@ export const MarketPost = () => {
   const changeStateToLowerCase = (state) =>
     stateMapClientToServer[state] || state;
 
-  const [selectedDropdown, setSelectedDropdown] = useState(
-    changeStateToLowerCase(productData?.state) || 'Active',
-  );
+  useEffect(() => {
+    setSelectedDropdown(changeStateToLowerCase(productData?.productStatus));
+  }, [productData]);
 
   // 이미지 관련 state
   const [imageFocus, setImageFocus] = useState(false);
@@ -103,7 +104,7 @@ export const MarketPost = () => {
             {/* 이미지 */}
             {productData?.photos?.length > 0 && (
               <div
-                className={productData?.photos?.length > 1 && 'pb-3'}
+                className={productData?.photos?.length > 1 ? 'pb-3' : ''}
                 onClick={() => setImageFocus(true)}
               >
                 <ImageSlider
@@ -145,11 +146,7 @@ export const MarketPost = () => {
               {/* 제목, 본문 */}
               <article className="relative flex w-full whitespace-pre-line break-words pb-6 pt-8">
                 <div className="flex w-full flex-col gap-4">
-                  <div className="flex w-full flex-col gap-2">
-                    {/* 상태 */}
-                    {!productData?.isAuthor && (
-                      <ProductState>{productData?.productStatus}</ProductState>
-                    )}
+                  <div className="flex w-full flex-col gap-4">
                     {productData?.isAuthor && (
                       <Dropdown
                         selectedDropdown={selectedDropdown}
@@ -161,24 +158,37 @@ export const MarketPost = () => {
                         }
                       />
                     )}
-                    {/* 제목 */}
-                    <h1 className="flex text-pageTitle text-neutral-title">
-                      <span
-                        className={
-                          translatePending ? 'opacity-0' : 'opacity-100'
-                        }
-                      >
-                        {translateState
-                          ? translatedPost?.title
-                          : productData?.title}
-                      </span>
-                    </h1>
                     {/* 카테고리 */}
-                    <span className="flex flex-wrap gap-1 text-small text-neutral-border-50">
-                      {productData?.categories.map((category) => (
-                        <span>#{category}</span>
+                    <span className="flex flex-wrap gap-2 text-small text-neutral-border-40">
+                      {productData?.categories.map((category, index) => (
+                        <span key={category} className="flex gap-2">
+                          {index !== 0 && <span>·</span>}
+                          <span className="underline">{category}</span>
+                        </span>
                       ))}
                     </span>
+                    <div className="flex gap-2 text-center">
+                      {/* 상품 상태 */}
+                      {!productData?.isAuthor &&
+                        productData?.productStatus !==
+                          SERVER_PRODUCT_STATE.active && (
+                          <ProductState>
+                            {productData?.productStatus}
+                          </ProductState>
+                        )}
+                      {/* 제목*/}
+                      <h1 className="flex whitespace-break-spaces break-words text-pageTitle text-neutral-title">
+                        <span
+                          className={
+                            translatePending ? 'opacity-0' : 'opacity-100'
+                          }
+                        >
+                          {translateState
+                            ? translatedPost?.title
+                            : productData?.title}
+                        </span>
+                      </h1>
+                    </div>
                   </div>
                   {/* 본문 */}
                   <p className="w-full whitespace-break-spaces text-base">
@@ -240,7 +250,7 @@ export const MarketPost = () => {
           className="rounded-[.625rem] bg-primary-base px-8 py-5 text-title-bold-16 text-white"
           onClick={handleChat}
         >
-          Chat
+          Chat ({productData?.isAuthor && productData?.chatCount})
         </button>
       </div>
     </div>

@@ -8,7 +8,7 @@ export const ProductState = ({ children }) => {
     switch (state) {
       case 'RESERVED':
         return 'Reserved';
-      case 'SOLD_OUT':
+      case 'SOLD':
         return 'Sold Out';
       default:
         return state;
