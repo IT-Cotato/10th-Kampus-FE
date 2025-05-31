@@ -12,7 +12,7 @@ export const usePostMarketProduct = () => {
     mutationFn: (data) => postMarketProduct(data),
     onSuccess: (response) => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.POST_MARKET_PRODUCTS],
+        queryKey: [QUERY_KEYS.POST_MARKET_PRODUCT],
       });
       const productId = response.productId;
       navigate(`${path.market.base}/${productId}`, {

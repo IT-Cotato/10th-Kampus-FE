@@ -18,13 +18,17 @@ import {
   CLIENT_PRODUCT_STATE,
 } from '@/constants/ProductState';
 import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
+import { usePatchMarketProductStatus } from '@/state/mutation/market/usePatchMarketProductStatus';
+import { useParams } from 'react-router-dom';
 
 export const MarketPost = () => {
+  const { productId } = useParams();
+
   // 백 <-> 프론트 매핑 객체
   const stateMapClientToServer = {
-    [SERVER_PRODUCT_STATE.active]: CLIENT_PRODUCT_STATE.active,
-    [SERVER_PRODUCT_STATE.reserved]: CLIENT_PRODUCT_STATE.reserved,
-    [SERVER_PRODUCT_STATE.soldOut]: CLIENT_PRODUCT_STATE.soldOut,
+    [CLIENT_PRODUCT_STATE.active]: SERVER_PRODUCT_STATE.active,
+    [CLIENT_PRODUCT_STATE.reserved]: SERVER_PRODUCT_STATE.reserved,
+    [CLIENT_PRODUCT_STATE.soldOut]: SERVER_PRODUCT_STATE.soldOut,
   };
   const stateMapServerToClient = {
     [SERVER_PRODUCT_STATE.active]: CLIENT_PRODUCT_STATE.active,
@@ -44,16 +48,17 @@ export const MarketPost = () => {
 
   const { data: productData, isLoading: isProductLoading } =
     useGetMarketProduct();
+  const { mutate: changeStatus } = usePatchMarketProductStatus();
 
   const [selectedDropdown, setSelectedDropdown] = useState();
 
   // 프론트 -> 백 통신 전 사용
   const changeStateToUpperCase = (state) =>
-    stateMapServerToClient[state] || state;
+    stateMapClientToServer[state] || state;
 
   // 백 -> 프론트 통신 후 사용
   const changeStateToLowerCase = (state) =>
-    stateMapClientToServer[state] || state;
+    stateMapServerToClient[state] || state;
 
   useEffect(() => {
     setSelectedDropdown(changeStateToLowerCase(productData?.productStatus));
@@ -72,13 +77,15 @@ export const MarketPost = () => {
 
   // 드롭다운 클릭 시
   const handleDropdownClick = (state) => {
-    setSelectedDropdown(state);
+    if (selectedDropdown !== state) {
+      changeStatus({
+        productId,
+        productStatus: changeStateToUpperCase(selectedDropdown),
+      });
+      setSelectedDropdown(state);
+    }
     setIsDropdownOpen(false);
   };
-
-  useEffect(() => {
-    // chageStateToUpperCase(selectedDropdown); // 이 상태를 백에 전송
-  }, [selectedDropdown]);
 
   // 채팅 걸기
   const handleChat = () => {};
