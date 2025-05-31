@@ -3,7 +3,7 @@ import { PostHeader } from '@/components/board/PostHeader';
 import { WriteButton } from '@/components/board/write/WriteButton';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
-import { useGetMarketCategory } from '@/state/query/market/useGetMarketGategory';
+import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
 import { useGetMarketProductList } from '@/state/query/market/useGetMarketProductList';
 import { useEffect, useState } from 'react';
 

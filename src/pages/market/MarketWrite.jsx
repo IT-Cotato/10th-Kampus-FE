@@ -11,7 +11,7 @@ import { createPortal } from 'react-dom';
 import { useMutation } from '@tanstack/react-query';
 import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
 import { WritePrice } from '@/components/market/WritePrice';
-import { useGetMarketCategory } from '@/state/query/market/useGetMarketGategory';
+import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
 import { usePostMarketProduct } from '@/state/mutation/market/usePostMarketProduct';
 export const MarketWrite = () => {
   const navigate = useNavigate();
