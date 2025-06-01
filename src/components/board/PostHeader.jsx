@@ -124,11 +124,13 @@ export const PostHeader = ({ isAuthor = false }) => {
             <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
           </button>
         )}
-        <BoardMenuBar
-          isAuthor={isAuthor}
-          data={boardDetail}
-          isMarket={isMarket}
-        />
+        {(!isMarket || productId) && (
+          <BoardMenuBar
+            isAuthor={isAuthor}
+            data={boardDetail}
+            isMarket={isMarket}
+          />
+        )}
       </div>
     </div>
   );

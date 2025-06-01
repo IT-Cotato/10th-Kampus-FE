@@ -80,7 +80,7 @@ export const MarketPost = () => {
     if (selectedDropdown !== state) {
       changeStatus({
         productId,
-        productStatus: changeStateToUpperCase(selectedDropdown),
+        productStatus: changeStateToUpperCase(state),
       });
       setSelectedDropdown(state);
     }
