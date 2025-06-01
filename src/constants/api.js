@@ -58,7 +58,7 @@ export const API_DOMAINS = {
   MARKET_CATEGORIES: '/products/categories',
   MARKET_PRODUCT_LIST: '/products',
   MARKET_POST_PRODUCT: '/products',
-  MARKET_GET_PRODUCT: '/products/:productId',
+  MARKET_HANDLE_PRODUCT: '/products/:productId',
   MARKET_PATCH_PRODUCT_STATUS: '/products/:productId/status',
 
   ADMIN_CATEGORY: '/categories',
@@ -142,6 +142,7 @@ export const QUERY_KEYS = {
   POST_MARKET_PRODUCT: 'postMarketProduct',
   GET_MARKET_PRODUCT: 'getMarketProduct',
   PATCH_MARKET_PRODUCT_STATUS: 'patchMarketProductStatus',
+  DELETE_MARKET_PRODUCT: 'deleteMarketProduct',
 
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',

@@ -1,4 +1,4 @@
-import { getMarketProduct } from '@/apis/market/getMarketProduct.api';
+import { getMarketProduct } from '@/apis/market/handleMarketProduct.api';
 import { QUERY_KEYS } from '@/constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
