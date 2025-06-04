@@ -3,11 +3,7 @@ import Camera from '@/assets/imgs/camera.svg?react';
 import XIcon from '@/assets/imgs/ImgX.svg?react';
 import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
-
-export const InputTypes = {
-  CHAT: 'chat',
-  POST: 'post',
-};
+import { INPUT_TYPE } from '@/constants/inputType';
 
 export const UserInput = ({
   placeholder,
@@ -42,16 +38,16 @@ export const UserInput = ({
   }, [handleSend]);
 
   useEffect(() => {
-    if (textareaRef.current && inputFocus && InputTypes.POST === type) {
+    if (textareaRef.current && inputFocus && INPUT_TYPE.POST === type) {
       textareaRef.current.focus();
     }
   });
 
-  const handlePhoto = (e) => {
+  const handlePhoto = async (e) => {
     const newFiles = Array.from(e.target.files);
 
-    if (newFiles.length > 10) {
-      alert('최대 10개의 이미지만 업로드할 수 있습니다.');
+    if (newFiles.length > 1) {
+      alert('1개의 이미지만 업로드할 수 있습니다.');
       return;
     }
 
@@ -61,15 +57,23 @@ export const UserInput = ({
     }
 
     try {
-      const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
+      const newPreviews = await Promise.all(
+        validFiles.map((file) => {
+          return new Promise((resolve, reject) => {
+            try {
+              resolve(URL.createObjectURL(file));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }),
+      );
 
-      if (validFiles.length > 0) {
+      if (validFiles.length > 0 && newPreviews.length === validFiles.length) {
         setPreviewImages(newPreviews);
         setShowImagePreview(true);
 
-        // 부모 컴포넌트에 파일 데이터 전달
-        onImagesChange?.(validFiles);
-
+        onImagesChange?.(validFiles); // 부모 컴포넌트에 파일 데이터 전달
         e.target.value = ''; // input 초기화
       }
     } catch (error) {
@@ -95,22 +99,22 @@ export const UserInput = ({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 max-w-lg px-4 py-4 mx-auto bg-white">
+    <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-lg bg-white px-4 py-4">
       {/* 이미지파일 미리보기 */}
       {showImagePreview && (
-        <div className="flex flex-row gap-2 pb-2 mb-2 overflow-x-auto">
+        <div className="mb-2 flex flex-row gap-2 overflow-x-auto pb-2">
           {previewImages.map((src, index) => (
-            <div className="relative flex-shrink-0 w-16 h-16" key={index}>
+            <div className="relative h-16 w-16 flex-shrink-0" key={index}>
               <img
                 src={src}
                 alt={`Preview ${index + 1}`}
-                className="object-cover w-full h-full rounded-md"
+                className="h-full w-full rounded-md object-cover"
               />
               <button
                 onClick={() => removeImage(index)}
-                className="absolute z-10 p-1 bg-white rounded-full shadow-md -right-1 -top-1"
+                className="absolute -right-1 -top-1 z-10 rounded-full bg-white p-1 shadow-md"
               >
-                <XIcon className="w-3 h-3 text-neutral-border-50" />
+                <XIcon className="h-3 w-3 text-neutral-border-50" />
               </button>
             </div>
           ))}
@@ -120,7 +124,7 @@ export const UserInput = ({
         ref={containerRef}
         className="flex h-auto items-start overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
       >
-        {type === InputTypes.CHAT && (
+        {type === INPUT_TYPE.CHAT && (
           <label
             htmlFor="imageUpload"
             aria-label="Upload Image"
@@ -129,7 +133,7 @@ export const UserInput = ({
               'text-neutral-border-30': !input && previewImages.length === 0,
             })}
           >
-            <Camera className="w-full h-full text-neutral-icon" />
+            <Camera className="h-full w-full text-neutral-icon" />
             <input
               type="file"
               id="imageUpload"
@@ -144,13 +148,25 @@ export const UserInput = ({
           ref={textareaRef}
           value={input}
           onChange={(e) => {
-            setInput(e.target.value);
-            handleInput();
+            if (previewImages.length === 0) {
+              setInput(e.target.value);
+              handleInput();
+            }
           }}
           rows={1}
-          className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
-          placeholder={placeholder}
-          autoFocus={type === InputTypes.CHAT}
+          className={cn(
+            'flex-grow resize-none bg-neutral-bg-5 px-2 pt-1 text-base text-neutral-title',
+            {
+              'cursor-not-allowed opacity-50': previewImages.length > 0,
+            },
+          )}
+          placeholder={
+            previewImages.length > 0
+              ? '이미지가 첨부되어 있습니다'
+              : placeholder
+          }
+          autoFocus={type === INPUT_TYPE.CHAT}
+          disabled={previewImages.length > 0}
         />
         <button
           onClick={handleSend}
@@ -160,7 +176,7 @@ export const UserInput = ({
             'text-neutral-border-30': !input && previewImages.length === 0,
           })}
         >
-          <Send className="w-full h-full" />
+          <Send className="h-full w-full" />
         </button>
       </div>
     </div>

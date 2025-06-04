@@ -1,15 +1,16 @@
 import { ArticleInfo } from '@/components/chat/articleInfo';
 import { NoticeBox } from '@/components/common/noticeBox';
-import { UserInput, InputTypes } from '@/components/common/userInput';
+import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
 import { useEffect, useState, useRef } from 'react';
 import { RoomHeader } from '@/components/chat/roomHeader';
-import { MessageModal, PRESS_TYPE } from '@/components/chat/messageModal';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { MessageModal } from '@/components/chat/messageModal';
+import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { getChatRoom } from '@/apis/chat/chatRoom.api';
 import { Loading } from '@/components/common/Loading';
-import { postReadMessage } from '@/apis/chat/messages.api';
+import { postReadMessage, postChatImage } from '@/apis/chat/messages.api';
+import { useGetChatroom } from '@/state/query/chat/useGetChatroom';
+import { INPUT_TYPE } from '@/constants/inputType';
 
 export const ChatRoom = ({
   chatroomId,
@@ -25,10 +26,8 @@ export const ChatRoom = ({
   const messagesEndRef = useRef(null);
 
   //방 정보
-  const { data: roomData, isLoading: isRoomLoading } = useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAT_ROOM, chatroomId],
-    queryFn: () => getChatRoom({ chatroomId }),
-    enabled: !!chatroomId,
+  const { data: roomData, isLoading: isRoomLoading } = useGetChatroom({
+    chatroomId,
   });
 
   //읽음처리
@@ -37,6 +36,16 @@ export const ChatRoom = ({
     mutationFn: () => postReadMessage({ chatroomId }),
     onSuccess: () => {
       console.log('🚨✨ 읽음처리 전송');
+    },
+  });
+
+  //이미지 전송
+  const { mutate: sendImage } = useMutation({
+    mutationKey: [QUERY_KEYS.POST_CHAT_IMAGE],
+    mutationFn: (files) => postChatImage({ chatroomId, images: files }),
+    onSuccess: () => {
+      console.log('🚨✨ 이미지 전송 완료');
+      setFiles([]);
     },
   });
 
@@ -51,8 +60,10 @@ export const ChatRoom = ({
       }
     }
     //채팅 읽음 처리
-    chatsRead();
-  }, [chatroomId, roomData, setMessages]);
+    if (messages.length) {
+      chatsRead();
+    }
+  }, [chatroomId, roomData, setMessages, chatsRead, messages.length]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,10 +82,12 @@ export const ChatRoom = ({
   const handleSendMessage = () => {
     if (!input.trim() && files.length === 0) return;
 
-    //웹소켓 사용 - 이미지 : 서버 반영 후 구현
-    sendMessage(chatroomId, input.trim(), files);
-    setInput('');
-    setFiles([]);
+    if (files.length > 0) {
+      sendImage(files);
+    } else if (input.trim()) {
+      sendMessage(chatroomId, input.trim());
+      setInput('');
+    }
   };
 
   const handleClickMessage = (senderId) => {
@@ -86,7 +99,7 @@ export const ChatRoom = ({
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex h-screen w-full flex-col">
       <RoomHeader
         text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
         setChatroomId={setChatroomId}
@@ -99,9 +112,9 @@ export const ChatRoom = ({
         boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
         dataDelete={dataDelete}
       />
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         <NoticeBox />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           {messages.length > 0 ? (
             messages
               .slice()
@@ -121,8 +134,15 @@ export const ChatRoom = ({
                     })}
                     onClick={() => handleClickMessage(message.senderId)}
                   >
-                    {message.content}
-                    {/* 시간 필요함 */}
+                    {message.isImage ? (
+                      <img
+                        src={message.content}
+                        alt="채팅 이미지"
+                        className="max-w-full rounded-lg"
+                      />
+                    ) : (
+                      message.content
+                    )}
                   </div>
                 </div>
               ))
@@ -133,7 +153,7 @@ export const ChatRoom = ({
         <div ref={messagesEndRef} />
       </div>
       <UserInput
-        type={InputTypes.CHAT}
+        type={INPUT_TYPE.CHAT}
         placeholder="메시지를 입력하세요"
         input={input}
         setInput={setInput}
@@ -141,10 +161,7 @@ export const ChatRoom = ({
         onImagesChange={handleImagesChange}
       />
       {selectedMessage && (
-        <MessageModal
-          onClose={() => setSelectedMessage(false)}
-          type={PRESS_TYPE.message}
-        />
+        <MessageModal onClose={() => setSelectedMessage(false)} />
       )}
     </div>
   );
