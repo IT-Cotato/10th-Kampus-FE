@@ -20,8 +20,6 @@ export const ListItem = ({
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
 
-  const time = parseToDate(data.lastChatTime);
-
   const { mutate: deleteChatroomId } = useMutation({
     mutationKey: [QUERY_KEYS.CHAT_LIST],
     mutationFn: (chatroomId) => deleteChatroom({ chatroomId }),
@@ -29,6 +27,16 @@ export const ListItem = ({
       onChatRoomLeave(data.chatroomId);
     },
   });
+
+  const time = parseToDate(data.lastChatTime);
+  const lastChatDate = new Date(data.lastChatTime);
+  const isSameDay =
+    lastChatDate.getFullYear() === new Date().getFullYear() &&
+    lastChatDate.getMonth() === new Date().getMonth() &&
+    lastChatDate.getDate() === new Date().getDate();
+  const formatTime = isSameDay
+    ? `${time.hh}:${time.mi}`
+    : `${time.mm}월 ${time.dd}일`;
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">
@@ -60,11 +68,9 @@ export const ListItem = ({
         <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
-              {data.postTitle}
+              {data.title}
             </p>
-            <p className="text-small text-neutral-border-50">
-              {time.hh}:{time.mi}
-            </p>
+            <p className="text-small text-neutral-border-50">{formatTime}</p>
           </div>
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-base text-neutral-base">

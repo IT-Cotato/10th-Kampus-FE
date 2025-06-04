@@ -107,8 +107,8 @@ export const ChatRoom = ({
       />
       <ArticleInfo
         boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
-        postName={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
-        postId={!dataDelete ? roomData.postId : '삭제된 게시글입니다.'}
+        postName={!dataDelete ? roomData.title : '삭제된 게시글입니다.'}
+        postId={!dataDelete ? roomData.referenceId : '삭제된 게시글입니다.'}
         boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
         dataDelete={dataDelete}
       />
