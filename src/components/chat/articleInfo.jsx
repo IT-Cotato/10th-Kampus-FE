@@ -10,11 +10,11 @@ export const ArticleInfo = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-start justify-center w-full p-4 bg-neutral-bg-5 text-neutral-base">
+    <div className="flex w-full flex-col items-start justify-center bg-neutral-bg-5 p-4 text-neutral-base">
       <p className="text-base">{boardName}</p>
       <p className="text-pageTitle text-neutral-title">{postName}</p>
       <button
-        className="w-full h-10 bg-white border rounded-lg border-neutral-border-30 text-small"
+        className="h-10 w-full rounded-lg border border-neutral-border-30 bg-white text-small"
         onClick={() => {
           !dataDelete
             ? navigate(`${path.board.base}/${boardId}/${postId}`)

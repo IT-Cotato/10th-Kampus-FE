@@ -1,6 +1,5 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
 import menubar from '@/assets/imgs/menubar.svg';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { BlockModal } from '@/components/chat/blockModal';
 import { LeaveModal } from '@/components/chat/leaveModal';
