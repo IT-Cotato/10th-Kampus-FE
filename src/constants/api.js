@@ -25,11 +25,12 @@ export const API_DOMAINS = {
 
   PRODUCTS: '/products',
 
-  CREATE_CHAT: '/chats/post',
+  CREATE_CHAT: '/chats/chatrooms',
   READ_MESSAGE: '/chats/:chatroomId/read',
   CHATLIST: '/chats/chatrooms',
   CHAT_MESSAGE: '/chats/:chatroomId/messages',
   CHATROOM_DETAIL: '/chats/chatrooms/:chatroomId',
+  CHAT_IMAGE: '/chats/chatrooms/:chatroomId/images',
 
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
