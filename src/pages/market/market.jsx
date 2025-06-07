@@ -42,8 +42,8 @@ export const Market = () => {
   return (
     <div className="flex flex-1">
       <PostHeader />
-      <div className="flex flex-1 flex-col pt-14">
-        <div className="z-10 flex w-full gap-[0.875rem] bg-white px-4 pt-5">
+      <div className="flex h-fit w-full flex-col pt-14">
+        <div className="fixed z-10 flex w-full max-w-lg gap-[0.875rem] border-b bg-white px-4 py-5">
           {categoryData && (
             <FilterBox
               content={'Category'}
@@ -59,7 +59,7 @@ export const Market = () => {
             selected={sortOrder}
           />
         </div>
-        <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+        <div className="flex w-full flex-1 flex-col divide-y overflow-y-auto bg-white px-4 pt-[4.875rem]">
           {isPostLoading && <Loading />}
           {isPostError && <p>An error occured while loading</p>}
           {!isPostLoading &&
