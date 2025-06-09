@@ -71,6 +71,17 @@ export const ImageSlider = ({
     });
   };
 
+  const total = images.length;
+  const maxDots = 5;
+  let dotsToDisplay = [];
+
+  if (total <= maxDots) {
+    dotsToDisplay = Array.from({ length: total }, (_, i) => i);
+  } else {
+    const start = Math.max(0, Math.min(currentImgIndex - 2, total - maxDots));
+    dotsToDisplay = Array.from({ length: maxDots }, (_, i) => start + i);
+  }
+
   return (
     <div
       className="relative"
@@ -90,46 +101,28 @@ export const ImageSlider = ({
           ))}
         </div>
       </div>
-      <div className="absolute -bottom-5 left-1/2 flex -translate-x-1/2 gap-1">
-        {images.length > 1 &&
-          (() => {
-            const total = images.length;
-            const maxDots = 5;
-            let dotsToDisplay = [];
-
-            if (total <= maxDots) {
-              dotsToDisplay = Array.from({ length: total }, (_, i) => i);
-            } else {
-              const start = Math.max(
-                0,
-                Math.min(currentImgIndex - 2, total - maxDots),
-              );
-              dotsToDisplay = Array.from(
-                { length: maxDots },
-                (_, i) => start + i,
-              );
-            }
-
-            return dotsToDisplay.map((index) => (
-              <div
-                key={index}
-                onClick={(e) => handleDotsToDisplay(e, index)}
-                className={cn(
-                  'h-2 w-2 flex-shrink-0 transform cursor-pointer rounded-full transition-transform duration-300',
-                  {
-                    'scale-125 bg-primary-30': index === currentImgIndex,
-                    'scale-75 bg-neutral-disabled':
-                      index !== currentImgIndex &&
-                      Math.abs(index - currentImgIndex) < 2,
-                    'scale-50 bg-neutral-disabled':
-                      index !== currentImgIndex &&
-                      Math.abs(index - currentImgIndex) >= 2,
-                  },
-                )}
-              />
-            ));
-          })()}
-      </div>
+      {images.length > 1 && (
+        <div className="absolute -bottom-5 left-1/2 flex -translate-x-1/2 gap-1">
+          {dotsToDisplay.map((index) => (
+            <div
+              key={index}
+              onClick={(e) => handleDotsToDisplay(e, index)}
+              className={cn(
+                'h-2 w-2 flex-shrink-0 transform cursor-pointer rounded-full transition-transform duration-300',
+                {
+                  'scale-125 bg-primary-30': index === currentImgIndex,
+                  'scale-75 bg-neutral-disabled':
+                    index !== currentImgIndex &&
+                    Math.abs(index - currentImgIndex) < 2,
+                  'scale-50 bg-neutral-disabled':
+                    index !== currentImgIndex &&
+                    Math.abs(index - currentImgIndex) >= 2,
+                },
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

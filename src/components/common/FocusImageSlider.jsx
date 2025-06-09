@@ -108,7 +108,7 @@ export const FocusImageSlider = ({
             </h1>
             <Close
               aria-label="Close button"
-              className="absolute left-5 h-5 w-5 text-white"
+              className="absolute left-5 h-5 w-5 cursor-pointer text-white"
               onClick={handleClose}
             />
           </div>

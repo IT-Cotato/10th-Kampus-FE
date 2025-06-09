@@ -174,7 +174,10 @@ export const Post = () => {
               {translateState ? translatedPost?.content : postData?.content}
             </p>
             {postData?.postPhotos?.length > 0 && (
-              <div className="pb-3" onClick={() => setImageFocus(true)}>
+              <div
+                className={postData?.photos?.length > 1 ? 'pb-3' : ''}
+                onClick={() => setImageFocus(true)}
+              >
                 <ImageSlider
                   images={postData?.postPhotos}
                   currentImgIndex={currentImgIndex}
