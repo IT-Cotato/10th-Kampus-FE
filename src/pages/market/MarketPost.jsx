@@ -38,14 +38,6 @@ export const MarketPost = () => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // const {
-  //   translateState,
-  //   setTranslateState,
-  //   translatedPost,
-  //   translatePending,
-  //   handleTranslate,
-  // } = usePostTranslate(productId);
-
   const { data: productData, isLoading: isProductLoading } =
     useGetMarketProduct();
   const { mutate: changeStatus } = usePatchMarketProductStatus();
@@ -143,69 +135,57 @@ export const MarketPost = () => {
                     </span>
                   </div>
                 </div>
-                <ScrapComponent
-                  state={productData?.isScrapped}
-                  id={productData?.productId}
-                  market={true}
-                  className="h-[1.75rem] w-[1.75rem]"
-                />
               </div>
               {/* 제목, 본문 */}
-              <article className="relative flex w-full whitespace-pre-line break-words pb-6 pt-8">
+              <article className="relative flex w-full whitespace-pre-line break-words pb-4 pt-6">
                 <div className="flex w-full flex-col gap-4">
-                  <div className="flex w-full flex-col gap-4">
-                    {productData?.isAuthor && (
-                      <Dropdown
-                        selectedDropdown={selectedDropdown}
-                        dropdownOptions={Object.values(CLIENT_PRODUCT_STATE)}
-                        isDropdownOpen={isDropdownOpen}
-                        setIsDropdownOpen={setIsDropdownOpen}
-                        handleDropdownClick={(state) =>
-                          handleDropdownClick(state)
+                  {productData?.isAuthor && (
+                    <Dropdown
+                      selectedDropdown={selectedDropdown}
+                      dropdownOptions={Object.values(CLIENT_PRODUCT_STATE)}
+                      isDropdownOpen={isDropdownOpen}
+                      setIsDropdownOpen={setIsDropdownOpen}
+                      handleDropdownClick={(state) =>
+                        handleDropdownClick(state)
+                      }
+                    />
+                  )}
+                  {/* 카테고리 */}
+                  <span className="flex flex-wrap gap-2 text-small text-neutral-border-40">
+                    {productData?.categories.map((category, index) => (
+                      <span key={category} className="flex gap-2">
+                        {index !== 0 && <span>·</span>}
+                        <span className="underline">{category}</span>
+                      </span>
+                    ))}
+                  </span>
+                  <div className="flex gap-2 text-center">
+                    {/* 상품 상태 */}
+                    {!productData?.isAuthor &&
+                      productData?.productStatus !==
+                        SERVER_PRODUCT_STATE.active && (
+                        <ProductState>
+                          {productData?.productStatus}
+                        </ProductState>
+                      )}
+                    {/* 제목*/}
+                    <h1 className="flex whitespace-break-spaces break-words text-pageTitle text-neutral-title">
+                      <span
+                        className={
+                          translatePending ? 'opacity-0' : 'opacity-100'
                         }
-                      />
-                    )}
-                    {/* 카테고리 */}
-                    <span className="flex flex-wrap gap-2 text-small text-neutral-border-40">
-                      {productData?.categories.map((category, index) => (
-                        <span key={category} className="flex gap-2">
-                          {index !== 0 && <span>·</span>}
-                          <span className="underline">{category}</span>
-                        </span>
-                      ))}
-                    </span>
-                    <div className="flex gap-2 text-center">
-                      {/* 상품 상태 */}
-                      {!productData?.isAuthor &&
-                        productData?.productStatus !==
-                          SERVER_PRODUCT_STATE.active && (
-                          <ProductState>
-                            {productData?.productStatus}
-                          </ProductState>
-                        )}
-                      {/* 제목*/}
-                      <h1 className="flex whitespace-break-spaces break-words text-pageTitle text-neutral-title">
-                        <span
-                          className={
-                            translatePending ? 'opacity-0' : 'opacity-100'
-                          }
-                        >
-                          {translateState
-                            ? translatedPost?.title
-                            : productData?.title}
-                        </span>
-                      </h1>
-                    </div>
+                      >
+                        {translateState
+                          ? translatedPost?.title
+                          : productData?.title}
+                      </span>
+                    </h1>
                   </div>
                   {/* 본문 */}
                   <p className="w-full whitespace-break-spaces text-base">
-                    <span
-                      className={translatePending ? 'opacity-0' : 'opacity-100'}
-                    >
-                      {translateState
-                        ? translatedPost?.description
-                        : productData?.description}
-                    </span>
+                    {translateState
+                      ? translatedPost?.description
+                      : productData?.description}
                   </p>
                 </div>
                 {translatePending && (
@@ -237,8 +217,6 @@ export const MarketPost = () => {
                 </div>
                 <TranslateButton
                   handleTranslate={() => {}}
-                  size="large"
-                  color="base"
                   state={translateState}
                   setState={setTranslateState}
                 />
@@ -248,9 +226,17 @@ export const MarketPost = () => {
         )}
       </div>
       {/* 하단바 */}
-      <div className="fixed bottom-0 z-10 flex h-[5.375rem] w-full max-w-[512px] items-center justify-between bg-white p-4 shadow-base">
-        <span className="px-[.625rem] text-title-bold-16 text-neutral-80">
-          ₩ {formatPrice(productData?.price)}
+      <div className="fixed bottom-0 z-10 flex h-[5.375rem] w-full max-w-lg items-center justify-between bg-white p-4 shadow-base">
+        <span className="flex h-8 items-center gap-[.625rem] divide-x divide-neutral-disabled">
+          <ScrapComponent
+            state={productData?.isScrapped}
+            id={productData?.productId}
+            market={true}
+            className="h-[1.75rem] w-[1.75rem]"
+          />
+          <span className="px-[.625rem] text-title-bold-16 text-neutral-80">
+            ₩ {formatPrice(productData?.price)}
+          </span>
         </span>
         <button
           type="button"
