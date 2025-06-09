@@ -95,22 +95,22 @@ export const UserInput = ({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 max-w-lg px-4 py-4 mx-auto bg-white">
+    <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-lg bg-white px-4 py-4">
       {/* 이미지파일 미리보기 */}
       {showImagePreview && (
-        <div className="flex flex-row gap-2 pb-2 mb-2 overflow-x-auto">
+        <div className="mb-2 flex flex-row gap-2 overflow-x-auto pb-2">
           {previewImages.map((src, index) => (
-            <div className="relative flex-shrink-0 w-16 h-16" key={index}>
+            <div className="relative h-16 w-16 flex-shrink-0" key={index}>
               <img
                 src={src}
                 alt={`Preview ${index + 1}`}
-                className="object-cover w-full h-full rounded-md"
+                className="h-full w-full rounded-md object-cover"
               />
               <button
                 onClick={() => removeImage(index)}
-                className="absolute z-10 p-1 bg-white rounded-full shadow-md -right-1 -top-1"
+                className="absolute -right-1 -top-1 z-10 rounded-full bg-white p-1 shadow-md"
               >
-                <XIcon className="w-3 h-3 text-neutral-border-50" />
+                <XIcon className="h-3 w-3 text-neutral-border-50" />
               </button>
             </div>
           ))}
@@ -129,7 +129,7 @@ export const UserInput = ({
               'text-neutral-border-30': !input && previewImages.length === 0,
             })}
           >
-            <Camera className="w-full h-full text-neutral-icon" />
+            <Camera className="h-full w-full text-neutral-icon" />
             <input
               type="file"
               id="imageUpload"
@@ -148,7 +148,7 @@ export const UserInput = ({
             handleInput();
           }}
           rows={1}
-          className="flex-grow px-2 pt-1 text-base resize-none bg-neutral-bg-5 text-neutral-title"
+          className="flex-grow resize-none bg-neutral-bg-5 px-2 pt-1 text-base text-neutral-title"
           placeholder={placeholder}
           autoFocus={type === InputTypes.CHAT}
         />
@@ -156,11 +156,12 @@ export const UserInput = ({
           onClick={handleSend}
           aria-label="Send Message"
           className={cn('right-6 h-8 w-8', {
-            'text-primary-30': input || previewImages.length > 0,
-            'text-neutral-border-30': !input && previewImages.length === 0,
+            'text-primary-30': input.trim() || previewImages.length > 0,
+            'text-neutral-border-30':
+              !input.trim() && previewImages.length === 0,
           })}
         >
-          <Send className="w-full h-full" />
+          <Send className="h-full w-full" />
         </button>
       </div>
     </div>
