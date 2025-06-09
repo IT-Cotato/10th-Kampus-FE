@@ -167,27 +167,12 @@ export const Post = () => {
             <article className="relative flex whitespace-pre-line break-words px-4 py-5">
               <div className="flex flex-col gap-1">
                 <h1 className="flex text-pageTitle text-neutral-title">
-                  <span
-                    className={translatePending ? 'opacity-0' : 'opacity-100'}
-                  >
-                    {translateState ? translatedPost.title : postData?.title}
-                  </span>
+                  {translateState ? translatedPost.title : postData?.title}
                 </h1>
                 <p className="text-base text-neutral-base">
-                  <span
-                    className={translatePending ? 'opacity-0' : 'opacity-100'}
-                  >
-                    {translateState
-                      ? translatedPost.content
-                      : postData?.content}
-                  </span>
+                  {translateState ? translatedPost.content : postData?.content}
                 </p>
               </div>
-              {translatePending && (
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <Translating width={'4rem'} height={'4rem'} />
-                </div>
-              )}
             </article>
             {postData?.postPhotos?.length > 0 && (
               <div className="pb-3" onClick={() => setImageFocus(true)}>
@@ -223,13 +208,15 @@ export const Post = () => {
                   {postData && postData?.comments}
                 </div>
               </div>
-              <TranslateButton
-                handleTranslate={handleTranslate}
-                size="large"
-                color="base"
-                state={translateState}
-                setState={setTranslateState}
-              />
+              {translatePending ? (
+                <Translating />
+              ) : (
+                <TranslateButton
+                  handleTranslate={handleTranslate}
+                  state={translateState}
+                  setState={setTranslateState}
+                />
+              )}
             </div>
           </div>
         )}
