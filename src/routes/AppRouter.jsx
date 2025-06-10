@@ -264,6 +264,10 @@ const AppRouter = createBrowserRouter([
         path: path.market.write,
         element: <MarketWrite />,
       },
+      {
+        path: `${path.market.product}/${path.market.edit}`,
+        element: <MarketWrite />,
+      },
     ],
   },
   {

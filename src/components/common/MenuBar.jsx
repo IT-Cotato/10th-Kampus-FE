@@ -155,6 +155,12 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
         startMenuAni(setUrlAni);
       });
   };
+
+  const handleEdit = () => {
+    if (postId) navigate(path.board.specific.edit);
+    if (productId) navigate(path.market.edit);
+  };
+
   useEffect(() => {
     const handleOutSide = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -170,6 +176,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
       document.removeEventListener('mousedown', handleOutSide);
     };
   }, [openModal]);
+
   return (
     <div ref={modalRef} className="h-5 w-5 cursor-pointer text-neutral-title">
       <button
@@ -250,7 +257,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
             </div>
             <div
               className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
-              onClick={() => {}}
+              onClick={() => handleEdit()}
             >
               <p className="text-neutral-title">Edit</p>
               <Pencil className="h-4 w-4 text-black" />

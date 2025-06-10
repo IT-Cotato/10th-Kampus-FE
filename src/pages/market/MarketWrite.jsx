@@ -4,7 +4,7 @@ import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
@@ -13,6 +13,10 @@ import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
 import { WritePrice } from '@/components/market/WritePrice';
 import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
 import { usePostMarketProduct } from '@/state/mutation/market/usePostMarketProduct';
+import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
+import { Modal, MODAL_TYPES } from '@/components/common/Modal';
+import { urlToFile } from '@/utils/urlToFile';
+import { usePutMarketProduct } from '@/state/mutation/market/usePutMarketProduct';
 export const MarketWrite = () => {
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);
@@ -24,6 +28,7 @@ export const MarketWrite = () => {
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
+  const { productId } = useParams(); // productId 있으면 수정 페이지
 
   // 빈칸으로 업로드 버튼 클릭 시 focus를 위한 위한 ref
   const imageRef = useRef(null);
@@ -45,6 +50,31 @@ export const MarketWrite = () => {
   }, [categoryData]);
 
   const { mutate: addPost } = usePostMarketProduct();
+  const { data: prevPost } = useGetMarketProduct();
+  useEffect(() => {
+    if (prevPost) {
+      setTitle(prevPost.title);
+      setPrice(prevPost.price);
+      setContent(prevPost.description);
+      setSelectedCategory(prevPost.categories);
+      loadPrevPhotos();
+    }
+  }, [prevPost]);
+  const { mutate: putPost } = usePutMarketProduct();
+
+  const [prevPhotoLoadErrorMessage, setPrevPhotoLoadErrorMessage] =
+    useState('');
+  const loadPrevPhotos = async () => {
+    try {
+      const filePromises = prevPost.photos.map((photo) =>
+        urlToFile(photo.photoUrl, photo.order),
+      );
+      const files = await Promise.all(filePromises);
+      setUploadedFiles(files);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const {
     mutate: setTranslate,
@@ -117,7 +147,12 @@ export const MarketWrite = () => {
         formData.append('images', file); // 각 파일을 개별적으로 추가
       });
     }
-    addPost(formData);
+
+    if (prevPost) {
+      putPost({ productId, data: formData });
+    } else {
+      addPost(formData);
+    }
   };
 
   const handleCancelTranslatePopup = () => {
@@ -155,6 +190,7 @@ export const MarketWrite = () => {
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         <UploadPics
           onChange={setUploadedFiles}
+          prev={uploadedFiles}
           imageRef={imageRef}
           invalid={isImageInvalid}
           setInvalid={setIsImageInvalid}
@@ -200,12 +236,18 @@ export const MarketWrite = () => {
 
       {/* 업로드 버튼 */}
       <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 shadow-base">
-        <MainButton onClick={handleUploadWithoutTranslation} color="white">
-          Upload
-        </MainButton>
-        <MainButton onClick={handleTranslateAndUpload}>
-          Upload in English
-        </MainButton>
+        {prevPost ? (
+          <MainButton onClick={handleUploadWithoutTranslation}>Edit</MainButton>
+        ) : (
+          <>
+            <MainButton onClick={handleUploadWithoutTranslation} color="white">
+              Upload
+            </MainButton>
+            <MainButton onClick={handleTranslateAndUpload}>
+              Upload in English
+            </MainButton>
+          </>
+        )}
       </div>
 
       {isPopup &&
@@ -219,6 +261,15 @@ export const MarketWrite = () => {
           />,
           document.getElementById('modal-root'),
         )}
+
+      {prevPhotoLoadErrorMessage && (
+        <Modal
+          type={MODAL_TYPES.CONFIRM}
+          title={prevPhotoLoadErrorMessage}
+          onClickRight={() => setPrevPhotoLoadErrorMessage('')}
+          onClose={() => setPrevPhotoLoadErrorMessage('')}
+        ></Modal>
+      )}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import Camera from '@/assets/imgs/camera.svg';
 import ImgX from '@/assets/imgs/ImgX.svg?react';
 import { InputWarningText } from '@/components/common/InputWarningText';
-import { Modal } from '@/components/common/Modal';
-import { useState } from 'react';
+import { Modal, MODAL_TYPES } from '@/components/common/Modal';
+import { useEffect, useState } from 'react';
 
 export const UploadPics = ({
   onChange,
+  prev,
   imageRef = null,
   invalid = false,
   setInvalid = null,
@@ -13,6 +14,43 @@ export const UploadPics = ({
   const [previewImages, setPreviewImages] = useState([]);
   const [files, setFiles] = useState([]);
   const [showErrorModal, setShowErrorModal] = useState('');
+
+  useEffect(() => {
+    if (prev) {
+      loadPhotos(prev);
+    }
+  }, [prev]);
+
+  const loadPhotos = async (prev) => {
+    try {
+      // Promise로 모든 미리보기 URL 생성
+      const newPreviews = await Promise.all(
+        prev.map((file) => {
+          // URL 생성 중 오류 가능성 대비
+          return new Promise((resolve, reject) => {
+            try {
+              resolve(URL.createObjectURL(file));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }),
+      );
+
+      // 모든 파일과 미리보기가 준비된 후 상태 업데이트
+      if (prev.length > 0 && newPreviews.length === prev.length) {
+        setFiles(prev);
+        setPreviewImages(newPreviews);
+        onChange(prev); // 부모 컴포넌트에 전달
+        console.log(prev);
+      }
+    } catch (error) {
+      setShowErrorModal(
+        error.message || 'An error occurred while processing the file.',
+      );
+      return null;
+    }
+  };
 
   const getImageFiles = async (e) => {
     const newFiles = Array.from(e.target.files);
@@ -54,7 +92,9 @@ export const UploadPics = ({
         e.target.value = '';
       }
     } catch (error) {
-      setShowErrorModal('An error occurred while processing the file.');
+      setShowErrorModal(
+        error.message || 'An error occurred while processing the file.',
+      );
       return null;
     }
   };
@@ -120,10 +160,10 @@ export const UploadPics = ({
       )}
       {showErrorModal !== '' && (
         <Modal
-          type={MODAL_TYPES.WARNING}
+          type={MODAL_TYPES.CONFIRM}
           title={showErrorModal}
-          leftButton="Close"
-          onClickLeft={() => setShowErrorModal('')}
+          rightButton="Close"
+          onClickRight={() => setShowErrorModal('')}
           onClose={() => setShowErrorModal('')}
         />
       )}

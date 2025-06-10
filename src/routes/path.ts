@@ -18,6 +18,7 @@ export const path = {
     specific: {
       base: ':boardId',
       write: 'write',
+      edit: 'edit',
       post: ':postId',
       report: 'report',
       search: 'search',
@@ -70,6 +71,7 @@ export const path = {
   market: {
     base: '/market',
     write: 'write',
+    edit: 'edit',
     product: ':productId',
   },
   chatList: {
