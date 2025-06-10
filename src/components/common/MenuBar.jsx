@@ -19,7 +19,7 @@ import {
 } from '@/apis/board/toggleBoardFavorite.api';
 import { postChat } from '@/apis/chat/chatRoom.api';
 import { Modal } from './Modal';
-import { useDeleteMarketProduct } from '@/state/query/market/useDeleteMarketProduct';
+import { useDeleteMarketProduct } from '@/state/mutation/market/useDeleteMarketProduct';
 export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
