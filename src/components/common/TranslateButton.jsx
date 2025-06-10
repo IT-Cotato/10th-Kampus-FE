@@ -17,7 +17,9 @@ export const TranslateButton = ({ handleTranslate, state, setState, size }) => {
       }}
       className={cn(size === 'small' ? 'h-[1.125rem] w-[1.125rem]' : 'h-6 w-6')}
     >
-      <TranslateImg alt="Translate" className="text-neutral-border-50" />
+      <TranslateImg
+        className={cn(state ? 'text-neutral-title' : 'text-neutral-border-50')}
+      />
     </button>
   );
 };
