@@ -5,8 +5,9 @@ import { formatTime } from '@/utils/formatTime';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { formatPrice } from '@/utils/formatPrice';
 import { ProductState } from '@/components/market/ProductState';
-import { TranslateButton } from '../common/TranslateButton';
+import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/hooks/usePostTranslate';
+import { Translating } from '@/components/common/Translating';
 
 export const MarketList = ({ data, ...props }) => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const MarketList = ({ data, ...props }) => {
     translatedPost,
     translatePending,
     handleTranslate,
-  } = usePostTranslate(data?.id);
+  } = usePostTranslate(data?.productId); // 아직 백 api 없음
 
   const handleOnClick = (data) => {
     if (props.onClick) {
@@ -91,14 +92,17 @@ export const MarketList = ({ data, ...props }) => {
             <p>{data?.chatCount}</p>
           </div>
         </div>
-
-        <TranslateButton
-          handleTranslate={handleTranslate}
-          state={translateState}
-          setState={setTranslateState}
-          size="small"
-          color="title"
-        />
+        {translatePending ? (
+          <Translating size="small" />
+        ) : (
+          <TranslateButton
+            handleTranslate={handleTranslate}
+            state={translateState}
+            setState={setTranslateState}
+            size="small"
+            color="title"
+          />
+        )}
       </div>
     </div>
   );

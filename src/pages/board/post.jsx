@@ -46,7 +46,7 @@ export const Post = () => {
     queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
     select: (res) => res.postDetails,
     staleTime: 2 * 60 * 1000,
-    gcTime: 5 * 60 * 1000,
+    gcTime: 5 * 60 * 1000, // 언마운트 후 5분 동안 캐시에 남아있음
   });
 
   const {

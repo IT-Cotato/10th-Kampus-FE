@@ -148,7 +148,7 @@ export const MarketWrite = () => {
       });
     }
 
-    if (prevPost) {
+    if (productId) {
       putPost({ productId, data: formData });
     } else {
       addPost(formData);
@@ -184,7 +184,7 @@ export const MarketWrite = () => {
           />
         </button>
         <span className="flex justify-center text-pageTitle text-neutral-title">
-          Write
+          {productId ? 'Edit' : 'Write'}
         </span>
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
@@ -236,7 +236,7 @@ export const MarketWrite = () => {
 
       {/* 업로드 버튼 */}
       <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 shadow-base">
-        {prevPost ? (
+        {productId ? (
           <MainButton onClick={handleUploadWithoutTranslation}>Edit</MainButton>
         ) : (
           <>

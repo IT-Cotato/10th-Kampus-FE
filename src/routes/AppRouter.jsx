@@ -235,6 +235,10 @@ const AppRouter = createBrowserRouter([
                 element: <Post />,
               },
               {
+                path: path.board.specific.edit,
+                element: <Write />,
+              },
+              {
                 path: path.board.specific.report,
                 element: <PostReport />,
               },

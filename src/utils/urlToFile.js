@@ -1,5 +1,8 @@
 export const urlToFile = async (url, order) => {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    cache: 'no-store',
+    mode: 'cors',
+  });
   const blob = await response.blob();
 
   // url에서 확장자 추출

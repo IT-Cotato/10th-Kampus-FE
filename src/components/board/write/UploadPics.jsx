@@ -42,7 +42,6 @@ export const UploadPics = ({
         setFiles(prev);
         setPreviewImages(newPreviews);
         onChange(prev); // 부모 컴포넌트에 전달
-        console.log(prev);
       }
     } catch (error) {
       setShowErrorModal(
