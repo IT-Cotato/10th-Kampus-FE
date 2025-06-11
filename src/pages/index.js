@@ -56,7 +56,7 @@ export { BoardManagement } from './admin/board/BoardManagement';
 export { CreateBoard } from './admin/board/CreateBoard';
 export { CardnewsList } from './admin/cardnews/CardnewsList';
 export { CreateCardnews } from './admin/cardnews/CreateCardnews';
-export { Dashboard } from './admin/Dashboard';
+export { Dashboard } from './admin/Dashboard/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
 export { SignupManagement } from './admin/signup/SignupManagement';
 export { StudentVerifications } from './admin/signup/StudentVerifications';
