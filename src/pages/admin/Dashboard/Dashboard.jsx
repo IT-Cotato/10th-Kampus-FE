@@ -1,17 +1,12 @@
-import { getUser } from '@/apis/user/userDetail.api';
 import User from '@/assets/imgs/admin/User.svg?react';
-import { QUERY_KEYS } from '@/constants/api';
-import { useQuery } from '@tanstack/react-query';
+import { useGetAdminUserData } from '@/state/query/admin/useGetAdminUserData';
 export const Dashboard = () => {
-  const { data: userData } = useQuery({
-    queryKey: [QUERY_KEYS.GET_ADMIN_USER_ME],
-    queryFn: () => getUser(),
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: userData } = useGetAdminUserData();
 
   const handleAdministratorPermissionSettings = () => {
     //  관리자 권한 설정 페이지로 이동
   };
+
   return (
     <div className="flex flex-1 flex-row gap-5">
       <div className="flex h-fit w-full flex-col gap-5">
