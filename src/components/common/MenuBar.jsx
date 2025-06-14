@@ -60,7 +60,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_LIST, boardId],
       });
-      navigate(-1);
+      navigate('..');
     },
   });
   const { mutate: removeProduct } = useDeleteMarketProduct();

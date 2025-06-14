@@ -13,7 +13,7 @@ export const useDeleteMarketProduct = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.DELETE_MARKET_PRODUCT, productId],
       });
-      navigate(-1);
+      navigate('..');
     },
   });
   return mutate;

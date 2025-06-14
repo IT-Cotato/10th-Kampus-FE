@@ -10,13 +10,13 @@ export const TranslateModal = (props) => {
           className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]"
           onClick={(e) => e.stopPropagation()}
         >
-          <h1 className="text-bold-20 flex w-full justify-center text-neutral-title">
+          <h1 className="flex w-full justify-center text-bold-20 text-neutral-title">
             Preview
           </h1>
           {props.isLoading ? (
             <Loading />
           ) : (
-            <p className="flex h-fit w-full flex-col gap-6">
+            <div className="flex h-fit w-full flex-col gap-6">
               <div className="flex max-h-[50vh] flex-col gap-4">
                 <div className="flex gap-4">
                   <div className="text-title-bold-16 text-neutral-80">
@@ -57,7 +57,7 @@ export const TranslateModal = (props) => {
               <div className="flex w-full overflow-y-auto whitespace-break-spaces text-neutral-base scrollbar-hide">
                 {props.text}
               </div>
-            </p>
+            </div>
           )}
           <div className="flex w-full flex-row justify-center gap-4">
             <ButtonRound
