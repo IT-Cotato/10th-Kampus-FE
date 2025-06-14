@@ -6,10 +6,7 @@ import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
-import { TranslatePopup } from '@/components/board/write/TranslatePopup';
-import { createPortal } from 'react-dom';
-import { useMutation } from '@tanstack/react-query';
-import { postWriteTranslate } from '@/apis/translate/handleTranslate.api';
+import { TranslateModal } from '@/components/common/TranslateModal';
 import { WritePrice } from '@/components/market/WritePrice';
 import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
 import { usePostMarketProduct } from '@/state/mutation/market/usePostMarketProduct';
@@ -17,6 +14,7 @@ import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutMarketProduct } from '@/state/mutation/market/usePutMarketProduct';
+import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
 export const MarketWrite = () => {
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);
@@ -27,7 +25,7 @@ export const MarketWrite = () => {
   const [price, setPrice] = useState();
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [isPopup, setIsPopup] = useState(false);
+  const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
   const { productId } = useParams(); // productId 있으면 수정 페이지
 
   // 빈칸으로 업로드 버튼 클릭 시 focus를 위한 위한 ref
@@ -77,16 +75,10 @@ export const MarketWrite = () => {
   };
 
   const {
-    mutate: setTranslate,
+    mutate: handleTranslate,
     isPending: translatePending,
     isError: translateError,
-  } = useMutation({
-    mutationFn: (data) => postWriteTranslate(data),
-    onSuccess: (response) => {
-      setTranslatedTitle(response.title);
-      setTranslatedContent(response.content);
-    },
-  });
+  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   const handleFocus = (ref) => {
     ref.current?.focus();
@@ -156,20 +148,18 @@ export const MarketWrite = () => {
   };
 
   const handleCancelTranslatePopup = () => {
-    setIsPopup(false);
+    setIsTranslateModalOpen(false);
     setTranslatedTitle(null);
     setTranslatedContent(null);
   };
 
   const handleTranslateAndUpload = () => {
     if (validateBeforeUpload()) {
-      setIsPopup(true);
-      setTranslate({
-        data: {
-          title: title,
-          description: content,
-          targetLanguageCode: 'EN-US',
-        },
+      setIsTranslateModalOpen(true);
+      handleTranslate({
+        title: title,
+        content: content,
+        targetLanguageCode: 'EN-US',
       });
     }
   };
@@ -250,17 +240,17 @@ export const MarketWrite = () => {
         )}
       </div>
 
-      {isPopup &&
-        createPortal(
-          <TranslatePopup
-            title={translatedTitle}
-            text={translatedContent}
-            onClickLeft={() => handleCancelTranslatePopup()}
-            onClickRight={() => handleUpload()}
-            isLoading={translatePending}
-          />,
-          document.getElementById('modal-root'),
-        )}
+      {isTranslateModalOpen && (
+        <TranslateModal
+          title={translatedTitle}
+          text={translatedContent}
+          onClickLeft={() => handleCancelTranslatePopup()}
+          onClickRight={() => handleUpload()}
+          isLoading={translatePending}
+          price={price}
+          categories={selectedCategory}
+        />
+      )}
 
       {prevPhotoLoadErrorMessage && (
         <Modal

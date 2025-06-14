@@ -6,16 +6,16 @@ import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
-import { TranslatePopup } from '@/components/board/write/TranslatePopup';
-import { createPortal } from 'react-dom';
+import { TranslateModal } from '@/components/common/TranslateModal';
 import { postWritePost } from '@/apis/board/postWritePost.api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { postWriteTranslate } from '@/apis/translate/handleTranslate.api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
+import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
+
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId, postId } = useParams();
@@ -53,18 +53,6 @@ export const Write = () => {
     },
   });
 
-  const {
-    mutate: setTranslate,
-    isPending: translatePending,
-    isError: translateError,
-  } = useMutation({
-    mutationFn: (data) => postWriteTranslate(data),
-    onSuccess: (response) => {
-      setTranslatedTitle(response.title);
-      setTranslatedContent(response.content);
-    },
-  });
-
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -72,7 +60,13 @@ export const Write = () => {
   const [translatedTitle, setTranslatedTitle] = useState(null);
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [isPopup, setIsPopup] = useState(false);
+  const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
+
+  const {
+    mutate: handleTranslate,
+    isPending: translatePending,
+    isError: translateError,
+  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   const { data: prevPost } = useGetBoardPost();
 
@@ -165,21 +159,20 @@ export const Write = () => {
   };
 
   const handleCancelTranslatePopup = () => {
-    setIsPopup(false);
+    setIsTranslateModalOpen(false);
     setTranslatedTitle(null);
     setTranslatedContent(null);
   };
 
   const handleTranslateAndUpload = () => {
-    setIsPopup(true);
-    const buildData = () => {
-      return {
+    if (validateBeforeUpload()) {
+      setIsTranslateModalOpen(true);
+      handleTranslate({
         title: title,
         content: content,
         targetLanguageCode: 'EN-US',
-      };
-    };
-    setTranslate({ data: buildData() });
+      });
+    }
   };
 
   useEffect(() => {
@@ -262,17 +255,16 @@ export const Write = () => {
         ></Modal>
       )}
 
-      {isPopup &&
-        createPortal(
-          <TranslatePopup
-            title={translatedTitle}
-            text={translatedContent}
-            onClickLeft={() => handleCancelTranslatePopup()}
-            onClickRight={() => handleUpload()}
-            isLoading={translatePending}
-          />,
-          document.getElementById('modal-root'),
-        )}
+      {isTranslateModalOpen && (
+        <TranslateModal
+          title={translatedTitle}
+          text={translatedContent}
+          onClickLeft={() => handleCancelTranslatePopup()}
+          onClickRight={() => handleUpload()}
+          isLoading={translatePending}
+          categories={selectedCategory}
+        />
+      )}
     </div>
   );
 };

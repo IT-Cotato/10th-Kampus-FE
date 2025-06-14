@@ -58,6 +58,13 @@ export default {
           fontWeight: '700',
         },
       ],
+      'bold-20': [
+        '1.25rem', // 20px
+        {
+          letterSpacing: '0em',
+          fontWeight: '700',
+        },
+      ],
     },
     extend: {
       colors: {
