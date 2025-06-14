@@ -20,6 +20,7 @@ import {
 import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 import { usePatchMarketProductStatus } from '@/state/mutation/market/usePatchMarketProductStatus';
 import { useParams } from 'react-router-dom';
+import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 
 export const MarketPost = () => {
   const { productId } = useParams();
@@ -64,9 +65,6 @@ export const MarketPost = () => {
     transition: `all 0.4s ease-in-out`,
   });
 
-  const [translateState, setTranslateState] = useState(false);
-  const translatePending = false;
-
   // 드롭다운 클릭 시
   const handleDropdownClick = (state) => {
     if (selectedDropdown !== state) {
@@ -81,6 +79,14 @@ export const MarketPost = () => {
 
   // 채팅 걸기
   const handleChat = () => {};
+
+  const {
+    translateState,
+    setTranslateState,
+    translatedPost,
+    translateProductPending,
+    handleTranslate,
+  } = usePostTranslate('market', productData?.productId);
 
   return (
     <div className="relative w-full flex-1 pb-[5.375rem] scrollbar-hide">
@@ -170,29 +176,18 @@ export const MarketPost = () => {
                       )}
                     {/* 제목*/}
                     <h1 className="flex whitespace-break-spaces break-words text-pageTitle text-neutral-title">
-                      <span
-                        className={
-                          translatePending ? 'opacity-0' : 'opacity-100'
-                        }
-                      >
-                        {translateState
-                          ? translatedPost?.title
-                          : productData?.title}
-                      </span>
+                      {translateState
+                        ? translatedPost?.title
+                        : productData?.title}
                     </h1>
                   </div>
                   {/* 본문 */}
                   <p className="w-full whitespace-break-spaces text-base">
                     {translateState
-                      ? translatedPost?.description
+                      ? translatedPost?.content
                       : productData?.description}
                   </p>
                 </div>
-                {translatePending && (
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <Translating width={'4rem'} height={'4rem'} />
-                  </div>
-                )}
               </article>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-[.375rem] text-small text-neutral-border-50">
@@ -215,11 +210,17 @@ export const MarketPost = () => {
                     {productData && productData?.chatCount}
                   </div>
                 </div>
-                <TranslateButton
-                  handleTranslate={() => {}}
-                  state={translateState}
-                  setState={setTranslateState}
-                />
+                {translateProductPending ? (
+                  <Translating />
+                ) : (
+                  <TranslateButton
+                    handleTranslate={handleTranslate}
+                    isTranslatePending={translateProductPending}
+                    state={translateState}
+                    setState={setTranslateState}
+                    color="title"
+                  />
+                )}
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@ import {
 } from '@/apis/comment/toggleCommentLike.api';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
-import { usePostTranslate } from '@/hooks/usePostTranslate';
+import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 export const Post = () => {
   const queryClient = useQueryClient();
   const { postId, boardId } = useParams();
@@ -34,9 +34,10 @@ export const Post = () => {
     translateState,
     setTranslateState,
     translatedPost,
-    translatePending,
+    translatePostPending,
     handleTranslate,
-  } = usePostTranslate(postId);
+  } = usePostTranslate('board', postId);
+
   const {
     data: postData,
     isLoading: postLoading,
@@ -219,7 +220,7 @@ export const Post = () => {
                   {postData?.commentCount || 0}
                 </div>
               </div>
-              {translatePending ? (
+              {translatePostPending ? (
                 <Translating />
               ) : (
                 <TranslateButton

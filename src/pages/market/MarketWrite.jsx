@@ -9,7 +9,7 @@ import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslatePopup } from '@/components/board/write/TranslatePopup';
 import { createPortal } from 'react-dom';
 import { useMutation } from '@tanstack/react-query';
-import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
+import { postWriteTranslate } from '@/apis/translate/handleTranslate.api';
 import { WritePrice } from '@/components/market/WritePrice';
 import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
 import { usePostMarketProduct } from '@/state/mutation/market/usePostMarketProduct';
@@ -81,7 +81,7 @@ export const MarketWrite = () => {
     isPending: translatePending,
     isError: translateError,
   } = useMutation({
-    mutationFn: (data) => writePostTranslate(data),
+    mutationFn: (data) => postWriteTranslate(data),
     onSuccess: (response) => {
       setTranslatedTitle(response.title);
       setTranslatedContent(response.content);

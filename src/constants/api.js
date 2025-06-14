@@ -52,7 +52,8 @@ export const API_DOMAINS = {
   COMMENT_LIKE_TOGGLE: '/comments/:commentId/like',
 
   TRANSLATE_CREATE_POST: '/translations/posts',
-  TRANSLATE_POST: '/translations/:postId',
+  TRANSLATE_POST: '/translations/posts/:postId',
+  TRANSLATE_PRODUCT: '/translations/products/:productId',
   TRANSLATE_TEXT: '/translations/texts',
 
   MARKET_CATEGORIES: '/products/categories',
@@ -111,6 +112,7 @@ export const QUERY_KEYS = {
 
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
+  GET_TRANSLATE_PROUDCT: 'productTranslated',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
   GET_SEARCH_KEYWORD: 'searchKeyword',

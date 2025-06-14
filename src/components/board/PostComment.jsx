@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import { cn } from '@/utils/cn';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { Translating } from '@/components/common/Translating';
-import { useTextTranslate } from '@/hooks/useTextTranslate';
+import { useTextTranslate } from '@/state/mutation/common/useTextTranslate';
 export const PostComment = ({
   data,
   setInputFocus,

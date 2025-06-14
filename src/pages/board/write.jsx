@@ -11,7 +11,7 @@ import { createPortal } from 'react-dom';
 import { postWritePost } from '@/apis/board/postWritePost.api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
+import { postWriteTranslate } from '@/apis/translate/handleTranslate.api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
 import { urlToFile } from '@/utils/urlToFile';
@@ -58,7 +58,7 @@ export const Write = () => {
     isPending: translatePending,
     isError: translateError,
   } = useMutation({
-    mutationFn: (data) => writePostTranslate(data),
+    mutationFn: (data) => postWriteTranslate(data),
     onSuccess: (response) => {
       setTranslatedTitle(response.title);
       setTranslatedContent(response.content);

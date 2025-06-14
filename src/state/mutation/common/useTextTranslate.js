@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { translateText } from '@/apis/translate/translateText.api';
+import { postTranslateText } from '@/apis/translate/handleTranslate.api';
 import { QUERY_KEYS } from '@/constants/api';
 
 export const useTextTranslate = (content) => {
@@ -9,7 +9,7 @@ export const useTextTranslate = (content) => {
   const queryClient = useQueryClient();
   const { mutate: textTranslate, isPending: translatePending } = useMutation({
     mutationFn: async (content) => {
-      return await translateText({ content });
+      return await postTranslateText({ content });
     },
     onSuccess: (translatedContent) => {
       queryClient.invalidateQueries({

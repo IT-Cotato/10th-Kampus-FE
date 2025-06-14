@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
 import { Translating } from '../common/Translating';
 import { TranslateButton } from '../common/TranslateButton';
-import { usePostTranslate } from '@/hooks/usePostTranslate';
+import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 export const PostList = ({ data, isTrendingBoard, ...props }) => {
   const navigate = useNavigate();
 
@@ -12,9 +12,9 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
     translateState,
     setTranslateState,
     translatedPost,
-    translatePending,
+    translatePostPending,
     handleTranslate,
-  } = usePostTranslate(data?.postId);
+  } = usePostTranslate('board', data?.postId);
 
   const handleOnClick = (data) => {
     if (props.onClick) {
@@ -74,7 +74,7 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
             {formatTime(data?.createdTime)}
           </p>
         </div>
-        {translatePending ? (
+        {translatePostPending ? (
           <Translating size="small" />
         ) : (
           <TranslateButton
