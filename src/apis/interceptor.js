@@ -84,7 +84,7 @@ export const onError = async (error, api) => {
       // 토큰 갱신 자체가 실패하면, 로그아웃 후 로그인 창으로 리다이렉트
       useAuthStore.getState().clearAccessToken();
       processQueue(refreshError, null);
-      window.location.href = path.login;
+      window.location.href = path.login.base;
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
@@ -99,7 +99,7 @@ export const onError = async (error, api) => {
     // 이 친구도 디자인 좋은걸로 바꾸면 좋을 듯...
     alert('세션이 만료되었습니다.');
     useAuthStore.getState().clearAccessToken();
-    window.location.href = path.login;
+    window.location.href = path.login.base;
     return Promise.reject(error);
   }
 
@@ -114,7 +114,7 @@ export const onError = async (error, api) => {
 
     useAuthStore.getState().clearAccessToken();
 
-    window.location.href = path.login;
+    window.location.href = path.login.base;
 
     return Promise.reject(error);
   }

@@ -38,7 +38,7 @@ export const MyPage = () => {
 
   const handleLogout = async () => {
     await removeTokens();
-    navigate(path.login);
+    navigate(path.login.base);
   };
 
   return (

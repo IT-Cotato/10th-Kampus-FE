@@ -8,8 +8,7 @@ import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 export const KakaoLogin = () => {
   const kakaoKey = import.meta.env.VITE_KAKAO_JS_KEY;
   const redirectUri =
-    //import.meta.env.VITE_API_SOCKET_URL
-    'https://020c-221-149-135-127.ngrok-free.app' +
+    import.meta.env.VITE_API_SOCKET_URL +
     import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
   useEffect(() => {
