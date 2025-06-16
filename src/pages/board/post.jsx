@@ -27,78 +27,14 @@ import {
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/hooks/usePostTranslate';
+import { useGetPost } from '@/state/query/post/useGetPost';
+import { useGetComment } from '@/state/query/post/useGetComment';
+import { useHandleComment } from '@/state/mutation/post/useHandleComment';
+import { useHandlePostLike } from '@/state/mutation/post/useHandlePostLike';
+import { useHandleCommentLike } from '@/state/mutation/post/useHandleCommentLike';
 export const Post = () => {
   const queryClient = useQueryClient();
   const { postId, boardId } = useParams();
-  const {
-    translateState,
-    setTranslateState,
-    translatedPost,
-    translatePending,
-    handleTranslate,
-  } = usePostTranslate(postId);
-  const {
-    data: postData,
-    isLoading: postLoading,
-    error: postError,
-  } = useQuery({
-    queryFn: () => getPostDetail({ postId: postId }),
-    queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
-    select: (res) => res.postDetails,
-    staleTime: 2 * 60 * 1000,
-    gcTime: 5 * 60 * 1000,
-  });
-
-  const {
-    data: commentData,
-    isLoading: commentLoading,
-    error: commentError,
-  } = useQuery({
-    queryFn: () => getComment({ postId: postId }),
-    queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId],
-    select: (res) => res.comments,
-  });
-
-  const { mutate: handleComment } = useMutation({
-    //  true -> 댓글 추가 , false -> 댓글 삭제
-    mutationFn: ({ type, param, data = null }) =>
-      type
-        ? addComment({ postId: param, data: data })
-        : deleteComment({ commentId: param }),
-    onSuccess: (_, { type }) => {
-      if (type) {
-        setInput('');
-      }
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId],
-      });
-    },
-  });
-  const { mutate: handleLike } = useMutation({
-    //  true -> 좋아요 추가 , false -> 좋아요 삭제
-    mutationFn: ({ type }) =>
-      !type
-        ? addPostLike({ postId: postId })
-        : deletePostLike({ postId: postId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
-      });
-    },
-  });
-
-  const { mutate: handleCommentLike } = useMutation({
-    //  true -> 스크랩 추가 , false -> 스크랩 삭제
-    mutationFn: ({ type, commentId }) =>
-      !type
-        ? addCommentLike({ commentId: commentId })
-        : deleteCommentLike({ commentId: commentId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_COMMENT_LIST, postId],
-      });
-    },
-  });
 
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
   const [inputFocus, setInputFocus] = useState(false);
@@ -110,6 +46,30 @@ export const Post = () => {
     transform: `translateX(-${currentImgIndex}00%)`,
     transition: `all 0.4s ease-in-out`,
   });
+
+  const {
+    translateState,
+    setTranslateState,
+    translatedPost,
+    translatePending,
+    handleTranslate,
+  } = usePostTranslate(postId);
+
+  const {
+    data: postData,
+    isLoading: postLoading,
+    error: postError,
+  } = useGetPost();
+
+  const {
+    data: commentData,
+    isLoading: commentLoading,
+    error: commentError,
+  } = useGetComment();
+
+  const { mutate: handleComment } = useHandleComment({ setInput: setInput });
+  const { mutate: handleLike } = useHandlePostLike();
+  const { mutate: handleCommentLike } = useHandleCommentLike();
 
   const submitComment = () => {
     const buildComment = {

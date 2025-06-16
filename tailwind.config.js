@@ -132,7 +132,7 @@ export default {
             '',
         },
         '.admin-layout': {
-          '@apply flex overflow-auto min-h-dvh bg-primary-10': '',
+          '@apply flex overflow-auto min-h-dvh bg-neutral-bg-10': '',
         },
         '.animate-bottom-sheet-up': {
           animation: 'bottom-sheet-up 0.2s ease-in-out',
