@@ -13,7 +13,6 @@ export const AllBoard = () => {
 
   const { data: listData, isLoading, error } = useGetBoardList();
   const { data: univBoardData } = useGetUnivBoard();
-  console.log(univBoardData);
 
   const { mutate: toggleFavorite } = useToggleFavorite({
     setPrev: setPrevState,
