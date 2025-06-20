@@ -32,12 +32,12 @@ export const Dropdown = ({
 
     if (isDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchdown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchdown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [isDropdownOpen]);
 

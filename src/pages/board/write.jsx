@@ -19,7 +19,6 @@ import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTrans
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId, postId } = useParams();
-  const [categoryList, setCategoryList] = useState([]);
 
   // 게시판에 적용되는 카테고리 조회
   const { data: boardCategories } = useQuery({
@@ -30,13 +29,8 @@ export const Write = () => {
     enabled: !!boardId,
   });
 
-  useEffect(() => {
-    if (boardCategories && categoryList.length === 0) {
-      boardCategories.categories.map((item) => {
-        setCategoryList((prev) => [...prev, item.categoryName]);
-      });
-    }
-  }, []);
+  const categoryList =
+    boardCategories?.categories.map((item) => item.categoryName) || [];
 
   const {
     mutate: addPost,
@@ -92,7 +86,9 @@ export const Write = () => {
       const files = await Promise.all(filePromises);
       setUploadedFiles(files);
     } catch (error) {
-      alert(error);
+      setPrevPhotoLoadErrorMessage(
+        error?.message || '이미지 업로드 중 알 수 없는 오류가 발생하였습니다.',
+      );
     }
   };
 

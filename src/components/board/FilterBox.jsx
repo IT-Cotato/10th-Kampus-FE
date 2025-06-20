@@ -20,18 +20,19 @@ export const FilterBox = ({ content, dropList, select, selected }) => {
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchdown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchdown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [isOpen]);
 
   return (
     <div className="flex flex-col" ref={dropdownRef}>
-      <div
+      <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'flex w-fit cursor-pointer items-center justify-center gap-3 rounded-full border border-white px-[1.125rem] py-[0.375rem] text-neutral-80',
@@ -50,7 +51,7 @@ export const FilterBox = ({ content, dropList, select, selected }) => {
             'rotate-180': !isOpen,
           })}
         />
-      </div>
+      </button>
       {isOpen && (
         <div className="relative">
           <div className="absolute top-2 flex w-fit min-w-32 flex-col rounded-[0.625rem] bg-white px-1 py-1 shadow-navbar">

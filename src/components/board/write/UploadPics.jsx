@@ -16,6 +16,12 @@ export const UploadPics = ({
   const [showErrorModal, setShowErrorModal] = useState('');
 
   useEffect(() => {
+    return () => {
+      previewImages.forEachh((url) => revokeObjectURL(url));
+    };
+  }, []);
+
+  useEffect(() => {
     if (prev) {
       loadPhotos(prev);
     }
