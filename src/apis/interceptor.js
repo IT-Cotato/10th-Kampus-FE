@@ -43,7 +43,6 @@ export const onRequestError = (error) => {
  * 401, 403 에러 처리 용도
  */
 export const onError = async (error, api) => {
-  console.error('[Response Error]', error);
   const originalRequest = error.config;
   const { status } = error.response || {};
 

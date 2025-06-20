@@ -18,4 +18,7 @@ export const authApi = axiosInstance(BASE_URL);
 // 요청 인터셉터
 authApi.interceptors.request.use(onRequest, onRequestError);
 // 응답 인터셉터
-authApi.interceptors.response.use((error) => onError(error, authApi));
+authApi.interceptors.response.use(
+  (response) => response,
+  (error) => onError(error, authApi),
+);
