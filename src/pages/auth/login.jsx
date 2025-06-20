@@ -1,38 +1,13 @@
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { KakaoLogin } from '@/components/common/kakaoLogin';
 import { GoogleLogin } from '@/components/common/googleLogin';
-import { useEffect } from 'react';
-import { parseTokenFromUrl } from '@/utils/authUtils';
-import { getUserDetail } from '../../apis/auth/login.api';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
-import { setTokens } from '../../utils/authUtils';
 import { Bubble } from '@/components/common/Bubble';
 
 export const Login = () => {
   const navigate = useNavigate();
 
-  /*useEffect(() => {
-    const handleLogin = async () => {
-      const { accessToken, refreshToken } = parseTokenFromUrl();
-      if (!accessToken || !refreshToken) {
-        return;
-      }
-      await setTokens({ accessToken, refreshToken });
-      const { data, success } = await getUserDetail();
-      if (data === undefined) {
-        window.location.reload();
-      }
-      if (success && data.needSetup) {
-        navigate(path.signup.base);
-      } else if (success && !data.needSetup) {
-        navigate(path.home);
-      } else {
-        alert('Login Failed!');
-      }
-    };
-    handleLogin();
-  }, []);*/
   return (
     <div className="relative flex flex-1 items-center">
       <button
