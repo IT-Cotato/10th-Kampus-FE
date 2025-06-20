@@ -4,6 +4,7 @@ export { Home } from './home/home';
 export { SplashScreen } from './SplashScreen';
 
 export { Login } from './auth/login';
+export { KakaoLoginHandler } from './auth/handler/KakaoLoginHandler';
 export { Terms } from './auth/terms';
 export { ProfileSettings } from './auth/profileSettings';
 export { Welcome } from './auth/welcome';

@@ -1,5 +1,5 @@
 import arrow from '@/assets/imgs/arrowRight.svg';
-import { useNavigate } from 'react-router-dom';
+import { replace, useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { removeTokens } from '@/utils/authUtils';
 import { useEffect, useState } from 'react';
@@ -38,7 +38,7 @@ export const MyPage = () => {
 
   const handleLogout = async () => {
     await removeTokens();
-    navigate(path.login);
+    navigate(path.login.base, { replace: true });
   };
 
   return (

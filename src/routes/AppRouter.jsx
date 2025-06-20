@@ -58,6 +58,7 @@ import {
   AccountPermanentSuspendedNotice,
   MarketWrite,
   ManageCategory,
+  KakaoLoginHandler,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -81,7 +82,7 @@ const AppRouter = createBrowserRouter([
     ),
   },
   {
-    path: path.login,
+    path: path.login.base,
     element: (
       <Layout>
         <Outlet />
@@ -89,8 +90,12 @@ const AppRouter = createBrowserRouter([
     ),
     children: [
       {
-        path: path.login,
+        path: '',
         element: <Login />,
+      },
+      {
+        path: path.login.kakao,
+        element: <KakaoLoginHandler />,
       },
     ],
   },
