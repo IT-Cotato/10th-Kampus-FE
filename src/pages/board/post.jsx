@@ -26,14 +26,13 @@ import {
 } from '@/apis/comment/toggleCommentLike.api';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
-import { usePostTranslate } from '@/hooks/usePostTranslate';
+import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { useGetPost } from '@/state/query/post/useGetPost';
 import { useGetComment } from '@/state/query/post/useGetComment';
 import { useHandleComment } from '@/state/mutation/post/useHandleComment';
 import { useHandlePostLike } from '@/state/mutation/post/useHandlePostLike';
 import { useHandleCommentLike } from '@/state/mutation/post/useHandleCommentLike';
 export const Post = () => {
-  const queryClient = useQueryClient();
   const { postId, boardId } = useParams();
 
   const [focusedComment, setFocusedComment] = useState(null); // null인 경우 게시글에 대한 댓글, 입력값이 있는 경우 댓글에 대한 대댓글 작성
@@ -51,9 +50,9 @@ export const Post = () => {
     translateState,
     setTranslateState,
     translatedPost,
-    translatePending,
+    translatePostPending,
     handleTranslate,
-  } = usePostTranslate(postId);
+  } = usePostTranslate('board', postId);
 
   const {
     data: postData,
@@ -72,6 +71,7 @@ export const Post = () => {
   const { mutate: handleCommentLike } = useHandleCommentLike();
 
   const submitComment = () => {
+    if (!input.trim()) return;
     const buildComment = {
       content: input,
       parentId: focusedComment?.parentId,
@@ -81,15 +81,15 @@ export const Post = () => {
   };
   return (
     <div
-      className="h-full w-full"
+      className="flex h-full w-full flex-col overflow-scroll pb-20 scrollbar-hide"
       onClick={() => {
         setInputFocus(false);
         setFocusedComment(null);
       }}
     >
-      {imageFocus && postData?.postPhotoUrls?.length > 0 && (
+      {imageFocus && postData?.postPhotos?.length > 0 && (
         <FocusImageSlider
-          images={postData.postPhotoUrls}
+          images={postData.postPhotos}
           setImageFocus={setImageFocus}
           currentImgIndex={currentImgIndex}
           setCurrentImgIndex={setCurrentImgIndex}
@@ -102,7 +102,8 @@ export const Post = () => {
         {postLoading && <Loading />}
         {postError && <p>Error Data Loading</p>}
         {!postLoading && !postError && postData && (
-          <div className="flex flex-col pt-5">
+          <div className="flex flex-col gap-4 pt-4">
+            {/* 프로필, 작성 시간, 스크랩 */}
             <div className="flex items-center justify-between px-4">
               <div className="flex gap-2">
                 <img
@@ -115,7 +116,7 @@ export const Post = () => {
                     {boardId === '5' ? 'Kampus' : 'Anonymity'}
                   </h1>
                   <h2 className="text-small text-neutral-border-50">
-                    {formatTime(postData.createdTime)}
+                    {formatTime(postData?.createdTime)}
                   </h2>
                 </div>
               </div>
@@ -124,35 +125,20 @@ export const Post = () => {
                 className="h-[1.75rem] w-[1.75rem]"
               />
             </div>
-            <article className="relative flex whitespace-pre-line break-words px-4 py-5">
-              <div className="flex flex-col gap-1">
-                <h1 className="flex text-pageTitle text-neutral-title">
-                  <span
-                    className={translatePending ? 'opacity-0' : 'opacity-100'}
-                  >
-                    {translateState ? translatedPost.title : postData?.title}
-                  </span>
-                </h1>
-                <p className="text-base text-neutral-base">
-                  <span
-                    className={translatePending ? 'opacity-0' : 'opacity-100'}
-                  >
-                    {translateState
-                      ? translatedPost.content
-                      : postData?.content}
-                  </span>
-                </p>
-              </div>
-              {translatePending && (
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <Translating width={'4rem'} height={'4rem'} />
-                </div>
-              )}
-            </article>
-            {postData?.postPhotoUrls?.length > 0 && (
-              <div className="pb-3" onClick={() => setImageFocus(true)}>
+            {/* 제목, 본문 */}
+            <h1 className="flex px-4 text-pageTitle text-neutral-title">
+              {translateState ? translatedPost?.title : postData?.title}
+            </h1>
+            <p className="whitespace-break-spaces break-words px-4 text-base text-neutral-base">
+              {translateState ? translatedPost?.content : postData?.content}
+            </p>
+            {postData?.postPhotos?.length > 0 && (
+              <div
+                className={postData?.photos?.length > 1 ? 'pb-3' : ''}
+                onClick={() => setImageFocus(true)}
+              >
                 <ImageSlider
-                  images={postData.postPhotoUrls}
+                  images={postData?.postPhotos}
                   currentImgIndex={currentImgIndex}
                   setCurrentImgIndex={setCurrentImgIndex}
                   style={style}
@@ -160,55 +146,72 @@ export const Post = () => {
                 />
               </div>
             )}
-            <div className="flex items-center justify-between border-b-[0.5px] border-b-[#D8D8D8] px-4 pb-4 pt-6">
-              <div className="flex items-center gap-[.375rem] text-base text-neutral-border-50">
+            <div className="flex items-center justify-between border-b-[0.5px] border-b-neutral-border-30 px-4 pb-4">
+              <div className="flex items-center gap-[.375rem] text-small text-neutral-border-50">
+                {/* 찜 수 */}
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => {
-                      handleLike({ type: postData.isLiked });
+                      handleLike({ type: postData?.isLiked });
                     }}
                   >
-                    {postData && postData?.isLiked ? (
-                      <FillLike className="h-8 w-8" />
+                    {postData?.isLiked ? (
+                      <FillLike
+                        aria-label="likes"
+                        className="h-[.75rem] w-[.75rem] text-neutral-border-50"
+                      />
                     ) : (
-                      <Like className="h-8 w-8" />
+                      <Like
+                        aria-label="likes"
+                        className="h-[.75rem] w-[.75rem] text-neutral-border-50"
+                      />
                     )}
                   </button>
-                  {postData && postData?.likes}
+                  {postData?.likeCount || 0}
                 </div>
+                {/* 댓글 수 */}
                 <div className="flex items-center gap-1">
-                  <button onClick={() => console.log('comment')}>
-                    <Comment className="h-8 w-8" />
-                  </button>
-                  {postData && postData?.comments}
+                  <Comment
+                    aria-label="comments"
+                    className="h-[.75rem] w-[.75rem] text-neutral-border-50"
+                  />
+                  {postData?.commentCount || 0}
                 </div>
               </div>
-              <TranslateButton
-                handleTranslate={handleTranslate}
-                size="large"
-                color="base"
-                state={translateState}
-                setState={setTranslateState}
-              />
+              {translatePostPending ? (
+                <Translating />
+              ) : (
+                <TranslateButton
+                  handleTranslate={handleTranslate}
+                  state={translateState}
+                  setState={setTranslateState}
+                />
+              )}
             </div>
           </div>
         )}
+
+        {/** 댓글 */}
+        {commentData?.length !== 0 ? (
+          <div className="flex flex-col">
+            {commentData?.map((item) => (
+              <PostComment
+                data={item}
+                key={item.commentId}
+                setInputFocus={setInputFocus}
+                focusedComment={focusedComment}
+                setFocusedComment={setFocusedComment}
+                handleCommentLike={handleCommentLike}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex w-full justify-center py-6 text-neutral-disabled">
+            Leave the first comment!
+          </div>
+        )}
       </div>
-      {/** 댓글 부분 */}
-      <div className="flex flex-col pb-16">
-        {commentData &&
-          commentData.comments &&
-          commentData.comments.map((item, index) => (
-            <PostComment
-              data={item}
-              key={item.commentId}
-              setInputFocus={setInputFocus}
-              focusedComment={focusedComment}
-              setFocusedComment={setFocusedComment}
-              handleCommentLike={handleCommentLike}
-            />
-          ))}
-      </div>
+
       {/** 댓글 입력창 */}
       <UserInput
         placeholder="Write a comment."

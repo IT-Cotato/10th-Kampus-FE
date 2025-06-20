@@ -3,9 +3,8 @@ import Comment from '../../assets/imgs/comment.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
 import { Translating } from '../common/Translating';
-import { cn } from '@/utils/cn';
 import { TranslateButton } from '../common/TranslateButton';
-import { usePostTranslate } from '@/hooks/usePostTranslate';
+import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 export const PostList = ({ data, isTrendingBoard, ...props }) => {
   const navigate = useNavigate();
 
@@ -13,9 +12,9 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
     translateState,
     setTranslateState,
     translatedPost,
-    translatePending,
+    translatePostPending,
     handleTranslate,
-  } = usePostTranslate(data?.postId);
+  } = usePostTranslate('board', data?.postId);
 
   const handleOnClick = (data) => {
     if (props.onClick) {
@@ -39,20 +38,12 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
           <div className="flex w-full gap-3">
             <div className="flex w-full flex-col">
               <h1 className="flex w-full text-subTitle text-neutral-title">
-                <span
-                  className={cn('line-clamp-1', {
-                    'opacity-0': translatePending,
-                  })}
-                >
+                <span className="line-clamp-1">
                   {translateState ? translatedPost.title : data?.title}
                 </span>
               </h1>
-              <h2 className="line-clamp-2 flex w-full text-neutral-base">
-                <span
-                  className={cn('line-clamp-2', {
-                    'opacity-0': translatePending,
-                  })}
-                >
+              <h2 className="flex w-full text-neutral-base">
+                <span className="line-clamp-2">
                   {translateState ? translatedPost.content : data?.content}
                 </span>
               </h2>
@@ -67,11 +58,6 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
               </div>
             )}
           </div>
-          {translatePending && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2">
-              <Translating width={'3rem'} height={'3rem'} />
-            </div>
-          )}
         </div>
       </div>
       <div className="flex items-center justify-between">
@@ -88,13 +74,16 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
             {formatTime(data?.createdTime)}
           </p>
         </div>
-        <TranslateButton
-          handleTranslate={handleTranslate}
-          state={translateState}
-          setState={setTranslateState}
-          size="small"
-          color="title"
-        />
+        {translatePostPending ? (
+          <Translating size="small" />
+        ) : (
+          <TranslateButton
+            handleTranslate={handleTranslate}
+            state={translateState}
+            setState={setTranslateState}
+            size="small"
+          />
+        )}
       </div>
     </div>
   );

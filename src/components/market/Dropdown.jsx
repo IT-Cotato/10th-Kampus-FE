@@ -32,11 +32,12 @@ export const Dropdown = ({
 
     if (isDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
     }
 
-    // 컴포넌트 언마운트/useEffect 실행 전 listener clean(메모리 누수 방지와 리스너 중복 등록 방지를 위해)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [isDropdownOpen]);
 

@@ -235,6 +235,10 @@ const AppRouter = createBrowserRouter([
                 element: <Post />,
               },
               {
+                path: path.board.specific.edit,
+                element: <Write />,
+              },
+              {
                 path: path.board.specific.report,
                 element: <PostReport />,
               },
@@ -257,11 +261,15 @@ const AppRouter = createBrowserRouter([
         element: <Market />,
       },
       {
-        path: path.market.post,
+        path: path.market.product,
         element: <MarketPost />,
       },
       {
         path: path.market.write,
+        element: <MarketWrite />,
+      },
+      {
+        path: `${path.market.product}/${path.market.edit}`,
         element: <MarketWrite />,
       },
     ],

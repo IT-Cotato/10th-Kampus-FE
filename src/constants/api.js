@@ -52,8 +52,15 @@ export const API_DOMAINS = {
   COMMENT_LIKE_TOGGLE: '/comments/:commentId/like',
 
   TRANSLATE_CREATE_POST: '/translations/posts',
-  TRANSLATE_POST: '/translations/:postId',
+  TRANSLATE_POST: '/translations/posts/:postId',
+  TRANSLATE_PRODUCT: '/translations/products/:productId',
   TRANSLATE_TEXT: '/translations/texts',
+
+  MARKET_CATEGORIES: '/products/categories',
+  MARKET_PRODUCT_LIST: '/products',
+  MARKET_POST_PRODUCT: '/products',
+  MARKET_HANDLE_PRODUCT: '/products/:productId',
+  MARKET_PATCH_PRODUCT_STATUS: '/products/:productId/status',
 
   ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
@@ -107,6 +114,7 @@ export const QUERY_KEYS = {
 
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
+  GET_TRANSLATE_PROUDCT: 'productTranslated',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
   GET_SEARCH_KEYWORD: 'searchKeyword',
@@ -132,6 +140,13 @@ export const QUERY_KEYS = {
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
+
+  GET_MARKET_CATEGORIES: 'marketCategories',
+  GET_MARKET_PRODUCT_LIST: 'marketProductList',
+  POST_MARKET_PRODUCT: 'postMarketProduct',
+  GET_MARKET_PRODUCT: 'getMarketProduct',
+  PATCH_MARKET_PRODUCT_STATUS: 'patchMarketProductStatus',
+  DELETE_MARKET_PRODUCT: 'deleteMarketProduct',
 
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',

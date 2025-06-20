@@ -44,8 +44,22 @@ export default {
           fontWeight: '400',
         },
       ],
+      extraSmall: [
+        '.75rem', // 12px
+        {
+          letterSpacing: '0em',
+          fontWeight: '400',
+        },
+      ],
       'title-bold-16': [
         '1rem', // 16px
+        {
+          letterSpacing: '0em',
+          fontWeight: '700',
+        },
+      ],
+      'bold-20': [
+        '1.25rem', // 20px
         {
           letterSpacing: '0em',
           fontWeight: '700',

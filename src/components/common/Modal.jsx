@@ -62,7 +62,7 @@ export const Modal = ({
               theme={BUTTON_THEMES.PRIMARY}
               size="modal"
               onClick={onClickRight}
-              text={'Ok'}
+              text={rightButton || 'Ok'}
             />
           </div>
         );
