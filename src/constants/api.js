@@ -22,7 +22,7 @@ export const API_DOMAINS = {
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
   SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
   VERIFY_SCHOOL_EMAIL_CODE: '/users/verify/mail/confirm',
-  GET_SCHOOL_STATUS: 'users/verify/status',
+  GET_SCHOOL_STATUS: '/cert/status',
 
   PRODUCTS: '/products',
 
