@@ -1,56 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { BoardListBox } from '@/components/board/BoardListBox';
-import { StateChangeAnimate, startAnimation } from '@/components/common/StateChangeAnimate';
-import { getBoardList } from '@/apis/board/getBoardList.api';
-import { addBoardFavorite, deleteBoardFavorite } from '@/apis/board/toggleBoardFavorite.api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
+import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { Loading } from '@/components/common/Loading';
+import { BOARD_TYPE } from '@/constants/boardConstant';
+import { useGetBoardList } from '@/state/query/allBoard/useGetBoardList';
+import { useToggleFavorite } from '@/state/mutation/allBoard/useToggleFavorite';
+import { useGetUnivBoard } from '@/state/query/allBoard/useGetUnivBoard';
 export const AllBoard = () => {
-  const queryClient = useQueryClient()
-  const { data: listData, isLoading, error } = useQuery({
-    queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST],
-    queryFn: getBoardList,
-  })
-  const { mutate: toggleFavorite } = useMutation({
-    mutationFn: ({ boardId, isPinned }) =>
-      isPinned ? deleteBoardFavorite({ boardId }) : addBoardFavorite({ boardId })
-    ,
-    onMutate: ({ isPinned }) => {
-      setPrevState(isPinned);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST] });
-      startAnimation(setIsAni);
-    }
-  })
   const [isAni, setIsAni] = useState(false);
   const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
+
+  const { data: listData, isLoading, error } = useGetBoardList();
+  const { data: univBoardData } = useGetUnivBoard();
+
+  const { mutate: toggleFavorite } = useToggleFavorite({
+    setPrev: setPrevState,
+    setAnimate: setIsAni,
+  });
+
   const parseBoardData = (dataList) => {
-    const boardList = { first: [], second: [], third: [] };
+    const boardList = { univ: [], first: [], second: [], third: [] };
     dataList?.forEach((data) => {
       const formatData = {
         title: data.boardName,
+        description: data.description,
         pin: data.isFavorite,
         order: data.boardId,
-      }
-      if (data.boardId >= 1 && data.boardId <= 4) {
+      };
+      if (data.boardType === BOARD_TYPE.UNIV) {
+        boardList.univ.push(formatData);
+      } else if (
+        data.boardType === BOARD_TYPE.FIXED ||
+        data.boardType === BOARD_TYPE.TRENDING
+      ) {
         boardList.first.push(formatData);
-      }
-      else if (data.boardId === 5) {
+      } else if (data.boardType === BOARD_TYPE.CARD) {
         boardList.second.push(formatData);
-      }
-      else {
+      } else if (data.boardType === BOARD_TYPE.NORMAL) {
         boardList.third.push(formatData);
       }
-    })
+    });
     return {
+      univ: boardList.univ ?? [],
       first: boardList.first ?? [],
       second: boardList.second ?? [],
       third: boardList.third ?? [],
-    }
-  }
+    };
+  };
 
   const sortList = (data) => {
     const sortedList = {};
@@ -65,7 +62,7 @@ export const AllBoard = () => {
       unpinnedItems.sort((a, b) => a.order - b.order);
 
       sortedList[key] = [...pinnedItems, ...unpinnedItems];
-    })
+    });
     return sortedList;
   };
 
@@ -79,16 +76,19 @@ export const AllBoard = () => {
       };
       return sortList(updatedList);
     });
-    toggleFavorite({ boardId: boardId, isPinned: listArray[listKey][index].pin })
+    toggleFavorite({
+      boardId: boardId,
+      isPinned: listArray[listKey][index].pin,
+    });
   };
 
   useEffect(() => {
-    if (!listData || !listData.boards) return;
-    const parsedData = parseBoardData(listData.boards);
+    if (!listData || !listData.boards || !univBoardData) return;
+    const mergedBoards = [...listData.boards, univBoardData];
+    const parsedData = parseBoardData(mergedBoards);
     const sortedData = sortList(parsedData);
     setListArray(sortedData);
-  }, [listData]);
-
+  }, [listData, univBoardData]);
 
   return (
     <div className="relative flex h-full w-full flex-col gap-4 p-4">

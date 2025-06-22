@@ -1,6 +1,6 @@
-import activeScrap from '@/assets/imgs/activeScrap.svg';
-import scrap from '@/assets/imgs/scrap.svg';
-import { useEffect, useState } from 'react';
+import ActiveScrap from '@/assets/imgs/activeScrap.svg?react';
+import Scrap from '@/assets/imgs/scrap.svg?react';
+import { useState } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -9,17 +9,20 @@ import {
   deletePostScrap,
 } from '@/apis/board/togglePostScrap.api';
 import { QUERY_KEYS } from '@/constants/api';
+import { cn } from '@/utils/cn';
+
 export const ScrapComponent = ({
   state,
-  width,
-  height,
   id = undefined,
   boardId = undefined,
+  market = false, // market의 경우 스크랩 로직이 다름
+  ...props
 }) => {
   const queryClient = useQueryClient();
   const { postId } = useParams();
   const actualId = postId || id; // 카드뉴스면 전달받은 id, 게시글이면 파라미터에 있는 postId
   const [scrapAni, setScrapAni] = useState(false); // 스크랩 애니메이션 상태
+
   const { mutate: handleScrap } = useMutation({
     mutationFn: async ({ postId }) => {
       return state ? deletePostScrap({ postId }) : addPostScrap({ postId });
@@ -91,44 +94,29 @@ export const ScrapComponent = ({
   const handleScrapClick = () => {
     handleScrap({ postId: actualId });
   };
+
+  const isActive = state;
+
+  const Component = isActive ? ActiveScrap : Scrap;
+
+  const ariaLabel = isActive ? 'Unscrap button' : 'Scrap button';
+
   return (
-    <div style={{ width: `${width}`, height: `${height}` }}>
+    <>
       {scrapAni && (
         <StateChangeAnimate
           state={!state}
-          changeToTrueText={'Add to scrap'}
-          changeToFalseText={'Remove from Scrap'}
+          changeToTrueText={'Added to Scrap'}
+          changeToFalseText={'Removed from Scrap'}
         />
       )}
-      {state ? ( // currentColor로 색이 안바뀜
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleScrapClick();
-          }}
-        >
-          <img
-            src={activeScrap}
-            alt="Bookmarked"
-            className="cursor-pointer"
-            style={{ width: `${width}`, height: `${height}` }}
-          />
-        </button>
-      ) : (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleScrapClick();
-          }}
-        >
-          <img
-            src={scrap}
-            alt="Bookmark"
-            className="cursor-pointer"
-            style={{ width: `${width}`, height: `${height}` }}
-          />
-        </button>
-      )}
-    </div>
+      <Component
+        className={cn('cursor-pointer', props.className, {
+          'text-neutral-border-40': isActive,
+        })}
+        onClick={handleScrapClick}
+        aria-label={ariaLabel}
+      />
+    </>
   );
 };

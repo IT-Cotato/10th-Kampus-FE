@@ -20,10 +20,7 @@ import {
   SchoolVerification,
   Notification,
   FAQ,
-  Inquiry,
   Notice,
-  InquiryDetail,
-  WriteInquiry,
   NoticeDetail,
   Post,
   PostReport,
@@ -55,8 +52,14 @@ import {
   NoticeManagement,
   CreateNotice,
   Market,
-  StudentVerifications,
   Draft,
+  MarketPost,
+  StudentVerifications,
+  FailedVerify,
+  AccountPermanentSuspendedNotice,
+  MarketWrite,
+  ManageCategory,
+  KakaoLoginHandler,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -72,7 +75,15 @@ const AppRouter = createBrowserRouter([
     errorElement: <NotFound />,
   },
   {
-    path: path.login,
+    path: path.accountPermanentSuspended,
+    element: (
+      <Layout>
+        <AccountPermanentSuspendedNotice />
+      </Layout>
+    ),
+  },
+  {
+    path: path.login.base,
     element: (
       <Layout>
         <Outlet />
@@ -80,8 +91,12 @@ const AppRouter = createBrowserRouter([
     ),
     children: [
       {
-        path: path.login,
+        path: '',
         element: <Login />,
+      },
+      {
+        path: path.login.kakao,
+        element: <KakaoLoginHandler />,
       },
     ],
   },
@@ -210,6 +225,10 @@ const AppRouter = createBrowserRouter([
             element: <Board />,
           },
           {
+            path: path.board.specific.search,
+            element: <Search />,
+          },
+          {
             path: path.board.specific.write,
             element: <Write />,
           },
@@ -220,6 +239,10 @@ const AppRouter = createBrowserRouter([
               {
                 path: '',
                 element: <Post />,
+              },
+              {
+                path: path.board.specific.edit,
+                element: <Write />,
               },
               {
                 path: path.board.specific.report,
@@ -252,6 +275,18 @@ const AppRouter = createBrowserRouter([
       {
         path: '',
         element: <Market />,
+      },
+      {
+        path: path.market.product,
+        element: <MarketPost />,
+      },
+      {
+        path: path.market.write,
+        element: <MarketWrite />,
+      },
+      {
+        path: `${path.market.product}/${path.market.edit}`,
+        element: <MarketWrite />,
       },
     ],
   },
@@ -286,6 +321,10 @@ const AppRouter = createBrowserRouter([
         element: <MyPage />,
       },
       {
+        path: path.mypage.verify.fail,
+        element: <FailedVerify />,
+      },
+      {
         path: path.mypage.settings.info,
         element: <MyInfo />,
       },
@@ -316,10 +355,6 @@ const AppRouter = createBrowserRouter([
           {
             path: path.mypage.service.faq,
             element: <FAQ />,
-          },
-          {
-            path: path.mypage.service.inquiry,
-            element: <Inquiry />,
           },
           {
             path: path.mypage.service.notice,
@@ -402,14 +437,6 @@ const AppRouter = createBrowserRouter([
         element: <Outlet />,
         children: [
           {
-            path: `${path.mypage.service.inquiry}/${path.mypage.service.inquiryDetails}`,
-            element: <InquiryDetail />,
-          },
-          {
-            path: `${path.mypage.service.inquiry}/${path.mypage.service.writeInquiry}`,
-            element: <WriteInquiry />,
-          },
-          {
             path: `${path.mypage.service.notice}/${path.mypage.service.noticeDetails}`,
             element: <NoticeDetail />,
           },
@@ -432,6 +459,10 @@ const AppRouter = createBrowserRouter([
       {
         path: path.admin.dashboard,
         element: <Dashboard />,
+      },
+      {
+        path: path.admin.category,
+        element: <ManageCategory />,
       },
       {
         path: path.admin.userManagement,

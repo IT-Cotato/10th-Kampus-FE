@@ -3,18 +3,13 @@ import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { getUser } from '@/apis/user/userDetail.api';
+import { getUserDetail } from '@/apis/auth/login.api';
 import { getChatMessages, postReadMessage } from '@/apis/chat/messages.api';
 
 const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
 
-export const useWebsocket = (
-  setChatList,
-  chatroomId,
-  setMessages,
-  page,
-) => {
+export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
   const notificationSubscriptionRef = useRef(null);
@@ -24,7 +19,7 @@ export const useWebsocket = (
   //유저정보
   const { data: userDetail } = useQuery({
     queryKey: [QUERY_KEYS.GET_USER_ME],
-    queryFn: getUser,
+    queryFn: getUserDetail,
   });
 
   //채팅방 메시지 초기내역

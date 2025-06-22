@@ -1,0 +1,6 @@
+export const UNIV_STATUS = {
+  REJECT: 'REJECTED',
+  APPROVE: 'APPROVED',
+  PENDING: 'PENDING',
+  NONE: 'NOT_REQUESTED',
+};

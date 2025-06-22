@@ -3,27 +3,40 @@ import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
-import { MainWhiteButton } from '@/components/common/MainWhiteButton';
-import { TranslatePopup } from '@/components/board/write/TranslatePopup';
-import { createPortal } from 'react-dom';
-import { postWriteDraft, postWritePost } from '@/apis/board/postWritePost.api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { TranslateModal } from '@/components/common/TranslateModal';
+import { postWritePost } from '@/apis/board/postWritePost.api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
-import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
+import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
+import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
+import { urlToFile } from '@/utils/urlToFile';
+import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
+import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
 import {
   patchSaveDraft,
   postSaveDraft,
 } from '@/apis/board/handleSaveDraft.api';
 import { ReloadModal } from '@/components/board/draft/ReloadModal';
+import { path } from '@/routes/path';
 
 export const Write = () => {
   const queryClient = useQueryClient();
-  const { boardId } = useParams();
-  const location = useLocation();
+  const { boardId, postId } = useParams();
+
+  // 게시판에 적용되는 카테고리 조회
+  const { data: boardCategories } = useQuery({
+    queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
+    queryFn: () => getBoardCategories({ boardId: boardId }),
+    staleTime: 2 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    enabled: !!boardId,
+  });
+
+  const categoryList =
+    boardCategories?.categories.map((item) => item.categoryName) || [];
 
   const {
     mutate: addPost,
@@ -34,7 +47,7 @@ export const Write = () => {
     onSuccess: (response) => {
       const createdPostId = response.postId;
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
+      navigate(`../${createdPostId}`, {
         replace: true,
       });
     },
@@ -57,33 +70,93 @@ export const Write = () => {
     },
   });
 
-  const {
-    mutate: setTranslate,
-    isPending: translatePending,
-    isError: translateError,
-  } = useMutation({
-    mutationFn: (data) => writePostTranslate(data),
-    onSuccess: (response) => {
-      setTranslatedTitle(response.title);
-      setTranslatedContent(response.content);
-    },
-  });
-
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [content, setContent] = useState('');
   const [translatedTitle, setTranslatedTitle] = useState(null);
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [isPopup, setIsPopup] = useState(false);
+  const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
+
+  const {
+    mutate: handleTranslate,
+    isPending: translatePending,
+    isError: translateError,
+  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
+
+  const { data: prevPost } = useGetBoardPost();
+
+  useEffect(() => {
+    if (prevPost) {
+      setTitle(prevPost.title);
+      setContent(prevPost.content);
+      if (prevPost?.categories) {
+        setSelectedCategory(prevPost?.categories);
+      }
+      loadPrevPhotos();
+    }
+  }, [prevPost]);
+  const { mutate: putPost } = usePutBoardPost();
+
+  const [prevPhotoLoadErrorMessage, setPrevPhotoLoadErrorMessage] =
+    useState('');
+  const loadPrevPhotos = async () => {
+    try {
+      const filePromises = prevPost.postPhotos.map((photo) =>
+        urlToFile(photo.photoUrl, photo.order),
+      );
+      const files = await Promise.all(filePromises);
+      setUploadedFiles(files);
+    } catch (error) {
+      setPrevPhotoLoadErrorMessage(
+        error?.message || '이미지 업로드 중 알 수 없는 오류가 발생하였습니다.',
+      );
+    }
+  };
+
   const disabled = !title || !content;
   const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
   const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
 
-  const [postDraftId, setPostDraftId] = useState(
-    location.state.postDraftId || null,
-  ); // 있을 경우 내용 불러오기 필요(추가 예정)
+  const { state } = useLocation();
+  const [postDraftId, setPostDraftId] = useState(state?.postDraftId || null); // 있을 경우 내용 불러오기 필요(추가 예정)
+
+  // 빈칸으로 업로드 버튼 클릭 시 focus를 위한 위한 ref
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
+
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false);
+  const [isContentInvalid, setIsContentInvalid] = useState(false);
+
+  const handleFocus = (ref) => {
+    ref.current?.focus();
+    ref.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  };
+
+  // 업로드 버튼 클릭 시 유효성 검증
+  const validateBeforeUpload = () => {
+    setIsTitleInvalid(!title);
+    setIsContentInvalid(!content);
+
+    if (!title) {
+      handleFocus(titleRef);
+      return false;
+    } else if (!content) {
+      handleFocus(contentRef);
+      return false;
+    }
+    return true;
+  };
+
+  const handleUploadWithoutTranslation = () => {
+    if (validateBeforeUpload()) {
+      handleUpload();
+    }
+  };
 
   const handleUpload = async () => {
     const formData = new FormData();
@@ -92,8 +165,10 @@ export const Write = () => {
     formData.append('title', translatedTitle ?? title);
     formData.append('content', translatedContent ?? content);
 
-    if (selectedCategory) {
-      formData.append('postCategory', selectedCategory);
+    if (selectedCategory.length !== 0) {
+      selectedCategory.forEach((category) =>
+        formData.append('categories', category),
+      );
     }
 
     if (uploadedFiles.length > 0) {
@@ -103,7 +178,11 @@ export const Write = () => {
     }
 
     if (!postDraftId) {
-      addPost(formData);
+      if (postId) {
+        putPost({ postId, data: formData });
+      } else {
+        addPost(formData);
+      }
     } else {
       // 임시저장 게시물 발행
       postDraft(formData);
@@ -111,21 +190,20 @@ export const Write = () => {
   };
 
   const handleCancelTranslatePopup = () => {
-    setIsPopup(false);
+    setIsTranslateModalOpen(false);
     setTranslatedTitle(null);
     setTranslatedContent(null);
   };
 
   const handleTranslateAndUpload = () => {
-    setIsPopup(true);
-    const buildData = () => {
-      return {
+    if (validateBeforeUpload()) {
+      setIsTranslateModalOpen(true);
+      handleTranslate({
         title: title,
         content: content,
         targetLanguageCode: 'EN-US',
-      };
-    };
-    setTranslate({ data: buildData() });
+      });
+    }
   };
 
   const {
@@ -197,90 +275,108 @@ export const Write = () => {
     navigate(`../../${path.board.specific.draft}`);
   };
 
-  useEffect(() => {
-    if (!location.state.boardName) {
-      // 보드에서 Write 버튼 누르지 않고 다른 경로로 들어올 시 이전 기록으로 navigate
-      navigate(-1);
-    }
-  }, [location.state.boardName, navigate]);
-
-  if (!location.state.boardName) return null;
-  const { boardName } = location.state.boardName;
-
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="grid w-full grid-cols-3 items-center px-4 pb-3 pt-4">
-        <button type="button">
+      <div className="relative flex h-full w-full flex-col pb-[5.6875rem]">
+        <div className="grid w-full grid-cols-3 items-center px-4 pb-3 pt-4">
           <X
-            className="h-6 w-6 p-1 text-neutral-title"
+            aria-label="Close Button"
+            className="h-6 w-6 cursor-pointer p-1 text-neutral-title"
             onClick={() => navigate(-1)}
           />
-        </button>
-        <span className="flex justify-center text-pageTitle text-neutral-title">
-          Write
-        </span>
-        {/* 임시저장 */}
-        <span className="flex items-center justify-end gap-2 text-neutral-border-50">
-          <button
-            type="button"
-            onClick={handleSaveDraft}
-            disabled={saveDraftDisabled}
-          >
-            Save Draft
-          </button>
-          <span>|</span>
-          <button type="button" onClick={handleClickReloadDrafts}>
-            00
-          </button>
-        </span>
-        {isReloadModalOpen && (
-          <ReloadModal
-            onClose={() => setIsReloadModalOpen(false)}
-            handleReload={handleClickSavedDrafts}
+          <span className="flex justify-center text-pageTitle text-neutral-title">
+            {postId ? 'Edit' : 'Write'}
+          </span>
+          {/* 임시저장 */}
+          <span className="flex items-center justify-end gap-2 text-neutral-border-50">
+            <button
+              type="button"
+              onClick={handleSaveDraft}
+              disabled={saveDraftDisabled}
+            >
+              Save Draft
+            </button>
+            <span>|</span>
+            <button type="button" onClick={handleClickReloadDrafts}>
+              00
+            </button>
+          </span>
+          {isReloadModalOpen && (
+            <ReloadModal
+              onClose={() => setIsReloadModalOpen(false)}
+              handleReload={handleClickSavedDrafts}
+            />
+          )}
+        </div>
+        <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
+          <WriteTitle
+            title={title}
+            setTitle={setTitle}
+            placeholder="Please add a title."
+            maxLength={50}
+            titleRef={titleRef}
+            invalid={isTitleInvalid}
+            setInvalid={setIsTitleInvalid}
           />
-        )}
-      </div>
-      <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
-        <WriteTitle
-          title={title}
-          setTitle={setTitle}
-          placeholder="Please add a title."
-          maxLength={50}
-        />
-        {boardName &&
-          (boardName === 'Question' || boardName === 'Information') && (
+          {categoryList?.length !== 0 && (
             <SelectCategory
+              categories={categoryList}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
             />
           )}
-        <WriteContent
-          content={content}
-          setContent={setContent}
-          placeholder="Add a content."
-          maxLength={1000}
-        />
-        <UploadPics onChange={setUploadedFiles} />
-        <div className="flex gap-2">
-          <MainWhiteButton onClick={handleUpload} disabled={disabled}>
-            Upload
-          </MainWhiteButton>
-          <MainButton onClick={handleTranslateAndUpload} disabled={disabled}>
-            Upload in English
-          </MainButton>
+          <WriteContent
+            content={content}
+            setContent={setContent}
+            placeholder="Add a content."
+            maxLength={700}
+            contentRef={contentRef}
+            invalid={isContentInvalid}
+            setInvalid={setIsContentInvalid}
+          />
+          <UploadPics onChange={setUploadedFiles} prev={uploadedFiles} />
         </div>
-      </div>
-      {isPopup &&
-        createPortal(
-          <TranslatePopup
+
+        {/* 업로드 버튼 */}
+        <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 text-title-bold-16 text-neutral-80 shadow-base">
+          {postId ? (
+            <MainButton onClick={handleUploadWithoutTranslation}>
+              Edit
+            </MainButton>
+          ) : (
+            <>
+              <MainButton
+                color="white"
+                onClick={handleUploadWithoutTranslation}
+              >
+                Upload
+              </MainButton>
+              <MainButton onClick={handleTranslateAndUpload}>
+                Upload in English
+              </MainButton>
+            </>
+          )}
+        </div>
+        {prevPhotoLoadErrorMessage && (
+          <Modal
+            type={MODAL_TYPES.CONFIRM}
+            title={prevPhotoLoadErrorMessage}
+            onClickRight={() => setPrevPhotoLoadErrorMessage('')}
+            onClose={() => setPrevPhotoLoadErrorMessage('')}
+          ></Modal>
+        )}
+
+        {isTranslateModalOpen && (
+          <TranslateModal
             title={translatedTitle}
             text={translatedContent}
             onClickLeft={() => handleCancelTranslatePopup()}
             onClickRight={() => handleUpload()}
             isLoading={translatePending}
-          />,
-          document.getElementById('modal-root'),
+            categories={selectedCategory}
+          />
         )}
+      </div>
     </div>
   );
 };

@@ -13,22 +13,24 @@ import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { getUser } from '@/apis/user/userDetail.api';
+import { getUserDetail } from '@/apis/auth/login.api';
 import { path } from '@/routes/path';
-import { useCheckSchoolStatus } from '@/hooks/use-CheckSchoolStatus';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
+import { ERR_MSG } from '@/constants/errorMessage';
+import { UNIV_STATUS } from '@/constants/universityStatus';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState({
-    universityName: '',
+    universityCode: '',
     nickname: '',
     preferredLanguage: '',
     nationality: '',
   });
 
   const [savedInfo, setSavedInfo] = useState({
-    universityName: '',
+    universityCode: '',
     nickname: '',
     preferredLanguage: '',
     nationality: '',
@@ -39,21 +41,8 @@ export const MyInfo = () => {
   const [isLanguageSelected, setIsLanguageSelected] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const [status, setStatus] = useState(''); // 학교 인증 상태
-
   // 학교 인증 여부에 따라 학교 인증 버튼/학교 이름으로 보임
-  const { mutate: checkSchoolStatus } = useCheckSchoolStatus();
-
-  useEffect(() => {
-    checkSchoolStatus(undefined, {
-      onSuccess: (data) => {
-        setStatus(data.status);
-      },
-      onError: (error) => {
-        alert(error);
-      },
-    });
-  }, []);
+  const { data: status, isError: schoolStatusError } = useCheckSchoolStatus();
 
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;
@@ -128,7 +117,7 @@ export const MyInfo = () => {
 
   const { data: userData } = useQuery({
     queryKey: [QUERY_KEYS.USER_INFO],
-    queryFn: () => getUser(),
+    queryFn: () => getUserDetail(),
   });
 
   useEffect(() => {
@@ -139,15 +128,17 @@ export const MyInfo = () => {
   }, [userData]);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="My Information" onClick={handleBackClick} />
-      <div className="flex flex-col w-full h-full px-4">
+      <div className="flex h-full w-full flex-col px-4">
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
-          {info.universityName ? (
-            <DisabledInput name="School" defaultValue={info.universityName} />
-          ) : status === 'PENDING' ? (
+          {info.universityCode ? (
+            <DisabledInput name="School" defaultValue={info.universityCode} />
+          ) : schoolStatusError || status === UNIV_STATUS.PENDING ? (
             <div className="text-primary-base">
-              School verification is in progress.
+              {schoolStatusError
+                ? ERR_MSG
+                : 'School verification is in progress.'}
             </div>
           ) : (
             <div className="flex flex-col gap-[.625rem]">
@@ -191,7 +182,7 @@ export const MyInfo = () => {
           </div>
           <DisabledInput name="Nationality" defaultValue={info.nationality} />
         </div>
-        <div className="flex mt-8 mb-5">
+        <div className="mb-5 mt-8 flex">
           <MainButton onClick={handleClickSave} disabled={disabled}>
             Save
           </MainButton>

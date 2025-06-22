@@ -10,6 +10,7 @@ export const API_DOMAINS = {
   USER: '/users/details',
   PATCH_USER: '/users/info',
   MYPAGE: '/mypage',
+  POST_ACCESS_TOKEN: '/auth/reissue',
 
   GET_MY_POSTS: '/posts/my',
   GET_MY_COMMENTED_POST: '/my/commented-post',
@@ -21,7 +22,7 @@ export const API_DOMAINS = {
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
   SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
   VERIFY_SCHOOL_EMAIL_CODE: '/users/verify/mail/confirm',
-  GET_SCHOOL_STATUS: 'users/verify/status',
+  GET_SCHOOL_STATUS: '/cert/status',
 
   PRODUCTS: '/products',
 
@@ -34,6 +35,7 @@ export const API_DOMAINS = {
   BOARD_PUBLIC: '/boards/public',
   BOARD_FAVORITE_TOGGLE: '/boards/favorite/:boardId',
   BOARD_UNIV: '/boards/university',
+  BOARD_CATEGORIES: '/boards/:boardId/categories',
   BOARD_DETAIL: '/boards/:boardId',
   BOARD_FAVORITE: '/boards/favorite',
 
@@ -58,9 +60,17 @@ export const API_DOMAINS = {
   COMMENT_LIKE_TOGGLE: '/comments/:commentId/like',
 
   TRANSLATE_CREATE_POST: '/translations/posts',
-  TRANSLATE_POST: '/translations/:postId',
+  TRANSLATE_POST: '/translations/posts/:postId',
+  TRANSLATE_PRODUCT: '/translations/products/:productId',
   TRANSLATE_TEXT: '/translations/texts',
 
+  MARKET_CATEGORIES: '/products/categories',
+  MARKET_PRODUCT_LIST: '/products',
+  MARKET_POST_PRODUCT: '/products',
+  MARKET_HANDLE_PRODUCT: '/products/:productId',
+  MARKET_PATCH_PRODUCT_STATUS: '/products/:productId/status',
+
+  ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
   ADMIN_BOARD_DETAIL: '/admin/boards/:boardId',
   ADMIN_ACTIVE_BOARD: '/admin/boards/:boardId/active',
@@ -74,6 +84,7 @@ export const API_DOMAINS = {
   HOME_FAVORITE: '/boards/favorite',
 
   SEARCH_TOTAL: '/posts/search',
+  SEARCH_BOARD: '/posts/search/:boardId',
   SEARCH_KEYWORD: '/posts/search/keywords',
   SEARCH_DELETE: '/posts/search/keywords/:keywordId',
 
@@ -96,6 +107,7 @@ export const QUERY_KEYS = {
   POST_LOGIN: 'login',
   GET_KAKAO_LOGIN: 'kakaoLogin',
   GET_ADMIN_USER_ME: 'adminUser',
+  GET_USER_DETAIL: 'userDetail',
   GET_SCHOOL_EMAIL_CODE_SEND: 'schoolEmailSend',
   GET_SCHOOL_EMAIL_CODE_CONFIRM: 'schoolEmailCode',
   CHAT_LIST: 'chatList',
@@ -104,6 +116,7 @@ export const QUERY_KEYS = {
   POST_CHAT_READ: 'postChatRead',
 
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
+  GET_UNIV_BOARD: 'univBoard',
   GET_BOARD_DETAIL: 'boardData',
   GET_POST_DETAIL: 'postData',
   GET_POST_LIST: 'postList',
@@ -112,10 +125,12 @@ export const QUERY_KEYS = {
 
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
+  GET_TRANSLATE_PROUDCT: 'productTranslated',
   GET_TRANSLATE_TEXT: 'textTranslated',
 
   GET_SEARCH_KEYWORD: 'searchKeyword',
   GET_SEARCH_RESULT: 'searchResult',
+  GET_SEARCH_RESULT_BOARD: 'searchBoardResult',
 
   GET_HOME_UNIVERISTY: 'homeUniversity',
   GET_HOME_TRENDING: 'homeTrend',
@@ -124,18 +139,28 @@ export const QUERY_KEYS = {
 
   GET_BOARD_LIST: 'status',
   GET_BOARD: 'boardId',
+  GET_BOARD_CATEGORIES: 'boardCategories',
   POST_NOTICE: 'postNotice',
   GET_NOTICE: 'getNotice',
   NOTICE_DETAIL: 'noticeId',
   GET_INQUIRY: 'getInquiry',
   GET_INQUIRY_DETAILS: 'getInquiryDetails',
 
+  GET_MY_SCHOOL_VERIFICATION: 'mySchoolVerification',
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
 
+  GET_MARKET_CATEGORIES: 'marketCategories',
+  GET_MARKET_PRODUCT_LIST: 'marketProductList',
+  POST_MARKET_PRODUCT: 'postMarketProduct',
+  GET_MARKET_PRODUCT: 'getMarketProduct',
+  PATCH_MARKET_PRODUCT_STATUS: 'patchMarketProductStatus',
+  DELETE_MARKET_PRODUCT: 'deleteMarketProduct',
+
   ADMIN_GET_VERIFICATION_LIST: 'getVerficationList',
   ADMIN_GET_VERIFICATION: 'getVerficationList',
   ADMIN_POST_VERIFICATION: 'postVerficationList',
+  ADMIN_GET_CATEGORY: 'getCategory',
 };

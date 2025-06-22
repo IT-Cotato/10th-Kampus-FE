@@ -1,16 +1,5 @@
 import Close from '@/assets/imgs/x.svg?react';
-export const RecentSearch = ({ startSearch, data, deleteKeyword }) => {
-  const recentData = [
-    'Hospital',
-    'Food',
-    'Food',
-    'Universityeeeeeeeee',
-    'Universityeeeeeeeee',
-    'Hospital',
-    'University',
-    'Food',
-  ];
-  const emptyData = [];
+export const RecentSearch = ({ startSearch, data, deleteKeyword, error }) => {
   const RecordBox = ({ data }) => {
     return (
       <div className="flex cursor-pointer items-center gap-[0.625rem] rounded-full border border-neutral-border-30 px-3 py-[0.3125rem]">
@@ -24,7 +13,7 @@ export const RecentSearch = ({ startSearch, data, deleteKeyword }) => {
           {data?.keyword}
         </p>
         {/** 클릭 시, 해당 검색어 기록에서 삭제 하고 서버와 통신 */}
-        <button onClick={() => deleteKeyword(data?.id)}>
+        <button type="button" onClick={() => deleteKeyword(data?.id)}>
           <Close className="h-3 w-3 text-neutral-border-50" />
         </button>
       </div>
@@ -37,9 +26,15 @@ export const RecentSearch = ({ startSearch, data, deleteKeyword }) => {
           Recent searches
         </h1>
         {/** 아래 삭제 누를 시, 서버와 통신하여 최근 검색 기록 전체 삭제 */}
-        <h2 className="text-base text-neutral-border-40">Delete all</h2>
+        <button type="button" onClick={() => deleteKeyword(null)}>
+          <h2 className="text-base text-neutral-border-40">Delete all</h2>
+        </button>
       </div>
-      {recentData.length ? (
+      {error ? (
+        <p className="pt-4 text-base text-primary-red">
+          Failed to load keywords. Please try again later.
+        </p>
+      ) : data?.keywords?.length ? (
         <div className="flex max-h-24 flex-wrap gap-3 overflow-hidden">
           {data?.keywords.map((item, index) => (
             <RecordBox data={item} key={index} />

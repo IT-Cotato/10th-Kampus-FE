@@ -9,14 +9,14 @@ export const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       //로그인 상태일경우 path.board로 이동
-      navigate(path.login);
+      navigate(path.login.base);
     }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="flex items-center justify-center flex-1 bg-primary-base">
+    <div className="flex flex-1 items-center justify-center bg-primary-base">
       <Logo className="w-[12.5rem] text-white" />
     </div>
   );

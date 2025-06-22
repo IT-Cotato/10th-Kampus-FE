@@ -1,19 +1,26 @@
 import { cn } from '@/utils/cn';
 
-export const MainButton = (props) => {
+export const MainButton = ({
+  onClick,
+  disabled = false,
+  color = 'base', // 'base', 'white'
+  children,
+}) => {
   return (
     <button
       type="button"
-      onClick={props.onClick}
-      disabled={props.disabled}
+      onClick={onClick}
+      disabled={disabled}
       className={cn(
-        'h-[3.6875rem] w-full rounded-[.625rem] bg-primary-base text-white',
+        'box-border h-[3.6875rem] w-full cursor-pointer rounded-[.625rem] bg-primary-base px-[1.125rem] !text-title-bold-16 text-white',
         {
-          'bg-neutral-disabled cursor-default': props.disabled,
+          'border border-primary-base bg-white text-primary-base':
+            !disabled && color === 'white',
+          'cursor-default border-0 bg-neutral-border-50': disabled,
         },
       )}
     >
-      {props.children}
+      {children}
     </button>
   );
 };

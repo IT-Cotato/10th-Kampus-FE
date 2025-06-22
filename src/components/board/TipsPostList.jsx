@@ -9,7 +9,7 @@ export const TipsPostList = ({ data, boardId }) => {
 
   return (
     <div
-      className="flex justify-between gap-4 pt-5 pb-3"
+      className="flex justify-between gap-4 pb-3 pt-5"
       onClick={() => navigate(`${data.postId}`)}
     >
       <div className="flex flex-col justify-between">
@@ -41,8 +41,7 @@ export const TipsPostList = ({ data, boardId }) => {
         <ScrapComponent
           state={data.isScrapped}
           id={data.postId}
-          width="1.875rem"
-          height="1.875rem"
+          className="h-[1.875rem] w-[1.875rem]"
           boardId={boardId}
         />
       </div>

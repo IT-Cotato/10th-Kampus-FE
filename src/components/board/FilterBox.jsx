@@ -1,51 +1,72 @@
-import { useState } from 'react';
-import { DropBox } from '../common/DropBox';
-import { Categories } from '@/constants/categories';
-export const FilterBox = () => {
-  const [category, setCategory] = useState('All'); // 선택된 카테고리 값
-  const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const categoriesWithAll = ['All', ...Categories];
-  const sortOptions = ['All', 'Newest', 'Registered', 'Popularity'];
-  const toggleCategory_Sort = (type) => {
-    // 카테고리랑 정렬 토글
-    if (type === 'category') {
-      setIsCategoryOpen(!isCategoryOpen);
-      setIsSortOpen(false);
-    } else {
-      setIsSortOpen(!isSortOpen);
-      setIsCategoryOpen(false);
-    }
-  };
-  // 선택된 값 업데이트
-  const handleCategorySelect = (selected) => {
-    setCategory(selected);
-    setIsCategoryOpen(false);
+import { cn } from '@/utils/cn';
+import DropdownArrow from '@/assets/imgs/dropdown.svg?react';
+import { useEffect, useRef, useState } from 'react';
+export const FilterBox = ({ content, dropList, select, selected }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const nothingSelected = selected === 'All'; // 기본 상태는 아무것도 선택되지 않은 상태
+  const dropdownRef = useRef(null);
+
+  const handleSelectDropdown = (category) => {
+    setIsOpen(false);
+    select(category);
   };
 
-  const handleSortSelect = (selected) => {
-    setSortOrder(selected);
-    setIsSortOpen(false);
-  };
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="flex gap-[0.875rem] z-50">
-      <DropBox
-        dropList={categoriesWithAll}
-        state={isCategoryOpen}
-        content={'Category'}
-        toggle={() => toggleCategory_Sort('category')}
-        select={handleCategorySelect}
-        selected={category}
-      />
-      <DropBox
-        dropList={sortOptions}
-        state={isSortOpen}
-        content={'Sort by'}
-        toggle={() => toggleCategory_Sort('sortOrder')}
-        select={handleSortSelect}
-        selected={sortOrder}
-      />
+    <div className="flex flex-col" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          'flex w-fit cursor-pointer items-center justify-center gap-3 rounded-full border border-white px-[1.125rem] py-[0.375rem] text-neutral-80',
+          {
+            'border-primary-20 bg-primary-5 text-title-bold-16':
+              !nothingSelected || isOpen,
+            'text-base text-neutral-border-50 shadow-navbar':
+              nothingSelected && !isOpen,
+          },
+        )}
+      >
+        <p>{selected !== 'All' ? selected : content}</p>
+        <DropdownArrow
+          className={cn('h-3 w-3', {
+            'text-neutral-80': isOpen,
+            'rotate-180': !isOpen,
+          })}
+        />
+      </button>
+      {isOpen && (
+        <div className="relative">
+          <div className="absolute top-2 flex w-fit min-w-32 flex-col rounded-[0.625rem] bg-white px-1 py-1 shadow-navbar">
+            {dropList.map((category) => (
+              <p
+                key={category}
+                onClick={() => handleSelectDropdown(category)}
+                className="flex w-full cursor-pointer px-3 py-1 text-base text-neutral-title hover:bg-primary-5"
+              >
+                {category}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

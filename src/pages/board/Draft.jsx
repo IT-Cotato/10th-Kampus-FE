@@ -78,7 +78,7 @@ export const Draft = () => {
               : `Total ${getDrafts?.totalCount === 0 ? '00' : getDrafts?.totalCount}`}
           </span>
           <ul className="flex flex-col divide-y-[0.5px]">
-            {getDrafts?.draftPosts.map((draft) => (
+            {getDrafts?.items?.map((draft) => (
               <DraftBox
                 key={draft.draftId}
                 draftId={draft.draftId}
