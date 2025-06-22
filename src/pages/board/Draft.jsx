@@ -12,6 +12,7 @@ import { DraftHeader } from '@/components/board/draft/DraftHeader';
 import { Loading } from '@/components/common/Loading';
 import { QUERY_KEYS } from '@/constants/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import KampusLogo from '@/assets/imgs/kampusLogo.svg?react';
 import { useState } from 'react';
 
 export const Draft = () => {
@@ -77,22 +78,30 @@ export const Draft = () => {
               ? `Selected ${selectedDrafts?.length === 0 ? '00' : selectedDrafts?.length}`
               : `Total ${getDrafts?.totalCount === 0 ? '00' : getDrafts?.totalCount}`}
           </span>
-          <ul className="flex flex-col divide-y-[0.5px]">
-            {getDrafts?.items?.map((draft) => (
-              <DraftBox
-                key={draft.draftId}
-                draftId={draft.draftId}
-                boardId={draft.boardId}
-                title={draft.title}
-                content={draft.content}
-                thumbnailUrl={draft.thumbnailUrl}
-                createdTime={draft.createdTime}
-                isEditMode={isEditMode}
-                selectedDrafts={selectedDrafts}
-                setSelectedDrafts={setSelectedDrafts}
-              />
-            ))}
-          </ul>
+
+          {getDrafts?.totalCount !== 0 ? (
+            <ul className="flex flex-1 flex-col divide-y-[0.5px]">
+              {getDrafts?.items?.map((draft) => (
+                <DraftBox
+                  key={draft.draftId}
+                  draftId={draft.draftId}
+                  boardId={draft.boardId}
+                  title={draft.title}
+                  content={draft.content}
+                  thumbnailUrl={draft.thumbnailUrl}
+                  createdTime={draft.createdTime}
+                  isEditMode={isEditMode}
+                  selectedDrafts={selectedDrafts}
+                  setSelectedDrafts={setSelectedDrafts}
+                />
+              ))}
+            </ul>
+          ) : (
+            <span className="flex flex-1 -translate-y-12 flex-col items-center justify-center gap-2 text-center text-neutral-disabled">
+              <KampusLogo className="h-12" />
+              <span>There's nothing you've written!</span>
+            </span>
+          )}
         </section>
       )}
       {/* Delete */}
