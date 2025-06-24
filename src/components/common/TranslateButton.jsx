@@ -5,23 +5,21 @@ import { cn } from '@/utils/cn';
  * @param {function} props.handleTranslate
  * @param {boolean} props.state - 해당 함수로 번역된 텍스트 전달
  * @param {function} props.setState - 해당 함수로 번역된 텍스트 전달
- * @param {'small' | 'large'} props.size - 크기
- * @param {'title' | 'base'} props.color - 색상
+ * @param {undefined | 'small'} props.size - 크기
  */
-export const TranslateButton = ({ handleTranslate, state, setState, size, color }) => {
+export const TranslateButton = ({ handleTranslate, state, setState, size }) => {
   return (
-    <button type="button"
+    <button
+      type="button"
       onClick={(e) => {
         e.stopPropagation();
         state ? setState(false) : handleTranslate();
-      }}>
-      <TranslateImg alt="Translate"
-        className={cn({
-          "w-[1.125rem] h-[1.125rem]": size === "small",
-          "w-6 h-6": size === "large",
-          "text-neutral-base": color === "base",
-          "text-neutral-title": color === "title"
-        })} />
+      }}
+      className={cn(size === 'small' ? 'h-[1.125rem] w-[1.125rem]' : 'h-6 w-6')}
+    >
+      <TranslateImg
+        className={cn(state ? 'text-neutral-title' : 'text-neutral-border-50')}
+      />
     </button>
   );
 };

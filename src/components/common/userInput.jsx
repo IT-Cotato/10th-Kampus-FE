@@ -181,8 +181,9 @@ export const UserInput = ({
           onClick={handleSend}
           aria-label="Send Message"
           className={cn('right-6 h-8 w-8', {
-            'text-primary-30': input || previewImages.length > 0,
-            'text-neutral-border-30': !input && previewImages.length === 0,
+            'text-primary-30': input.trim() || previewImages.length > 0,
+            'text-neutral-border-30':
+              !input.trim() && previewImages.length === 0,
           })}
         >
           <Send className="h-full w-full" />

@@ -44,8 +44,22 @@ export default {
           fontWeight: '400',
         },
       ],
+      extraSmall: [
+        '.75rem', // 12px
+        {
+          letterSpacing: '0em',
+          fontWeight: '400',
+        },
+      ],
       'title-bold-16': [
         '1rem', // 16px
+        {
+          letterSpacing: '0em',
+          fontWeight: '700',
+        },
+      ],
+      'bold-20': [
+        '1.25rem', // 20px
         {
           letterSpacing: '0em',
           fontWeight: '700',
@@ -132,7 +146,7 @@ export default {
             '',
         },
         '.admin-layout': {
-          '@apply flex overflow-auto min-h-dvh bg-primary-10': '',
+          '@apply flex overflow-auto min-h-dvh bg-neutral-bg-10': '',
         },
         '.animate-bottom-sheet-up': {
           animation: 'bottom-sheet-up 0.2s ease-in-out',

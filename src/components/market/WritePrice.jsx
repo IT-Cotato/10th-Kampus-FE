@@ -8,7 +8,7 @@ export const WritePrice = ({
   placeholder,
   priceRef,
   invalid = false,
-  setInvalid = null,
+  setInvalid = () => {},
 }) => {
   const handleOnChange = (e) => {
     const raw = e.target.value.replace(/[^0-9]/g, '');

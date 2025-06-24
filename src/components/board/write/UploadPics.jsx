@@ -1,12 +1,61 @@
 import Camera from '@/assets/imgs/camera.svg';
 import ImgX from '@/assets/imgs/ImgX.svg?react';
-import { Modal } from '@/components/common/Modal';
-import { useState } from 'react';
+import { InputWarningText } from '@/components/common/InputWarningText';
+import { Modal, MODAL_TYPES } from '@/components/common/Modal';
+import { useEffect, useState } from 'react';
 
-export const UploadPics = ({ onChange }) => {
+export const UploadPics = ({
+  onChange,
+  prev,
+  imageRef = null,
+  invalid = false,
+  setInvalid = null,
+}) => {
   const [previewImages, setPreviewImages] = useState([]);
   const [files, setFiles] = useState([]);
   const [showErrorModal, setShowErrorModal] = useState('');
+
+  useEffect(() => {
+    return () => {
+      previewImages.forEachh((url) => revokeObjectURL(url));
+    };
+  }, []);
+
+  useEffect(() => {
+    if (prev) {
+      loadPhotos(prev);
+    }
+  }, [prev]);
+
+  const loadPhotos = async (prev) => {
+    try {
+      // Promise로 모든 미리보기 URL 생성
+      const newPreviews = await Promise.all(
+        prev.map((file) => {
+          // URL 생성 중 오류 가능성 대비
+          return new Promise((resolve, reject) => {
+            try {
+              resolve(URL.createObjectURL(file));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }),
+      );
+
+      // 모든 파일과 미리보기가 준비된 후 상태 업데이트
+      if (prev.length > 0 && newPreviews.length === prev.length) {
+        setFiles(prev);
+        setPreviewImages(newPreviews);
+        onChange(prev); // 부모 컴포넌트에 전달
+      }
+    } catch (error) {
+      setShowErrorModal(
+        error.message || 'An error occurred while processing the file.',
+      );
+      return null;
+    }
+  };
 
   const getImageFiles = async (e) => {
     const newFiles = Array.from(e.target.files);
@@ -44,10 +93,13 @@ export const UploadPics = ({ onChange }) => {
         setFiles(updatedFiles);
         setPreviewImages(updatedPreviews);
         onChange(updatedFiles); // 부모 컴포넌트에 전달
+        if (setInvalid) setInvalid(false);
         e.target.value = '';
       }
     } catch (error) {
-      setShowErrorModal('An error occurred while processing the file.');
+      setShowErrorModal(
+        error.message || 'An error occurred while processing the file.',
+      );
       return null;
     }
   };
@@ -66,47 +118,57 @@ export const UploadPics = ({ onChange }) => {
   };
 
   return (
-    <div className="flex flex-row items-end gap-2">
-      <label
-        htmlFor="selectImages"
-        className="mt-[.625rem] flex h-20 w-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30"
-      >
-        <img src={Camera} alt="" className="h-[2.375rem] w-[2.375rem]" />
-        <span className="text-small text-neutral-border-50">
-          {files.length}/10
-        </span>
-      </label>
-      <input
-        type="file"
-        accept="image/*"
-        id="selectImages"
-        className="hidden"
-        multiple
-        onChange={getImageFiles}
-      />
-      <div className="grid grid-flow-col gap-[.875rem] overflow-x-scroll pr-[.625rem] pt-[.625rem] scrollbar-hide">
-        {previewImages.map((src, index) => (
-          <div className="relative w-20 h-20" key={index}>
-            <img
-              src={src}
-              alt={`Preview ${index + 1}`}
-              className="object-cover w-20 h-20"
-            />
-            <button
-              onClick={() => removeImage(index)}
-              className="absolute top-0 right-0 z-10 translate-x-1/2 -translate-y-1/2"
-            >
-              <ImgX className="h-[1.125rem] w-[1.125rem] text-neutral-border-50" />
-            </button>
-          </div>
-        ))}
+    <div className="flex flex-col gap-2">
+      <div className="flex items-end gap-2">
+        <label
+          htmlFor="selectImages"
+          className="mt-[.625rem] flex h-20 w-20 flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[.3125rem] bg-neutral-border-30"
+        >
+          <img src={Camera} alt="" className="h-[2.375rem] w-[2.375rem]" />
+          <span className="text-small text-neutral-border-50">
+            {files.length}/10
+          </span>
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          id="selectImages"
+          className="hidden"
+          multiple
+          onChange={getImageFiles}
+        />
+        <div
+          ref={imageRef}
+          className="grid grid-flow-col gap-[.875rem] overflow-x-scroll pr-[.625rem] pt-[.625rem] scrollbar-hide"
+        >
+          {previewImages.map((src, index) => (
+            <div className="relative h-20 w-20" key={index}>
+              <img
+                src={src}
+                alt={`Preview ${index + 1}`}
+                className="h-20 w-20 object-cover"
+              />
+              <button
+                onClick={() => removeImage(index)}
+                className="absolute right-0 top-0 z-10 -translate-y-1/2 translate-x-1/2"
+              >
+                <ImgX className="h-[1.125rem] w-[1.125rem] text-neutral-border-50" />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
+      {invalid && (
+        <InputWarningText>
+          Please select at least one image to continue.
+        </InputWarningText>
+      )}
       {showErrorModal !== '' && (
         <Modal
-          type={MODAL_TYPES.WARNING}
+          type={MODAL_TYPES.CONFIRM}
           title={showErrorModal}
-          leftButton="Close"
-          onClickLeft={() => setShowErrorModal('')}
+          rightButton="Close"
+          onClickRight={() => setShowErrorModal('')}
           onClose={() => setShowErrorModal('')}
         />
       )}

@@ -27,6 +27,7 @@ export const Admin = ({ children }) => {
   const { data: userData } = useQuery({
     queryKey: [QUERY_KEYS.GET_USER_ME],
     queryFn: () => getUser(),
+    staleTime: 1000 * 60 * 5,
   });
 
   const menu = [
@@ -77,7 +78,7 @@ export const Admin = ({ children }) => {
         {showMenu && (
           <div className="flex max-h-[37.5rem] min-h-dvh w-72 flex-col justify-center rounded-br-3xl bg-white pt-20 text-start align-middle">
             {menu.map((item) => (
-              <div className="flex">
+              <div className="flex" key={item.id}>
                 {pathname.includes(item.path) && (
                   <div className="h-full w-1 rounded-r-lg bg-primary-base" />
                 )}

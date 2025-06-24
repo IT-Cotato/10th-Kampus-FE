@@ -8,7 +8,7 @@ export const WriteTitle = ({
   maxLength = 0,
   titleRef,
   invalid = false,
-  setInvalid = null,
+  setInvalid = () => {},
 }) => {
   const handleOnChange = (e) => {
     if (maxLength && e.target.value.length > maxLength) {

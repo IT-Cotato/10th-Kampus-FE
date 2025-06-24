@@ -74,14 +74,14 @@ export const Terms = () => {
         >
           <div
             className={cn(
-              'flex h-6 w-6 items-center justify-center rounded-[.3125rem]',
+              'flex aspect-square h-[1.625rem] w-[1.625rem] items-center justify-center rounded-full',
               {
                 'bg-primary-base': isAllAgreed,
                 'border border-neutral-border-40': !isAllAgreed,
               },
             )}
           >
-            {isAllAgreed ? <Check className="h-3 w-3 text-white" /> : ''}
+            {isAllAgreed ? <Check className="h-3.5 w-3.5 text-white" /> : ''}
           </div>
           <div className="text-subTitle text-neutral-title">Agree with all</div>
         </button>

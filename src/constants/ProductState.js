@@ -2,7 +2,7 @@
 export const SERVER_PRODUCT_STATE = {
   active: 'ACTIVE',
   reserved: 'RESERVED',
-  soldOut: 'SOLD_OUT',
+  soldOut: 'SOLD',
 };
 
 // 프론트 상품 상태

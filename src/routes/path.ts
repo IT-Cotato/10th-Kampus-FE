@@ -1,6 +1,9 @@
 export const path = {
   accountPermanentSuspended: '/account-permanent-suspended',
-  login: '/login',
+  login: {
+    base: '/login',
+    kakao: 'kakao',
+  },
   signup: {
     base: '/signup',
     terms: 'terms',
@@ -18,6 +21,7 @@ export const path = {
     specific: {
       base: ':boardId',
       write: 'write',
+      edit: 'edit',
       post: ':postId',
       report: 'report',
       search: 'search',
@@ -70,7 +74,8 @@ export const path = {
   market: {
     base: '/market',
     write: 'write',
-    post: ':postId',
+    edit: 'edit',
+    product: ':productId',
   },
   chatList: {
     base: '/chat',

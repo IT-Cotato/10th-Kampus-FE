@@ -3,59 +3,70 @@ import { PostHeader } from '@/components/board/PostHeader';
 import { WriteButton } from '@/components/board/write/WriteButton';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
+import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
+import { useGetMarketProductList } from '@/state/query/market/useGetMarketProductList';
+import { useEffect, useState } from 'react';
 
 export const Market = () => {
-  const postList = {
-    posts: [
-      {
-        postId: 1,
-        title: '인형',
-        price: 30000,
-        likes: 10,
-        chats: 0,
-        state: 'RESERVED',
-        thumbnailUrl: 'src/assets/imgs/bg1.png',
-        isScrapped: true,
-        createdTime: '2025-04-27 02:56:52',
-      },
-      {
-        postId: 2,
-        title: '인형',
-        price: 20000,
-        likes: 10,
-        chats: 0,
-        state: 'ACTIVE',
-        thumbnailUrl: 'src/assets/imgs/bg2.png',
-        isScrapped: false,
-        createdTime: '2025-04-27 02:56:52',
-      },
-    ],
+  const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
+  const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
+  const [category, setCategory] = useState('All'); // 선택된 카테고리 값
+  const [sortKey, setSortKey] = useState('recent');
+
+  // 프론트 -> 백 통신 전 변환
+  const getSortKey = (option) => {
+    switch (option) {
+      case 'All':
+      case 'Newest':
+        return 'recent';
+      case 'Registered':
+        return 'old';
+      case 'Popularity':
+        return 'scrapCount';
+      default:
+        return 'recent';
+    }
   };
 
-  const boardDetail = {
-    boardName: 'Market',
-    filter: true,
-  };
+  useEffect(() => {
+    setSortKey(getSortKey(sortOrder));
+  }, [sortOrder]);
 
-  const isPostLoading = false;
-  const isPostError = false;
+  const { data: categoryData } = useGetMarketCategory();
+  const {
+    data: productList,
+    isPending: isPostLoading,
+    isError: isPostError,
+  } = useGetMarketProductList({ pageParam: 1, sortKey, category });
 
   return (
     <div className="flex flex-1">
       <PostHeader />
-      <div className="relative flex flex-1 flex-col pt-14">
-        <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-          {boardDetail.filter && <FilterBox />}
-          {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
+      <div className="flex h-fit w-full flex-col pt-14">
+        <div className="fixed z-10 flex w-full max-w-lg gap-[0.875rem] bg-white px-[1.125rem] pb-4 pt-[.875rem]">
+          {categoryData && (
+            <FilterBox
+              content={'Category'}
+              dropList={['All', ...categoryData]}
+              select={(selected) => setCategory(selected)}
+              selected={category}
+            />
+          )}
+          <FilterBox
+            content={'Sort by'}
+            dropList={sortOptions}
+            select={(selected) => setSortOrder(selected)}
+            selected={sortOrder}
+          />
         </div>
-        <div className="flex w-full flex-1 flex-col divide-y bg-white px-4">
+        <div className="flex w-full flex-1 flex-col divide-y overflow-y-auto bg-white px-4 pt-[3.25rem]">
           {isPostLoading && <Loading />}
-          {isPostError && <p>Error Data Loading</p>}
+          {isPostError && <p>An error occured while loading</p>}
           {!isPostLoading &&
             !isPostError &&
-            (postList.posts?.length > 0 ? (
-              postList.posts.map((item) => (
-                <MarketList key={item.postId} data={item} />
+            (productList?.items?.length > 0 ? (
+              productList?.items.map((item) => (
+                <MarketList key={item.productId} data={item} />
               ))
             ) : (
               <p className="flex flex-1 items-center justify-center text-small text-neutral-disabled">
@@ -63,7 +74,7 @@ export const Market = () => {
               </p>
             ))}
         </div>
-        {boardDetail && <WriteButton />}
+        <WriteButton />
       </div>
     </div>
   );

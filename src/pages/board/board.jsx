@@ -4,7 +4,6 @@ import { PostList } from '@/components/board/PostList';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
-import { path } from '@/routes/path';
 import { WriteButton } from '@/components/board/write/WriteButton';
 import {
   getCardNewsList,
@@ -21,7 +20,6 @@ import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
 
 export const Board = () => {
   const { boardId } = useParams();
-  const navigate = useNavigate();
   const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
   const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
   const [category, setCategory] = useState('All'); // 선택된 카테고리 값
@@ -51,9 +49,9 @@ export const Board = () => {
   } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId, sortOrder, category],
     queryFn: ({ pageParam = 1 }) => {
-      if (boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.CARD) {
-        return getCardNewsList({ page: pageParam });
-      } else if (false) {
+      if (
+        boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.TRENDING
+      ) {
         return getTrendingList({ page: pageParam });
       } else {
         return getPostList({
@@ -95,33 +93,24 @@ export const Board = () => {
   return (
     <div className="flex flex-1">
       <PostHeader />
-      <div className="flex flex-1 flex-col pt-14">
-        <div className="flex w-full flex-col gap-[0.875rem] bg-white px-4 pb-1 pt-5">
-          <div
-            className="flex w-full cursor-pointer items-center justify-center rounded-[0.625rem] bg-primary-10 py-2 text-small text-neutral-base"
-            onClick={() => navigate(path.boardGuide)}
-          >
-            Board guide
-          </div>
-          <div className="z-10 flex gap-[0.875rem]">
-            {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
-              <FilterBox
-                content={'Category'}
-                dropList={categoryData}
-                select={(selected) => setCategory(selected)}
-                selected={category}
-              />
-            )}
+      <div className="flex h-fit w-full flex-col pt-14">
+        <div className="fixed z-10 flex w-full max-w-lg gap-[0.875rem] bg-white px-[1.125rem] pb-4 pt-[.875rem]">
+          {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
             <FilterBox
-              content={'Sort by'}
-              dropList={sortOptions}
-              select={(selected) => setSortOrder(selected)}
-              selected={sortOrder}
+              content={'Category'}
+              dropList={categoryData}
+              select={(selected) => setCategory(selected)}
+              selected={category}
             />
-            {/** 추후, 백엔드와 필터 작업 시 props 넘겨줘야 함 */}
-          </div>
+          )}
+          <FilterBox
+            content={'Sort by'}
+            dropList={sortOptions}
+            select={(selected) => setSortOrder(selected)}
+            selected={sortOrder}
+          />
         </div>
-        <div className="flex w-full flex-col divide-y bg-white px-4">
+        <div className="flex w-full flex-1 flex-col divide-y overflow-y-auto bg-white px-4 pt-[3.25rem]">
           {isPostLoading && <Loading />}
           {isPostError && <p>Error Data Loading</p>}
           {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰의 UI가 다름 */}

@@ -4,18 +4,18 @@ import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
-import { MainWhiteButton } from '@/components/common/MainWhiteButton';
-import { TranslatePopup } from '@/components/board/write/TranslatePopup';
-import { createPortal } from 'react-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
-import { writePostTranslate } from '@/apis/translate/writePostTranslate.api';
+import { TranslateModal } from '@/components/common/TranslateModal';
 import { WritePrice } from '@/components/market/WritePrice';
+import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
+import { usePostMarketProduct } from '@/state/mutation/market/usePostMarketProduct';
+import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
+import { Modal, MODAL_TYPES } from '@/components/common/Modal';
+import { urlToFile } from '@/utils/urlToFile';
+import { usePutMarketProduct } from '@/state/mutation/market/usePutMarketProduct';
+import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
 export const MarketWrite = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);
   const [title, setTitle] = useState('');
@@ -25,69 +25,60 @@ export const MarketWrite = () => {
   const [price, setPrice] = useState();
   const [translatedContent, setTranslatedContent] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [isPopup, setIsPopup] = useState(false);
+  const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
+  const { productId } = useParams(); // productId 있으면 수정 페이지
 
-  // 유효성 검사를 위한 ref
+  // 빈칸으로 업로드 버튼 클릭 시 focus를 위한 위한 ref
+  const imageRef = useRef(null);
   const titleRef = useRef(null);
   const priceRef = useRef(null);
   const categoryRef = useRef(null);
   const contentRef = useRef(null);
 
+  const [isImageInvalid, setIsImageInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
   const [isPriceInvalid, setIsPriceInvalid] = useState(false);
   const [isContentInvalid, setIsContentInvalid] = useState(false);
   const [isCategoryInvalid, setIsCategoryInvalid] = useState(false);
 
+  const { data: categoryData } = useGetMarketCategory();
+
   useEffect(() => {
-    setCategoryList([
-      'Book',
-      'Electronic',
-      'Fashion',
-      'Furniture',
-      'Living&Kitchen',
-    ]);
-  }, []);
+    setCategoryList(categoryData);
+  }, [categoryData]);
 
-  // 중고거래 게시판에 적용되는 카테고리 조회
-  // const { data: boardCategories, isSuccess: isBoardCategoriesSuccess } =
-  //   useQuery({
-  //     queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
-  //     queryFn: () => getBoardCategories({ boardId: boardId }),
-  //     enabled: !!boardId,
-  //   });
+  const { mutate: addPost } = usePostMarketProduct();
+  const { data: prevPost } = useGetMarketProduct();
+  useEffect(() => {
+    if (prevPost) {
+      setTitle(prevPost.title);
+      setPrice(prevPost.price);
+      setContent(prevPost.description);
+      setSelectedCategory(prevPost.categories);
+      loadPrevPhotos();
+    }
+  }, [prevPost]);
+  const { mutate: putPost } = usePutMarketProduct();
 
-  // useEffect(() => {
-  //   if (isBoardCategoriesSuccess) {
-  //     setCategoryList([...boardCategories?.categories]);
-  //   }
-  // }, [isBoardCategoriesSuccess]);
-
-  // const {
-  //   mutate: addPost,
-  //   isPending: postPending,
-  //   isError: postError,
-  // } = useMutation({
-  //   mutationFn: (newPost) => postWritePost({ data: newPost }),
-  //   onSuccess: (response) => {
-  //     const createdPostId = response.postId;
-  //     queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-  //     navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
-  //       replace: true,
-  //     });
-  //   },
-  // });
+  const [prevPhotoLoadErrorMessage, setPrevPhotoLoadErrorMessage] =
+    useState('');
+  const loadPrevPhotos = async () => {
+    try {
+      const filePromises = prevPost.photos.map((photo) =>
+        urlToFile(photo.photoUrl, photo.order),
+      );
+      const files = await Promise.all(filePromises);
+      setUploadedFiles(files);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const {
-    mutate: setTranslate,
+    mutate: handleTranslate,
     isPending: translatePending,
     isError: translateError,
-  } = useMutation({
-    mutationFn: (data) => writePostTranslate(data),
-    onSuccess: (response) => {
-      setTranslatedTitle(response.title);
-      setTranslatedContent(response.content);
-    },
-  });
+  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   const handleFocus = (ref) => {
     ref.current?.focus();
@@ -99,12 +90,16 @@ export const MarketWrite = () => {
 
   // 업로드 버튼 클릭 시 유효성 검증
   const validateBeforeUpload = () => {
+    setIsImageInvalid(uploadedFiles.length === 0);
     setIsTitleInvalid(!title);
     setIsPriceInvalid(!price);
     setIsCategoryInvalid(selectedCategory.length === 0);
     setIsContentInvalid(!content);
 
-    if (!title) {
+    if (uploadedFiles.length === 0) {
+      handleFocus(imageRef);
+      return false;
+    } else if (!title) {
       handleFocus(titleRef);
       return false;
     } else if (!price) {
@@ -130,39 +125,42 @@ export const MarketWrite = () => {
     const formData = new FormData();
 
     formData.append('title', translatedTitle ?? title);
-    formData.append('content', translatedContent ?? content);
+    formData.append('description', translatedContent ?? content);
+    formData.append('price', price);
 
     if (selectedCategory.length !== 0) {
       selectedCategory.forEach((category) =>
-        formData.append('categories', category),
+        formData.append('categoryNames', category),
       );
     }
 
     if (uploadedFiles.length > 0) {
       uploadedFiles.forEach((file) => {
-        formData.append(`images`, file); // 각 파일을 개별적으로 추가
+        formData.append('images', file); // 각 파일을 개별적으로 추가
       });
     }
-    addPost(formData);
+
+    if (productId) {
+      putPost({ productId, data: formData });
+    } else {
+      addPost(formData);
+    }
   };
 
   const handleCancelTranslatePopup = () => {
-    setIsPopup(false);
+    setIsTranslateModalOpen(false);
     setTranslatedTitle(null);
     setTranslatedContent(null);
   };
 
   const handleTranslateAndUpload = () => {
     if (validateBeforeUpload()) {
-      setIsPopup(true);
-      const buildData = () => {
-        return {
-          title: title,
-          content: content,
-          targetLanguageCode: 'EN-US',
-        };
-      };
-      setTranslate({ data: buildData() });
+      setIsTranslateModalOpen(true);
+      handleTranslate({
+        title: title,
+        content: content,
+        targetLanguageCode: 'EN-US',
+      });
     }
   };
 
@@ -176,11 +174,17 @@ export const MarketWrite = () => {
           />
         </button>
         <span className="flex justify-center text-pageTitle text-neutral-title">
-          Write
+          {productId ? 'Edit' : 'Write'}
         </span>
       </div>
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
-        <UploadPics onChange={setUploadedFiles} />
+        <UploadPics
+          onChange={setUploadedFiles}
+          prev={uploadedFiles}
+          imageRef={imageRef}
+          invalid={isImageInvalid}
+          setInvalid={setIsImageInvalid}
+        />
         <WriteTitle
           title={title}
           setTitle={setTitle}
@@ -222,25 +226,40 @@ export const MarketWrite = () => {
 
       {/* 업로드 버튼 */}
       <div className="fixed bottom-0 flex w-full max-w-[512px] gap-2 bg-white px-4 py-4 shadow-base">
-        <MainButton onClick={handleUploadWithoutTranslation} color="white">
-          Upload
-        </MainButton>
-        <MainButton onClick={handleTranslateAndUpload}>
-          Upload in English
-        </MainButton>
+        {productId ? (
+          <MainButton onClick={handleUploadWithoutTranslation}>Edit</MainButton>
+        ) : (
+          <>
+            <MainButton onClick={handleUploadWithoutTranslation} color="white">
+              Upload
+            </MainButton>
+            <MainButton onClick={handleTranslateAndUpload}>
+              Upload in English
+            </MainButton>
+          </>
+        )}
       </div>
 
-      {isPopup &&
-        createPortal(
-          <TranslatePopup
-            title={translatedTitle}
-            text={translatedContent}
-            onClickLeft={() => handleCancelTranslatePopup()}
-            onClickRight={() => handleUpload()}
-            isLoading={translatePending}
-          />,
-          document.getElementById('modal-root'),
-        )}
+      {isTranslateModalOpen && (
+        <TranslateModal
+          title={translatedTitle}
+          text={translatedContent}
+          onClickLeft={() => handleCancelTranslatePopup()}
+          onClickRight={() => handleUpload()}
+          isLoading={translatePending}
+          price={price}
+          categories={selectedCategory}
+        />
+      )}
+
+      {prevPhotoLoadErrorMessage && (
+        <Modal
+          type={MODAL_TYPES.CONFIRM}
+          title={prevPhotoLoadErrorMessage}
+          onClickRight={() => setPrevPhotoLoadErrorMessage('')}
+          onClose={() => setPrevPhotoLoadErrorMessage('')}
+        ></Modal>
+      )}
     </div>
   );
 };

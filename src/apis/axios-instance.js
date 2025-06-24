@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { ACCESS_TOKEN_KEY } from '../constants/api';
+import { onError, onRequest, onRequestError } from '@/apis/interceptor';
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const axiosInstance = (url, params, options) => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
   const instance = axios.create({
     baseURL: url,
-    headers: { Authorization: `Bearer ${accessToken}` },
     params: params,
     //그 외
     ...options,
@@ -15,3 +14,11 @@ const axiosInstance = (url, params, options) => {
 };
 
 export const authApi = axiosInstance(BASE_URL);
+
+// 요청 인터셉터
+authApi.interceptors.request.use(onRequest, onRequestError);
+// 응답 인터셉터
+authApi.interceptors.response.use(
+  (response) => response,
+  (error) => onError(error, authApi),
+);

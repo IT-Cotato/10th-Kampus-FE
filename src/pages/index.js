@@ -4,6 +4,7 @@ export { Home } from './home/home';
 export { SplashScreen } from './SplashScreen';
 
 export { Login } from './auth/login';
+export { KakaoLoginHandler } from './auth/handler/KakaoLoginHandler';
 export { Terms } from './auth/terms';
 export { ProfileSettings } from './auth/profileSettings';
 export { Welcome } from './auth/welcome';
@@ -56,7 +57,7 @@ export { BoardManagement } from './admin/board/BoardManagement';
 export { CreateBoard } from './admin/board/CreateBoard';
 export { CardnewsList } from './admin/cardnews/CardnewsList';
 export { CreateCardnews } from './admin/cardnews/CreateCardnews';
-export { Dashboard } from './admin/Dashboard';
+export { Dashboard } from './admin/Dashboard/Dashboard';
 export { ReportManagement } from './admin/ReportManagement';
 export { SignupManagement } from './admin/signup/SignupManagement';
 export { StudentVerifications } from './admin/signup/StudentVerifications';
