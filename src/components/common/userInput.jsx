@@ -20,15 +20,15 @@ export const UserInput = ({
   const [previewImages, setPreviewImages] = useState([]);
   const [showImagePreview, setShowImagePreview] = useState(false);
 
+  // textarea 높이 조절
   const handleInput = () => {
-    // textarea 높이 조절
     if (textareaRef.current) {
       textareaRef.current.style.height = '0px';
       const scrollHeight = textareaRef.current.scrollHeight;
       textareaRef.current.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
 
       if (containerRef.current) {
-        containerRef.current.style.height = `${Math.min(scrollHeight, maxHeight) + 20}px'`;
+        containerRef.current.style.height = `${Math.min(scrollHeight, maxHeight) + 20}px`;
       }
     }
   };
@@ -41,7 +41,16 @@ export const UserInput = ({
     if (textareaRef.current && inputFocus && INPUT_TYPE.POST === type) {
       textareaRef.current.focus();
     }
-  });
+  }, [inputFocus, type]);
+
+  // 언마운트 시 미리보기 URL 모두 해제
+  useEffect(() => {
+    return () => {
+      previewImages.forEach((url) => {
+        URL.revokeObjectURL(url);
+      });
+    };
+  }, [previewImages]);
 
   const handlePhoto = async (e) => {
     const newFiles = Array.from(e.target.files);

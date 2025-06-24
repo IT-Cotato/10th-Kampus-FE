@@ -5,7 +5,7 @@ import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
 import blockIcon from '@/assets/imgs/blockIcon.svg';
 import leaveIcon from '@/assets/imgs/leaveIcon.svg';
 import { touchDrag } from '@/utils/touchDrag';
-import { parseToDate } from '@/utils/utcToKst';
+import { parseToDate, formatChatTime } from '@/utils/utcToKst';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { deleteChatroom } from '@/apis/chat/chatRoom.api';
@@ -30,13 +30,7 @@ export const ListItem = ({
 
   const time = parseToDate(data.lastChatTime);
   const lastChatDate = new Date(data.lastChatTime);
-  const isSameDay =
-    lastChatDate.getFullYear() === new Date().getFullYear() &&
-    lastChatDate.getMonth() === new Date().getMonth() &&
-    lastChatDate.getDate() === new Date().getDate();
-  const formatTime = isSameDay
-    ? `${time.hh}:${time.mi}`
-    : `${time.mm}월 ${time.dd}일`;
+  const formatTime = formatChatTime(lastChatDate, time);
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">

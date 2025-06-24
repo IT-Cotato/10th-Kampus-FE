@@ -2,7 +2,7 @@ import { ArticleInfo } from '@/components/chat/articleInfo';
 import { NoticeBox } from '@/components/common/noticeBox';
 import { UserInput } from '@/components/common/userInput';
 import { cn } from '@/utils/cn';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { RoomHeader } from '@/components/chat/roomHeader';
 import { MessageModal } from '@/components/chat/messageModal';
 import { useMutation } from '@tanstack/react-query';
@@ -11,6 +11,7 @@ import { Loading } from '@/components/common/Loading';
 import { postReadMessage, postChatImage } from '@/apis/chat/messages.api';
 import { useGetChatroom } from '@/state/query/chat/useGetChatroom';
 import { INPUT_TYPE } from '@/constants/inputType';
+import { DELETED_POST_ID } from '@/constants/boardConstant';
 
 export const ChatRoom = ({
   chatroomId,
@@ -49,21 +50,23 @@ export const ChatRoom = ({
     },
   });
 
-  //채팅메시지 데이터
+  //게시글 삭제 여부 체크
   useEffect(() => {
     if (roomData) {
-      //게시글 삭제된 경우
-      if (roomData.postId === -1) {
+      if (roomData.postId === DELETED_POST_ID) {
         setDataDelete(true);
       } else {
         setDataDelete(false);
       }
     }
-    //채팅 읽음 처리
+  }, [roomData]);
+
+  //채팅 메시지 읽음 처리
+  useEffect(() => {
     if (messages.length) {
       chatsRead();
     }
-  }, [chatroomId, roomData, setMessages, chatsRead, messages.length]);
+  }, [chatroomId, chatsRead, messages.length]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,6 +74,11 @@ export const ChatRoom = ({
 
   useEffect(() => {
     scrollToBottom();
+  }, [messages]);
+
+  // 메시지 useMemo로 정렬 관리
+  const sortedMessages = useMemo(() => {
+    return messages.slice().sort((a, b) => a.id - b.id);
   }, [messages]);
 
   // 파일 데이터 변경 핸들러
@@ -115,37 +123,34 @@ export const ChatRoom = ({
       <div className="flex-1 overflow-y-auto p-4">
         <NoticeBox />
         <div className="flex flex-1 flex-col">
-          {messages.length > 0 ? (
-            messages
-              .slice()
-              .sort((a, b) => a.id - b.id)
-              .map((message, index) => (
+          {sortedMessages.length > 0 ? (
+            sortedMessages.map((message, index) => (
+              <div
+                key={index}
+                className={cn('mb-4 flex', {
+                  'justify-end': message.isMine,
+                  'justify-start': !message.isMine,
+                })}
+              >
                 <div
-                  key={index}
-                  className={cn('mb-4 flex', {
-                    'justify-end': message.isMine,
-                    'justify-start': !message.isMine,
+                  className={cn('max-w-[70%] rounded-lg p-3', {
+                    'bg-primary-30 text-white': message.isMine,
+                    'bg-neutral-bg-5': !message.isMine,
                   })}
+                  onClick={() => handleClickMessage(message.senderId)}
                 >
-                  <div
-                    className={cn('max-w-[70%] rounded-lg p-3', {
-                      'bg-primary-30 text-white': message.isMine,
-                      'bg-neutral-bg-5': !message.isMine,
-                    })}
-                    onClick={() => handleClickMessage(message.senderId)}
-                  >
-                    {message.isImage ? (
-                      <img
-                        src={message.content}
-                        alt="채팅 이미지"
-                        className="max-w-full rounded-lg"
-                      />
-                    ) : (
-                      message.content
-                    )}
-                  </div>
+                  {message.isImage ? (
+                    <img
+                      src={message.content}
+                      alt="채팅 이미지"
+                      className="max-w-full rounded-lg"
+                    />
+                  ) : (
+                    message.content
+                  )}
                 </div>
-              ))
+              </div>
+            ))
           ) : (
             <p className="mx-auto text-neutral-border-40">Empty</p>
           )}

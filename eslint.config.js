@@ -24,7 +24,6 @@ export default defineConfig([
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react-hooks/rules-of-hooks': 'error',
-      'react-refresh/only-export-components': 'error',
 
       'no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'warn',

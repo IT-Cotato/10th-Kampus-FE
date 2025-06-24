@@ -8,3 +8,4 @@ export const BOARD_STATE = {
   INACTIVE: 'INACTIVE',
   PENDING: 'PENDING_DELETION',
 };
+export const DELETED_POST_ID = -Infinity;
