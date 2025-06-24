@@ -1,39 +1,42 @@
+import js from '@eslint/js';
 import globals from 'globals';
-import pluginJs from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import pluginReact from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import prettier from 'eslint-config-prettier';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactRefresh from 'eslint-plugin-react-refresh';
 import unusedImports from 'eslint-plugin-unused-imports';
+import pluginPrettier from 'eslint-plugin-prettier';
 
-export default [
+export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],
-    languageOptions: { globals: globals.browser, ecmaVersion: 2020 },
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      js,
       'unused-imports': unusedImports,
-      prettier,
+      react: pluginReact,
+      'react-hooks': pluginReactHooks,
+      'react-refresh': pluginReactRefresh,
+      prettier: pluginPrettier,
     },
-    parserOptions: {
-      ecmaVersion: 'latest',
-      ecmaFeatures: {
-        jsx: true,
-      },
-      sourceType: 'module',
-    },
+    extends: ['js/recommended', pluginReact.configs.flat.recommended],
+    languageOptions: { globals: globals.browser },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
-      'import/named': 'error',
-      'no-undef': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+
+      'no-unused-vars': 'off',
+      'unused-imports/no-unused-imports': 'warn',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      'prettier/prettier': 'warn',
     },
   },
-  pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
-];
+]);

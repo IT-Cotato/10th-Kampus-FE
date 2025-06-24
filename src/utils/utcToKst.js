@@ -23,3 +23,18 @@ export const parseToDate = (utcDate) => {
 
   return { yy, mm, dd, hh, mi, se };
 };
+
+export function isSameDay(date1, date2) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
+
+export function formatChatTime(date, timeObj) {
+  if (isSameDay(date, new Date())) {
+    return `${timeObj.hh}:${timeObj.mi}`;
+  }
+  return `${timeObj.mm}월 ${timeObj.dd}일`;
+}

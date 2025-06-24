@@ -1,20 +1,15 @@
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getUser } from '@/apis/user/userDetail.api';
-import { getChatMessages, postReadMessage } from '@/apis/chat/messages.api';
+import { getChatMessages } from '@/apis/chat/messages.api';
 
 const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
 
-export const useWebsocket = (
-  setChatList,
-  chatroomId,
-  setMessages,
-  page,
-) => {
+export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
   const notificationSubscriptionRef = useRef(null);
@@ -193,18 +188,17 @@ export const useWebsocket = (
 
         const newMessage = JSON.parse(message.body);
         console.log(newMessage, '💬 수신된 newMessage');
+
+        // 메시지 타입에 따른 처리
         const enrichedMessage = {
           id: newMessage.id,
           chatroomId: newMessage.chatroomId,
           senderId: newMessage.senderId,
-          content: newMessage.content, // 메시지 내용
+          content: newMessage.content, // 메시지가 글시 또는 이미지 URL 로 반환됨
           createdTime: newMessage.createdTime,
           isMine: Number(newMessage.senderId) === Number(userDetail?.id),
+          isImage: newMessage.isImage, //contents 가 이미지인지 확인
         };
-
-        // if (!enrichedMessage.isMine) {
-
-        // }
 
         setMessages((prevMessages) => [...prevMessages, enrichedMessage]);
       },
@@ -212,14 +206,13 @@ export const useWebsocket = (
     console.log('✅ 채팅방 구독 성공:', chatroomId);
   };
 
-  const sendMessage = (chatroomId, message) => {
+  const sendMessage = (chatroomId, message, files = []) => {
     if (!connected) {
-      // 연결 상태 확인
       console.warn('❌ 메시지 전송 실패: 연결상태확인');
       return;
     }
-    if (!message) {
-      console.warn('❌ 메시지 전송 실패: 메시지 없음');
+    if (!message && files.length === 0) {
+      console.warn('❌ 메시지 전송 실패: 메시지와 이미지 모두 없음');
       return;
     }
     if (!stompClientRef.current) {
@@ -227,12 +220,16 @@ export const useWebsocket = (
       return;
     }
 
-    const chatMessage = { chatroomId, message: message.trim() };
+    const chatMessage = {
+      chatroomId,
+      message: message?.trim() || '',
+    };
+
     stompClientRef.current.publish({
       destination: `/app/chatrooms/${chatroomId}`,
       body: JSON.stringify(chatMessage),
     });
-    console.log('✅ 메시지 전송 성공:', chatMessage); // 메시지 전송 성공 로그
+    console.log('✅ 메시지 전송 성공:', chatMessage);
   };
 
   const disconnect = () => {

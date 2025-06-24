@@ -3,11 +3,10 @@ import { ChatRoom } from '@/components/chat/chatRoomPage';
 import { ACCESS_TOKEN_KEY } from '@/constants/api';
 import { useWebsocket } from '@/hooks/use-websocket';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getChatList } from '@/apis/chat/chatList.api';
 import { ChatLayout } from '@/components/layout/chatLayout';
 import { Loading } from '@/components/common/Loading';
+import { CHAT_TYPE } from '@/constants/chatType';
+import { useGetChatList } from '@/state/query/chat/useGetChatList';
 
 export const ChatPage = () => {
   const [chatroomId, setChatroomId] = useState(null);
@@ -30,10 +29,7 @@ export const ChatPage = () => {
     error,
     isLoading,
     refetch,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.CHAT_LIST, accessToken, chatroomId],
-    queryFn: () => getChatList(page),
-  });
+  } = useGetChatList(page, CHAT_TYPE.POST);
 
   //채팅리스트
   useEffect(() => {
@@ -42,12 +38,12 @@ export const ChatPage = () => {
     if (chatListData) {
       setChatList(chatListData.chatRoomPreviewList || []);
     }
-  }, [chatListData]);
+  }, [chatListData, error, isLoading]);
 
   //웹소켓 서버
   useEffect(() => {
     connectSocket(accessToken);
-  }, [connectSocket]);
+  }, [connectSocket, accessToken]);
 
   const handleChatRoomLeave = (roomId) => {
     setChatList((prevChatList) =>

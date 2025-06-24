@@ -1,4 +1,3 @@
-import { ButtonRound } from '@/components/common/ButtonRound';
 import { Modal } from '@/components/common/Modal';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +11,10 @@ export const LeaveModal = ({ isOpen, onClose }) => {
     <Modal
       title="Would you like to leave the chat room?"
       onClose={onClose}
-      leftButton='Cancel'
+      leftButton="Cancel"
       onClickLeft={onClose}
-      rightButton='Leave'
+      rightButton="Leave"
       onClickRight={() => navigate(path.chatList.base)}
-    >
-    </Modal>
+    ></Modal>
   );
 };

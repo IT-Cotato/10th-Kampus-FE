@@ -18,3 +18,20 @@ export const postReadMessage = async ({ chatroomId }) => {
   );
   return response.data.data;
 };
+
+//채팅 이미지 전송
+export const postChatImage = async ({ chatroomId, images }) => {
+  const formData = new FormData();
+  images.forEach((image) => {
+    formData.append('images', image);
+  });
+
+  const response = await authApi.post(
+    generateApiPath(API_DOMAINS.CHAT_IMAGE, { chatroomId }),
+    formData,
+    {
+      'Content-Type': 'multipart/form-data',
+    },
+  );
+  return response.data.data;
+};

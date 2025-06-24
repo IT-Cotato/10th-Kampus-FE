@@ -4,11 +4,7 @@ import muteIcon from '@/assets/imgs/muteIcon.svg';
 import deleteIcon from '@/assets/imgs/delete.svg';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
-import { useState } from 'react';
-import {
-  startAnimation,
-  StateChangeAnimate,
-} from '@/components/common/StateChangeAnimate';
+import { startAnimation } from '@/components/common/StateChangeAnimate';
 
 export const ChatMenu = ({
   setIsOpenMenu,
