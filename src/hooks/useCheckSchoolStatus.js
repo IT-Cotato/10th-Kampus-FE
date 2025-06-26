@@ -11,7 +11,5 @@ export const useCheckSchoolStatus = () => {
     gcTime: 10 * 60 * 1000, // 10분
   });
 
-  return {
-    query,
-  };
+  return query;
 };
