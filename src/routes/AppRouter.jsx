@@ -35,7 +35,6 @@ import {
   MyComments,
   MyArticles,
   ChatReport,
-  Admin,
   Dashboard,
   UserManagement,
   BoardManagement,
@@ -62,13 +61,18 @@ import {
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
+import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
+import { Suspense } from 'react';
+import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
 
 const AppRouter = createBrowserRouter([
   {
     path: '',
     element: (
       <Layout>
-        <SplashScreen />
+        <ApiErrorBoundary>
+          <SplashScreen />
+        </ApiErrorBoundary>
       </Layout>
     ),
     errorElement: <NotFound />,
@@ -77,7 +81,11 @@ const AppRouter = createBrowserRouter([
     path: path.accountPermanentSuspended,
     element: (
       <Layout>
-        <AccountPermanentSuspendedNotice />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <AccountPermanentSuspendedNotice />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
   },
@@ -85,7 +93,11 @@ const AppRouter = createBrowserRouter([
     path: path.login.base,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -103,7 +115,11 @@ const AppRouter = createBrowserRouter([
     path: path.signup.base,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -151,7 +167,11 @@ const AppRouter = createBrowserRouter([
     path: path.home,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -165,7 +185,11 @@ const AppRouter = createBrowserRouter([
     path: path.search,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -179,7 +203,11 @@ const AppRouter = createBrowserRouter([
     path: path.boardGuide,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -193,7 +221,11 @@ const AppRouter = createBrowserRouter([
     path: path.notificationList,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -207,7 +239,11 @@ const AppRouter = createBrowserRouter([
     path: path.board.base,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -257,7 +293,11 @@ const AppRouter = createBrowserRouter([
     path: path.market.base,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
@@ -291,7 +331,11 @@ const AppRouter = createBrowserRouter([
         path: path.chatList.report,
         element: (
           <Layout>
-            <ChatReport />,
+            <ApiErrorBoundary>
+              <Suspense fallback={<SuspenseFallback />}>
+                <ChatReport />
+              </Suspense>
+            </ApiErrorBoundary>
           </Layout>
         ),
       },
@@ -300,6 +344,7 @@ const AppRouter = createBrowserRouter([
   {
     path: path.mypage.base,
     element: (
+      // ApiErrorBoundary, Suspense 를 컴포넌트 영역 단위로 이동함
       <Layout>
         <Outlet />
       </Layout>
@@ -436,9 +481,13 @@ const AppRouter = createBrowserRouter([
   {
     path: path.admin.base,
     element: (
-      <Admin>
-        <Outlet />
-      </Admin>
+      <Layout>
+        <ApiErrorBoundary>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
+      </Layout>
     ),
     children: [
       {
@@ -535,7 +584,9 @@ const AppRouter = createBrowserRouter([
     path: path.admin.base,
     element: (
       <Layout>
-        <Outlet />
+        <ApiErrorBoundary>
+          <Outlet />
+        </ApiErrorBoundary>
       </Layout>
     ),
     children: [
