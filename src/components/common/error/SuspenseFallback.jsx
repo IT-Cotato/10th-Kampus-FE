@@ -1,4 +1,6 @@
 import { Loading } from '@/components/common/Loading';
+import { Suspense } from 'react';
+import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
 
 export function SuspenseFallback() {
   return (
@@ -8,5 +10,13 @@ export function SuspenseFallback() {
         ⏳ 데이터 불러오는 중...
       </span>
     </div>
+  );
+}
+
+export function ErrorWrapper({ children }) {
+  return (
+    <ApiErrorBoundary>
+      <Suspense fallback={<SuspenseFallback />}>{children}</Suspense>
+    </ApiErrorBoundary>
   );
 }

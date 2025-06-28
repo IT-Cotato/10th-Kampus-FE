@@ -4,9 +4,7 @@ import { removeTokens } from '@/utils/authUtils';
 import { NotificationButton } from '@/components/common/NotificationButton';
 import OfficialMail from '@/constants/OfficialMail.json';
 import { MyMainData } from '@/components/my/MyMainData';
-import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
-import { Suspense } from 'react';
-import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
+import { ErrorWrapper } from '@/components/common/error/SuspenseFallback';
 
 export const MyPage = () => {
   const navigate = useNavigate();
@@ -24,11 +22,9 @@ export const MyPage = () => {
       </div>
       {/* 본문 영역 */}
       <div className="flex h-full w-full flex-col gap-[1.25rem]">
-        <ApiErrorBoundary>
-          <Suspense fallback={<SuspenseFallback />}>
-            <MyMainData />
-          </Suspense>
-        </ApiErrorBoundary>
+        <ErrorWrapper>
+          <MyMainData />
+        </ErrorWrapper>
         {/* 마이페이지 항목들 */}
         <div className="mt-[1.25rem] flex h-full w-full flex-col gap-[1.875rem] leading-tight">
           <div className="flex h-full w-full flex-col gap-[.625rem]">

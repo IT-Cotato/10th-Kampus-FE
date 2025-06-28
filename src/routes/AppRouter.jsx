@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { Layout } from '@/components/layout/layout';
+import { path } from '@/routes/path';
 import {
   AllBoard,
   SplashScreen,
@@ -60,13 +61,10 @@ import {
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
-import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
-import { Suspense } from 'react';
-import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
 import PrivateRoute from '@/routes/PrivateRoute';
 import PublicRoute from '@/routes/PublicRoute';
 import AdminRoute from '@/routes/AdminRoute';
-import { path } from '@/routes/path';
+import { ErrorWrapper } from '@/components/common/error/SuspenseFallback';
 
 const createAuthRouter = (routeType, children) => {
   const authRouter = children.map((child) => ({
@@ -90,11 +88,9 @@ const AppRouter = createBrowserRouter([
     path: path.root,
     element: (
       <Layout>
-        <ApiErrorBoundary>
-          <Suspense fallback={<SuspenseFallback />}>
-            <Outlet />
-          </Suspense>
-        </ApiErrorBoundary>
+        <ErrorWrapper>
+          <Outlet />
+        </ErrorWrapper>
       </Layout>
     ),
     errorElement: <NotFound />,
