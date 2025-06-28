@@ -1,4 +1,5 @@
 export { NotFound } from './notFound';
+export { Forbidden } from './Forbidden';
 export { AccountPermanentSuspendedNotice } from './home/accountPermanentSuspendedNotice';
 export { Home } from './home/home';
 export { SplashScreen } from './SplashScreen';
