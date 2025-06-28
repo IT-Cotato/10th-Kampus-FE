@@ -8,6 +8,7 @@ import {
   BUTTON_SIZES,
 } from '@/components/common/ButtonRound';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
+import { UnknownErrorBoundary } from '@/components/common/error/UnknownErrorBoundary';
 
 function ApiFallback({ error, resetErrorBoundary }) {
   const { code, message, status } = getErrorPayload(error);
@@ -41,7 +42,11 @@ function ApiFallback({ error, resetErrorBoundary }) {
 export function ApiErrorBoundary({ children }) {
   const { reset } = useQueryErrorResetBoundary();
   return (
-    <ErrorBoundary onReset={reset} fallbackRender={ApiFallback}>
+    <ErrorBoundary
+      onReset={reset}
+      fallbackRender={ApiFallback}
+      isUnknownErrorFallback={<UnknownErrorBoundary />}
+    >
       {children}
     </ErrorBoundary>
   );
