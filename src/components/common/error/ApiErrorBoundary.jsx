@@ -1,5 +1,4 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { getErrorPayload } from '@/utils/errorHandler';
 import { Player } from '@lottiefiles/react-lottie-player';
 import errorAnimation from '@/assets/lottie/error.json';
@@ -8,6 +7,7 @@ import {
   BUTTON_THEMES,
   BUTTON_SIZES,
 } from '@/components/common/ButtonRound';
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 function ApiFallback({ error, resetErrorBoundary }) {
   const { code, message, status } = getErrorPayload(error);
@@ -39,13 +39,10 @@ function ApiFallback({ error, resetErrorBoundary }) {
 }
 
 export function ApiErrorBoundary({ children }) {
+  const { reset } = useQueryErrorResetBoundary();
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary onReset={reset} fallbackRender={ApiFallback}>
-          {children}
-        </ErrorBoundary>
-      )}
-    </QueryErrorResetBoundary>
+    <ErrorBoundary onReset={reset} fallbackRender={ApiFallback}>
+      {children}
+    </ErrorBoundary>
   );
 }
