@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import bgErrorAnimation from '@/assets/lottie/bgError.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 
-function GlobalFallback({ error, resetErrorBoundary }) {
+function UnknownFallback({ error, resetErrorBoundary }) {
   const { code, message, status } = getErrorPayload(error);
 
   return (
@@ -40,10 +40,10 @@ function GlobalFallback({ error, resetErrorBoundary }) {
   );
 }
 
-export function GlobalErrorBoundary({ children }) {
+export function UnknownErrorBoundary({ children }) {
   return (
     <ErrorBoundary
-      fallbackRender={GlobalFallback}
+      fallbackRender={UnknownFallback}
       onReset={() => {
         window.location.reload();
       }}
