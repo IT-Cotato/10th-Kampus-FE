@@ -70,7 +70,16 @@ import { path } from '@/routes/path';
 
 const createAuthRouter = (routeType, children) => {
   const authRouter = children.map((child) => ({
-    element: routeType === 'PRIVATE' ? <PrivateRoute /> : <PublicRoute />,
+    element:
+      routeType === 'PRIVATE' ? (
+        <PrivateRoute />
+      ) : routeType === 'PUBLIC' ? (
+        <PublicRoute />
+      ) : routeType === 'ADMIN' ? (
+        <AdminRoute />
+      ) : (
+        <NotFound />
+      ),
     children: [child],
   }));
   return authRouter;
@@ -420,112 +429,106 @@ const AppRouter = createBrowserRouter([
           ],
         },
       ]),
-    ],
-  },
-  {
-    path: path.admin.base,
-    element: (
-      <Layout>
-        <ApiErrorBoundary>
-          <Suspense fallback={<SuspenseFallback />}>
-            <AdminRoute />
-          </Suspense>
-        </ApiErrorBoundary>
-      </Layout>
-    ),
-    children: [
-      {
-        path: path.admin.login,
-        element: <AdminLogin />,
-      },
-      {
-        path: '',
-        element: <Navigate to={path.admin.dashboard} replace />,
-      },
-      {
-        path: path.admin.dashboard,
-        element: <Dashboard />,
-      },
-      {
-        path: path.admin.category,
-        element: <ManageCategory />,
-      },
-      {
-        path: path.admin.userManagement,
-        element: <UserManagement />,
-      },
-      {
-        path: path.admin.signupManagement.base,
-        element: <Outlet />,
-        children: [
-          {
-            path: '',
-            element: <SignupManagement />,
-          },
-          {
-            path: path.admin.signupManagement.studentVertifications,
-            element: <StudentVerifications />,
-          },
-        ],
-      },
-      {
-        path: path.admin.boardManagement.base,
-        element: <Outlet />,
-        children: [
-          {
-            path: '',
-            element: <BoardManagement />,
-          },
-          {
-            path: path.admin.boardManagement.create,
-            element: <CreateBoard />,
-          },
-          {
-            path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
-            element: <CreateBoard />,
-          },
-        ],
-      },
-      {
-        path: path.admin.cardnews.base,
-        element: <Outlet />,
-        children: [
-          {
-            path: '',
-            element: <CardnewsList />,
-          },
-          {
-            path: path.admin.cardnews.create,
-            element: <CreateCardnews />,
-          },
-        ],
-      },
-      {
-        path: path.admin.reportMangement,
-        element: <ReportManagement />,
-      },
-      {
-        path: path.admin.statistics,
-        element: <Statistics />,
-      },
-      {
-        path: path.admin.notice.base,
-        element: <Outlet />,
-        children: [
-          {
-            path: '',
-            element: <NoticeManagement />,
-          },
-          {
-            path: path.admin.cardnews.create,
-            element: <CreateNotice />,
-          },
-          {
-            path: `${path.admin.notice.noticeId}/${path.admin.notice.edit}`,
-            element: <CreateNotice />,
-          },
-        ],
-      },
+      ...createAuthRouter('ADMIN', [
+        {
+          path: path.admin.base,
+          element: <Outlet />,
+          children: [
+            {
+              path: path.admin.login,
+              element: <AdminLogin />,
+            },
+            {
+              path: '',
+              element: <Navigate to={path.admin.dashboard} replace />,
+            },
+            {
+              path: path.admin.dashboard,
+              element: <Dashboard />,
+            },
+            {
+              path: path.admin.category,
+              element: <ManageCategory />,
+            },
+            {
+              path: path.admin.userManagement,
+              element: <UserManagement />,
+            },
+            {
+              path: path.admin.signupManagement.base,
+              element: <Outlet />,
+              children: [
+                {
+                  path: '',
+                  element: <SignupManagement />,
+                },
+                {
+                  path: path.admin.signupManagement.studentVertifications,
+                  element: <StudentVerifications />,
+                },
+              ],
+            },
+            {
+              path: path.admin.boardManagement.base,
+              element: <Outlet />,
+              children: [
+                {
+                  path: '',
+                  element: <BoardManagement />,
+                },
+                {
+                  path: path.admin.boardManagement.create,
+                  element: <CreateBoard />,
+                },
+                {
+                  path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
+                  element: <CreateBoard />,
+                },
+              ],
+            },
+            {
+              path: path.admin.cardnews.base,
+              element: <Outlet />,
+              children: [
+                {
+                  path: '',
+                  element: <CardnewsList />,
+                },
+                {
+                  path: path.admin.cardnews.create,
+                  element: <CreateCardnews />,
+                },
+              ],
+            },
+            {
+              path: path.admin.reportMangement,
+              element: <ReportManagement />,
+            },
+            {
+              path: path.admin.statistics,
+              element: <Statistics />,
+            },
+            {
+              path: path.admin.notice.base,
+              element: <Outlet />,
+              children: [
+                {
+                  path: '',
+                  element: <NoticeManagement />,
+                },
+                {
+                  path: path.admin.cardnews.create,
+                  element: <CreateNotice />,
+                },
+                {
+                  path: `${path.admin.notice.noticeId}/${path.admin.notice.edit}`,
+                  element: <CreateNotice />,
+                },
+              ],
+            },
+          ],
+        },
+      ]),
     ],
   },
 ]);
