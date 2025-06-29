@@ -214,15 +214,14 @@ export const Write = () => {
   } = useMutation({
     mutationFn: (draft) => postSaveDraft({ data: draft }),
     onSuccess: (response) => {
-      setPostDraftId(response.postDraftId);
+      setPostDraftId(response?.postDraftId);
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_DRAFT_ID],
+        queryKey: [QUERY_KEYS.GET_DRAFT_ID],
       });
     },
   });
 
   const { data: draftCount } = useGetDraftCount();
-  console.log(draftCount);
 
   const {
     mutate: patchDraft,
@@ -232,9 +231,9 @@ export const Write = () => {
     mutationFn: (draft) =>
       patchSaveDraft({ data: draft, postDraftId: postDraftId }),
     onSuccess: (response) => {
-      setPostDraftId(response.postDraftId);
+      setPostDraftId(response?.postDraftId);
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_DRAFT_ID],
+        queryKey: [QUERY_KEYS.GET_DRAFT_ID],
       });
     },
   });
@@ -247,8 +246,8 @@ export const Write = () => {
     formData.append('title', title);
     formData.append('content', content);
 
-    if (selectedCategory) {
-      formData.append('postCategory', selectedCategory);
+    if (selectedCategory.length !== 0) {
+      formData.append('categories', selectedCategory);
     }
 
     if (uploadedFiles.length > 0) {
