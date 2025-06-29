@@ -83,12 +83,7 @@ export const Draft = () => {
               {getDrafts?.items?.map((draft) => (
                 <DraftBox
                   key={draft.tempPostId}
-                  tempPostId={draft.tempPostId}
-                  boardId={draft.boardId}
-                  title={draft.title}
-                  content={draft.content}
-                  thumbnailUrl={draft.thumbnailUrl}
-                  createdTime={draft.createdTime}
+                  draft={draft}
                   isEditMode={isEditMode}
                   selectedDrafts={selectedDrafts}
                   setSelectedDrafts={setSelectedDrafts}

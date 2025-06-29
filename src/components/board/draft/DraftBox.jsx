@@ -6,24 +6,21 @@ import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 
 export const DraftBox = ({
-  tempPostId,
-  boardId,
-  title,
-  content,
-  thumbnailUrl,
-  createdTime,
+  draft,
   isEditMode,
   selectedDrafts,
   setSelectedDrafts,
 }) => {
-  const [date, time] = formatISO(createdTime);
+  const [date, time] = formatISO(draft?.createdTime);
   const navigate = useNavigate();
 
   const handleSelectDraft = () => {
-    if (selectedDrafts.includes(tempPostId)) {
-      setSelectedDrafts((prev) => prev.filter((draft) => draft !== tempPostId));
+    if (selectedDrafts.includes(draft.tempPostId)) {
+      setSelectedDrafts((prev) =>
+        prev.filter((draft) => draft !== draft.tempPostId),
+      );
     } else {
-      setSelectedDrafts((prev) => [...prev, tempPostId]);
+      setSelectedDrafts((prev) => [...prev, draft.tempPostId]);
     }
   };
 
@@ -32,17 +29,17 @@ export const DraftBox = ({
       return;
     }
     navigate(`../${boardId}/${path.board.specific.write}`, {
-      state: tempPostId,
+      state: draft.tempPostId,
     });
   };
 
-  const checked = selectedDrafts.includes(tempPostId);
+  const checked = selectedDrafts.includes(draft.tempPostId);
 
   return (
     <li className="flex w-full gap-4 py-4" onClick={handleSelectDraft}>
       {isEditMode && (
         <div className="flex items-center">
-          <label htmlFor={tempPostId} className="cursor-pointer">
+          <label htmlFor={draft.tempPostId} className="cursor-pointer">
             {checked ? (
               <Checkbox className="text-primary-base" aria-label="checked" />
             ) : (
@@ -51,7 +48,7 @@ export const DraftBox = ({
           </label>
           <input
             type="checkbox"
-            id={tempPostId}
+            id={draft.tempPostId}
             className="hidden"
             onChange={() => {}}
             checked={checked}
@@ -63,15 +60,17 @@ export const DraftBox = ({
         onClick={handleClickDraft}
       >
         {/* 게시판명 */}
-        <BoardName>Board Name</BoardName>
+        <BoardName>{draft?.boardName}</BoardName>
         <span className="flex w-full justify-between gap-20">
           <span className="flex w-full flex-col gap-5 truncate">
             <div className="flex w-full flex-col">
               {/* 제목 */}
-              <h1 className="text-subTitle text-neutral-title">{title}</h1>
+              <h1 className="text-subTitle text-neutral-title">
+                {draft?.title}
+              </h1>
               {/* 본문 */}
               <div className="min-w-0 truncate text-base text-neutral-base">
-                {content}
+                {draft?.content}
               </div>
             </div>
             {/* 임시저장 시각 */}
@@ -81,10 +80,10 @@ export const DraftBox = ({
             </div>
           </span>
           {/* 사진 */}
-          {thumbnailUrl && (
+          {draft?.thumbnailUrl && (
             <img
               className="flex h-20 w-20 flex-shrink-0 object-cover"
-              src={thumbnailUrl}
+              src={draft?.thumbnailUrl}
             />
           )}
         </span>
