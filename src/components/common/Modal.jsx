@@ -100,7 +100,7 @@ export const Modal = ({
             {title}
           </h2>
           {children && (
-            <div className="flex w-full flex-col whitespace-pre text-center">
+            <div className="flex w-full flex-col whitespace-break-spaces text-center">
               {children}
             </div>
           )}
