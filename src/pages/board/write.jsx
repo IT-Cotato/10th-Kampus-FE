@@ -33,6 +33,7 @@ import {
   usePostDraft,
 } from '@/state/mutation/post/useHandleDraft';
 import { useSaveDraft } from '@/state/mutation/post/useSaveDraft';
+import { usePostPost } from '@/state/mutation/post/useHandlePost';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -54,20 +55,7 @@ export const Write = () => {
   const categoryList =
     boardCategories?.categories.map((item) => item.categoryName) || [];
 
-  const {
-    mutate: addPost,
-    isPending: postPending,
-    isError: postError,
-  } = useMutation({
-    mutationFn: (newPost) => postWritePost({ data: newPost }),
-    onSuccess: (response) => {
-      const createdPostId = response.postId;
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`../${createdPostId}`, {
-        replace: true,
-      });
-    },
-  });
+  const { mutate: addPost } = usePostPost();
 
   const { mutate: postDraft } = usePostDraft({ draftId });
 
