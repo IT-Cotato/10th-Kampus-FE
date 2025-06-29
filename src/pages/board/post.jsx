@@ -192,9 +192,9 @@ export const Post = () => {
         )}
 
         {/** 댓글 */}
-        {commentData?.length !== 0 ? (
+        {commentData?.comments?.length !== 0 ? (
           <div className="flex flex-col">
-            {commentData?.map((item) => (
+            {commentData?.comments?.map((item) => (
               <PostComment
                 data={item}
                 key={item.commentId}

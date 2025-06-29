@@ -54,7 +54,6 @@ export const Write = () => {
     },
   });
 
-  // 작동 안함. 백 변경 후 수정해야함!!
   const {
     mutate: postDraft,
     isPending: postDraftPending,
@@ -116,7 +115,6 @@ export const Write = () => {
     }
   };
 
-  const disabled = !title || !content;
   const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
   const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
 
