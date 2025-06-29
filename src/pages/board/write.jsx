@@ -4,7 +4,12 @@ import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslateModal } from '@/components/common/TranslateModal';
 import { postWritePost } from '@/apis/board/postWritePost.api';
@@ -22,10 +27,15 @@ import {
 import { ReloadModal } from '@/components/board/draft/ReloadModal';
 import { path } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
+import { useGetDraft } from '@/state/query/post/useGetDraft';
 
 export const Write = () => {
   const queryClient = useQueryClient();
   const { boardId, postId } = useParams();
+  const [searchParams] = useSearchParams();
+  const draftId = searchParams.get('draftId');
+
+  const { data: draftData } = useGetDraft({ postDraftId: draftId });
 
   // 게시판에 적용되는 카테고리 조회
   const { data: boardCategories } = useQuery({
@@ -97,13 +107,25 @@ export const Write = () => {
       loadPrevPhotos();
     }
   }, [prevPost]);
+
+  useEffect(() => {
+    if (draftData) {
+      setTitle(draftData.title);
+      setContent(draftData.content);
+      if (draftData?.categories) {
+        setSelectedCategory(draftData?.categories);
+      }
+      loadPrevPhotos();
+    }
+  }, [draftData]);
+
   const { mutate: putPost } = usePutBoardPost();
 
   const [prevPhotoLoadErrorMessage, setPrevPhotoLoadErrorMessage] =
     useState('');
   const loadPrevPhotos = async () => {
     try {
-      const filePromises = prevPost.postPhotos.map((photo) =>
+      const filePromises = (prevPost ?? draftData).postPhotos.map((photo) =>
         urlToFile(photo.photoUrl, photo.order),
       );
       const files = await Promise.all(filePromises);

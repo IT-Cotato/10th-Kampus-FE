@@ -13,7 +13,7 @@ export const postSaveDraft = async ({ data }) => {
 
 export const patchSaveDraft = async ({ data, postDraftId }) => {
   const response = await authApi.patch(
-    generateApiPath(API_DOMAINS.PATCH_SAVE_DRAFT, { postDraftId }),
+    generateApiPath(API_DOMAINS.HANDLE_DRAFT_DETAILS, { postDraftId }),
     data,
     {
       headers: {
