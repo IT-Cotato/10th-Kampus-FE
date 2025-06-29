@@ -16,7 +16,7 @@ export const StateChangeAnimate = ({
         className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 animate-fadeInOutText rounded-xl bg-white px-12 py-4"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="truncate text-[#525252]">
+        <p className="truncate whitespace-break-spaces text-center text-[#525252]">
           {state ? `${changeToFalseText}` : `${changeToTrueText}`}
         </p>
       </div>

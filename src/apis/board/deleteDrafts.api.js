@@ -6,9 +6,9 @@ export const deleteAllDraft = async () => {
   return response.data.data;
 };
 
-export const deleteSelectedDraft = async ({ draftPostIds }) => {
+export const deleteSelectedDraft = async ({ tempPostIds }) => {
   const response = await authApi.delete(API_DOMAINS.DELETE_SELECTED_DRAFT, {
-    data: { draftPostIds },
+    data: { tempPostIds },
     headers: {
       'Content-Type': 'application/json',
     },

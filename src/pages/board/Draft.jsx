@@ -2,7 +2,6 @@ import {
   deleteAllDraft,
   deleteSelectedDraft,
 } from '@/apis/board/deleteDrafts.api';
-import { getDraftList } from '@/apis/board/getDraftList.api';
 import {
   DeleteAllDraftModal,
   DeleteSelectedDraftModal,
@@ -11,9 +10,14 @@ import { DraftBox } from '@/components/board/draft/DraftBox';
 import { DraftHeader } from '@/components/board/draft/DraftHeader';
 import { Loading } from '@/components/common/Loading';
 import { QUERY_KEYS } from '@/constants/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import KampusLogo from '@/assets/imgs/kampusLogo.svg?react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetDraftList } from '@/state/query/post/useGetDraftList';
+import {
+  startAnimation,
+  StateChangeAnimate,
+} from '@/components/common/StateChangeAnimate';
 
 export const Draft = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -21,48 +25,53 @@ export const Draft = () => {
   const [isDeleteAllModalOpen, setIsDeleteAllModalOpen] = useState(false);
   const [isDeleteSelectedModalOpen, setIsDeleteSelectedModalOpen] =
     useState(false);
+  const [isDeleteAllSuccessAniOpen, setIsDeleteAllSuccessAniOpen] =
+    useState(false);
+  const [isDeleteSelectedSuccessAniOpen, setIsDeleteSelectedSuccessAniOpen] =
+    useState(false);
   const queryClient = useQueryClient();
 
-  const {
-    data: getDrafts,
-    isSuccess: draftSuccess,
-    isLoading: draftLoading,
-    error: draftError,
-  } = useQuery({
-    queryFn: () => getDraftList({ page: 1 }),
-    queryKey: [QUERY_KEYS.GET_DRAFT_LIST],
-  });
+  const { data: getDrafts, isLoading: draftLoading } = useGetDraftList();
 
-  const { mutate: deleteAllDraftMutate } = useMutation({
-    mutationFn: () => deleteAllDraft(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_DRAFT_LIST] }); // 삭제 후 리스트 다시 불러오기
+  const { mutate: deleteAllDraftMutate, onError: deleteAllError } = useMutation(
+    {
+      mutationFn: () => deleteAllDraft(),
+      onSuccess: () => {
+        startAnimation(setIsDeleteAllSuccessAniOpen);
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.GET_DRAFT_LIST],
+        }); // 삭제 후 리스트 다시 불러오기
+      },
+      onError: (error) => {
+        console.log('삭제 실패');
+      },
+      onSettled: () => {
+        setIsEditMode(false);
+        setIsDeleteAllModalOpen(false);
+        setSelectedDrafts([]);
+      },
     },
-    onError: (error) => {
-      console.log('삭제 실패');
-    },
-    onSettled: () => {
-      setIsEditMode(false);
-      setIsDeleteAllModalOpen(false);
-      setSelectedDrafts([]);
-    },
-  });
+  );
 
-  const { mutate: deleteSelectedDraftMutate } = useMutation({
-    mutationFn: (selectedDrafts) =>
-      deleteSelectedDraft({ draftPostIds: selectedDrafts }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_DRAFT_LIST] }); // 삭제 후 리스트 다시 불러오기
-    },
-    onError: (error) => {
-      console.log('삭제 실패');
-    },
-    onSettled: () => {
-      setIsEditMode(false);
-      setIsDeleteSelectedModalOpen(false);
-      setSelectedDrafts([]);
-    },
-  });
+  const { mutate: deleteSelectedDraftMutate, onError: deleteSelectedError } =
+    useMutation({
+      mutationFn: (selectedDrafts) =>
+        deleteSelectedDraft({ tempPostIds: selectedDrafts }),
+      onSuccess: () => {
+        startAnimation(setIsDeleteSelectedSuccessAniOpen);
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.GET_DRAFT_LIST],
+        }); // 삭제 후 리스트 다시 불러오기
+      },
+      onError: (error) => {
+        console.log('삭제 실패');
+      },
+      onSettled: () => {
+        setIsEditMode(false);
+        setIsDeleteSelectedModalOpen(false);
+        setSelectedDrafts([]);
+      },
+    });
 
   return (
     <main className="flex w-full flex-1 flex-col pt-16">
@@ -132,6 +141,22 @@ export const Draft = () => {
           total={selectedDrafts.length}
           onClose={() => setIsDeleteSelectedModalOpen(false)}
           deleteSelected={() => deleteSelectedDraftMutate(selectedDrafts)}
+        />
+      )}
+      {isDeleteAllSuccessAniOpen && (
+        <StateChangeAnimate
+          state={!!deleteAllError}
+          changeToTrueText={`All ${getDrafts?.totalCount} draft posts\nhas been successfully deleted.`}
+          changeToFalseText="Error occured while deleting all draft posts."
+          onClose={() => setIsDeleteAllSuccessAniOpen(false)}
+        />
+      )}
+      {isDeleteSelectedSuccessAniOpen && (
+        <StateChangeAnimate
+          state={!!deleteSelectedError}
+          changeToTrueText={`The selected draft posts\nhas been successfully deleted.`}
+          changeToFalseText="Error occured while deleting selected draft posts."
+          onClose={() => setIsDeleteSelectedSuccessAniOpen(false)}
         />
       )}
     </main>
