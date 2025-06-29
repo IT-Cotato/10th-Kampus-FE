@@ -17,3 +17,20 @@ export const usePatchDraft = ({ draftId }) => {
 
   return mutate;
 };
+
+export const usePostDraft = ({ postDraftId }) => {
+  const queryClient = useQueryClient();
+  const mutate = useMutation({
+    mutationFn: (newPost) =>
+      postWriteDraft({ postDraftId: postDraftId, data: newPost }),
+    onSuccess: (response) => {
+      const createdPostId = response.postId;
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
+        replace: true,
+      });
+    },
+  });
+
+  return mutate;
+};

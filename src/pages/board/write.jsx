@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslateModal } from '@/components/common/TranslateModal';
-import { postWritePost } from '@/apis/board/postWritePost.api';
+import { postWriteDraft, postWritePost } from '@/apis/board/postWritePost.api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
@@ -28,7 +28,10 @@ import { ReloadModal } from '@/components/board/draft/ReloadModal';
 import { path } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
 import { useGetDraft } from '@/state/query/post/useGetDraft';
-import { usePatchDraft } from '@/state/mutation/post/usePatchDraft';
+import {
+  usePatchDraft,
+  usePostDraft,
+} from '@/state/mutation/post/useHandleDraft';
 import { useSaveDraft } from '@/state/mutation/post/useSaveDraft';
 
 export const Write = () => {
@@ -66,21 +69,7 @@ export const Write = () => {
     },
   });
 
-  const {
-    mutate: postDraft,
-    isPending: postDraftPending,
-    isError: postDraftError,
-  } = useMutation({
-    mutationFn: (newPost) =>
-      postWriteDraft({ postDraftId: postDraftId, data: newPost }),
-    onSuccess: (response) => {
-      const createdPostId = response.postId;
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
-        replace: true,
-      });
-    },
-  });
+  const { mutate: postDraft } = usePostDraft({ draftId });
 
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -142,9 +131,6 @@ export const Write = () => {
   const saveDraftDisabled = !title && !content && uploadedFiles.length === 0;
   const [isReloadModalOpen, setIsReloadModalOpen] = useState(false);
 
-  const { state } = useLocation();
-  const [postDraftId, setPostDraftId] = useState(state?.postDraftId || null); // 있을 경우 내용 불러오기 필요(추가 예정)
-
   // 빈칸으로 업로드 버튼 클릭 시 focus를 위한 위한 ref
   const titleRef = useRef(null);
   const contentRef = useRef(null);
@@ -200,14 +186,13 @@ export const Write = () => {
       });
     }
 
-    if (!postDraftId) {
-      if (postId) {
+    if (draftId !== undefined) {
+      if (postId !== undefined) {
         putPost({ postId, data: formData });
       } else {
         addPost(formData);
       }
     } else {
-      // 임시저장 게시물 발행
       postDraft(formData);
     }
   };
