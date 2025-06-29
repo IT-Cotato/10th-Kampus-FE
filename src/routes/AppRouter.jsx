@@ -64,7 +64,10 @@ import { BlockingManagement } from '@/components/layout/BlockingManagement';
 import PrivateRoute from '@/routes/PrivateRoute';
 import PublicRoute from '@/routes/PublicRoute';
 import AdminRoute from '@/routes/AdminRoute';
-import { ErrorWrapper } from '@/components/common/error/SuspenseFallback';
+import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
+import { Suspense } from 'react';
+import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
+import { UnknownFallback } from '@/components/common/error/UnknownErrorBoundary';
 
 const createAuthRouter = (routeType, children) => {
   const authRouter = children.map((child) => ({
@@ -88,9 +91,11 @@ const AppRouter = createBrowserRouter([
     path: path.root,
     element: (
       <Layout>
-        <ErrorWrapper>
-          <Outlet />
-        </ErrorWrapper>
+        <ApiErrorBoundary fallbackRender={UnknownFallback}>
+          <Suspense fallback={<SuspenseFallback />}>
+            <Outlet />
+          </Suspense>
+        </ApiErrorBoundary>
       </Layout>
     ),
     errorElement: <NotFound />,

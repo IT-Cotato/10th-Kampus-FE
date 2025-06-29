@@ -1,12 +1,9 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
-import { getErrorPayload } from '@/utils/errorHandler';
 import { ErrorBoundary } from 'react-error-boundary';
 import bgErrorAnimation from '@/assets/lottie/bgError.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 
-function UnknownFallback({ error, resetErrorBoundary }) {
-  const { code, message, status } = getErrorPayload(error);
-
+export function UnknownFallback({ resetErrorBoundary }) {
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center">
       <Player
@@ -24,11 +21,6 @@ function UnknownFallback({ error, resetErrorBoundary }) {
           We apologize for the inconvenience.
           <br />
           Please try again later.
-        </p>
-        <p className="text-xs mb-6 break-all text-gray-500">
-          (HTTP {status})
-          <br />
-          {code}:{message}
         </p>
         <ButtonRound
           text="Retry"
