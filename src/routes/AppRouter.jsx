@@ -98,7 +98,11 @@ const AppRouter = createBrowserRouter([
         </ApiErrorBoundary>
       </Layout>
     ),
-    errorElement: <NotFound />,
+    errorElement: (
+      <Layout>
+        <NotFound />
+      </Layout>
+    ),
     children: [
       {
         path: path.root,
