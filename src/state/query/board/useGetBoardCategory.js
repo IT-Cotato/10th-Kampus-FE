@@ -18,3 +18,15 @@ export const useGetBoardCategory = (state) => {
   });
   return query;
 };
+
+export const useGetBoardVanillaCategory = () => {
+  const { boardId } = useParams();
+  const query = useQuery({
+    queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
+    queryFn: () => getBoardCategories({ boardId }),
+    staleTime: 5 * 60 * 1000, // 5분
+    gcTime: 10 * 60 * 1000, // 10분
+    enabled: !!boardId,
+  });
+  return query;
+};

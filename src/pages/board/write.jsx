@@ -4,26 +4,16 @@ import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';
 import { MainButton } from '@/components/common/MainButton';
 import { useEffect, useRef, useState } from 'react';
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslateModal } from '@/components/common/TranslateModal';
-import { postWriteDraft, postWritePost } from '@/apis/board/postWritePost.api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
 import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
-import {
-  patchSaveDraft,
-  postSaveDraft,
-} from '@/apis/board/handleSaveDraft.api';
 import { ReloadModal } from '@/components/board/draft/ReloadModal';
 import { path } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
@@ -34,29 +24,25 @@ import {
 } from '@/state/mutation/post/useHandleDraft';
 import { useSaveDraft } from '@/state/mutation/post/useSaveDraft';
 import { usePostPost } from '@/state/mutation/post/useHandlePost';
+import { useGetBoardVanillaCategory } from '@/state/query/board/useGetBoardCategory';
 
 export const Write = () => {
-  const queryClient = useQueryClient();
   const { boardId, postId } = useParams();
+
+  // 임시저장글 선택해서 넘어온 경우
   const [searchParams] = useSearchParams();
   const draftId = searchParams.get('draftId');
-
   const { data: draftData } = useGetDraft({ postDraftId: draftId });
 
   // 게시판에 적용되는 카테고리 조회
-  const { data: boardCategories } = useQuery({
-    queryKey: [QUERY_KEYS.GET_BOARD_CATEGORIES, boardId],
-    queryFn: () => getBoardCategories({ boardId: boardId }),
-    staleTime: 2 * 60 * 1000,
-    gcTime: 5 * 60 * 1000,
-    enabled: !!boardId,
-  });
-
+  const { data: boardCategories } = useGetBoardVanillaCategory();
   const categoryList =
     boardCategories?.categories.map((item) => item.categoryName) || [];
 
+  // 글 올리기
   const { mutate: addPost } = usePostPost();
 
+  // 임시저장글 게시
   const { mutate: postDraft } = usePostDraft({ draftId });
 
   const navigate = useNavigate();
@@ -68,12 +54,14 @@ export const Write = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
 
+  // 번역
   const {
     mutate: handleTranslate,
     isPending: translatePending,
     isError: translateError,
   } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
+  // 글 수정하기 위해 조회
   const { data: prevPost } = useGetBoardPost();
 
   useEffect(() => {
