@@ -28,6 +28,7 @@ import { ReloadModal } from '@/components/board/draft/ReloadModal';
 import { path } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
 import { useGetDraft } from '@/state/query/post/useGetDraft';
+import { usePatchDraft } from '@/state/mutation/post/usePatchDraft';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -246,19 +247,8 @@ export const Write = () => {
 
   const { data: draftCount } = useGetDraftCount();
 
-  const {
-    mutate: patchDraft,
-    isPending: patchDraftPending,
-    isError: patchDraftError,
-  } = useMutation({
-    mutationFn: (draft) =>
-      patchSaveDraft({ data: draft, postDraftId: postDraftId }),
-    onSuccess: (response) => {
-      setPostDraftId(response?.postDraftId);
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_DRAFT_ID],
-      });
-    },
+  const { mutate: patchDraft } = usePatchDraft({
+    draftId,
   });
 
   // 임시저장 버튼 클릭 시
@@ -279,7 +269,7 @@ export const Write = () => {
       });
     }
 
-    if (!postDraftId) {
+    if (!draftId) {
       // 임시저장
       saveDraft(formData);
     } else {
