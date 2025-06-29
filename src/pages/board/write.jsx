@@ -216,6 +216,9 @@ export const Write = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_DRAFT_ID],
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_DRAFT_COUNT], // draftCount 쿼리 무효화
+      });
     },
   });
 
