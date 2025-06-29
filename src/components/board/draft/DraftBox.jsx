@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 
 export const DraftBox = ({
-  draftId,
+  tempPostId,
   boardId,
   title,
   content,
@@ -20,10 +20,10 @@ export const DraftBox = ({
   const navigate = useNavigate();
 
   const handleSelectDraft = () => {
-    if (selectedDrafts.includes(draftId)) {
-      setSelectedDrafts((prev) => prev.filter((draft) => draft !== draftId));
+    if (selectedDrafts.includes(tempPostId)) {
+      setSelectedDrafts((prev) => prev.filter((draft) => draft !== tempPostId));
     } else {
-      setSelectedDrafts((prev) => [...prev, draftId]);
+      setSelectedDrafts((prev) => [...prev, tempPostId]);
     }
   };
 
@@ -31,16 +31,18 @@ export const DraftBox = ({
     if (isEditMode) {
       return;
     }
-    navigate(`../${boardId}/${path.board.specific.write}`, { state: draftId });
+    navigate(`../${boardId}/${path.board.specific.write}`, {
+      state: tempPostId,
+    });
   };
 
-  const checked = selectedDrafts.includes(draftId);
+  const checked = selectedDrafts.includes(tempPostId);
 
   return (
-    <li className="flex w-full gap-4 py-4">
+    <li className="flex w-full gap-4 py-4" onClick={handleSelectDraft}>
       {isEditMode && (
         <div className="flex items-center">
-          <label htmlFor={draftId} className="cursor-pointer">
+          <label htmlFor={tempPostId} className="cursor-pointer">
             {checked ? (
               <Checkbox className="text-primary-base" aria-label="checked" />
             ) : (
@@ -49,9 +51,9 @@ export const DraftBox = ({
           </label>
           <input
             type="checkbox"
-            id={draftId}
+            id={tempPostId}
             className="hidden"
-            onChange={handleSelectDraft}
+            onChange={() => {}}
             checked={checked}
           />
         </div>

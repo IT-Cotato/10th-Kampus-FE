@@ -78,13 +78,12 @@ export const Draft = () => {
               ? `Selected ${selectedDrafts?.length === 0 ? '00' : selectedDrafts?.length}`
               : `Total ${getDrafts?.totalCount === 0 ? '00' : getDrafts?.totalCount}`}
           </span>
-
           {getDrafts?.totalCount !== 0 ? (
             <ul className="flex flex-1 flex-col divide-y-[0.5px]">
               {getDrafts?.items?.map((draft) => (
                 <DraftBox
-                  key={draft.draftId}
-                  draftId={draft.draftId}
+                  key={draft.tempPostId}
+                  tempPostId={draft.tempPostId}
                   boardId={draft.boardId}
                   title={draft.title}
                   content={draft.content}
