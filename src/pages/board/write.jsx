@@ -29,6 +29,7 @@ import { path } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
 import { useGetDraft } from '@/state/query/post/useGetDraft';
 import { usePatchDraft } from '@/state/mutation/post/usePatchDraft';
+import { useSaveDraft } from '@/state/mutation/post/useSaveDraft';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -228,28 +229,11 @@ export const Write = () => {
     }
   };
 
-  const {
-    mutate: saveDraft,
-    isPending: saveDraftPending,
-    isError: saveDraftError,
-  } = useMutation({
-    mutationFn: (draft) => postSaveDraft({ data: draft }),
-    onSuccess: (response) => {
-      setPostDraftId(response?.postDraftId);
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_DRAFT_ID],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_DRAFT_COUNT], // draftCount 쿼리 무효화
-      });
-    },
-  });
+  const { mutate: saveDraft } = useSaveDraft();
 
   const { data: draftCount } = useGetDraftCount();
 
-  const { mutate: patchDraft } = usePatchDraft({
-    draftId,
-  });
+  const { mutate: patchDraft } = usePatchDraft({ draftId });
 
   // 임시저장 버튼 클릭 시
   const handleSaveDraft = async () => {
