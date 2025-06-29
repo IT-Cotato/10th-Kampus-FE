@@ -21,6 +21,7 @@ import {
 } from '@/apis/board/handleSaveDraft.api';
 import { ReloadModal } from '@/components/board/draft/ReloadModal';
 import { path } from '@/routes/path';
+import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -220,6 +221,9 @@ export const Write = () => {
     },
   });
 
+  const { data: draftCount } = useGetDraftCount();
+  console.log(draftCount);
+
   const {
     mutate: patchDraft,
     isPending: patchDraftPending,
@@ -293,12 +297,17 @@ export const Write = () => {
               type="button"
               onClick={handleSaveDraft}
               disabled={saveDraftDisabled}
+              className="cursor-pointer"
             >
               Save Draft
             </button>
             <span>|</span>
-            <button type="button" onClick={handleClickReloadDrafts}>
-              00
+            <button
+              type="button"
+              onClick={handleClickReloadDrafts}
+              className="cursor-pointer"
+            >
+              {draftCount || '00'}
             </button>
           </span>
           {isReloadModalOpen && (

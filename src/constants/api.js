@@ -49,6 +49,7 @@ export const API_DOMAINS = {
   POST_HANDLE: '/posts/:postId',
   POST_GET_LIST: '/posts/boards/:boardId',
   POST_WRITE: '/posts',
+  GET_DRAFT_COUNT: '/posts/draft/count',
   POST_WRITE_DRAFT: '/posts/draft/:postDraftId',
   POST_SCRAP_TOGGLE: '/posts/:postId/scrap',
   POST_LIKE_TOGGLE: '/posts/:postId/likes',
@@ -122,6 +123,7 @@ export const QUERY_KEYS = {
   GET_POST_LIST: 'postList',
   GET_DRAFT_ID: 'draftId',
   GET_DRAFT_LIST: 'draftList',
+  GET_DRAFT_COUNT: 'draftCount',
 
   GET_COMMENT_LIST: 'commentList',
   GET_TRANSLATE_POST: 'postTranslated',
