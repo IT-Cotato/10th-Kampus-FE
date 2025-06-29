@@ -1,9 +1,9 @@
 import { BoardName } from '../BoardName';
 import { formatISO } from '@/utils/formatTime';
-import Checkbox from '@/assets/imgs/Checkbox_checked.svg?react';
-import CheckboxUnchecked from '@/assets/imgs/Checkbox_unchecked.svg?react';
+import Check from '@/assets/imgs/check.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
+import { cn } from '@/utils/cn';
 
 export const DraftBox = ({
   draft,
@@ -17,20 +17,25 @@ export const DraftBox = ({
   const handleSelectDraft = () => {
     if (selectedDrafts.includes(draft.tempPostId)) {
       setSelectedDrafts((prev) =>
-        prev.filter((draft) => draft !== draft.tempPostId),
+        prev.filter((draftId) => draftId !== draft.tempPostId),
       );
     } else {
       setSelectedDrafts((prev) => [...prev, draft.tempPostId]);
     }
   };
 
+  const handleOnChange = (e) => {
+    e.stopPropagation();
+    handleSelectDraft(e);
+  };
+
   const handleClickDraft = () => {
     if (isEditMode) {
       return;
     }
-    navigate(`../${boardId}/${path.board.specific.write}`, {
-      state: draft.tempPostId,
-    });
+    navigate(
+      `../${draft.boardId}/${path.board.specific.write}?draftId=${draft.tempPostId}`,
+    );
   };
 
   const checked = selectedDrafts.includes(draft.tempPostId);
@@ -39,18 +44,24 @@ export const DraftBox = ({
     <li className="flex w-full gap-4 py-4" onClick={handleSelectDraft}>
       {isEditMode && (
         <div className="flex items-center">
-          <label htmlFor={draft.tempPostId} className="cursor-pointer">
-            {checked ? (
-              <Checkbox className="text-primary-base" aria-label="checked" />
-            ) : (
-              <CheckboxUnchecked aria-label="unchecked" />
-            )}
-          </label>
+          <div htmlFor={draft.tempPostId} className="cursor-pointer">
+            <div
+              className={cn(
+                'flex aspect-square h-[1.625rem] w-[1.625rem] items-center justify-center rounded-full',
+                {
+                  'bg-primary-base': checked,
+                  'border border-neutral-border-40': !checked,
+                },
+              )}
+            >
+              {checked && <Check className="h-3.5 w-3.5 text-white" />}
+            </div>
+          </div>
           <input
             type="checkbox"
             id={draft.tempPostId}
             className="hidden"
-            onChange={() => {}}
+            onChange={handleOnChange}
             checked={checked}
           />
         </div>

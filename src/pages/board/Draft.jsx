@@ -72,14 +72,14 @@ export const Draft = () => {
           <Loading />
         </section>
       ) : (
-        <section className="flex h-full w-full flex-col gap-6 px-4 py-2">
+        <section className="flex h-full w-full flex-col gap-2 px-4 py-2">
           <span className="flex text-neutral-border-50">
             {isEditMode
               ? `Selected ${selectedDrafts?.length === 0 ? '00' : selectedDrafts?.length}`
               : `Total ${getDrafts?.totalCount === 0 ? '00' : getDrafts?.totalCount}`}
           </span>
           {getDrafts?.totalCount !== 0 ? (
-            <ul className="flex flex-1 flex-col divide-y-[0.5px]">
+            <ul className="flex flex-1 flex-col divide-y-[0.5px] divide-neutral-border-30">
               {getDrafts?.items?.map((draft) => (
                 <DraftBox
                   key={draft.tempPostId}
