@@ -17,10 +17,10 @@ export const NotFound = () => {
         className="absolute inset-0 z-0 h-full w-full opacity-70"
       />
       <div className="relative z-10 mx-auto flex flex-col items-center justify-center rounded-xl bg-white bg-opacity-10 p-6 text-center shadow-xl">
-        <h2 className="text-2xl mb-3 font-extrabold text-red-600">
+        <h2 className="text-2xl mb-3 font-extrabold text-primary-red">
           Page Not Found
         </h2>
-        <p className="mb-4 text-base text-gray-800">
+        <p className="mb-4 text-base text-neutral-title">
           The page you are looking for does not exist.
           <br />
           Please check the URL and try again.

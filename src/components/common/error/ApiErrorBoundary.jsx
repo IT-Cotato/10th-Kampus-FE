@@ -12,10 +12,10 @@ export function ApiFallback({ resetErrorBoundary }) {
   return (
     <div className="mx-4 flex flex-col items-center justify-center">
       <Player src={errorAnimation} loop autoplay speed={1} className="h-16" />
-      <h2 className="text-2xl mb-3 font-extrabold text-red-600">
-        Error Occurred!
+      <h2 className="text-2xl mb-3 font-extrabold text-primary-red">
+        Error Occurred
       </h2>
-      <p className="mb-4 text-base text-gray-800">
+      <p className="mb-4 text-base text-neutral-80">
         We apologize for the inconvenience. Please try again later.
       </p>
       <ButtonRound
