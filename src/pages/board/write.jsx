@@ -222,7 +222,6 @@ export const Write = () => {
       // 임시저장 덮어쓰기
       patchDraft(formData);
     }
-    console.log(draftId);
   };
 
   useEffect(() => {
@@ -241,7 +240,9 @@ export const Write = () => {
 
   // 임시저장 목록 페이지로 이동
   const handleClickSavedDrafts = () => {
-    if (boardId !== undefined) {
+    if (postId !== undefined) {
+      navigate(`../../../${path.board.specific.draft}`);
+    } else if (boardId !== undefined) {
       navigate(`../../${path.board.specific.draft}`);
     } else {
       navigate(`../../../../${path.board.specific.draft}`);
