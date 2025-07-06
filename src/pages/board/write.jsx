@@ -28,7 +28,7 @@ export const Write = () => {
 
   // 임시저장글 선택해서 넘어온 경우
   const [searchParams] = useSearchParams();
-  const draftId = searchParams.get('draftId');
+  const [draftId, setDraftId] = useState(() => searchParams.get('draftId'));
   const { data: draftData } = useGetDraft({ postDraftId: draftId });
 
   // 게시판에 적용되는 카테고리 조회
@@ -187,7 +187,11 @@ export const Write = () => {
     }
   };
 
-  const { mutate: saveDraft } = useSaveDraft();
+  const {
+    mutate: saveDraft,
+    data: saveDraftResponse,
+    isSuccess: isSaveDraftSuccess,
+  } = useSaveDraft();
 
   const { data: draftCount } = useGetDraftCount();
 
@@ -211,14 +215,21 @@ export const Write = () => {
       });
     }
 
-    if (!draftId) {
+    if (draftId === undefined || draftId === null) {
       // 임시저장
       saveDraft(formData);
     } else {
       // 임시저장 덮어쓰기
       patchDraft(formData);
     }
+    console.log(draftId);
   };
+
+  useEffect(() => {
+    if (isSaveDraftSuccess && saveDraftResponse?.postDraftId !== null) {
+      setDraftId(saveDraftResponse?.postDraftId);
+    }
+  }, [isSaveDraftSuccess, saveDraftResponse]);
 
   const handleClickReloadDrafts = () => {
     if (title !== '' || content !== '' || uploadedFiles.length !== 0) {

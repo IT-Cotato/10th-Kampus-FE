@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useSaveDraft = () => {
   const queryClient = useQueryClient();
-  const mutate = useMutation({
+  const mutation = useMutation({
     mutationFn: (draft) => postSaveDraft({ data: draft }),
     onSuccess: (response) => {
       queryClient.invalidateQueries({
@@ -16,5 +16,5 @@ export const useSaveDraft = () => {
     },
   });
 
-  return mutate;
+  return mutation;
 };
