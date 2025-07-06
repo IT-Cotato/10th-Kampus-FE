@@ -12,7 +12,7 @@ import { Loading } from '@/components/common/Loading';
 import { QUERY_KEYS } from '@/constants/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import KampusLogo from '@/assets/imgs/kampusLogo.svg?react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGetDraftList } from '@/state/query/post/useGetDraftList';
 import {
   startAnimation,
@@ -89,7 +89,7 @@ export const Draft = () => {
           </span>
           {getDrafts?.totalCount !== 0 ? (
             <ul className="flex flex-1 flex-col divide-y-[0.5px] divide-neutral-border-30">
-              {getDrafts?.items?.map((draft) => (
+              {getDrafts?.tempPosts?.map((draft) => (
                 <DraftBox
                   key={draft.tempPostId}
                   draft={draft}

@@ -7,9 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslateModal } from '@/components/common/TranslateModal';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
@@ -43,7 +40,7 @@ export const Write = () => {
   const { mutate: addPost } = usePostPost();
 
   // 임시저장글 게시
-  const { mutate: postDraft } = usePostDraft({ draftId });
+  const { mutate: postDraft } = usePostDraft({ boardId, postDraftId: draftId });
 
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -162,14 +159,14 @@ export const Write = () => {
       });
     }
 
-    if (draftId !== undefined) {
-      if (postId !== undefined) {
-        putPost({ postId, data: formData });
-      } else {
-        addPost(formData);
-      }
-    } else {
+    if (draftId !== undefined || draftId !== null) {
       postDraft(formData);
+    } else {
+      if (postId !== undefined || postId !== null) {
+        addPost(formData);
+      } else {
+        putPost({ postId, data: formData });
+      }
     }
   };
 
@@ -233,7 +230,11 @@ export const Write = () => {
 
   // 임시저장 목록 페이지로 이동
   const handleClickSavedDrafts = () => {
-    navigate(`../../${path.board.specific.draft}`);
+    if (boardId !== undefined) {
+      navigate(`../../${path.board.specific.draft}`);
+    } else {
+      navigate(`../../../../${path.board.specific.draft}`);
+    }
   };
 
   return (

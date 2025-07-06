@@ -1,14 +1,16 @@
 import { patchSaveDraft } from '@/apis/board/handleSaveDraft.api';
+import { postWriteDraft } from '@/apis/board/postWritePost.api';
 import { QUERY_KEYS } from '@/constants/api';
+import { path } from '@/routes/path';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const usePatchDraft = ({ draftId }) => {
   const queryClient = useQueryClient();
   const mutate = useMutation({
     mutationFn: (draft) =>
       patchSaveDraft({ data: draft, postDraftId: draftId }),
-    onSuccess: (response) => {
-      setPostDraftId(response?.postDraftId);
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_DRAFT_ID],
       });
@@ -18,13 +20,15 @@ export const usePatchDraft = ({ draftId }) => {
   return mutate;
 };
 
-export const usePostDraft = ({ postDraftId }) => {
+export const usePostDraft = ({ boardId, postDraftId }) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const mutate = useMutation({
-    mutationFn: (newPost) =>
-      postWriteDraft({ postDraftId: postDraftId, data: newPost }),
+    mutationFn: (newPost) => postWriteDraft({ postDraftId, data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
+      console.log(createdPostId);
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
       navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
         replace: true,

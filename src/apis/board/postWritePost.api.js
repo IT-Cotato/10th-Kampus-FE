@@ -10,7 +10,7 @@ export const postWritePost = async ({ data }) => {
 // 임시 저장 게시물 발행
 export const postWriteDraft = async ({ postDraftId, data }) => {
   const response = await authApi.post(
-    generateApiPath(API_DOMAINS.POST_WRITE_DRAFT, postDraftId),
+    generateApiPath(API_DOMAINS.POST_WRITE_DRAFT, { postDraftId }),
     data,
   );
   return response.data.data;
