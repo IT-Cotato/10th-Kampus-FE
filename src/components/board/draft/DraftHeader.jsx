@@ -5,7 +5,7 @@ export const DraftHeader = ({ isEditMode, setIsEditMode }) => {
   const navigate = useNavigate();
 
   return (
-    <header className="fixed top-0 z-10 grid h-fit w-full max-w-[512px] grid-cols-3 items-center px-4 pb-3 pt-4">
+    <header className="fixed top-0 z-10 grid h-fit w-full max-w-[512px] grid-cols-3 items-center bg-white px-4 pb-3 pt-4">
       <button type="button">
         <X
           className="h-6 w-6 p-1 text-neutral-title"
