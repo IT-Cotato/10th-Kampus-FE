@@ -160,13 +160,13 @@ export const Write = () => {
     }
 
     if (draftId !== undefined || draftId !== null) {
-      postDraft(formData);
-    } else {
       if (postId !== undefined || postId !== null) {
-        addPost(formData);
-      } else {
         putPost({ postId, data: formData });
+      } else {
+        postDraft(formData);
       }
+    } else {
+      addPost(formData);
     }
   };
 
@@ -241,11 +241,11 @@ export const Write = () => {
   // 임시저장 목록 페이지로 이동
   const handleClickSavedDrafts = () => {
     if (postId !== undefined) {
-      navigate(`../../../${path.board.specific.draft}`);
+      navigate(`../../../${path.board.specific.draft}`, { replace: true });
     } else if (boardId !== undefined) {
-      navigate(`../../${path.board.specific.draft}`);
+      navigate(`../../${path.board.specific.draft}`, { replace: true });
     } else {
-      navigate(`../../../../${path.board.specific.draft}`);
+      navigate(`../../../../${path.board.specific.draft}`, { replace: true });
     }
   };
 
