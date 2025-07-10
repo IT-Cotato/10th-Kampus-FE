@@ -9,7 +9,24 @@ import pluginPrettier from 'eslint-plugin-prettier';
 
 export default defineConfig([
   {
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      '.dist/**',
+      'build/**',
+      'public/**',
+      'src/assets/**',
+      'ios/**',
+      'android/**',
+      '.husky/**',
+      '.github/**',
+    ],
     files: ['**/*.{js,mjs,cjs,jsx}'],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     plugins: {
       js,
       'unused-imports': unusedImports,
@@ -18,7 +35,7 @@ export default defineConfig([
       'react-refresh': pluginReactRefresh,
       prettier: pluginPrettier,
     },
-    extends: ['js/recommended', pluginReact.configs.flat.recommended],
+    extends: [js.configs.recommended, pluginReact.configs.flat.recommended],
     languageOptions: { globals: globals.browser },
     rules: {
       'react/prop-types': 'off',
