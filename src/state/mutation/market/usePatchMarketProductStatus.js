@@ -7,9 +7,10 @@ export const usePatchMarketProductStatus = () => {
 
   const mutate = useMutation({
     mutationFn: ({ productId, productStatus }) => {
-      patchMarketProductStatus({ productId, productStatus });
+      return patchMarketProductStatus({ productId, productStatus });
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
+      const { productId } = variables;
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.PATCH_MARKET_PRODUCT_STATUS, productId],
       });

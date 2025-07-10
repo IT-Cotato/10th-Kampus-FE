@@ -13,7 +13,7 @@ export const NotificationButton = ({ isNotification }) => {
       <img
         src={isNotification ? notification_true : notification}
         alt="notification button"
-        className="w-5 h-6"
+        className="h-6 w-5"
       />
     </button>
   );

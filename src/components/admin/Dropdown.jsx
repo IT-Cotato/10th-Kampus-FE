@@ -58,7 +58,7 @@ export const Dropdown = ({
         )}
       >
         <ul
-          className="py-2 divide-y divide-primary-20 text-neutral-80"
+          className="divide-y divide-primary-20 py-2 text-neutral-80"
           aria-labelledby="dropdownDefaultButton"
         >
           {dropdownOptions.map((state, index) => (

@@ -12,7 +12,7 @@ export const Inquiry = () => {
   });
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
       ) : !inquiryList ? (
@@ -21,8 +21,8 @@ export const Inquiry = () => {
           <InquiryButton />
         </div>
       ) : (
-        <div className="flex flex-col w-full">
-          <div className="flex justify-center pt-5 pb-7">
+        <div className="flex w-full flex-col">
+          <div className="flex justify-center pb-7 pt-5">
             <InquiryButton />
           </div>
           {inquiryList.inquiryPreviews.map((item, index) => (

@@ -27,7 +27,7 @@ export const SchoolEmail = () => {
   const { mutate: sendSchoolEmailCode } = useMutation({
     mutationFn: (data) => postSchoolEmailCodeSend({ data: data }),
     mutationKey: [QUERY_KEYS.GET_SCHOOL_EMAIL_CODE_SEND],
-    onSuccess: (response) => {
+    onSuccess: () => {
       setShowModal(true);
     },
   });

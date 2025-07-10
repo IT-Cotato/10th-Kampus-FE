@@ -7,7 +7,7 @@ export const useGetMarketCategory = () => {
     queryKey: [QUERY_KEYS.GET_MARKET_CATEGORIES],
     queryFn: () => getMarketCategories(),
     select: (res) => [
-      ...res.categoryInfos?.map((category) => category.categoryName),
+      ...(res.categoryInfos?.map((category) => category.categoryName) ?? []),
     ],
     staleTime: 5 * 60 * 1000, // 5분
     gcTime: 10 * 60 * 1000, // 10분

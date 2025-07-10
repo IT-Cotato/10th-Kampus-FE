@@ -9,11 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const MyArticles = () => {
   const navigate = useNavigate();
-  const {
-    data: postList,
-    isLoading,
-    error: isPostError,
-  } = useQuery({
+  const { data: postList, isLoading } = useQuery({
     queryKey: [QUERY_KEYS.MY_POST_LIST],
     queryFn: () => getMyArticlesList({ page: 1 }),
   });
@@ -23,18 +19,18 @@ export const MyArticles = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
       ) : !postList.post ? (
-        <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
+        <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-neutral-border-40">
-            You haven't written anything yet! Share your story:)
+            You haven&apos;t written anything yet! Share your story:)
           </span>
         </div>
       ) : (
-        <div className="flex flex-col flex-1 w-full bg-white divide-y">
+        <div className="flex w-full flex-1 flex-col divide-y bg-white">
           {postList.posts.map((item, index) => (
             <PostList
               key={index}

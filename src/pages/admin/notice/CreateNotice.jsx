@@ -7,6 +7,8 @@ import { QUERY_KEYS } from '@/constants/api';
 import { postCreateNotice } from '@/apis/admin/postCreateNotice.api';
 import { getNoticeDetail } from '@/apis/mypage/getNoticeDetail.api';
 import { patchAdminNotice } from '@/apis/admin/patchAdminNotice.api';
+import { toast } from 'react-toastify';
+import { Toast } from '@/components/common/toast';
 
 export const CreateNotice = () => {
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ export const CreateNotice = () => {
       setContent(noticeData.content);
     }
   }, [noticeData, noticeId]);
-  
+
   const { mutate: createBoard } = useMutation({
     mutationFn: postCreateNotice,
   });
@@ -44,20 +46,20 @@ export const CreateNotice = () => {
     createBoard(
       { data: data },
       {
-        onSuccess: (response) => {
+        onSuccess: () => {
           navigate(-1);
         },
-        onError: (err) => {
-          alert(err.message);
+        onError: () => {
+          toast.error('공지사항을 작성하지 못했습니다.');
         },
       },
     );
   };
 
   const { mutate: editBoard } = useMutation({
-      mutationFn: ({ noticeId, noticeData }) =>
-        patchAdminNotice({ noticeId, data: noticeData }),
-    });
+    mutationFn: ({ noticeId, noticeData }) =>
+      patchAdminNotice({ noticeId, data: noticeData }),
+  });
 
   const handleEditNotice = (noticeId) => {
     const data = {
@@ -68,11 +70,11 @@ export const CreateNotice = () => {
     editBoard(
       { noticeId: noticeId, noticeData: data },
       {
-        onSuccess: (response) => {
+        onSuccess: () => {
           navigate(-1);
         },
-        onError: (err) => {
-          alert(err.message);
+        onError: () => {
+          toast.error('공지사항을 수정하지 못했습니다.');
         },
       },
     );
@@ -81,8 +83,8 @@ export const CreateNotice = () => {
   const disabled = !title || !content;
 
   return (
-    <div className="flex flex-col flex-1 gap-5">
-      <div className="flex flex-col h-full gap-5 p-8 bg-white rounded-2xl">
+    <div className="flex flex-1 flex-col gap-5">
+      <div className="flex h-full flex-col gap-5 rounded-2xl bg-white p-8">
         <div className="flex h-10 gap-5">
           <div className="flex items-center gap-2 text-subTitle"></div>
         </div>
@@ -97,18 +99,21 @@ export const CreateNotice = () => {
             cols={3}
             rows={10}
             value={content}
-            className="p-2 border rounded-lg resize-none border-neutral-border-40"
+            className="resize-none rounded-lg border border-neutral-border-40 p-2"
             onChange={(e) => setContent(e.target.value)}
             placeholder="공지사항 본문을 적어주세요."
           />
           <MainButton
             disabled={disabled}
-            onClick={isEditMode ? () => handleEditNotice(noticeId) : handleCreateNotice}
+            onClick={
+              isEditMode ? () => handleEditNotice(noticeId) : handleCreateNotice
+            }
           >
             {isEditMode ? '공지 수정' : '공지 작성'}
           </MainButton>
         </div>
       </div>
+      <Toast />
     </div>
   );
 };

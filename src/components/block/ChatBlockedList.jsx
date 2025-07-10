@@ -1,7 +1,7 @@
 export const ChatBlockedList = ({ title, content, userId, onClick }) => {
   return (
-    <div className="flex flex-row items-center justify-between w-full gap-3 py-5 border-b border-primary-20">
-      <div className="flex flex-col w-full truncate">
+    <div className="flex w-full flex-row items-center justify-between gap-3 border-b border-primary-20 py-5">
+      <div className="flex w-full flex-col truncate">
         <span className="truncate text-subTitle text-neutral-title">
           {title}
         </span>

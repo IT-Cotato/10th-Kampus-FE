@@ -13,7 +13,7 @@ export const ChatPage = () => {
   const [chatList, setChatList] = useState([]);
   const [messages, setMessages] = useState([]);
 
-  const [page, setPage] = useState(1);
+  const [page, _setPage] = useState(1);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
   const { connectSocket, sendMessage } = useWebsocket(

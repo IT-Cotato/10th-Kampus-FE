@@ -3,14 +3,12 @@ import search from '@/assets/imgs/search.svg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
-import { BoardBox, CardPostBox } from '@/components/home/BoardBox.jsx';
+import { BoardBox } from '@/components/home/BoardBox.jsx';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getFavorite } from '@/apis/home/getFavorite.api';
 import { getTrend } from '@/apis/home/getTrend.api';
 import { getUser } from '@/apis/user/userDetail.api';
-import { getCardNewsList } from '@/apis/board/getPostList.api';
-import { getUniversity } from '@/apis/home/getUniversity.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
 
 export const Home = () => {
@@ -28,20 +26,12 @@ export const Home = () => {
     throwOnError: true,
   })*/
 
-  const {
-    data: favoriteList,
-    isLoading: favoriteLoading,
-    error: favoriteError,
-  } = useQuery({
+  const { data: favoriteList } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_FAVORITE],
     queryFn: getFavorite,
   });
 
-  const {
-    data: trendingList,
-    isLoading: trendingLoading,
-    error: trendingError,
-  } = useQuery({
+  const { data: trendingList } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_TRENDING],
     queryFn: getTrend,
   });
@@ -57,16 +47,12 @@ export const Home = () => {
   });*/
   }
 
-  const {
-    data: userDetail,
-    isLoading: userLoading,
-    error: userError,
-  } = useQuery({
+  const { data: userDetail } = useQuery({
     queryKey: [QUERY_KEYS.GET_USER_ME],
     queryFn: getUser,
   });
 
-  const [isNotification, setIsNotification] = useState(false);
+  const [isNotification, _setIsNotification] = useState(false);
 
   return (
     <div className="flex w-full flex-col gap-[.625rem] px-4 py-3">

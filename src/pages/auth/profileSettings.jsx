@@ -47,11 +47,14 @@ export const ProfileSettings = () => {
   const { mutate } = useDuplicateCheck(postDuplicateCheck);
 
   const handleDuplicateCheck = (value) => {
-    mutate({ data: { nickname: value } }, {
-      onSuccess: (response) => {
-        setIsUserNameDuplicated(!(response?.isAvailable)); // API 응답에 따라 상태 업데이트
+    mutate(
+      { data: { nickname: value } },
+      {
+        onSuccess: (response) => {
+          setIsUserNameDuplicated(!response?.isAvailable); // API 응답에 따라 상태 업데이트
+        },
       },
-    });
+    );
   };
 
   useEffect(() => {
@@ -81,7 +84,7 @@ export const ProfileSettings = () => {
   };
 
   const handleClickJoinNow = async () => {
-    const { data, success } = await patchSignup(returnSignupData());
+    const { success } = await patchSignup(returnSignupData());
     if (success) {
       // 우선은 userId를 쓰는 곳이 없어서 저장안해뒀는데 필요하면 추가시키겠습니다!
       navigate(`${path.signup.base}/${path.signup.welcome}`);
@@ -91,7 +94,7 @@ export const ProfileSettings = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="Profile Settings" />
       <div className="flex flex-col px-4 py-[.625rem]">
         <div className="mb-5 mt-12 flex w-full flex-col space-y-[1.875rem]">
@@ -122,7 +125,7 @@ export const ProfileSettings = () => {
             warn="You have to select your language"
           />
         </div>
-        <div className="flex mt-8 mb-5">
+        <div className="mb-5 mt-8 flex">
           <MainButton onClick={handleClickJoinNow} disabled={disabled}>
             Join Now
           </MainButton>

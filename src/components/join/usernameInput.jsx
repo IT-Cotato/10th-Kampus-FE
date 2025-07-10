@@ -1,8 +1,12 @@
 import { useRef } from 'react';
 
-export const UserNameInput = (
-  { userName, onChange, invalid, duplicated, label = true }
-) => {
+export const UserNameInput = ({
+  userName,
+  onChange,
+  invalid,
+  duplicated,
+  label = true,
+}) => {
   const userNameRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -11,7 +15,7 @@ export const UserNameInput = (
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       {label && (
         <label htmlFor="username" className="text-base text-neutral-base">
           User Name<span className="text-primary-red">*</span>

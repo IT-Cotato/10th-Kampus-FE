@@ -12,6 +12,8 @@ import { deleteAdminBoard } from '@/apis/admin/deleteAdminBoard.api';
 import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
 import { postInactivateBoard } from '@/apis/admin/postInactivateBoard.api';
 import { BOARD_STATE } from '@/constants/boardConstant';
+import { toast } from 'react-toastify';
+import { Toast } from '@/components/common/toast';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();
@@ -33,8 +35,8 @@ export const BoardManagement = () => {
       alert('게시판이 보관되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
     },
-    onError: (error) => {
-      alert('게시판 보관 실패');
+    onError: () => {
+      toast.error('게시판 보관 실패');
     },
     onSettled: () => {
       setSelectedBoardMenu(null);
@@ -52,8 +54,8 @@ export const BoardManagement = () => {
       alert('게시판이 삭제되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
     },
-    onError: (error) => {
-      alert('게시판 삭제 실패');
+    onError: () => {
+      toast.error('게시판 삭제 실패');
     },
     onSettled: () => {
       setSelectedBoardMenu(null);
@@ -77,8 +79,8 @@ export const BoardManagement = () => {
       alert('게시판이 활성화되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_BOARD_LIST] }); // 삭제 후 리스트 다시 불러오기
     },
-    onError: (error) => {
-      alert('게시판 활성화 실패');
+    onError: () => {
+      toast.error('게시판 활성화 실패');
     },
     onSettled: () => {
       setSelectedBoardMenu(null);
@@ -225,6 +227,7 @@ export const BoardManagement = () => {
           <img src={Plus} />
         </button>
       </ul>
+      <Toast />
     </div>
   );
 };

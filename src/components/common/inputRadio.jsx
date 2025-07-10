@@ -29,8 +29,8 @@ export const InputRadio = ({
   }, [selected, item.text]);
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex justify-between w-full py-4 border-b border-neutral-border-30">
+    <div className="flex w-full flex-col">
+      <div className="flex w-full justify-between border-b border-neutral-border-30 py-4">
         <label htmlFor={item.text}>{item.text}</label>
         <input
           type="radio"
@@ -41,7 +41,8 @@ export const InputRadio = ({
           className="border-box h-7 w-7 cursor-pointer appearance-none rounded-full border border-neutral-border-30 checked:border checked:border-neutral-border-30 checked:bg-primary-30 checked:shadow-[inset_0rem_0rem_0rem_.25rem_#FFFFFF]"
         />
       </div>
-      {((item.text === 'Other' && selected === 'Other') || (item.text === 'Others' && selected === 'Others')) && (
+      {((item.text === 'Other' && selected === 'Other') ||
+        (item.text === 'Others' && selected === 'Others')) && (
         <textarea
           ref={textareaRef}
           className="mt-[1.875rem] resize-none rounded-[.625rem] border border-primary-20 p-4 text-base placeholder-neutral-border-50"

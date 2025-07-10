@@ -15,7 +15,7 @@ export const InquiryDetail = () => {
   });
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="1:1 Inquriy" />
       {isLoading ? (
         <Loading />

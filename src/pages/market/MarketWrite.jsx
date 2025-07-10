@@ -74,11 +74,8 @@ export const MarketWrite = () => {
     }
   };
 
-  const {
-    mutate: handleTranslate,
-    isPending: translatePending,
-    isError: translateError,
-  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
+  const { mutate: handleTranslate, isPending: translatePending } =
+    usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   const handleFocus = (ref) => {
     ref.current?.focus();

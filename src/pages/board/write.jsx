@@ -15,6 +15,7 @@ import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
 import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
+import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 
 export const Write = () => {
   const queryClient = useQueryClient();
@@ -32,11 +33,7 @@ export const Write = () => {
   const categoryList =
     boardCategories?.categories.map((item) => item.categoryName) || [];
 
-  const {
-    mutate: addPost,
-    isPending: postPending,
-    isError: postError,
-  } = useMutation({
+  const { mutate: addPost } = useMutation({
     mutationFn: (newPost) => postWritePost({ data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
@@ -56,11 +53,8 @@ export const Write = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
 
-  const {
-    mutate: handleTranslate,
-    isPending: translatePending,
-    isError: translateError,
-  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
+  const { mutate: handleTranslate, isPending: translatePending } =
+    usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   const { data: prevPost } = useGetBoardPost();
 

@@ -5,11 +5,13 @@ import {
 } from '@/apis/admin/postStudentVerifications.api';
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { Loading } from '@/components/common/Loading';
+import { Toast } from '@/components/common/toast';
 import { QUERY_KEYS } from '@/constants/api';
 import { cn } from '@/utils/cn';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const StudentVerifications = () => {
   const navigate = useNavigate();
@@ -34,8 +36,8 @@ export const StudentVerifications = () => {
     onSuccess: () => {
       navigate(-1);
     },
-    onError: (error) => {
-      alert('저장 실패');
+    onError: () => {
+      toast.error('저장 실패');
     },
   });
 
@@ -45,8 +47,8 @@ export const StudentVerifications = () => {
     onSuccess: () => {
       navigate(-1);
     },
-    onError: (error) => {
-      alert('저장 실패');
+    onError: () => {
+      toast.error('저장 실패');
     },
   });
 
@@ -62,14 +64,14 @@ export const StudentVerifications = () => {
     !selectedStatus || (selectedStatus === 'reject' && reason === '');
 
   return (
-    <div className="flex flex-col flex-1 gap-5">
+    <div className="flex flex-1 flex-col gap-5">
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="grid items-center w-full h-full grid-cols-2 gap-5 p-8 bg-white rounded-2xl">
+        <div className="grid h-full w-full grid-cols-2 items-center gap-5 rounded-2xl bg-white p-8">
           <img
             src={studentVerificationData.imageUrl}
-            className="w-full h-auto"
+            className="h-auto w-full"
           />
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <h1 className="text-subTitle text-neutral-title">
@@ -116,6 +118,7 @@ export const StudentVerifications = () => {
           </div>
         </div>
       )}
+      <Toast />
     </div>
   );
 };
