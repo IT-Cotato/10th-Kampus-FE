@@ -1,8 +1,14 @@
-name: Deploy
+name: CI
 
 on:
   push:
     branches: ['develop']
+  pull_request:
+    branches: ['develop']
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   build:
@@ -10,11 +16,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Code Quality Check
+        run: npm run prettier:check && npm run lint
 
       - name: Prepare Environment
         run: rm -f .env.production && touch .env.production
@@ -27,30 +40,13 @@ jobs:
           echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> .env.production
           echo "VITE_API_SOCKET_URL=${{ secrets.VITE_API_SOCKET_URL }}" >> .env.production
 
-      - name: Install Dependencies
-        run: npm install --force
-
-      - name: Run Prettier Check
-        run: npm run prettier:check
-
-      - name: Run ESLint
-        run: npm run lint
-
       - name: Build Production
         run: CI=false npm run build --if-present
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Upload Build Artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        uses: actions/upload-artifact@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
-
-      - name: Deploy to S3
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws s3 sync --region ap-northeast-2 dist s3://kampus-bucket --delete
-
-      - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_DISTRIBUTION_ID}} --paths "/*"
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 30
