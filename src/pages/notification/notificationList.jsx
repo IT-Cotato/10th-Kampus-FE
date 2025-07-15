@@ -31,6 +31,7 @@ export const NotificationList = () => {
       isRead: true,
     },
   ];
+
   return (
     <div className="h-full w-full">
       <NotificationHeader />
