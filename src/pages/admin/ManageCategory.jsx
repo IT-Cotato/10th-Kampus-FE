@@ -2,8 +2,7 @@
 import { useGetCategory } from '@/state/query/admin/useGetCategory';
 import { usePostCategory } from '@/state/mutation/admin/usePostCategory';
 import { useState } from 'react';
-import { Toast } from '@/components/common/Toast';
-import { toast } from 'react-toastify';
+import { Toast } from '@/components/common/toast';
 
 export const ManageCategory = () => {
   const [categoryValue, setCategoryValue] = useState('');
