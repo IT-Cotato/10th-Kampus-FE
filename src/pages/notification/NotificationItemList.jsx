@@ -1,6 +1,6 @@
 import { NotificationHeader } from '@/components/notification/NotificationHeader';
 import { NotificationBox } from '@/components/notification/NotificationBox';
-export const NotificationList = () => {
+export const NotificationItemList = () => {
   const dummyData = [
     {
       createdTime: '2 hours ago',

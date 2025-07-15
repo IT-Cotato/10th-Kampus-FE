@@ -46,7 +46,7 @@ import {
   ChatPage,
   CardnewsList,
   BoardGuide,
-  NotificationList,
+  NotificationItemList,
   CreateBoard,
   NoticeManagement,
   CreateNotice,
@@ -208,7 +208,7 @@ const AppRouter = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <NotificationList />,
+            element: <NotificationItemList />,
           },
         ],
       },
