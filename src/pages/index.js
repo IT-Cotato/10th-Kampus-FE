@@ -47,7 +47,7 @@ export { MyInfo } from './my/settings/MyInfo';
 export { Notification } from './my/settings/notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
-export { NotificationList } from './notification/NotificationList';
+export { NotificationItemList } from './notification/NotificationItemList';
 export { Market } from './market/market';
 export { MarketPost } from './market/MarketPost';
 export { MarketWrite } from './market/MarketWrite';
