@@ -1,44 +1,44 @@
-import { getMyCommentsList } from '@/apis/mypage/getMyArticle.api';
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
-import { PostList } from '@/components/board/PostList';
 import { Loading } from '@/components/common/Loading';
-import { QUERY_KEYS } from '@/constants/api';
+import { MarketList } from '@/components/market/MarketList';
 import { path } from '@/routes/path';
-import { useQuery } from '@tanstack/react-query';
+import { useGetMyMarketList } from '@/state/query/my/useGetMyMarketList';
 import { useNavigate } from 'react-router-dom';
 
-export const MyComments = () => {
+export const MyMarkets = () => {
   const navigate = useNavigate();
+
   const {
-    data: postList,
+    data: marketList,
     isLoading,
-    error: isPostError,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.MY_COMMENTED_POST_LIST],
-    queryFn: () => getMyCommentsList({ page: 1 }),
-  });
+    error: isMarketError,
+  } = useGetMyMarketList();
 
   const handleNavigate = (data) => {
-    navigate(`../../../${path.board.base}/${data.boardId}/${data.postId}`);
+    navigate(`${path.market.base}/${data.productId}`);
   };
 
   return (
     <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
-      ) : !postList.posts ? (
+      ) : !marketList.items ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 pb-10">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
-            You haven't posted any comments yet!
+            There's nothing you've scrapped!
             <br />
-            Share your opinion:)
+            Try saving your interest:)
           </span>
+        </div>
+      ) : isMarketError ? (
+        <div className="flex h-full w-full items-center justify-center text-subTitle text-red-500">
+          An error has occurred.
         </div>
       ) : (
         <div className="flex w-full flex-1 flex-col divide-y bg-white">
-          {postList.posts.map((item, index) => (
-            <PostList
+          {marketList.items.map((item, index) => (
+            <MarketList
               key={index}
               data={item}
               isActive={true}

@@ -14,3 +14,10 @@ export const getMyCommentsList = async ({ page }) => {
   });
   return response.data.data;
 };
+
+export const getMyMarketList = async ({ page }) => {
+  const response = await authApi.get(API_DOMAINS.GET_MY_MARKETS, {
+    params: { page },
+  });
+  return response.data.data;
+};

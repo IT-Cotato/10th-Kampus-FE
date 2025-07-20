@@ -54,6 +54,7 @@ export const path = {
         base: 'article',
         articles: 'articles',
         comments: 'comments',
+        market: 'markets',
       },
       secondhand: 'secondhand',
     },

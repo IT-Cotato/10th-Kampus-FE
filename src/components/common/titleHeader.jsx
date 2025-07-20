@@ -1,5 +1,4 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
-import { cn } from '@/utils/cn';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,7 +18,7 @@ export const TitleHeader = ({ text, onClick = null }) => {
     if (text.length > 20) {
       setIsLong(true);
     }
-  }, [text])
+  }, [text]);
   const longText = text.length > 20;
 
   return (
@@ -30,10 +29,12 @@ export const TitleHeader = ({ text, onClick = null }) => {
         onClick={handleBackClick}
         className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
-      <span className={`text-neutral-title ${longText ? "text-base font-semibold" : "text-pageTitle"}`}>
+      <span
+        className={`text-neutral-title ${longText ? 'text-base font-semibold' : 'text-pageTitle'}`}
+      >
         {text}
       </span>
       <div className="h-[1.25rem] w-[1.25rem]" />
-    </div >
+    </div>
   );
 };
