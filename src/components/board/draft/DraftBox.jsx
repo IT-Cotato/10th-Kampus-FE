@@ -29,15 +29,11 @@ export const DraftBox = ({
     handleSelectDraft(e);
   };
 
-  const generateWritePath = (boardId, draftId) => {
-    return `../${boardId}/${path.board.specific.write}?draftId=${draftId}`;
-  };
-
   const handleClickDraft = () => {
     if (isEditMode) {
       return;
     }
-    navigate(generateWritePath(draft.boardId, draft.tempPostId));
+    navigate(`../${boardId}/${path.board.specific.write}?draftId=${draftId}`);
   };
 
   const checked = selectedDrafts.includes(draft.tempPostId);
