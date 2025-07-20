@@ -159,14 +159,14 @@ export const Write = () => {
       });
     }
 
-    if (draftId !== undefined || draftId !== null) {
-      if (postId !== undefined || postId !== null) {
+    if (draftId !== undefined && draftId !== null) {
+      postDraft(formData);
+    } else {
+      if (postId !== undefined) {
         putPost({ postId, data: formData });
       } else {
-        postDraft(formData);
+        addPost(formData);
       }
-    } else {
-      addPost(formData);
     }
   };
 
@@ -195,7 +195,7 @@ export const Write = () => {
 
   const { data: draftCount } = useGetDraftCount();
 
-  const { mutate: patchDraft } = usePatchDraft({ draftId });
+  const { mutate: patchDraft } = usePatchDraft();
 
   // 임시저장 버튼 클릭 시
   const handleSaveDraft = async () => {
@@ -220,7 +220,7 @@ export const Write = () => {
       saveDraft(formData);
     } else {
       // 임시저장 덮어쓰기
-      patchDraft(formData);
+      patchDraft({ data: formData, postDraftId: draftId });
     }
   };
 
