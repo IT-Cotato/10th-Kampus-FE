@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { SkipHeader } from '@/components/join/SkipHeader';
-import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { UNIV_STATUS } from '@/constants/universityStatus';
 
 export const SchoolSearch = () => {
@@ -23,7 +22,7 @@ export const SchoolSearch = () => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
       navigate(path.home, { replace: true });
     }
-  }, [status, university]);
+  }, [status]);
 
   return (
     <div className="flex h-full w-full flex-col">

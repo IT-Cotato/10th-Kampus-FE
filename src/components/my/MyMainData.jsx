@@ -27,7 +27,7 @@ export const MyMainData = () => {
     data: status,
     isLoading: isSchoolStatusLoading,
     isError: isSchoolStatusError,
-  } = useCheckSchoolStatus();
+  } = useCheckSchoolStatus(!!userData && userData.universityId !== -1);
 
   return (
     <>
@@ -59,7 +59,7 @@ export const MyMainData = () => {
         )}
       </div>
       {/* 학교 인증 시 반려 시, 실패 네비게이트 페이지 버튼 */}
-      {status === UNIV_STATUS.REJECTED && (
+      {status === UNIV_STATUS.REJECT && (
         <button
           onClick={() =>
             navigate(`${path.mypage.base}/${path.mypage.verify.fail}`)

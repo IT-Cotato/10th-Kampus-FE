@@ -3,7 +3,6 @@ import { Layout } from '@/components/layout/layout';
 import { path } from '@/routes/path';
 import {
   AllBoard,
-  SplashScreen,
   Login,
   Terms,
   NotFound,
@@ -46,7 +45,6 @@ import {
   ChatPage,
   CardnewsList,
   BoardGuide,
-  NotificationItemList,
   CreateBoard,
   NoticeManagement,
   CreateNotice,
@@ -55,7 +53,6 @@ import {
   MarketPost,
   StudentVerifications,
   FailedVerify,
-  AccountPermanentSuspendedNotice,
   MarketWrite,
   ManageCategory,
   KakaoLoginHandler,
@@ -107,11 +104,11 @@ const AppRouter = createBrowserRouter([
     ),
     children: [
       {
-        path: '',
+        path: path.login.base,
         element: <Login />,
       },
       {
-        path: path.login.kakao,
+        path: path.login.base + '/' + path.login.kakao,
         element: <KakaoLoginHandler />,
       },
     ],
