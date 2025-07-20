@@ -19,6 +19,8 @@ import {
 } from '@/apis/board/toggleBoardFavorite.api';
 import { Modal } from './Modal';
 import { useDeleteMarketProduct } from '@/state/mutation/market/useDeleteMarketProduct';
+import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
+import { CHAT_TYPE } from '@/constants/chatType';
 
 export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();

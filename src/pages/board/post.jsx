@@ -10,20 +10,9 @@ import { ImageSlider } from '@/components/common/ImageSlider';
 import { UserInput } from '@/components/common/userInput';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { useParams } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getPostDetail } from '@/apis/board/handlePost.api';
-import { QUERY_KEYS } from '@/constants/api';
 import { Loading } from '@/components/common/Loading';
 import { formatTime } from '@/utils/formatTime';
 import { PostComment } from '@/components/board/PostComment';
-import { getComment } from '@/apis/comment/getComment.api';
-import { addComment } from '@/apis/comment/addComment.api';
-import { deleteComment } from '@/apis/comment/deleteComment.api';
-import { addPostLike, deletePostLike } from '@/apis/board/togglePostLike.api';
-import {
-  addCommentLike,
-  deleteCommentLike,
-} from '@/apis/comment/toggleCommentLike.api';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
@@ -192,9 +181,9 @@ export const Post = () => {
         )}
 
         {/** 댓글 */}
-        {commentData?.length !== 0 ? (
+        {commentData?.comments?.length !== 0 ? (
           <div className="flex flex-col">
-            {commentData?.map((item) => (
+            {commentData?.comments?.map((item) => (
               <PostComment
                 data={item}
                 key={item.commentId}

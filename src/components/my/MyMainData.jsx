@@ -1,14 +1,12 @@
-import { getUser } from '@/apis/user/userDetail.api';
 import { Loading } from '@/components/common/Loading';
-import { QUERY_KEYS } from '@/constants/api';
 import { ERR_MSG } from '@/constants/errorMessage';
 import { UNIV_STATUS } from '@/constants/universityStatus';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { path } from '@/routes/path';
 import arrow from '@/assets/imgs/arrowRight.svg';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
 
 export const MyMainData = () => {
   const navigate = useNavigate();
@@ -16,10 +14,7 @@ export const MyMainData = () => {
   const [username, setUsername] = useState('');
   const [university, setUniversity] = useState('');
 
-  const { data: userData, isLoading: isUserDetailsLoading } = useQuery({
-    queryKey: [QUERY_KEYS.USER_INFO],
-    queryFn: () => getUser(),
-  });
+  const { data: userData, isLoading: isUserDetailsLoading } = useGetUserData();
 
   useEffect(() => {
     if (userData) {
