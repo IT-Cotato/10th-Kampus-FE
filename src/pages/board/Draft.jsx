@@ -1,23 +1,13 @@
-import {
-  deleteAllDraft,
-  deleteSelectedDraft,
-} from '@/apis/board/deleteDrafts.api';
-import {
-  DeleteAllDraftModal,
-  DeleteSelectedDraftModal,
-} from '@/components/board/draft/DeleteDraftModal';
+import { DraftDeleteModal } from '@/components/board/draft/DraftDeleteModal';
 import { DraftBox } from '@/components/board/draft/DraftBox';
 import { DraftHeader } from '@/components/board/draft/DraftHeader';
 import { Loading } from '@/components/common/Loading';
-import { QUERY_KEYS } from '@/constants/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import KampusLogo from '@/assets/imgs/kampusLogo.svg?react';
 import { useState } from 'react';
 import { useGetDraftList } from '@/state/query/post/useGetDraftList';
-import {
-  startAnimation,
-  StateChangeAnimate,
-} from '@/components/common/StateChangeAnimate';
+import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
+import { useDeleteAllDraft } from '@/state/mutation/board/useDeleteAllDraft';
+import { useDeleteSelectedDraft } from '@/state/mutation/board/useDeleteSelectedDraft';
 
 export const Draft = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -29,44 +19,23 @@ export const Draft = () => {
     useState(false);
   const [isDeleteSelectedSuccessAniOpen, setIsDeleteSelectedSuccessAniOpen] =
     useState(false);
-  const queryClient = useQueryClient();
 
   const { data: getDrafts, isLoading: draftLoading } = useGetDraftList();
 
-  const { mutate: deleteAllDraftMutate, onError: deleteAllError } = useMutation(
-    {
-      mutationFn: () => deleteAllDraft(),
-      onSuccess: () => {
-        startAnimation(setIsDeleteAllSuccessAniOpen);
-        queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.GET_DRAFT_LIST],
-        }); // 삭제 후 리스트 다시 불러오기
-      },
-      onError: (error) => {
-        console.log('삭제 실패');
-      },
-      onSettled: () => {
+  const { mutate: deleteAllDraftMutate, onError: deleteAllError } =
+    useDeleteAllDraft({
+      setIsDeleteAllSuccessAniOpen: setIsDeleteAllSuccessAniOpen,
+      onSettledCallback: () => {
         setIsEditMode(false);
         setIsDeleteAllModalOpen(false);
         setSelectedDrafts([]);
       },
-    },
-  );
+    });
 
   const { mutate: deleteSelectedDraftMutate, onError: deleteSelectedError } =
-    useMutation({
-      mutationFn: (selectedDrafts) =>
-        deleteSelectedDraft({ tempPostIds: selectedDrafts }),
-      onSuccess: () => {
-        startAnimation(setIsDeleteSelectedSuccessAniOpen);
-        queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.GET_DRAFT_LIST],
-        }); // 삭제 후 리스트 다시 불러오기
-      },
-      onError: (error) => {
-        console.log('삭제 실패');
-      },
-      onSettled: () => {
+    useDeleteSelectedDraft({
+      setIsDeleteSelectedSuccessAniOpen: setIsDeleteSelectedSuccessAniOpen,
+      onSettledCallback: () => {
         setIsEditMode(false);
         setIsDeleteSelectedModalOpen(false);
         setSelectedDrafts([]);
@@ -130,17 +99,19 @@ export const Draft = () => {
       )}
       {/* Modal */}
       {isDeleteAllModalOpen && (
-        <DeleteAllDraftModal
+        <DraftDeleteModal
           total={getDrafts?.totalCount}
           onClose={() => setIsDeleteAllModalOpen(false)}
-          deleteAll={deleteAllDraftMutate}
+          onConfirm={deleteAllDraftMutate}
+          type="all"
         />
       )}
       {isDeleteSelectedModalOpen && selectedDrafts.length !== 0 && (
-        <DeleteSelectedDraftModal
+        <DraftDeleteModal
           total={selectedDrafts.length}
           onClose={() => setIsDeleteSelectedModalOpen(false)}
-          deleteSelected={() => deleteSelectedDraftMutate(selectedDrafts)}
+          onConfirm={() => deleteSelectedDraftMutate(selectedDrafts)}
+          type="selected"
         />
       )}
       {isDeleteAllSuccessAniOpen && (

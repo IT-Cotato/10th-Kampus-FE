@@ -2,7 +2,7 @@ import { BoardName } from '../BoardName';
 import { formatISO } from '@/utils/formatTime';
 import Check from '@/assets/imgs/check.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { path, path } from '@/routes/path';
 import { cn } from '@/utils/cn';
 
 export const DraftBox = ({
@@ -29,13 +29,15 @@ export const DraftBox = ({
     handleSelectDraft(e);
   };
 
+  const generateWritePath = (boardId, draftId) => {
+    return `../${boardId}/${path.board.specific.write}?draftId=${draftId}`;
+  };
+
   const handleClickDraft = () => {
     if (isEditMode) {
       return;
     }
-    navigate(
-      `../${draft.boardId}/${path.board.specific.write}?draftId=${draft.tempPostId}`,
-    );
+    navigate(generateWritePath(draft.boardId, draft.tempPostId));
   };
 
   const checked = selectedDrafts.includes(draft.tempPostId);

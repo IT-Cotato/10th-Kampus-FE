@@ -241,11 +241,17 @@ export const Write = () => {
   // 임시저장 목록 페이지로 이동
   const handleClickSavedDrafts = () => {
     if (postId !== undefined) {
-      navigate(`../../../${path.board.specific.draft}`, { replace: true });
+      navigate(`${path.board.base}/${path.board.specific.draft}`, {
+        replace: true,
+      });
     } else if (boardId !== undefined) {
-      navigate(`../../${path.board.specific.draft}`, { replace: true });
+      navigate(`${path.board.base}/${path.board.specific.draft}`, {
+        replace: true,
+      });
     } else {
-      navigate(`../../../../${path.board.specific.draft}`, { replace: true });
+      navigate(`${path.board.base}/${path.board.specific.draft}`, {
+        replace: true,
+      });
     }
   };
 
