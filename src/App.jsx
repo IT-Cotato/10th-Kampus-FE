@@ -7,12 +7,13 @@ import { toast } from 'react-toastify';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0,
+      retry: false,
       throwOnError: true,
     },
     mutations: {
+      throwOnError: false,
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(`[${error.code}] ${error.message}`);
       },
     },
   },
@@ -20,11 +21,9 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={AppRouter} />
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={AppRouter} />
+    </QueryClientProvider>
   );
 }
 

@@ -1,4 +1,5 @@
 export const path = {
+  root: '/',
   accountPermanentSuspended: '/account-permanent-suspended',
   login: {
     base: '/login',

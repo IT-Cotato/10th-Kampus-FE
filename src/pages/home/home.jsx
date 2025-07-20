@@ -8,10 +8,10 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getFavorite } from '@/apis/home/getFavorite.api';
 import { getTrend } from '@/apis/home/getTrend.api';
-import { getUserDetail } from '@/apis/auth/login.api';
 import { getCardNewsList } from '@/apis/board/getPostList.api';
 import { getUniversity } from '@/apis/home/getUniversity.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -61,10 +61,7 @@ export const Home = () => {
     data: userDetail,
     isLoading: userLoading,
     error: userError,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_DETAIL],
-    queryFn: getUserDetail,
-  });
+  } = useGetUserData();
 
   const [isNotification, setIsNotification] = useState(false);
 

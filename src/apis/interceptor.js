@@ -73,7 +73,10 @@ export const onError = async (error, api) => {
           withCredentials: true, // refreshToken 추가
         },
       );
-      const newAccessToken = response.data.accessToken;
+
+      const authorizationHeader = response.headers.authorization;
+      // Bearer 제거하고 값만 파싱
+      const newAccessToken = authorizationHeader.split(' ')[1];
 
       useAuthStore.getState().setAccessToken(newAccessToken);
 

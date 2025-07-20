@@ -3,11 +3,7 @@ import Camera from '@/assets/imgs/camera.svg?react';
 import XIcon from '@/assets/imgs/ImgX.svg?react';
 import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
-
-export const InputTypes = {
-  CHAT: 'chat',
-  POST: 'post',
-};
+import { INPUT_TYPE } from '@/constants/inputType';
 
 export const UserInput = ({
   placeholder,
@@ -24,15 +20,15 @@ export const UserInput = ({
   const [previewImages, setPreviewImages] = useState([]);
   const [showImagePreview, setShowImagePreview] = useState(false);
 
+  // textarea 높이 조절
   const handleInput = () => {
-    // textarea 높이 조절
     if (textareaRef.current) {
       textareaRef.current.style.height = '0px';
       const scrollHeight = textareaRef.current.scrollHeight;
       textareaRef.current.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
 
       if (containerRef.current) {
-        containerRef.current.style.height = `${Math.min(scrollHeight, maxHeight) + 20}px'`;
+        containerRef.current.style.height = `${Math.min(scrollHeight, maxHeight) + 20}px`;
       }
     }
   };
@@ -42,16 +38,25 @@ export const UserInput = ({
   }, [handleSend]);
 
   useEffect(() => {
-    if (textareaRef.current && inputFocus && InputTypes.POST === type) {
+    if (textareaRef.current && inputFocus && INPUT_TYPE.POST === type) {
       textareaRef.current.focus();
     }
-  });
+  }, [inputFocus, type]);
 
-  const handlePhoto = (e) => {
+  // 언마운트 시 미리보기 URL 모두 해제
+  useEffect(() => {
+    return () => {
+      previewImages.forEach((url) => {
+        URL.revokeObjectURL(url);
+      });
+    };
+  }, [previewImages]);
+
+  const handlePhoto = async (e) => {
     const newFiles = Array.from(e.target.files);
 
-    if (newFiles.length > 10) {
-      alert('최대 10개의 이미지만 업로드할 수 있습니다.');
+    if (newFiles.length > 1) {
+      alert('1개의 이미지만 업로드할 수 있습니다.');
       return;
     }
 
@@ -61,15 +66,23 @@ export const UserInput = ({
     }
 
     try {
-      const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
+      const newPreviews = await Promise.all(
+        validFiles.map((file) => {
+          return new Promise((resolve, reject) => {
+            try {
+              resolve(URL.createObjectURL(file));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }),
+      );
 
-      if (validFiles.length > 0) {
+      if (validFiles.length > 0 && newPreviews.length === validFiles.length) {
         setPreviewImages(newPreviews);
         setShowImagePreview(true);
 
-        // 부모 컴포넌트에 파일 데이터 전달
-        onImagesChange?.(validFiles);
-
+        onImagesChange?.(validFiles); // 부모 컴포넌트에 파일 데이터 전달
         e.target.value = ''; // input 초기화
       }
     } catch (error) {
@@ -120,7 +133,7 @@ export const UserInput = ({
         ref={containerRef}
         className="flex h-auto items-start overflow-y-auto rounded-[1.25rem] bg-neutral-bg-5 px-2 py-2"
       >
-        {type === InputTypes.CHAT && (
+        {type === INPUT_TYPE.CHAT && (
           <label
             htmlFor="imageUpload"
             aria-label="Upload Image"
@@ -144,13 +157,25 @@ export const UserInput = ({
           ref={textareaRef}
           value={input}
           onChange={(e) => {
-            setInput(e.target.value);
-            handleInput();
+            if (previewImages.length === 0) {
+              setInput(e.target.value);
+              handleInput();
+            }
           }}
           rows={1}
-          className="flex-grow resize-none bg-neutral-bg-5 px-2 pt-1 text-base text-neutral-title"
-          placeholder={placeholder}
-          autoFocus={type === InputTypes.CHAT}
+          className={cn(
+            'flex-grow resize-none bg-neutral-bg-5 px-2 pt-1 text-base text-neutral-title',
+            {
+              'cursor-not-allowed opacity-50': previewImages.length > 0,
+            },
+          )}
+          placeholder={
+            previewImages.length > 0
+              ? '이미지가 첨부되어 있습니다'
+              : placeholder
+          }
+          autoFocus={type === INPUT_TYPE.CHAT}
+          disabled={previewImages.length > 0}
         />
         <button
           onClick={handleSend}

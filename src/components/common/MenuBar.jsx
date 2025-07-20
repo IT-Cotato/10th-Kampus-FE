@@ -17,9 +17,11 @@ import {
   addBoardFavorite,
   deleteBoardFavorite,
 } from '@/apis/board/toggleBoardFavorite.api';
-import { postChat } from '@/apis/chat/chatRoom.api';
 import { Modal } from './Modal';
 import { useDeleteMarketProduct } from '@/state/mutation/market/useDeleteMarketProduct';
+import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
+import { CHAT_TYPE } from '@/constants/chatType';
+
 export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -107,17 +109,9 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
     },
   });
 
-  const { mutate: createChatRoom } = useMutation({
-    mutationKey: [QUERY_KEYS.POST_CHAT_ROOM],
-    mutationFn: () => postChat({ postId }),
-    onSuccess: () => {
-      navigate(path.chatList.base);
-    },
-    onError: (error) => {
-      if (error.response.data.code === 'CHAT-002') {
-        navigate(path.chatList.base);
-      }
-    },
+  const { mutate: createChatRoom } = usePostChatroom({
+    type: CHAT_TYPE.POST,
+    referenceId: Number(postId),
   });
 
   const startMenuAni = (setAni) => {

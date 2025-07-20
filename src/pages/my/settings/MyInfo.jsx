@@ -11,14 +11,13 @@ import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
 import { useEffect, useState } from 'react';
 import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getUserDetail } from '@/apis/auth/login.api';
+import { useMutation } from '@tanstack/react-query';
 import { path } from '@/routes/path';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
 import { ERR_MSG } from '@/constants/errorMessage';
 import { UNIV_STATUS } from '@/constants/universityStatus';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
 
 export const MyInfo = () => {
   const navigate = useNavigate();
@@ -115,11 +114,7 @@ export const MyInfo = () => {
     !isLanguageSelected ||
     JSON.stringify(info) === JSON.stringify(savedInfo);
 
-  const { data: userData } = useQuery({
-    queryKey: [QUERY_KEYS.USER_INFO],
-    queryFn: () => getUserDetail(),
-  });
-
+  const { data: userData } = useGetUserData();
   useEffect(() => {
     if (userData) {
       setInfo(userData);

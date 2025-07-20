@@ -2,7 +2,7 @@ import { BoardName } from '../BoardName';
 import { formatISO } from '@/utils/formatTime';
 import Check from '@/assets/imgs/check.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { path, path } from '@/routes/path';
+import { path } from '@/routes/path';
 import { cn } from '@/utils/cn';
 
 export const DraftBox = ({

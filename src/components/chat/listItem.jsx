@@ -5,7 +5,7 @@ import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
 import blockIcon from '@/assets/imgs/blockIcon.svg';
 import leaveIcon from '@/assets/imgs/leaveIcon.svg';
 import { touchDrag } from '@/utils/touchDrag';
-import { parseToDate } from '@/utils/utcToKst';
+import { parseToDate, formatChatTime } from '@/utils/utcToKst';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { deleteChatroom } from '@/apis/chat/chatRoom.api';
@@ -20,8 +20,6 @@ export const ListItem = ({
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
 
-  const time = parseToDate(data.lastChatTime);
-
   const { mutate: deleteChatroomId } = useMutation({
     mutationKey: [QUERY_KEYS.CHAT_LIST],
     mutationFn: (chatroomId) => deleteChatroom({ chatroomId }),
@@ -29,6 +27,10 @@ export const ListItem = ({
       onChatRoomLeave(data.chatroomId);
     },
   });
+
+  const time = parseToDate(data.lastChatTime);
+  const lastChatDate = new Date(data.lastChatTime);
+  const formatTime = formatChatTime(lastChatDate, time);
 
   return (
     <div className="mb-[1.25rem] flex h-[3.875rem]">
@@ -60,11 +62,9 @@ export const ListItem = ({
         <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-subTitle text-neutral-title">
-              {data.postTitle}
+              {data.title}
             </p>
-            <p className="text-small text-neutral-border-50">
-              {time.hh}:{time.mi}
-            </p>
+            <p className="text-small text-neutral-border-50">{formatTime}</p>
           </div>
           <div className="flex items-center justify-between">
             <p className="w-[14.375rem] text-base text-neutral-base">
