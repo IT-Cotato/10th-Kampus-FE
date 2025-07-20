@@ -3,7 +3,7 @@ import XIcon from '@/assets/imgs/x.svg?react';
 import { MainButton } from '@/components/common/MainButton';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
-import { replace, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { postSchoolPhoto } from '@/apis/auth/postSchoolPhoto.api';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { UNIV_STATUS } from '@/constants/universityStatus';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
 
 export const SchoolPhoto = () => {
   const location = useLocation();
@@ -21,7 +22,11 @@ export const SchoolPhoto = () => {
 
   const { university, isInitialAuthFlow } = location.state || {};
 
-  const { data: status } = useCheckSchoolStatus();
+  const { data: userInfo } = useGetUserData();
+
+  const { data: status } = useCheckSchoolStatus(
+    !!userInfo && userInfo.universityId !== -1,
+  );
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {

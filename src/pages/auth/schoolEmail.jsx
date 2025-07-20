@@ -6,6 +6,7 @@ import { QUERY_KEYS } from '@/constants/api';
 import { UNIV_STATUS } from '@/constants/universityStatus';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { path } from '@/routes/path';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -30,12 +31,13 @@ export const SchoolEmail = () => {
     onSuccess: (response) => {
       setShowModal(true);
     },
+    onError: (error) => alert(error.response.data.message),
   });
 
   const sendVerificationCode = () => {
     const data = {
       email: email,
-      universityCode: university,
+      univCode: university,
     };
     sendSchoolEmailCode(data);
   };
@@ -43,13 +45,16 @@ export const SchoolEmail = () => {
   const handleClickValidate = (code) => {
     const data = {
       email: email,
-      universityCode: university,
       code: code,
     };
     return data;
   };
 
-  const { data: status } = useCheckSchoolStatus();
+  const { data: userInfo } = useGetUserData();
+
+  const { data: status } = useCheckSchoolStatus(
+    !!userInfo && userInfo.universityId !== -1,
+  );
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {

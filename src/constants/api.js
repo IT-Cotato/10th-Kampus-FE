@@ -20,8 +20,8 @@ export const API_DOMAINS = {
 
   DUPLICATE_CHECK: '/users/check-nickname',
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
-  SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
-  VERIFY_SCHOOL_EMAIL_CODE: '/users/verify/mail/confirm',
+  SEND_SCHOOL_EMAIL_CODE: '/cert/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE: '/cert/email/verify',
   GET_SCHOOL_STATUS: '/cert/status',
 
   PRODUCTS: '/products',
