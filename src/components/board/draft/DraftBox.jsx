@@ -33,7 +33,9 @@ export const DraftBox = ({
     if (isEditMode) {
       return;
     }
-    navigate(`../${boardId}/${path.board.specific.write}?draftId=${draftId}`);
+    navigate(
+      `../${draft.boardId}/${path.board.specific.write}?draftId=${draft.tempPostId}`,
+    );
   };
 
   const checked = selectedDrafts.includes(draft.tempPostId);

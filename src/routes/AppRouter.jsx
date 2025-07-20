@@ -266,15 +266,15 @@ const AppRouter = createBrowserRouter([
               },
             ],
           },
+        ],
+      },
+      {
+        path: '',
+        element: <Outlet />,
+        children: [
           {
-            path: '',
-            element: <Outlet />,
-            children: [
-              {
-                path: path.board.specific.draft,
-                element: <Draft />,
-              },
-            ],
+            path: path.board.specific.draft,
+            element: <Draft />,
           },
         ],
       },

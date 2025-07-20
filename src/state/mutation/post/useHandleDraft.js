@@ -5,11 +5,10 @@ import { path } from '@/routes/path';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-export const usePatchDraft = ({ draftId }) => {
+export const usePatchDraft = () => {
   const queryClient = useQueryClient();
   const mutate = useMutation({
-    mutationFn: (draft) =>
-      patchSaveDraft({ data: draft, postDraftId: draftId }),
+    mutationFn: (draft) => patchSaveDraft({ data: draft, postDraftId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_DRAFT_ID],
