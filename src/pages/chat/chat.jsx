@@ -1,21 +1,21 @@
 import { ChatList } from '@/components/chat/chatListPage';
 import { ChatRoom } from '@/components/chat/chatRoomPage';
-import { ACCESS_TOKEN_KEY } from '@/constants/api';
 import { useWebsocket } from '@/hooks/use-websocket';
 import { useEffect, useState } from 'react';
 import { ChatLayout } from '@/components/layout/chatLayout';
 import { Loading } from '@/components/common/Loading';
 import { CHAT_TYPE } from '@/constants/chatType';
 import { useGetChatList } from '@/state/query/chat/useGetChatList';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export const ChatPage = () => {
   const [chatroomId, setChatroomId] = useState(null);
   const [chatList, setChatList] = useState([]);
   const [messages, setMessages] = useState([]);
-
+  const [selectedType, setSelectedType] = useState(CHAT_TYPE.ALL);
   const [page, setPage] = useState(1);
 
-  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+  const { accessToken } = useAuthStore();
   const { connectSocket, sendMessage } = useWebsocket(
     setChatList,
     chatroomId,
@@ -29,7 +29,7 @@ export const ChatPage = () => {
     error,
     isLoading,
     refetch,
-  } = useGetChatList(page, CHAT_TYPE.POST);
+  } = useGetChatList(page, selectedType);
 
   //채팅리스트
   useEffect(() => {
@@ -52,6 +52,10 @@ export const ChatPage = () => {
     refetch();
   };
 
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+  };
+
   return (
     <div className="h-full w-full">
       <ChatLayout render={!chatroomId ? 'chatList' : null}>
@@ -60,6 +64,7 @@ export const ChatPage = () => {
             onChatRoomSelect={setChatroomId}
             chatList={chatList}
             onChatRoomLeave={handleChatRoomLeave}
+            onTypeChange={handleTypeChange}
           />
         ) : (
           <ChatRoom

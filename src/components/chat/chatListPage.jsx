@@ -1,8 +1,14 @@
 import { NoticeBox } from '@/components/common/noticeBox';
 import { ListItem } from '@/components/chat/listItem';
 import { useState } from 'react';
+import { ChatType } from '@/components/chat/ChatType';
 
-export const ChatList = ({ onChatRoomSelect, chatList, onChatRoomLeave }) => {
+export const ChatList = ({
+  onChatRoomSelect,
+  chatList,
+  onChatRoomLeave,
+  onTypeChange,
+}) => {
   const [activeSlide, setActiveSlide] = useState(null);
 
   const handleClickOutside = () => {
@@ -16,6 +22,7 @@ export const ChatList = ({ onChatRoomSelect, chatList, onChatRoomLeave }) => {
     >
       <div className="text-title text-neutral-title">Chats</div>
       <NoticeBox />
+      <ChatType onTypeChange={onTypeChange} />
       {chatList.length === 0 ? (
         <p className="mx-auto text-neutral-border-40">Empty</p>
       ) : (
