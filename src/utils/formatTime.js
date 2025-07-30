@@ -26,3 +26,28 @@ export const formatTime = (createdTime) => {
     }
   }
 };
+
+// ISO -> [Jan 20, 2025, 00:00]
+export const formatISO = (createdTime) => {
+  let [year, month, dayWithTime] = createdTime.split('-');
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  month = monthNames[parseInt(month)];
+  let [day, time] = dayWithTime.split(' ');
+  time = time.slice(0, 5);
+  day = parseInt(day);
+  const date = month + ' ' + day + ', ' + year;
+  return [date, time];
+};

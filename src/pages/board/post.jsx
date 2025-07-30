@@ -13,7 +13,6 @@ import { useParams } from 'react-router-dom';
 import { Loading } from '@/components/common/Loading';
 import { formatTime } from '@/utils/formatTime';
 import { PostComment } from '@/components/board/PostComment';
-
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
@@ -178,9 +177,9 @@ export const Post = () => {
         )}
 
         {/** 댓글 */}
-        {commentData?.length !== 0 ? (
+        {commentData?.comments?.length !== 0 ? (
           <div className="flex flex-col">
-            {commentData?.map((item) => (
+            {commentData?.comments?.map((item) => (
               <PostComment
                 data={item}
                 key={item.commentId}

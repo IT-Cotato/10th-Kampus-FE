@@ -25,6 +25,7 @@ export const path = {
       edit: 'edit',
       post: ':postId',
       report: 'report',
+      draft: 'draft',
       search: 'search',
     },
   },

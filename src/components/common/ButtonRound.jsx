@@ -8,6 +8,8 @@ export const BUTTON_THEMES = {
   PENDING: 'PENDING',
   REJECTED: 'REJECTED',
   BORDER: 'border',
+  SHADOW_BORDER: 'shadowBorder',
+  SELECTED: 'selected',
 };
 
 export const BUTTON_SIZES = {
@@ -37,6 +39,10 @@ export const ButtonRound = ({
           'bg-primary-red text-white': theme === BUTTON_THEMES.REJECTED,
           'border border-neutral-border-40 bg-white text-neutral-title':
             theme === BUTTON_THEMES.BORDER,
+          'bg-white text-neutral-border-50 shadow-navbar':
+            theme === BUTTON_THEMES.SHADOW_BORDER,
+          'border border-primary-20 bg-primary-5 text-black':
+            theme === BUTTON_THEMES.SELECTED,
           'w-full py-1': size === BUTTON_SIZES.LONG,
           'w-fit min-w-[7.625rem] rounded-full px-5 py-3':
             size === BUTTON_SIZES.MODAL,

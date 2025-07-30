@@ -101,7 +101,9 @@ export const Modal = ({
             {title}
           </h2>
           {children && (
-            <div className="flex w-full flex-col text-center">{children}</div>
+            <div className="flex w-full flex-col whitespace-break-spaces text-center">
+              {children}
+            </div>
           )}
           {renderButtons()}
         </div>

@@ -14,7 +14,7 @@ import Volume from '@/assets/imgs/admin/Volume.svg?react';
 import Edit from '@/assets/imgs/admin/Edit.svg?react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { getUser } from '@/apis/user/userDetail.api';
+import { getAdminUser } from '@/apis/user/adminUserDetail.api';
 
 export const Admin = ({ children }) => {
   const location = useLocation();
@@ -26,7 +26,7 @@ export const Admin = ({ children }) => {
 
   const { data: userData } = useQuery({
     queryKey: [QUERY_KEYS.GET_USER_ME],
-    queryFn: () => getUser(),
+    queryFn: () => getAdminUser(),
     staleTime: 1000 * 60 * 5,
   });
 
