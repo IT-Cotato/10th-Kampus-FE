@@ -20,18 +20,23 @@ export const MyArticle = ({ children }) => {
       text: 'My Comments',
       path: path.mypage.community.article.comments,
     },
+    {
+      id: 2,
+      text: 'Market',
+      path: path.mypage.community.article.market,
+    },
   ];
 
   return (
     <div className="flex w-full flex-col">
       <TitleHeader text="My Article" />
-      <div className="flex w-full flex-row justify-start gap-[0.625rem] px-4 pb-6 pt-12">
+      <div className="flex w-full flex-row justify-start gap-[0.625rem] p-4">
         {menu.map((item) => (
           <ButtonRound
             key={item.id}
             theme={`${pathname.includes(item.path) ? BUTTON_THEMES.PRIMARY : BUTTON_THEMES.DISABLED}`}
             text={item.text}
-            size="short"
+            size="long"
             onClick={() => navigate(`./${item.path}`, { replace: true })}
           />
         ))}

@@ -5,13 +5,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { UNIV_STATUS } from '@/constants/universityStatus';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
 
 export const SchoolVerification = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { university, isInitialAuthFlow } = location.state;
 
-  const { data: status } = useCheckSchoolStatus();
+  const { data: userInfo } = useGetUserData();
+
+  const { data: status } = useCheckSchoolStatus(
+    !!userInfo && userInfo.universityId !== -1,
+  );
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
@@ -40,6 +45,8 @@ export const SchoolVerification = () => {
             >
               School email address
             </MainWhiteButton>
+            {/** 
+             * 사진 인증 관리자 페이지 미완성으로 우선 보류 
             <MainWhiteButton
               onClick={() =>
                 navigate(path.signup.verify.file, {
@@ -49,6 +56,7 @@ export const SchoolVerification = () => {
             >
               Student verification photo
             </MainWhiteButton>
+             */}
           </div>
         </div>
       </div>

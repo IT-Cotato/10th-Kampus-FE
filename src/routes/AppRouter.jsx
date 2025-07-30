@@ -57,6 +57,7 @@ import {
   ManageCategory,
   KakaoLoginHandler,
   Admin,
+  MyMarkets,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -101,11 +102,11 @@ const AppRouter = createBrowserRouter([
     ),
     children: [
       {
-        path: '',
+        path: path.login.base,
         element: <Login />,
       },
       {
-        path: path.login.kakao,
+        path: path.login.base + '/' + path.login.kakao,
         element: <KakaoLoginHandler />,
       },
     ],
@@ -417,6 +418,10 @@ const AppRouter = createBrowserRouter([
           {
             path: path.mypage.community.article.comments,
             element: <MyComments />,
+          },
+          {
+            path: path.mypage.community.article.market,
+            element: <MyMarkets />,
           },
         ],
       },

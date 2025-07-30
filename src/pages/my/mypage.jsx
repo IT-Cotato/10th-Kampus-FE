@@ -75,7 +75,11 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate(path.mypage.community.secondhand)}
+                onClick={() =>
+                  navigate(
+                    `${path.mypage.community.article.base}/${path.mypage.community.article.market}`,
+                  )
+                }
               >
                 Secondhand
               </button>

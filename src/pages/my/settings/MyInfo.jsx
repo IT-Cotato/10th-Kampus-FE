@@ -40,8 +40,12 @@ export const MyInfo = () => {
   const [isLanguageSelected, setIsLanguageSelected] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const { data: userInfo } = useGetUserData();
+
   // 학교 인증 여부에 따라 학교 인증 버튼/학교 이름으로 보임
-  const { data: status, isError: schoolStatusError } = useCheckSchoolStatus();
+  const { data: status, isError: schoolStatusError } = useCheckSchoolStatus(
+    !!userInfo && userInfo.universityId !== -1,
+  );
 
   const validateUserNameValue = (value) => {
     const regex = /^[a-z0-9]{5,20}$/;

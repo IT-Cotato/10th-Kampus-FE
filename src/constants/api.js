@@ -14,14 +14,15 @@ export const API_DOMAINS = {
 
   GET_MY_POSTS: '/posts/my',
   GET_MY_COMMENTED_POST: '/my/commented-post',
+  GET_MY_MARKETS: '/products/my',
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
 
   POST_INQUIRY: '/support/inquiry',
 
   DUPLICATE_CHECK: '/users/check-nickname',
   VERIFY_SCHOOL_PHOTO: '/users/verify/document',
-  SEND_SCHOOL_EMAIL_CODE: '/users/verify/email/send',
-  VERIFY_SCHOOL_EMAIL_CODE: '/users/verify/mail/confirm',
+  SEND_SCHOOL_EMAIL_CODE: '/cert/email/send',
+  VERIFY_SCHOOL_EMAIL_CODE: '/cert/email/verify',
   GET_SCHOOL_STATUS: '/cert/status',
 
   PRODUCTS: '/products',
@@ -152,6 +153,7 @@ export const QUERY_KEYS = {
   GET_MY_SCHOOL_VERIFICATION: 'mySchoolVerification',
   MY_POST_LIST: 'myPostList',
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
+  MY_MARKET_LIST: 'myMarketList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
   USER_INFO: 'userInfo',
 

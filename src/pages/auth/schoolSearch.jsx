@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { SkipHeader } from '@/components/join/SkipHeader';
-import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { UNIV_STATUS } from '@/constants/universityStatus';
+import { useGetUserData } from '@/state/query/common/useGetUserData';
+import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 
 export const SchoolSearch = () => {
   const UniversityList = University;
@@ -17,13 +18,17 @@ export const SchoolSearch = () => {
   const navigate = useNavigate();
   const { isInitialAuthFlow } = location.state || false;
 
-  const { data: status } = useCheckSchoolStatus();
+  const { data: userInfo } = useGetUserData();
+
+  const { data: status } = useCheckSchoolStatus(
+    !!userInfo && userInfo.universityId !== -1,
+  );
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
       navigate(path.home, { replace: true });
     }
-  }, [status, university]);
+  }, [status]);
 
   return (
     <div className="flex h-full w-full flex-col">
