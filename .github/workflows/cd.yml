@@ -1,20 +1,21 @@
-name: Build and Deploy
+name: Manual Release and Deploy
 
 on:
-  push:
-    branches: ['develop']
-  pull_request:
-    branches: ['develop']
+  workflow_dispatch:
 
 jobs:
-  # CI Job: 빌드 및 코드 검사
-  build:
-    name: Build and Test
+  release-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
+      - name: Checkout develop branch
         uses: actions/checkout@v4
+        with:
+          ref: 'develop'
+          fetch-depth: 0
 
+      # 빌드 과정
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -23,12 +24,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-
-      - name: Run Code Quality Check
-        run: npm run prettier:check && npm run lint
-
-      - name: Prepare Environment
-        run: rm -f .env.production && touch .env.production
 
       - name: Set ENV Variables
         run: |
@@ -40,36 +35,7 @@ jobs:
 
       - name: Build Production
         run: CI=false npm run build --if-present
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-build
-          path: dist/
-
-  # CD Job: 배포 및 릴리즈
-  deploy:
-    name: Deploy and Release
-    needs: build # build job이 성공해야만 실행
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    environment:
-      name: production # 수동 승인
-
-    steps:
-      - name: Checkout develop branch for release
-        uses: actions/checkout@v4
-        with:
-          ref: 'develop'
-          fetch-depth: 0
-
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-build
-          path: dist/
+      # 빌드 과정 끝
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
