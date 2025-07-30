@@ -53,11 +53,8 @@ export const Write = () => {
   const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
 
   // 번역
-  const {
-    mutate: handleTranslate,
-    isPending: translatePending,
-    isError: translateError,
-  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
+  const { mutate: handleTranslate, isPending: translatePending } =
+    usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   // 글 수정하기 위해 조회
   const { data: prevPost } = useGetBoardPost();

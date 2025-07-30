@@ -71,7 +71,7 @@ export const Draft = () => {
           ) : (
             <span className="flex flex-1 -translate-y-12 flex-col items-center justify-center gap-2 text-center text-neutral-disabled">
               <KampusLogo className="h-12" />
-              <span>There's nothing you've written!</span>
+              <span>There&apos;s nothing you&apos;ve written!</span>
             </span>
           )}
         </section>

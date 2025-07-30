@@ -8,8 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getFavorite } from '@/apis/home/getFavorite.api';
 import { getTrend } from '@/apis/home/getTrend.api';
-import { getCardNewsList } from '@/apis/board/getPostList.api';
-import { getUniversity } from '@/apis/home/getUniversity.api';
 import { NotificationButton } from '@/components/common/NotificationButton';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
 
@@ -49,11 +47,7 @@ export const Home = () => {
   });*/
   }
 
-  const {
-    data: userDetail,
-    isLoading: userLoading,
-    error: userError,
-  } = useGetUserData();
+  const { data: userDetail, isLoading: _userLoading } = useGetUserData();
 
   const [isNotification, _setIsNotification] = useState(false);
 

@@ -15,12 +15,13 @@ export const DraftDeleteModal = ({
   return (
     <Modal
       title={title}
-      children={`Would you like to delete ${type === 'all' ? 'all' : 'the selected'} ${total} draft ${POST}? Deleted ${POST} cannot be recovered.`}
       onClose={onClose}
       leftButton="Cancel"
       onClickLeft={onClose}
       rightButton={rightButton}
       onClickRight={onConfirm}
-    />
+    >
+      {`Would you like to delete ${type === 'all' ? 'all' : 'the selected'} ${total} draft ${POST}? Deleted ${POST} cannot be recovered.`}
+    </Modal>
   );
 };

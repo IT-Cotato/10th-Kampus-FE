@@ -12,9 +12,9 @@ export const ChatPage = () => {
   const [chatroomId, setChatroomId] = useState(null);
   const [chatList, setChatList] = useState([]);
   const [messages, setMessages] = useState([]);
-  
+
   const [selectedType, setSelectedType] = useState(CHAT_TYPE.ALL);
-  const [page, setPage] = useState(1);
+  const [page, _setPage] = useState(1);
 
   const { accessToken } = useAuthStore();
   const { connectSocket, sendMessage } = useWebsocket(

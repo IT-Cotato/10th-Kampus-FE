@@ -6,7 +6,7 @@ export const useSaveDraft = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (draft) => postSaveDraft({ data: draft }),
-    onSuccess: (response) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_DRAFT_ID],
       });
