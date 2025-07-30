@@ -1,3 +1,3 @@
 export const Statistics = () => {
-    return <div></div>;
+  return <div></div>;
 };

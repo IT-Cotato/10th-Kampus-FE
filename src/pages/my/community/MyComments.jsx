@@ -9,11 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const MyComments = () => {
   const navigate = useNavigate();
-  const {
-    data: postList,
-    isLoading,
-    error: isPostError,
-  } = useQuery({
+  const { data: postList, isLoading } = useQuery({
     queryKey: [QUERY_KEYS.MY_COMMENTED_POST_LIST],
     queryFn: () => getMyCommentsList({ page: 1 }),
   });
@@ -30,7 +26,7 @@ export const MyComments = () => {
         <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
-            You haven't posted any comments yet!
+            You haven&apos;t posted any comments yet!
             <br />
             Share your opinion:)
           </span>

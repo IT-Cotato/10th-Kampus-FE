@@ -1,3 +1,3 @@
 export const ReportManagement = () => {
-    return <div></div>;
+  return <div></div>;
 };

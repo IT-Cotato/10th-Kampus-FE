@@ -3,7 +3,7 @@ import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 
 export const AccountPermanentSuspendedNotice = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-8 p-4 text-base text-center text-nuetral-base">
+    <div className="text-nuetral-base flex flex-col items-center justify-center gap-8 p-4 text-center text-base">
       <div className="flex flex-col items-center justify-center gap-6">
         <ReportIcon
           className="h-14 w-14 text-primary-red"

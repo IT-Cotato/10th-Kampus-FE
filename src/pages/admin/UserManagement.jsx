@@ -1,3 +1,3 @@
 export const UserManagement = () => {
-    return <div></div>;
+  return <div></div>;
 };

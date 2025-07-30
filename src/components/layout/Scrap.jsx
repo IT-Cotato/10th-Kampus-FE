@@ -15,7 +15,7 @@ export const Scrap = ({ children }) => {
   ];
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <TitleHeader text="Scrap" />
       <div className="flex w-full flex-row justify-start gap-[0.625rem] px-4 pb-6 pt-12">
         {menu.map((item) => (
@@ -28,7 +28,7 @@ export const Scrap = ({ children }) => {
           />
         ))}
       </div>
-      <div className="flex flex-col flex-1 w-full px-4">{children}</div>
+      <div className="flex w-full flex-1 flex-col px-4">{children}</div>
     </div>
   );
 };

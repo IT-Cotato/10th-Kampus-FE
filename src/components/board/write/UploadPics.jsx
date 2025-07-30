@@ -17,7 +17,7 @@ export const UploadPics = ({
 
   useEffect(() => {
     return () => {
-      previewImages.forEach((url) => revokeObjectURL(url));
+      previewImages.forEach((url) => URL.revokeObjectURL(url));
     };
   }, []);
 

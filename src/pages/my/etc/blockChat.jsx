@@ -29,15 +29,17 @@ export const BlockChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       {count === 0 ? (
         // data.inquiry.length === 0
-        <div className="flex flex-col items-center justify-center w-full h-full gap-2 -translate-y-10">
+        <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
-          <span className='text-neutral-border-40'>You don't have blocked any users yet.</span>
+          <span className="text-neutral-border-40">
+            You don&apos;t have blocked any users yet.
+          </span>
         </div>
       ) : (
-        <div className="flex flex-col w-full">
+        <div className="flex w-full flex-col">
           {list.map((item, index) => (
             <ChatBlockedList
               key={index}

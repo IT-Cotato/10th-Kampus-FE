@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/useAuthStore';
-import { path } from '@/routes/path';
 import { API_DOMAINS } from '@/constants/api';
+import { path } from '@/routes/path';
 
 // 여러 요청이 동시에 실패 했을 때 용도
 let isRefreshing = false;

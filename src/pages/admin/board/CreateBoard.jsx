@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import XIcon from '@/assets/imgs/x.svg?react';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,6 +13,8 @@ import { getBoardCategories } from '@/apis/board/getBoardCategories.api';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useGetCategory } from '@/state/query/admin/useGetCategory';
 import { cn } from '@/utils/cn';
+import { toast } from 'react-toastify';
+import { Toast } from '@/components/common/toast';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();
@@ -66,7 +67,10 @@ export const CreateBoard = () => {
       // 카테고리 선택되어있을 경우
       if (boardDetailsData.usesCategories) {
         setIsCategoryChecked(true);
-        setCategoryList((prev) => [...prev, ...boardCategories?.categories]);
+        setCategoryList((prev) => [
+          ...prev,
+          ...(boardCategories?.categories || []),
+        ]);
       }
     }
   }, [boardDetailsData]);
@@ -104,11 +108,11 @@ export const CreateBoard = () => {
     createBoard(
       { data: formData },
       {
-        onSuccess: (response) => {
+        onSuccess: () => {
           navigate(-1);
         },
         onError: (err) => {
-          alert(err.message);
+          toast.error(err.message);
         },
       },
     );
@@ -135,7 +139,7 @@ export const CreateBoard = () => {
           navigate(-1);
         },
         onError: (err) => {
-          alert(err.message);
+          toast.error(err.message);
         },
       },
     );
@@ -153,7 +157,7 @@ export const CreateBoard = () => {
         <h1 className="text-pageTitle">게시판 타입</h1>
         <div className="flex h-10 gap-5">
           {Object.values(BOARD_TYPE).map((type) => (
-            <div className="flex items-center gap-2 text-subTitle">
+            <div key={type} className="flex items-center gap-2 text-subTitle">
               <input
                 id={type}
                 type="radio"
@@ -243,6 +247,7 @@ export const CreateBoard = () => {
           </MainButton>
         </div>
       </div>
+      <Toast />
     </div>
   );
 };

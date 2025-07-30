@@ -120,7 +120,7 @@ export const VerificationCodeModal = (props) => {
     <div className="fixed z-[100] mx-auto flex h-full min-h-dvh w-full max-w-lg items-center justify-center overflow-y-auto overflow-x-hidden bg-[rgba(11,11,11,0.6)] align-middle">
       <dialog className="relative z-[200] mx-4 flex flex-col items-center justify-center gap-7 rounded-[.625rem] border bg-white px-6 pb-4 pt-[1.875rem]">
         <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-center w-full text-center align-middle text-subTitle">
+          <div className="flex w-full items-center justify-center text-center align-middle text-subTitle">
             {props.title}
           </div>
           {verify.verify ? (
@@ -182,7 +182,7 @@ export const VerificationCodeModal = (props) => {
             </button>
           </div>
           <div className="flex flex-row justify-center gap-1 text-small">
-            <span className="text-neutral-base">Didn't get the code?</span>
+            <span className="text-neutral-base">Didn&apos;t get the code?</span>
             <button
               type="button"
               className="text-primary-40"

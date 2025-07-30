@@ -6,7 +6,7 @@ export const SkipButton = ({ navigateTo }) => {
   return (
     <button
       onClick={() => navigate(navigateTo)}
-      className="h-8 text-neutral-base shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)] w-fit px-7 rounded-3xl text-small"
+      className="h-8 w-fit rounded-3xl px-7 text-small text-neutral-base shadow-[0rem_0rem_.25rem_0rem_rgba(0,0,0,0.25)]"
     >
       skip
     </button>

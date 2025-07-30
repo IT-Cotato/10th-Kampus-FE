@@ -15,7 +15,7 @@ export const ScrapComponent = ({
   state,
   id = undefined,
   boardId = undefined,
-  market = false, // market의 경우 스크랩 로직이 다름
+  _market = false, // market의 경우 스크랩 로직이 다름
   ...props
 }) => {
   const queryClient = useQueryClient();

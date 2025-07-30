@@ -5,6 +5,8 @@ import ImgIcon from '@/assets/imgs/imgIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { postCreateCardnews } from '@/apis/admin/postCreateCardnews.api';
+import { toast } from 'react-toastify';
+import { Toast } from '@/components/common/toast';
 
 export const CreateCardnews = () => {
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ export const CreateCardnews = () => {
 
     const validFiles = newFiles.filter((file) => file.type.match('image/.*'));
     if (validFiles.length !== newFiles.length) {
-      alert('이미지 파일만 업로드가 가능합니다.');
+      toast.error('이미지 파일만 업로드가 가능합니다.');
     }
 
     try {
@@ -59,8 +61,8 @@ export const CreateCardnews = () => {
         setPreviewImages(updatedPreviews);
         e.target.value = '';
       }
-    } catch (error) {
-      alert('파일 처리 중 오류가 발생했습니다.');
+    } catch {
+      toast.error('파일 처리 중 오류가 발생했습니다.');
       return null;
     }
   };
@@ -134,8 +136,8 @@ export const CreateCardnews = () => {
           console.log(response);
           navigate(-1);
         },
-        onError: (err) => {
-          alert(err.message);
+        onError: () => {
+          toast.error('카드뉴스를 업로드하지 못했습니다.');
         },
       },
     );
@@ -143,8 +145,8 @@ export const CreateCardnews = () => {
 
   const isUploadButtonDisabled = !title || files.length === 0;
   return (
-    <div className="flex flex-col flex-1 gap-5">
-      <div className="flex flex-col w-full h-full gap-5 p-8 bg-white rounded-2xl">
+    <div className="flex flex-1 flex-col gap-5">
+      <div className="flex h-full w-full flex-col gap-5 rounded-2xl bg-white p-8">
         <h1 className="text-pageTitle">카드뉴스 업로드</h1>
         <div className="grid grid-cols-2 gap-5">
           <div className="flex flex-col gap-5">
@@ -166,7 +168,7 @@ export const CreateCardnews = () => {
                 className="w-full"
                 required
               />
-              <span className="flex justify-end text-sm w-fit text-neutral-border-50">
+              <span className="text-sm flex w-fit justify-end text-neutral-border-50">
                 {title.length}/{MAX_TITLE_LENGTH}
               </span>
             </div>
@@ -175,15 +177,15 @@ export const CreateCardnews = () => {
               cols={3}
               rows={10}
               value={content}
-              className="flex w-full h-48 p-4 border resize-none rounded-xl border-neutral-border-30"
+              className="flex h-48 w-full resize-none rounded-xl border border-neutral-border-30 p-4"
               placeholder="카드뉴스 본문을 입력하세요."
               onChange={(e) => setContent(e.target.value)}
             />
 
             {/* 카드뉴스 사진 선택 */}
-            <div className="flex items-center justify-center w-full h-48 px-3 text-center align-middle border border-neutral-border-40">
+            <div className="flex h-48 w-full items-center justify-center border border-neutral-border-40 px-3 text-center align-middle">
               {/* 선택한 사진들 파일명 */}
-              <div className="flex flex-col items-center w-full h-full gap-3 overflow-x-hidden overflow-y-auto text-center">
+              <div className="flex h-full w-full flex-col items-center gap-3 overflow-y-auto overflow-x-hidden text-center">
                 {files.length !== 0 ? (
                   files.map((file, index) => (
                     <span
@@ -199,7 +201,7 @@ export const CreateCardnews = () => {
                     </span>
                   ))
                 ) : (
-                  <span className="flex items-center justify-center w-full h-full text-neutral-border-50">
+                  <span className="flex h-full w-full items-center justify-center text-neutral-border-50">
                     사진 파일을 선택하세요.
                   </span>
                 )}
@@ -246,9 +248,9 @@ export const CreateCardnews = () => {
               />
             </div>
           </div>
-          <div className="relative flex flex-col items-center h-full gap-4 p-5 text-center border rounded-lg">
+          <div className="relative flex h-full flex-col items-center gap-4 rounded-lg border p-5 text-center">
             <h1 className="text-neutral-base">미리보기</h1>
-            <div className="flex flex-col w-full align-top h-fit text-start">
+            <div className="flex h-fit w-full flex-col text-start align-top">
               <h2
                 className={cn('flex h-fit min-h-10 text-pageTitle', {
                   'text-neutral-border-50': !title,
@@ -267,12 +269,12 @@ export const CreateCardnews = () => {
                 {content ? content : '본문이 없습니다.'}
               </h2>
             </div>
-            <div className="flex items-center flex-1 align-middle">
-              <div className="relative flex justify-center h-60 w-60 lg:h-80 lg:w-80">
+            <div className="flex flex-1 items-center align-middle">
+              <div className="relative flex h-60 w-60 justify-center lg:h-80 lg:w-80">
                 {previewIndex > 0 && (
                   <button
                     type="button"
-                    className="absolute z-50 px-2 py-1 bg-white border left-3 top-1/2 rounded-xl border-primary-base text-primary-base"
+                    className="absolute left-3 top-1/2 z-50 rounded-xl border border-primary-base bg-white px-2 py-1 text-primary-base"
                     onClick={() => setPreviewIndex(previewIndex - 1)}
                   >
                     이전
@@ -284,7 +286,7 @@ export const CreateCardnews = () => {
                       // 추후 사용자가 보는 카드뉴스 컴포넌트로 대체
                       previewIndex === index && (
                         <div
-                          className="flex justify-center w-full h-full border"
+                          className="flex h-full w-full justify-center border"
                           key={index}
                         >
                           <img
@@ -298,7 +300,7 @@ export const CreateCardnews = () => {
                 {previewIndex < files.length - 1 && (
                   <button
                     type="button"
-                    className="absolute z-50 px-2 py-1 bg-white border right-3 top-1/2 rounded-xl border-primary-base text-primary-base"
+                    className="absolute right-3 top-1/2 z-50 rounded-xl border border-primary-base bg-white px-2 py-1 text-primary-base"
                     onClick={() => setPreviewIndex(previewIndex + 1)}
                   >
                     다음
@@ -324,6 +326,7 @@ export const CreateCardnews = () => {
           </div>
         </div>
       </div>
+      <Toast />
     </div>
   );
 };

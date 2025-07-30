@@ -1,10 +1,12 @@
 import { deleteAdminNotice } from '@/apis/admin/deleteAdminNotice.api';
 import { getNoticeList } from '@/apis/mypage/getNoticeList.api';
 import { ButtonRound } from '@/components/common/ButtonRound';
+import { Toast } from '@/components/common/toast';
 import { QUERY_KEYS } from '@/constants/api';
 import { path } from '@/routes/path';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const NoticeManagement = () => {
   const navigate = useNavigate();
@@ -22,8 +24,8 @@ export const NoticeManagement = () => {
       alert('공지사항이 삭제되었습니다.');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_NOTICE] }); // 삭제 후 리스트 다시 불러오기
     },
-    onError: (error) => {
-      alert('공지사항을 삭제하지 못했습니다.');
+    onError: () => {
+      toast.error('공지사항을 삭제하지 못했습니다.');
     },
   });
 
@@ -32,15 +34,15 @@ export const NoticeManagement = () => {
   };
 
   return (
-    <div className="flex flex-col flex-1 gap-5">
-      <div className="flex flex-col w-full gap-5 p-8 bg-white h-fit rounded-2xl">
+    <div className="flex flex-1 flex-col gap-5">
+      <div className="flex h-fit w-full flex-col gap-5 rounded-2xl bg-white p-8">
         <h1 className="text-pageTitle">공지사항 작성</h1>
         <ButtonRound
           text="공지사항 작성하러 가기"
           onClick={() => navigate(path.admin.notice.create)}
         />
       </div>
-      <div className="relative flex flex-col w-full h-full gap-5 p-8 text-base bg-white rounded-2xl text-neutral-title">
+      <div className="relative flex h-full w-full flex-col gap-5 rounded-2xl bg-white p-8 text-base text-neutral-title">
         <h1 className="text-subTitle">공지사항 리스트</h1>
         <table className="divide-y divide-primary-20">
           <thead>
@@ -87,6 +89,7 @@ export const NoticeManagement = () => {
             ))}
         </table>
       </div>
+      <Toast />
     </div>
   );
 };

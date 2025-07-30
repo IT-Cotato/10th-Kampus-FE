@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { PostList } from '@/components/board/PostList';
 import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
 import { WriteButton } from '@/components/board/write/WriteButton';
-import {
-  getCardNewsList,
-  getPostList,
-  getTrendingList,
-} from '@/apis/board/getPostList.api';
+import { getPostList, getTrendingList } from '@/apis/board/getPostList.api';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
@@ -23,19 +19,15 @@ export const Board = () => {
   const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
   const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
   const [category, setCategory] = useState('All'); // 선택된 카테고리 값
-  const { ref, inView } = useInView();
+  const { _ref, inView } = useInView();
 
-  const {
-    data: boardDetail,
-    isLoading: isBoardLoading,
-    error: isBoardError,
-  } = useQuery({
+  const { data: boardDetail } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
     queryFn: () => getBoardDetail({ boardId: boardId }),
   });
 
   // enable 속성으로 카테고리를 사용하지 않으면 쿼리가 실행되지 않음
-  const { data: categoryData, isError: categoryError } = useGetBoardCategory(
+  const { data: categoryData } = useGetBoardCategory(
     boardDetail?.boardWithFavoriteStatus?.usesCategories === true,
   );
 
@@ -44,7 +36,6 @@ export const Board = () => {
     fetchNextPage: fetchNextPostList,
     hasNextPage: hasNextPostList,
     isLoading: isPostLoading,
-    isPending: isPostPending,
     error: isPostError,
   } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId, sortOrder, category],

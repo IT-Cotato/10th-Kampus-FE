@@ -2,8 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 export const useDuplicateCheck = (apiFunction) => {
-
-    const { mutate } = useMutation({
+  const { mutate } = useMutation({
     // mutationFn: api 함수,
     mutationFn: apiFunction,
     onSuccess: () => {

@@ -18,7 +18,7 @@ export const WriteInquiry = () => {
     mutationFn: (inquiry) => postWriteInquiry({ data: inquiry }),
     onSuccess: () => {
       navigate(-1);
-    }
+    },
   });
 
   const disabled = !title || !content;
@@ -30,7 +30,6 @@ export const WriteInquiry = () => {
     formData.append('title', title);
     formData.append('content', content);
 
-
     if (uploadedFiles.length > 0) {
       uploadedFiles.forEach((file) => {
         formData.append('images', file); // 각 파일을 개별적으로 추가
@@ -40,7 +39,7 @@ export const WriteInquiry = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="1:1 Inquiry" />
       <div className="flex h-full w-full flex-col gap-[2.5rem] px-4 py-[1.25rem]">
         <WriteTitle
@@ -48,20 +47,20 @@ export const WriteInquiry = () => {
           setTitle={setTitle}
           placeholder="Write a inquiry title."
         />
-        <div className='flex flex-col gap-4'>
-        <WriteContent
-          content={content}
-          setContent={setContent}
-          placeholder="Please write the content in English or Korean."
-        />
-        <UploadPics onChange={setUploadedFiles} />
-        <div className="flex justify-center w-full">
-          <ButtonRound
-            text="Submit"
-            onClick={handleSubmit}
-            disabled={disabled}
+        <div className="flex flex-col gap-4">
+          <WriteContent
+            content={content}
+            setContent={setContent}
+            placeholder="Please write the content in English or Korean."
           />
-        </div>
+          <UploadPics onChange={setUploadedFiles} />
+          <div className="flex w-full justify-center">
+            <ButtonRound
+              text="Submit"
+              onClick={handleSubmit}
+              disabled={disabled}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -49,11 +49,7 @@ export const Search = () => {
     enabled: searchValue.length >= 2,
   });
 
-  const {
-    data: searchKeywords,
-    isLoading: keywordLoading,
-    error: keywordError,
-  } = useQuery({
+  const { data: searchKeywords, error: keywordError } = useQuery({
     queryKey: [QUERY_KEYS.GET_SEARCH_KEYWORD],
     queryFn: getSearchKeywords,
   });

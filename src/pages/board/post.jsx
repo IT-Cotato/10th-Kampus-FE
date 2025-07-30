@@ -49,11 +49,7 @@ export const Post = () => {
     error: postError,
   } = useGetPost();
 
-  const {
-    data: commentData,
-    isLoading: commentLoading,
-    error: commentError,
-  } = useGetComment();
+  const { data: commentData } = useGetComment();
 
   const { mutate: handleComment } = useHandleComment({ setInput: setInput });
   const { mutate: handleLike } = useHandlePostLike();

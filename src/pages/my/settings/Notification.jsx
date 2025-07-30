@@ -37,7 +37,7 @@ export const Notification = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <TitleHeader text="Notification & Information Agreements"></TitleHeader>
       <div className="flex h-full w-full flex-col gap-12 px-4 py-[.625rem]">
         <div className="flex text-neutral-base">
@@ -47,7 +47,7 @@ export const Notification = () => {
           <div className="flex flex-col gap-[1.25rem]">
             <div className="text-subTitle">Notification</div>
             <div className="flex flex-col gap-7">
-              <div className="flex flex-row items-center justify-between w-full h-full gap-10">
+              <div className="flex h-full w-full flex-row items-center justify-between gap-10">
                 <div>Message notification</div>
                 <Toggle
                   id="message"
@@ -55,7 +55,7 @@ export const Notification = () => {
                   onChange={handleClickMessageNotificationToggle}
                 />
               </div>
-              <div className="flex flex-row items-center justify-between w-full h-full gap-10">
+              <div className="flex h-full w-full flex-row items-center justify-between gap-10">
                 <div>Comment notification</div>
                 <Toggle
                   id="comment"
@@ -63,7 +63,7 @@ export const Notification = () => {
                   onChange={handleClickCommentNotificationToggle}
                 />
               </div>
-              <div className="flex flex-row items-center justify-between w-full h-full gap-10">
+              <div className="flex h-full w-full flex-row items-center justify-between gap-10">
                 <div>Comment reply notification</div>
                 <Toggle
                   id="reply"
@@ -71,7 +71,7 @@ export const Notification = () => {
                   onChange={handleClickRelyNotificationToggle}
                 />
               </div>
-              <div className="flex flex-row items-center justify-between w-full h-full gap-10">
+              <div className="flex h-full w-full flex-row items-center justify-between gap-10">
                 <div>Popular article notification</div>
                 <Toggle
                   id="popular"
@@ -82,7 +82,7 @@ export const Notification = () => {
             </div>
             <div className="text-subTitle">Privacy & Consent</div>
             <div className="flex flex-col gap-7">
-              <div className="flex flex-row items-center justify-between w-full h-full gap-10">
+              <div className="flex h-full w-full flex-row items-center justify-between gap-10">
                 <div>Consent to receive and use advertising information</div>
                 <Toggle
                   id="advertising"

@@ -5,6 +5,7 @@ import { formatTime } from '@/utils/formatTime';
 import { Translating } from '../common/Translating';
 import { TranslateButton } from '../common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
+import { BoardName } from './BoardName';
 export const PostList = ({ data, isTrendingBoard, ...props }) => {
   const navigate = useNavigate();
 

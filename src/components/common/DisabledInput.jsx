@@ -4,11 +4,11 @@ export const DisabledInput = ({ name, defaultValue }) => {
       <label htmlFor={name} className="text-neutral-base">
         {name}
       </label>
-      <div className="relative flex flex-col mt-1">
+      <div className="relative mt-1 flex flex-col">
         <input
           id={name}
           type="text"
-          className="flex w-full py-1 align-middle bg-transparent border-b border-neutral-base text-neutral-base"
+          className="flex w-full border-b border-neutral-base bg-transparent py-1 align-middle text-neutral-base"
           defaultValue={defaultValue}
           disabled
         />

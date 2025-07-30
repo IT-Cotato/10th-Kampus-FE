@@ -88,8 +88,9 @@ export const Modal = ({
     <ModalPortal>
       <div className="modal-layout" onClick={onClose}>
         <div
-          className="flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem]"
+          className={`flex w-full flex-col items-center gap-[1.875rem] rounded-[.625rem] bg-white px-10 py-[1.875rem] ${className}`}
           onClick={(e) => e.stopPropagation()}
+          {...props}
         >
           {titleIcon && (
             <div className="mb-2">

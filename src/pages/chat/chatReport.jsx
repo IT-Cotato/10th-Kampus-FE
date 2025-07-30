@@ -1,8 +1,9 @@
 import { Report } from '@/components/common/Report';
 export const ChatReport = () => {
-  const headerTitle = "Report";
-  const pageTitle = "Why are you reporting this chat room?";
-  const contentTitle = "Help us understand the problem.\nYour report is anonymous.";
+  const headerTitle = 'Report';
+  const pageTitle = 'Why are you reporting this chat room?';
+  const contentTitle =
+    'Help us understand the problem.\nYour report is anonymous.';
   const reasons = [
     { id: 0, text: 'Bullying or unwanted contact' },
     { id: 1, text: 'Violence, hate or exploitation' },
@@ -14,13 +15,15 @@ export const ChatReport = () => {
     { id: 7, text: 'Post that do not match the board' },
     { id: 8, text: 'Other' },
   ];
-  const radioPlaceHolder = "Please leave the reason why you are reporting this chat room.";
-  const handleSubmit = () => { };
-  const popupTitle = "Are you sure you want to report this?";
-  const popupText = "The reported content will be reviewed and handled by the Kampus administrators.";
-  const popupLeftText = "Cancel";
-  const popupRightText = "Report";
-  const ButtonText = "Report";
+  const radioPlaceHolder =
+    'Please leave the reason why you are reporting this chat room.';
+  const handleSubmit = () => {};
+  const popupTitle = 'Are you sure you want to report this?';
+  const popupText =
+    'The reported content will be reviewed and handled by the Kampus administrators.';
+  const popupLeftText = 'Cancel';
+  const popupRightText = 'Report';
+  const ButtonText = 'Report';
 
   return (
     <Report

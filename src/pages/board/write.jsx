@@ -11,6 +11,7 @@ import { useGetBoardPost } from '@/state/query/board/useGetBoardPost';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
 import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
+import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import { ReloadModal } from '@/components/board/draft/ReloadModal';
 import { path } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
@@ -52,11 +53,8 @@ export const Write = () => {
   const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
 
   // 번역
-  const {
-    mutate: handleTranslate,
-    isPending: translatePending,
-    isError: translateError,
-  } = usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
+  const { mutate: handleTranslate, isPending: translatePending } =
+    usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   // 글 수정하기 위해 조회
   const { data: prevPost } = useGetBoardPost();

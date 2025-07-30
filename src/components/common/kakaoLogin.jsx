@@ -1,9 +1,6 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import KakaoLogo from '@/assets/imgs/KakaoLogo.svg';
-import { parseTokenFromUrl } from '@/utils/authUtils';
-import { App } from '@capacitor/app';
-import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
 export const KakaoLogin = () => {
   const kakaoKey = import.meta.env.VITE_KAKAO_JS_KEY;

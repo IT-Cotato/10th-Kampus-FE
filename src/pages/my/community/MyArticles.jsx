@@ -9,11 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const MyArticles = () => {
   const navigate = useNavigate();
-  const {
-    data: postList,
-    isLoading,
-    error: isPostError,
-  } = useQuery({
+  const { data: postList, isLoading } = useQuery({
     queryKey: [QUERY_KEYS.MY_POST_LIST],
     queryFn: () => getMyArticlesList({ page: 1 }),
   });
@@ -30,7 +26,7 @@ export const MyArticles = () => {
         <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-neutral-border-40">
-            You haven't written anything yet! Share your story:)
+            You haven&apos;t written anything yet! Share your story:)
           </span>
         </div>
       ) : (

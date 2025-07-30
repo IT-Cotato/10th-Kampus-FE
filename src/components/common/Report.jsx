@@ -1,12 +1,8 @@
 import { InputRadio } from '@/components/common/inputRadio';
 import { MainButton } from '@/components/common/MainButton';
-import { Popup } from '@/components/common/popup';
 import { TitleHeader } from '@/components/common/titleHeader';
-import { path } from '@/routes/path';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
 import { Modal } from './Modal';
 
 export const Report = ({

@@ -3,7 +3,7 @@ import XIcon from '@/assets/imgs/x.svg?react';
 import { MainButton } from '@/components/common/MainButton';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
-import { replace, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { Modal } from '@/components/common/Modal';
@@ -45,7 +45,7 @@ export const SchoolPhoto = () => {
   const { mutate: sendPhoto } = useMutation({
     mutationFn: (image) =>
       postSchoolPhoto({ data: image, universityCode: university }),
-    onSuccess: (response) => {
+    onSuccess: () => {
       setShowModal(true);
     },
   });

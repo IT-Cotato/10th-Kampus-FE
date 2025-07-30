@@ -3,7 +3,6 @@ import { Layout } from '@/components/layout/layout';
 import { path } from '@/routes/path';
 import {
   AllBoard,
-  SplashScreen,
   Login,
   Terms,
   NotFound,
@@ -46,7 +45,6 @@ import {
   ChatPage,
   CardnewsList,
   BoardGuide,
-  NotificationItemList,
   CreateBoard,
   NoticeManagement,
   CreateNotice,
@@ -55,7 +53,6 @@ import {
   MarketPost,
   StudentVerifications,
   FailedVerify,
-  AccountPermanentSuspendedNotice,
   MarketWrite,
   ManageCategory,
   KakaoLoginHandler,
@@ -63,30 +60,27 @@ import {
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
-import PrivateRoute from '@/routes/PrivateRoute';
-import PublicRoute from '@/routes/PublicRoute';
-import AdminRoute from '@/routes/AdminRoute';
 import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
 import { Suspense } from 'react';
 import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
 import { UnknownFallback } from '@/components/common/error/UnknownErrorBoundary';
 
-const createAuthRouter = (routeType, children) => {
-  const authRouter = children.map((child) => ({
-    element:
-      routeType === 'PRIVATE' ? (
-        <PrivateRoute />
-      ) : routeType === 'PUBLIC' ? (
-        <PublicRoute />
-      ) : routeType === 'ADMIN' ? (
-        <AdminRoute />
-      ) : (
-        <NotFound />
-      ),
-    children: [child],
-  }));
-  return authRouter;
-};
+// const createAuthRouter = (routeType, children) => {
+//   const authRouter = children.map((child) => ({
+//     element:
+//       routeType === 'PRIVATE' ? (
+//         <PrivateRoute />
+//       ) : routeType === 'PUBLIC' ? (
+//         <PublicRoute />
+//       ) : routeType === 'ADMIN' ? (
+//         <AdminRoute />
+//       ) : (
+//         <NotFound />
+//       ),
+//     children: [child],
+//   }));
+//   return authRouter;
+// };
 
 const AppRouter = createBrowserRouter([
   {
@@ -206,20 +200,20 @@ const AppRouter = createBrowserRouter([
       },
     ],
   },
-  {
-    path: path.notificationList,
-    element: (
-      <Layout>
-        <Outlet />
-      </Layout>
-    ),
-    children: [
-      {
-        path: '',
-        element: <notificationList />,
-      },
-    ],
-  },
+  // {
+  //   path: path.notificationList,
+  //   element: (
+  //     <Layout>
+  //       <Outlet />
+  //     </Layout>
+  //   ),
+  //   children: [
+  //     {
+  //       path: '',
+  //       element: <notificationList />,
+  //     },
+  //   ],
+  // },
   {
     path: path.board.base,
     element: (
