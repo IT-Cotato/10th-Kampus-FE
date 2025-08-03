@@ -17,7 +17,6 @@ import {
   MyPage,
   MyInfo,
   SchoolVerification,
-  Notification,
   FAQ,
   Notice,
   NoticeDetail,
@@ -306,10 +305,7 @@ const AppRouter = createBrowserRouter([
               path: path.mypage.settings.info,
               element: <MyInfo />,
             },
-            {
-              path: path.mypage.settings.notification,
-              element: <Notification />,
-            },
+
             {
               path: path.mypage.delete,
               element: <DeleteAccount />,

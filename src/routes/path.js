@@ -32,7 +32,6 @@ export const path = {
   home: '/home',
   search: '/search',
   boardGuide: '/boardGuide',
-  notificationList: '/notificationList',
   mypage: {
     base: '/my',
     verify: {
@@ -41,7 +40,6 @@ export const path = {
     settings: {
       info: 'settings/info',
       verification: 'settings/verification',
-      notification: 'settings/notification',
     },
     community: {
       base: 'community',

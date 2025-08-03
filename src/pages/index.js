@@ -46,10 +46,8 @@ export { BlockSecondhand } from './my/etc/blockSecondhand';
 export { DeleteAccount } from './my/etc/deleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
-export { Notification } from './my/settings/notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
-export { NotificationItemList } from './notification/NotificationItemList';
 export { Market } from './market/market';
 export { MarketPost } from './market/MarketPost';
 export { MarketWrite } from './market/MarketWrite';

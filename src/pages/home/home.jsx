@@ -1,6 +1,5 @@
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import search from '@/assets/imgs/search.svg';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { BoardBox } from '@/components/home/BoardBox.jsx';
@@ -8,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getFavorite } from '@/apis/home/getFavorite.api';
 import { getTrend } from '@/apis/home/getTrend.api';
-import { NotificationButton } from '@/components/common/NotificationButton';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
 
 export const Home = () => {
@@ -49,14 +47,11 @@ export const Home = () => {
 
   const { data: userDetail, isLoading: _userLoading } = useGetUserData();
 
-  const [isNotification, _setIsNotification] = useState(false);
-
   return (
     <div className="flex w-full flex-col gap-[.625rem] px-4 py-3">
       <div className="flex items-start justify-between pb-[.625rem]">
         <Logo className="h-auto w-[6rem] text-primary-base" />
         <div className="flex gap-[0.875rem]">
-          <NotificationButton isNotification={isNotification} />
           <button
             className="cursor-pointer"
             onClick={() => navigate(path.search)}
