@@ -33,7 +33,7 @@ export { WriteInquiry } from './my/service/inquiry/writeInquiry';
 
 export { MyPage } from './my/mypage';
 export { Scrap } from '../components/layout/Scrap';
-export { SecondhandScrap } from './my/community/SecondhandScrap';
+export { MarketScrap } from './my/community/MarketScrap';
 export { CommunityScrap } from './my/community/CommunityScrap';
 export { MyArticle } from '../components/layout/MyArticle';
 export { MyComments } from './my/community/MyComments';
@@ -42,17 +42,16 @@ export { MyMarkets } from './my/community/MyMarkets';
 export { FailedVerify } from './my/verify/FailedVerify';
 
 export { BlockChat } from './my/etc/blockChat';
-export { BlockSecondhand } from './my/etc/blockSecondhand';
+export { BlockMarket } from './my/etc/blockMarket';
 export { DeleteAccount } from './my/etc/deleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
-export { Notification } from './my/settings/notification';
 export { Search } from './search/Search';
 export { BoardGuide } from './boardGuide/boardGuide';
-export { NotificationItemList } from './notification/NotificationItemList';
 export { Market } from './market/market';
 export { MarketPost } from './market/MarketPost';
 export { MarketWrite } from './market/MarketWrite';
+export { MarketSearch } from './market/MarketSearch';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';

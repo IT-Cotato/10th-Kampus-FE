@@ -89,6 +89,7 @@ export const API_DOMAINS = {
   SEARCH_BOARD: '/posts/search/:boardId',
   SEARCH_KEYWORD: '/posts/search/keywords',
   SEARCH_DELETE: '/posts/search/keywords/:keywordId',
+  SEARCH_MARKET: '/products/search',
 
   NOTICE: '/notices',
   ADMIN_NOTICE_DETAILS: '/notices/:noticeId',
@@ -135,6 +136,7 @@ export const QUERY_KEYS = {
   GET_SEARCH_KEYWORD: 'searchKeyword',
   GET_SEARCH_RESULT: 'searchResult',
   GET_SEARCH_RESULT_BOARD: 'searchBoardResult',
+  GET_SEARCH_RESULT_MARKET: 'searchMarketResult',
 
   GET_HOME_UNIVERISTY: 'homeUniversity',
   GET_HOME_TRENDING: 'homeTrend',

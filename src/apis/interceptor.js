@@ -45,6 +45,8 @@ export const onRequestError = (error) => {
 export const onError = async (error, api) => {
   const originalRequest = error.config;
   const { status } = error.response || {};
+  const { setInitializing, clearAccessToken, setAccessToken } =
+    useAuthStore.getState();
 
   const currentRetryCount = originalRequest._retryCount || 0; // 재시도 횟수 확인
 
@@ -64,6 +66,7 @@ export const onError = async (error, api) => {
     }
 
     isRefreshing = true;
+    setInitializing(true);
 
     try {
       const response = await api.post(
@@ -78,18 +81,19 @@ export const onError = async (error, api) => {
       // Bearer 제거하고 값만 파싱
       const newAccessToken = authorizationHeader.split(' ')[1];
 
-      useAuthStore.getState().setAccessToken(newAccessToken);
+      setAccessToken(newAccessToken);
 
       processQueue(null, newAccessToken);
       return api(originalRequest);
     } catch (refreshError) {
       // 토큰 갱신 자체가 실패하면, 로그아웃 후 로그인 창으로 리다이렉트
-      useAuthStore.getState().clearAccessToken();
+      clearAccessToken();
       processQueue(refreshError, null);
       window.location.replace(path.login.base);
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
+      setInitializing(false);
     }
   }
 
@@ -98,9 +102,9 @@ export const onError = async (error, api) => {
     console.error(
       `[Retry Failed] 재시도 횟수(${MAX_RETRIES})를 초과했습니다. 로그아웃 처리합니다.`,
     );
-    // 이 친구도 디자인 좋은걸로 바꾸면 좋을 듯...
     alert('세션이 만료되었습니다.');
-    useAuthStore.getState().clearAccessToken();
+    clearAccessToken();
+    setInitializing(false);
     window.location.replace(path.login.base);
     return Promise.reject(error);
   }
@@ -110,11 +114,10 @@ export const onError = async (error, api) => {
     console.error(
       '🚫 403 Forbidden 에러. 접근 권한이 없습니다. 로그아웃 처리합니다.',
     );
-
-    // 추후에 괜찮은 디자인으로 변경하면 좋을 듯 합니당...
     alert('요청에 대한 접근 권한이 없습니다. 다시 로그인해 주세요.');
 
-    useAuthStore.getState().clearAccessToken();
+    clearAccessToken();
+    setInitializing(false);
 
     window.location.replace(path.login.base);
 

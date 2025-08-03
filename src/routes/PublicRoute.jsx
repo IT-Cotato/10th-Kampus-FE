@@ -1,11 +1,23 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { path } from '@/routes/path';
+import { Loading } from '@/components/common/Loading';
 
 export default function PublicRoute() {
-  const { accessToken } = useAuthStore();
+  const { accessToken, isInitializing } = useAuthStore();
 
-  if (accessToken) {
+  // 토큰 갱신 중일 때는 로딩 화면 표시
+  if (isInitializing) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Loading />
+        <p className="text-sm mt-2 text-gray-600">인증 확인 중...</p>
+      </div>
+    );
+  }
+
+  // 토큰 갱신이 완료된 후 토큰이 있으면 홈 페이지로 리다이렉트
+  if (!isInitializing && accessToken) {
     return <Navigate to={path.home} replace />;
   }
 

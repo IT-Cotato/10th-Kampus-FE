@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { removeTokens } from '@/utils/authUtils';
-import { NotificationButton } from '@/components/common/NotificationButton';
 import OfficialMail from '@/constants/OfficialMail.json';
 import { MyMainData } from '@/components/my/MyMainData';
 import { ErrorWrapper } from '@/components/common/error/SuspenseFallback';
@@ -16,10 +15,6 @@ export const MyPage = () => {
 
   return (
     <div className="flex h-full w-full flex-col gap-[1.125rem] p-4">
-      {/* 알림 영역 */}
-      <div className="flex h-full w-full justify-end">
-        <NotificationButton isNotification={false} />
-      </div>
       {/* 본문 영역 */}
       <div className="flex h-full w-full flex-col gap-[1.25rem]">
         <ErrorWrapper>
@@ -45,13 +40,6 @@ export const MyPage = () => {
                 }
               >
                 School Verification
-              </button>
-              <button
-                type="button"
-                className="text-left"
-                onClick={() => navigate(path.mypage.settings.notification)}
-              >
-                Notifications and Information Agreements
               </button>
             </div>
           </div>
@@ -81,7 +69,7 @@ export const MyPage = () => {
                   )
                 }
               >
-                Secondhand
+                Market
               </button>
             </div>
           </div>

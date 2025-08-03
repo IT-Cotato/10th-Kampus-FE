@@ -6,13 +6,23 @@ import { Forbidden } from '@/pages/Forbidden';
 import { Loading } from '@/components/common/Loading';
 
 export default function AdminRoute() {
-  const { accessToken } = useAuthStore();
+  const { accessToken, isInitializing } = useAuthStore();
 
   // 관리자 사용자 정보를 가져와서 권한 확인
   const { data: userData, isLoading, error } = useGetAdminUserData();
 
-  // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-  if (!accessToken) {
+  // 토큰 갱신 중일 때는 로딩 화면 표시
+  if (isInitializing) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Loading />
+        <p className="text-sm mt-2 text-gray-600">인증 확인 중...</p>
+      </div>
+    );
+  }
+
+  // 토큰 갱신이 완료된 후 토큰이 없으면 로그인 페이지로 리다이렉트
+  if (!isInitializing && !accessToken) {
     return <Navigate to={path.login.base} replace />;
   }
 

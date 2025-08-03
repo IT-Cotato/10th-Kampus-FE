@@ -32,7 +32,6 @@ export const path = {
   home: '/home',
   search: '/search',
   boardGuide: '/boardGuide',
-  notificationList: '/notificationList',
   mypage: {
     base: '/my',
     verify: {
@@ -41,14 +40,13 @@ export const path = {
     settings: {
       info: 'settings/info',
       verification: 'settings/verification',
-      notification: 'settings/notification',
     },
     community: {
       base: 'community',
       scrap: {
         base: 'scrap',
         community: 'community',
-        secondhand: 'secondhand',
+        market: 'market',
       },
       article: {
         base: 'article',
@@ -56,7 +54,7 @@ export const path = {
         comments: 'comments',
         market: 'markets',
       },
-      secondhand: 'secondhand',
+      market: 'market',
     },
     service: {
       base: 'contactUs',
@@ -70,7 +68,7 @@ export const path = {
     block: {
       base: 'block',
       chat: 'chat',
-      secondhand: 'secondhand',
+      market: 'market',
     },
     delete: 'leave',
   },
@@ -79,6 +77,7 @@ export const path = {
     write: 'write',
     edit: 'edit',
     product: ':productId',
+    search: 'search',
   },
   chatList: {
     base: '/chat',
