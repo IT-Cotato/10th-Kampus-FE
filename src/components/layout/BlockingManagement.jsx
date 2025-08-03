@@ -11,7 +11,7 @@ export const BlockingManagement = ({ children }) => {
 
   const menu = [
     { id: 0, text: 'Chat', path: path.mypage.block.chat },
-    { id: 1, text: 'Secondhand', path: path.mypage.block.secondhand },
+    { id: 1, text: 'Market', path: path.mypage.block.market },
   ];
 
   return (

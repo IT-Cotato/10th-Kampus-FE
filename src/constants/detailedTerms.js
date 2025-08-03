@@ -8,7 +8,7 @@ const detailedTerms = {
 
             Purpose of Collection
             - User registration and identity verification
-            - Providing international student community services and a secondhand trading platform
+            - Providing international student community services and a market trading platform
             - Managing community activities and user content
 
             Retention Period
@@ -41,7 +41,7 @@ const detailedTerms = {
     required: true,
     content: `Details of Services
             - Access to the international student community board
-            - Posting and trading items through the secondhand trading platform
+            - Posting and trading items through the market trading platform
             - Sharing posts and photos within the community
 
             Service Restrictions

@@ -69,7 +69,7 @@ export const MyPage = () => {
                   )
                 }
               >
-                Secondhand
+                Market
               </button>
             </div>
           </div>

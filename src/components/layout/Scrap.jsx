@@ -11,7 +11,7 @@ export const Scrap = ({ children }) => {
 
   const menu = [
     { id: 0, text: 'Community', path: path.mypage.community.scrap.community },
-    { id: 1, text: 'Secondhand', path: path.mypage.community.scrap.secondhand },
+    { id: 1, text: 'Market', path: path.mypage.community.scrap.market },
   ];
 
   return (

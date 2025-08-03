@@ -1,2 +1,1 @@
-export const MARKET_DESCRIPTION =
-  'Easily buy and sell secondhand items near you.';
+export const MARKET_DESCRIPTION = 'Easily buy and sell market items near you.';

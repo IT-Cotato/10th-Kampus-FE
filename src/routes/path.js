@@ -46,7 +46,7 @@ export const path = {
       scrap: {
         base: 'scrap',
         community: 'community',
-        secondhand: 'secondhand',
+        market: 'market',
       },
       article: {
         base: 'article',
@@ -54,7 +54,7 @@ export const path = {
         comments: 'comments',
         market: 'markets',
       },
-      secondhand: 'secondhand',
+      market: 'market',
     },
     service: {
       base: 'contactUs',
@@ -68,7 +68,7 @@ export const path = {
     block: {
       base: 'block',
       chat: 'chat',
-      secondhand: 'secondhand',
+      market: 'market',
     },
     delete: 'leave',
   },
