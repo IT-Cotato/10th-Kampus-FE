@@ -58,6 +58,7 @@ import {
   MyMarkets,
   AccountPermanentSuspendedNotice,
   SplashScreen,
+  MarketSearch,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
 import { BlockingManagement } from '@/components/layout/BlockingManagement';
@@ -260,6 +261,10 @@ const AppRouter = createBrowserRouter([
             {
               path: '',
               element: <Market />,
+            },
+            {
+              path: path.market.search,
+              element: <MarketSearch />,
             },
             {
               path: path.market.product,

@@ -51,6 +51,7 @@ export { BoardGuide } from './boardGuide/boardGuide';
 export { Market } from './market/market';
 export { MarketPost } from './market/MarketPost';
 export { MarketWrite } from './market/MarketWrite';
+export { MarketSearch } from './market/MarketSearch';
 
 export { Admin } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';

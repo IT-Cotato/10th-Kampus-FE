@@ -44,7 +44,7 @@ export const PostHeader = ({ isAuthor = false }) => {
 
   const handleSearch = () => {
     if (isMarket) {
-      navigate('');
+      navigate(`${path.market.base}/${path.market.search}`);
     } else {
       navigate(`${path.board.base}/${boardId}/${path.board.specific.search}`);
     }

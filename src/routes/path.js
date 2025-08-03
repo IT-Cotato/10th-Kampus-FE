@@ -77,6 +77,7 @@ export const path = {
     write: 'write',
     edit: 'edit',
     product: ':productId',
+    search: 'search',
   },
   chatList: {
     base: '/chat',
