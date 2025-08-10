@@ -106,6 +106,8 @@ export default {
       boxShadow: {
         base: '1px 4px 10px rgba(0, 0, 0, 0.2)',
         navbar: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+        home: '0px 4px 16px 0px rgba(0, 0, 0, 0.04)',
+        board: '0px 4px 8px 0px rgba(0, 0, 0, 0.04)',
       },
       keyframes: {
         bottomSheetUp: {

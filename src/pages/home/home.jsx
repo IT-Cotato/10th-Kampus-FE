@@ -13,11 +13,7 @@ import { getUniversity } from '@/apis/home/getUniversity.api';
 
 export const Home = () => {
   const navigate = useNavigate();
-  const {
-    data: univeristyList,
-    isLoading: universityLoading,
-    error: universityError,
-  } = useQuery({
+  const { data: univeristyList, error: universityError } = useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_UNIVERISTY],
     queryFn: getUniversity,
     throwOnError: true,
@@ -33,31 +29,22 @@ export const Home = () => {
     queryFn: getTrend,
   });
 
-  {
-    /* const {
-    data: cardNewsList,
-    isLoading: cardNewsLoading,
-    error: cardNewsError,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.GET_HOME_CARDNEWS],
-    queryFn: () => getCardNewsList({ page: 1 }),
-  });*/
-  }
-
   const { data: userDetail, isLoading: _userLoading } = useGetUserData();
 
   return (
-    <div className="flex w-full flex-col gap-6 px-4 py-3">
+    <div className="flex w-full flex-col gap-6 bg-[#FCFCFC] px-4 py-3">
       <div className="flex items-start justify-between pb-[.625rem]">
-        <Logo className="h-auto w-[6rem] text-primary-base" />
-        <div className="flex gap-[0.875rem]">
-          <button
-            className="cursor-pointer"
-            onClick={() => navigate(path.search)}
-          >
-            <img src={search} alt="search button" className="h-6 w-6" />
-          </button>
-        </div>
+        <Logo
+          aria-label="Kampus Logo"
+          className="h-auto w-[6rem] text-primary-base"
+        />
+        <button
+          type="button"
+          className="cursor-pointer"
+          onClick={() => navigate(path.search)}
+        >
+          <img src={search} alt="search button" className="h-6 w-6" />
+        </button>
       </div>
       {userDetail?.universityId !== -1 && (
         <h1 className="text-pageTitle text-neutral-title">
@@ -70,19 +57,23 @@ export const Home = () => {
           data={univeristyList}
           boardTitle="My univ"
           university={true}
+          boardId={univeristyList.boardId}
         />
       )}
-      <BoardBox
-        data={favoriteList?.homePostThumbnailList}
-        boardTitle="Favorites"
-      />
-      {trendingList?.homePostThumbnailList.length !== 0 && (
+      {favoriteList?.homePostThumbnailList.length > 0 && (
+        <BoardBox
+          data={favoriteList?.homePostThumbnailList}
+          boardTitle="Favorites"
+        />
+      )}
+      {trendingList?.homePostThumbnailList.length > 0 && (
         <BoardBox
           data={trendingList?.homePostThumbnailList}
           boardTitle="Trending"
+          boardId={trendingList.homePostThumbnailList.boardId}
         />
       )}
-      {/* 추후 홈과 보드 관련으로 리팩토링 예정 <CardPostBox data={cardNewsList?.posts} />*/}
+      {/* <CardPostBox data={cardNewsList?.posts} /> */}
     </div>
   );
 };

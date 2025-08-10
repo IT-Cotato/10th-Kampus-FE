@@ -1,32 +1,26 @@
 import { useNavigate } from 'react-router-dom';
-import more from '@/assets/imgs/more.svg';
+import More from '@/assets/imgs/icon-more.svg?react';
 import { path } from '@/routes/path';
-export const BoardHeader = ({ title }) => {
+export const BoardHeader = ({ title, boardId }) => {
   const navigate = useNavigate();
+  const handleMoreClick = () => {
+    if (boardId === undefined) {
+      navigate(path.board.base);
+    } else {
+      navigate(path.board.base + '/' + boardId);
+    }
+  };
   return (
     <div className="flex items-center justify-between">
       <h1 className="text-pageTitle text-neutral-title">{title}</h1>
       <button
-        className="flex items-center gap-[0.125rem] text-small text-neutral-base"
-        onClick={() => {
-          if (title === 'Favorites') {
-            navigate(path.board.base);
-          } else if (title === 'Trending') {
-            navigate(path.board.base + '/' + '4');
-          } else if (title === 'How to live in Korea') {
-            navigate(path.board.base + '/' + '5');
-          }
-          {
-            /** 백엔드 타입 변경 전까지는 임시입니다*/
-          }
-        }}
+        type="button"
+        aria-label="See more"
+        className="flex shrink-0 items-center justify-center gap-1 px-[.125rem] text-neutral-border-40"
+        onClick={handleMoreClick}
       >
-        <p>more</p>
-        <img
-          src={more}
-          alt="See More"
-          className="w-[.875rem] text-neutral-base"
-        />
+        <p className="text-small">more</p>
+        <More className="w-[.875rem] text-neutral-border-40" />
       </button>
     </div>
   );

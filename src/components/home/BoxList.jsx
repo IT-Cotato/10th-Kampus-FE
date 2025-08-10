@@ -6,7 +6,7 @@ export const BoxList = ({ text }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="flex cursor-pointer items-center gap-5 whitespace-nowrap py-[.625rem]"
+      className="flex cursor-pointer items-center gap-5 whitespace-nowrap px-5 py-2.5"
       onClick={() => navigate(`${path.board.base}/${text.boardId}`)}
     >
       <h1 className="text-subTitle text-neutral-title">{text?.boardName}</h1>
