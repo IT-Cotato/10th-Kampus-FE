@@ -57,7 +57,7 @@ export const Home = () => {
           data={univeristyList}
           boardTitle="My univ"
           university={true}
-          boardId={univeristyList.boardId}
+          boardId={univeristyList?.boardId}
         />
       )}
       {favoriteList?.homePostThumbnailList.length > 0 && (

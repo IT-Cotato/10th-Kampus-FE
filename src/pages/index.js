@@ -1,7 +1,7 @@
 export { NotFound } from './notFound';
 export { Forbidden } from './Forbidden';
 export { AccountPermanentSuspendedNotice } from './home/accountPermanentSuspendedNotice';
-export { Home } from './home/home';
+export { Home } from './home/Home';
 export { SplashScreen } from './SplashScreen';
 
 export { Login } from './auth/login';
