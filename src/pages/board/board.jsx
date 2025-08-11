@@ -9,7 +9,6 @@ import { getPostList, getTrendingList } from '@/apis/board/getPostList.api';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
-import { Loading } from '@/components/common/Loading';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useInView } from 'react-intersection-observer';
 import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
@@ -35,8 +34,6 @@ export const Board = () => {
     data: postList,
     fetchNextPage: fetchNextPostList,
     hasNextPage: hasNextPostList,
-    isLoading: isPostLoading,
-    error: isPostError,
   } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_POST_LIST, boardId, sortOrder, category],
     queryFn: ({ pageParam = 1 }) => {
@@ -102,12 +99,8 @@ export const Board = () => {
           />
         </div>
         <div className="flex w-full flex-1 flex-col divide-y overflow-y-auto bg-white px-4 pt-[3.25rem]">
-          {isPostLoading && <Loading />}
-          {isPostError && <p>Error Data Loading</p>}
           {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰의 UI가 다름 */}
-          {!isPostLoading &&
-            !isPostError &&
-            posts &&
+          {posts &&
             posts.length > 0 &&
             posts.map((item, index) =>
               boardDetail?.boardWithFavoriteStatus?.boardType ===
@@ -118,9 +111,10 @@ export const Board = () => {
               ),
             )}
         </div>
-        {/* 추후에 Trending 게시판인지 여부도 추가 해야합니다 */}
         {boardDetail &&
-          boardDetail.boardWithFavoriteStatus.boardType !== BOARD_TYPE.CARD && (
+          boardDetail.boardWithFavoriteStatus.boardType !== BOARD_TYPE.CARD &&
+          boardDetail.boardWithFavoriteStatus.boardType !==
+            BOARD_TYPE.TRENDING && (
             <WriteButton boardName={boardDetail.boardName} />
           )}
       </div>

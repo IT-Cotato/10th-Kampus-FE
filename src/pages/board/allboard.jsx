@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { BoardListBox } from '@/components/board/BoardListBox';
+import { useEffect, useState } from 'react';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
-import { Loading } from '@/components/common/Loading';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useGetBoardList } from '@/state/query/allBoard/useGetBoardList';
 import { useToggleFavorite } from '@/state/mutation/allBoard/useToggleFavorite';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
 import { useGetUnivBoard } from '@/state/query/allBoard/useGetUnivBoard';
+import { BoardList } from '@/components/board/BoardList';
 export const AllBoard = () => {
   const [isAni, setIsAni] = useState(false);
   const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
 
   const { data: userInfo } = useGetUserData();
-  const { data: listData, isLoading, error } = useGetBoardList();
+  const { data: listData } = useGetBoardList();
   const { data: univBoardData } = useGetUnivBoard(
     !!userInfo && userInfo.universityId !== -1,
   );
@@ -31,6 +30,7 @@ export const AllBoard = () => {
         description: data.description,
         pin: data.isFavorite,
         order: data.boardId,
+        boardType: data.boardType,
       };
       if (data.boardType === BOARD_TYPE.UNIV) {
         boardList.univ.push(formatData);
@@ -100,7 +100,7 @@ export const AllBoard = () => {
   }, [listData, univBoardData]);
 
   return (
-    <div className="relative flex h-full w-full flex-col gap-4 p-4">
+    <div className="relative flex h-full w-full flex-col gap-4 bg-[#FCFCFC] p-4">
       {isAni && (
         <StateChangeAnimate
           state={prevState}
@@ -108,23 +108,31 @@ export const AllBoard = () => {
           changeToFalseText={'Unpinned from the board'}
         />
       )}
-      {isLoading && <Loading />}
-      {error && <div>Error loading data</div>}
-      {!isLoading && !error && (
-        <>
-          <div className="text-title text-neutral-title">Board</div>
-          {Object.entries(listArray).map(([key, value], index) => {
-            return (
-              <BoardListBox
-                list={value}
-                key={index}
+      <div className="text-title text-neutral-title">Board</div>
+      {Object.entries(listArray).map(([key, list], idx) => {
+        if (list.length === 0) return null;
+
+        return (
+          <div
+            className="flex flex-col items-start rounded-lg bg-white shadow-board"
+            key={idx}
+          >
+            {list.map((data, index) => (
+              <BoardList
+                data={data}
+                key={data.order}
                 listKey={key}
+                index={index}
                 togglePin={togglePin}
+                isPinnable={
+                  data.boardType === BOARD_TYPE.NORMAL ||
+                  data.boardType === BOARD_TYPE.TRENDING
+                }
               />
-            );
-          })}
-        </>
-      )}
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 };
