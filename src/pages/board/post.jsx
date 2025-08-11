@@ -143,7 +143,7 @@ export const Post = () => {
                     {postData?.isLiked ? (
                       <FillLike
                         aria-label="likes"
-                        className="h-[.75rem] w-[.75rem] text-neutral-border-50 text-primary-red"
+                        className="h-[.75rem] w-[.75rem] text-primary-red"
                       />
                     ) : (
                       <Like
