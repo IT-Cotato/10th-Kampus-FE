@@ -19,11 +19,12 @@ import {
 } from '@/constants/ProductState';
 import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 import { usePatchMarketProductStatus } from '@/state/mutation/market/usePatchMarketProductStatus';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 
 export const MarketPost = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   // 백 <-> 프론트 매핑 객체
   const stateMapClientToServer = {
@@ -78,7 +79,11 @@ export const MarketPost = () => {
   };
 
   // 채팅 걸기
-  const handleChat = () => {};
+  const handleChat = () => {
+    productData?.isAuthor
+      ? navigate(`/chat`, { state: { isProductAuthor: true } })
+      : navigate(`/chat`, { state: { isProductAuthor: false } });
+  };
 
   const {
     translateState,
@@ -244,7 +249,7 @@ export const MarketPost = () => {
           className="rounded-[.625rem] bg-primary-base px-8 py-5 text-title-bold-16 text-white"
           onClick={handleChat}
         >
-          Chat ({productData?.isAuthor && productData?.chatCount})
+          Chat
         </button>
       </div>
     </div>
