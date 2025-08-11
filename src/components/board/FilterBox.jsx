@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import DropdownArrow from '@/assets/imgs/dropdown.svg?react';
+import DropdownArrow from '@/assets/imgs/icon/dropdown.svg?react';
 import { useEffect, useRef, useState } from 'react';
 export const FilterBox = ({ content, dropList, select, selected }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-import AlertExclamationMark from '@/assets/imgs/AlertExclamationMark.svg?react';
+import AlertExclamationMark from '@/assets/imgs/icon/alert-exclamation-mark.svg?react';
 
 export const InputWarningText = ({
   children = 'Please fill in the blank.',

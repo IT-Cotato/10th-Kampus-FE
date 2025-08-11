@@ -1,4 +1,4 @@
-import arrow from '@/assets/imgs/arrowLine.svg';
+import arrow from '@/assets/imgs/icon/arrow-line.svg';
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 

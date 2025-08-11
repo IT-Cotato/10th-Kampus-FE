@@ -1,7 +1,7 @@
-import anonymous from '@/assets/imgs/anonymous.svg';
-import Like from '@/assets/imgs/like.svg?react';
-import FillLike from '@/assets/imgs/fillLike.svg?react';
-import Comment from '@/assets/imgs/comment.svg?react';
+import anonymous from '@/assets/imgs/icon/anonymous.svg';
+import Like from '@/assets/imgs/icon/like.svg?react';
+import FillLike from '@/assets/imgs/icon/active-heart.svg?react';
+import Comment from '@/assets/imgs/icon/comment.svg?react';
 import { formatTime } from '@/utils/formatTime';
 import { useRef } from 'react';
 import { cn } from '@/utils/cn';

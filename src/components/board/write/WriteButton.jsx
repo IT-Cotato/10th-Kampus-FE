@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import Pencil from '@/assets/imgs/pencil.svg?react';
+import Pencil from '@/assets/imgs/icon/pencil.svg?react';
 import { cn } from '@/utils/cn';
 
 export const WriteButton = () => {

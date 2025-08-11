@@ -1,4 +1,4 @@
-import menubar from '@/assets/imgs/menubar.svg';
+import menubar from '@/assets/imgs/icon/menubar.svg';
 import { useState } from 'react';
 import { BlockModal } from '@/components/chat/blockModal';
 import { LeaveModal } from '@/components/chat/leaveModal';

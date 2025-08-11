@@ -1,5 +1,5 @@
 import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
-import search from '@/assets/imgs/search.svg';
+import search from '@/assets/imgs/icon/search.svg';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { BoardBox } from '@/components/home/BoardBox.jsx';

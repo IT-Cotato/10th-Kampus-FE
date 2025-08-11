@@ -1,9 +1,9 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { useEffect, useState } from 'react';
-import Anonymous from '@/assets/imgs/anonymous.svg';
-import Bookmark from '@/assets/imgs/scrap.svg?react';
-import ChattingIcon from '@/assets/imgs/ChattingIcon.svg?react';
+import Anonymous from '@/assets/imgs/icon/anonymous.svg';
+import Bookmark from '@/assets/imgs/icon/scrap.svg?react';
+import ChattingIcon from '@/assets/imgs/icon/chatting.svg?react';
 import { ImageSlider } from '@/components/common/ImageSlider';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { Loading } from '@/components/common/Loading';

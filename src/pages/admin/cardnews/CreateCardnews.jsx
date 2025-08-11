@@ -1,7 +1,7 @@
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
-import XIcon from '@/assets/imgs/x.svg?react';
-import ImgIcon from '@/assets/imgs/imgIcon.svg';
+import XIcon from '@/assets/imgs/icon/x.svg?react';
+import ImgIcon from '@/assets/imgs/icon/image.svg';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { postCreateCardnews } from '@/apis/admin/postCreateCardnews.api';

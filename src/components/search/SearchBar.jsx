@@ -1,5 +1,5 @@
-import PreviousIcon from '@/assets/imgs/previous.svg?react';
-import SearchIcon from '@/assets/imgs/search.svg?react';
+import PreviousIcon from '@/assets/imgs/icon/previous.svg?react';
+import SearchIcon from '@/assets/imgs/icon/search.svg?react';
 import { QUERY_KEYS } from '@/constants/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';

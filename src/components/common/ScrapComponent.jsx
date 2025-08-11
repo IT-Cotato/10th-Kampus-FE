@@ -1,5 +1,5 @@
-import ActiveScrap from '@/assets/imgs/activeScrap.svg?react';
-import Scrap from '@/assets/imgs/scrap.svg?react';
+import ActiveScrap from '@/assets/imgs/icon/active-scrap.svg?react';
+import Scrap from '@/assets/imgs/icon/scrap.svg?react';
 import { useState } from 'react';
 import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useParams } from 'react-router-dom';

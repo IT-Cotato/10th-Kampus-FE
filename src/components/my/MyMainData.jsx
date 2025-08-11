@@ -3,7 +3,7 @@ import { ERR_MSG } from '@/constants/errorMessage';
 import { UNIV_STATUS } from '@/constants/universityStatus';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { path } from '@/routes/path';
-import arrow from '@/assets/imgs/arrowRight.svg';
+import arrow from '@/assets/imgs/icon/right-arrow.svg';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetUserData } from '@/state/query/common/useGetUserData';

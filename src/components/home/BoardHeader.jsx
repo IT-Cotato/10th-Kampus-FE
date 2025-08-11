@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import More from '@/assets/imgs/icon-more.svg?react';
+import More from '@/assets/imgs/icon/more.svg?react';
 import { path } from '@/routes/path';
 export const BoardHeader = ({ title, boardId }) => {
   const navigate = useNavigate();

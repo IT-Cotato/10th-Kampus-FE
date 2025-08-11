@@ -1,4 +1,4 @@
-import Pin from '@/assets/imgs/pin.svg?react';
+import Pin from '@/assets/imgs/icon/pin.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
 export const BoardList = ({

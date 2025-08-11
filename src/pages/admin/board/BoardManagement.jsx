@@ -1,5 +1,5 @@
 import { Dropdown } from '@/components/admin/Dropdown';
-import menubar from '@/assets/imgs/menubar.svg';
+import menubar from '@/assets/imgs/icon/menubar.svg';
 import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';

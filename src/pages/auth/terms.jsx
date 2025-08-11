@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainButton } from '../../components/common/MainButton';
 import { Term } from '../../components/join/term';
-import Check from '@/assets/imgs/check.svg?react';
+import Check from '@/assets/imgs/icon/check.svg?react';
 import DETAILED_TERMS from '@/constants/detailedTerms';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { cn } from '@/utils/cn';

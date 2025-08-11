@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { NewMsgCnt } from '@/components/chat/newMsgCnt';
-import DefaultProfile from '@/assets/imgs/defaultProfile.svg';
-import blockIcon from '@/assets/imgs/blockIcon.svg';
-import leaveIcon from '@/assets/imgs/leaveIcon.svg';
+import DefaultProfile from '@/assets/imgs/icon/default-profile.svg';
+import blockIcon from '@/assets/imgs/icon/block.svg';
+import leaveIcon from '@/assets/imgs/icon/leave.svg';
 import { touchDrag } from '@/utils/touchDrag';
 import { parseToDate, formatChatTime } from '@/utils/utcToKst';
 import { useMutation } from '@tanstack/react-query';

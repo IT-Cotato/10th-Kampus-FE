@@ -1,5 +1,5 @@
-import ImgIcon from '@/assets/imgs/imgIcon.svg';
-import XIcon from '@/assets/imgs/x.svg?react';
+import ImgIcon from '@/assets/imgs/icon/image.svg';
+import XIcon from '@/assets/imgs/icon/x.svg?react';
 import { MainButton } from '@/components/common/MainButton';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';

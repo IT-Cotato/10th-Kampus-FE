@@ -1,4 +1,4 @@
-import copiedIcon from '@/assets/imgs/copied.svg';
+import copiedIcon from '@/assets/imgs/icon/copied.svg';
 import ReactDom from 'react-dom';
 import { useEffect } from 'react';
 

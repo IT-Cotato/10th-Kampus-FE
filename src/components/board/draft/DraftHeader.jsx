@@ -1,4 +1,4 @@
-import X from '@/assets/imgs/x.svg?react';
+import X from '@/assets/imgs/icon/x.svg?react';
 import { useNavigate } from 'react-router-dom';
 
 export const DraftHeader = ({ isEditMode, setIsEditMode }) => {

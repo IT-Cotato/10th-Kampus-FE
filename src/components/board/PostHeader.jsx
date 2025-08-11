@@ -1,6 +1,6 @@
-import Prev from '@/assets/imgs/previous.svg?react';
-import Search from '@/assets/imgs/search.svg?react';
-import Intro from '@/assets/imgs/boardIntro.svg';
+import Prev from '@/assets/imgs/icon/previous.svg?react';
+import Search from '@/assets/imgs/icon/search.svg?react';
+import Intro from '@/assets/imgs/icon/board-intro.svg';
 import { AnimatePresence } from 'motion/react';
 import { BoardMenuBar } from '@/components/common/MenuBar';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
