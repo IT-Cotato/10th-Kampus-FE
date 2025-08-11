@@ -1,8 +1,18 @@
 import Pin from '@/assets/imgs/pin.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
-export const BoardList = ({ data, listKey, index, togglePin }) => {
+export const BoardList = ({
+  data,
+  listKey,
+  index,
+  togglePin,
+  isPinnable = false,
+}) => {
   const navigate = useNavigate();
+  const handlePinClick = () => {
+    if (!isPinnable) return; // 핀 고정이 불가능한 경우 클릭 이벤트 무시
+    togglePin(listKey, index, data.order);
+  };
   return (
     <div className="flex w-full items-start gap-4 p-4">
       <Pin
@@ -10,7 +20,7 @@ export const BoardList = ({ data, listKey, index, togglePin }) => {
           'text-primary-base': data.pin,
           'text-primary-10': !data.pin,
         })}
-        onClick={() => togglePin(listKey, index, data.order)}
+        onClick={handlePinClick}
       />
       <div className="flex h-fit w-full flex-col gap-1 leading-tight">
         <p

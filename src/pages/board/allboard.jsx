@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BoardListBox } from '@/components/board/BoardListBox';
+import { useEffect, useState } from 'react';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
-import { Loading } from '@/components/common/Loading';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useGetBoardList } from '@/state/query/allBoard/useGetBoardList';
 import { useToggleFavorite } from '@/state/mutation/allBoard/useToggleFavorite';
@@ -32,6 +30,7 @@ export const AllBoard = () => {
         description: data.description,
         pin: data.isFavorite,
         order: data.boardId,
+        boardType: data.boardType,
       };
       if (data.boardType === BOARD_TYPE.UNIV) {
         boardList.univ.push(formatData);
@@ -110,11 +109,14 @@ export const AllBoard = () => {
         />
       )}
       <div className="text-title text-neutral-title">Board</div>
-      {Object.entries(listArray).map(([key, list]) => {
+      {Object.entries(listArray).map(([key, list], idx) => {
         if (list.length === 0) return null;
 
         return (
-          <div className="flex flex-col items-start rounded-lg bg-white shadow-board">
+          <div
+            className="flex flex-col items-start rounded-lg bg-white shadow-board"
+            key={idx}
+          >
             {list.map((data, index) => (
               <BoardList
                 data={data}
@@ -122,6 +124,10 @@ export const AllBoard = () => {
                 listKey={key}
                 index={index}
                 togglePin={togglePin}
+                isPinnable={
+                  data.boardType === BOARD_TYPE.NORMAL ||
+                  data.boardType === BOARD_TYPE.TRENDING
+                }
               />
             ))}
           </div>
