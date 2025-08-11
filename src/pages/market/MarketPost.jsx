@@ -16,7 +16,7 @@ import { Dropdown } from '@/components/market/Dropdown';
 import {
   SERVER_PRODUCT_STATE,
   CLIENT_PRODUCT_STATE,
-} from '@/constants/ProductState';
+} from '@/constants/productState';
 import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 import { usePatchMarketProductStatus } from '@/state/mutation/market/usePatchMarketProductStatus';
 import { useParams } from 'react-router-dom';

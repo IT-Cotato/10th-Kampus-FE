@@ -1,4 +1,4 @@
-export const faqs = [
+const FAQS = [
   {
     question: 'What is Kampus?',
     answer:
@@ -31,3 +31,5 @@ export const faqs = [
       'Lorem ipsum dolor sit amet consectetur. Nisi id placerat tortor orci quis volutpat. Diam adipiscing tempor a lacinia mattis vel ut. Suspendisse mauris at in eget lectus aliquam eget adipiscing nunc. Venenatis dui nibh porta elit tellus dignissim nisl.',
   },
 ];
+
+export default FAQS;

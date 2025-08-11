@@ -4,9 +4,9 @@ import { path } from '@/routes/path';
 import { MainButton } from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import { SearchDropdown } from '@/components/join/searchDropdown';
-import Nations from '@/constants/nations';
-import Languages from '@/constants/languages';
-import { patchSignup } from '../../apis/auth/login.api';
+import NATIONS from '@/constants/nations';
+import LANGUAGES from '@/constants/languages';
+import { patchSignup } from '@/apis/auth/login.api';
 import { TitleHeader } from '@/components/common/titleHeader';
 import useDebounce from '@/hooks/useDebounce';
 import useDuplicateCheck from '@/hooks/useDuplicateCheck';
@@ -111,7 +111,7 @@ export const ProfileSettings = () => {
             onChange={(value) => setNationality(value)}
             setIsSelected={setIsNationalitySelected}
             selected={isNationalitySelected}
-            list={Nations}
+            list={NATIONS}
             warn="You have to select your country"
           />
           <SearchDropdown
@@ -121,7 +121,7 @@ export const ProfileSettings = () => {
             onChange={(value) => setLanguage(value)}
             setIsSelected={setIsLanguageSelected}
             selected={isLanguageSelected}
-            list={Languages}
+            list={LANGUAGES}
             warn="You have to select your language"
           />
         </div>

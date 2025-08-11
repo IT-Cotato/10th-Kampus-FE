@@ -1,4 +1,4 @@
-export const kampusGuide = `
+const KAMPUS_GUIDE = `
 📝 Post
 You can only post once a day on the ‘Housing’, ‘Part time/Job’, and ‘Festival/Events’ boards.
 For other boards, you can post up to 2 times per 5 minutes.
@@ -47,3 +47,5 @@ This is a space to introduce local festivals, international student events, cult
 Please share accurate information about the event and do not spread false information.
 It is prohibited to post excessive advertising.
 `;
+
+export default KAMPUS_GUIDE;

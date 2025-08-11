@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MainButton } from '../../components/common/MainButton';
 import { Term } from '../../components/join/term';
 import Check from '@/assets/imgs/check.svg?react';
-import detailedTerms from '@/constants/detailedTerms';
+import DETAILED_TERMS from '@/constants/detailedTerms';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { cn } from '@/utils/cn';
 import { path } from '@/routes/path';
@@ -89,30 +89,30 @@ export const Terms = () => {
           <Term
             onClick={() => handleClickAgree('term1')}
             isChecked={terms.term1}
-            detailedTerm={detailedTerms.term1}
+            detailedTerm={DETAILED_TERMS.term1}
           >
-            {detailedTerms.term1.title}
+            {DETAILED_TERMS.term1.title}
           </Term>
           <Term
             onClick={() => handleClickAgree('term2')}
             isChecked={terms.term2}
-            detailedTerm={detailedTerms.term2}
+            detailedTerm={DETAILED_TERMS.term2}
           >
-            {detailedTerms.term2.title}
+            {DETAILED_TERMS.term2.title}
           </Term>
           <Term
             onClick={() => handleClickAgree('term3')}
             isChecked={terms.term3}
-            detailedTerm={detailedTerms.term3}
+            detailedTerm={DETAILED_TERMS.term3}
           >
-            {detailedTerms.term3.title}
+            {DETAILED_TERMS.term3.title}
           </Term>
           <Term
             onClick={() => handleClickAgree('term4')}
             isChecked={terms.term4}
-            detailedTerm={detailedTerms.term4}
+            detailedTerm={DETAILED_TERMS.term4}
           >
-            {detailedTerms.term4.title}
+            {DETAILED_TERMS.term4.title}
           </Term>
         </div>
         <MainButton

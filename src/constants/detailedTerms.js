@@ -1,4 +1,4 @@
-const detailedTerms = {
+const DETAILED_TERMS = {
   term1: {
     title: `Personal information collection and usage agreement`,
     required: true,
@@ -81,4 +81,4 @@ const detailedTerms = {
   },
 };
 
-export default detailedTerms;
+export default DETAILED_TERMS;

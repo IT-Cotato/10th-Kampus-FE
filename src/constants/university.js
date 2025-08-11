@@ -1,4 +1,4 @@
-const University = [
+const UNIVERSITY = [
   { code: '가야대학교', name: 'Kaya University' },
   { code: '가천길대학교', name: 'Gachon-gil University' },
   { code: '가천대학교', name: 'Gachon University' },
@@ -526,4 +526,4 @@ const University = [
   },
 ];
 
-export default University;
+export default UNIVERSITY;

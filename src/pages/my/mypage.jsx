@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { removeTokens } from '@/utils/authUtils';
-import OfficialMail from '@/constants/OfficialMail.json';
+import OfficialMail from '@/constants/officialMail.json';
 import { MyMainData } from '@/components/my/MyMainData';
 import { ErrorWrapper } from '@/components/common/error/SuspenseFallback';
 

@@ -1,4 +1,4 @@
-const Languages = [
+const LANGUAGES = [
   { name: 'Arabic', code: 'AR' },
   { name: 'Bulgarian', code: 'BG' },
   { name: 'Czech', code: 'CS' },
@@ -34,4 +34,4 @@ const Languages = [
   { name: 'Chinese (traditional)', code: 'ZH-HANT' },
 ];
 
-export default Languages;
+export default LANGUAGES;

@@ -5,7 +5,7 @@ import { Modal } from '@/components/common/Modal';
 import { TitleHeader } from '@/components/common/titleHeader';
 import { SearchDropdown } from '@/components/join/searchDropdown';
 import { UserNameInput } from '@/components/join/usernameInput';
-import Languages from '@/constants/languages';
+import LANGUAGES from '@/constants/languages';
 import useDebounce from '@/hooks/useDebounce';
 import useDuplicateCheck from '@/hooks/useDuplicateCheck';
 import { useEffect, useState } from 'react';
@@ -174,7 +174,7 @@ export const MyInfo = () => {
               }
               setIsSelected={setIsLanguageSelected}
               selected={isLanguageSelected}
-              list={Languages}
+              list={LANGUAGES}
               warn="You have to select your language"
               label={false}
             />
