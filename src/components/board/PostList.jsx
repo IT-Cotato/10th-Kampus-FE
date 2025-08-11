@@ -1,9 +1,9 @@
-import Like from '../../assets/imgs/like.svg?react';
-import Comment from '../../assets/imgs/comment.svg?react';
+import Like from '@/assets/imgs/like.svg?react';
+import Comment from '@/assets/imgs/comment.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
-import { Translating } from '../common/Translating';
-import { TranslateButton } from '../common/TranslateButton';
+import { Translating } from '@/components/common/Translating';
+import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { BoardName } from './BoardName';
 export const PostList = ({ data, isTrendingBoard, ...props }) => {
@@ -32,32 +32,28 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
       {isTrendingBoard /** 인기 게시판 혹은 마이페이지 게시물들 레이아웃 */ && (
         <BoardName>{data?.boardName}</BoardName>
       )}
-      <div className="flex w-full justify-between gap-3">
-        <div className="relative flex w-full flex-col">
-          <div className="flex w-full gap-3">
-            <div className="flex w-full flex-col">
-              <h1 className="flex w-full text-subTitle text-neutral-title">
-                <span className="line-clamp-1">
-                  {translateState ? translatedPost.title : data?.title}
-                </span>
-              </h1>
-              <h2 className="flex w-full text-neutral-base">
-                <span className="line-clamp-2">
-                  {translateState ? translatedPost.content : data?.content}
-                </span>
-              </h2>
-            </div>
-            {data?.thumbnailUrl && (
-              <div className="flex h-20 w-20 flex-shrink-0">
-                <img
-                  src={data?.thumbnailUrl}
-                  alt="post image"
-                  className="h-20 w-20 object-cover"
-                />
-              </div>
-            )}
-          </div>
+      <div className="relative flex w-full justify-between">
+        <div className="flex w-full flex-col">
+          <h1 className="flex w-full text-subTitle text-neutral-title">
+            <span className="line-clamp-1">
+              {translateState ? translatedPost.title : data?.title}
+            </span>
+          </h1>
+          <h2 className="flex w-full text-neutral-base">
+            <span className="line-clamp-2">
+              {translateState ? translatedPost.content : data?.content}
+            </span>
+          </h2>
         </div>
+        {data?.thumbnailUrl && (
+          <div className="flex h-20 w-20 flex-shrink-0">
+            <img
+              src={data?.thumbnailUrl}
+              alt="post image"
+              className="h-20 w-20 object-cover"
+            />
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-between">
         <div className="flex gap-[0.375rem]">
