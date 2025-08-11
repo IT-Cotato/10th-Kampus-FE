@@ -8,8 +8,8 @@ import Nations from '@/constants/nations';
 import Languages from '@/constants/languages';
 import { patchSignup } from '../../apis/auth/login.api';
 import { TitleHeader } from '@/components/common/titleHeader';
-import useDebounce from '@/hooks/use-Debounce';
-import { useDuplicateCheck } from '@/hooks/use-duplicateCheck';
+import useDebounce from '@/hooks/useDebounce';
+import useDuplicateCheck from '@/hooks/useDuplicateCheck';
 import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 
 export const ProfileSettings = () => {

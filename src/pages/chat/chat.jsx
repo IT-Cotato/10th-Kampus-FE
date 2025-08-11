@@ -1,6 +1,6 @@
 import { ChatList } from '@/components/chat/chatListPage';
 import { ChatRoom } from '@/components/chat/chatRoomPage';
-import { useWebsocket } from '@/hooks/use-websocket';
+import { useWebsocket } from '@/hooks/useWebsocket';
 import { useEffect, useState } from 'react';
 import { ChatLayout } from '@/components/layout/chatLayout';
 import { Loading } from '@/components/common/Loading';
