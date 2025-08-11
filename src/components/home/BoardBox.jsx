@@ -10,7 +10,7 @@ export const BoardBox = ({
   return (
     <div className="flex flex-col gap-3">
       <BoardHeader title={boardTitle} boardId={boardId} />
-      <div className="shadow-home flex h-fit w-full flex-col rounded-[1.25rem] bg-white py-[.875rem]">
+      <div className="flex h-fit w-full flex-col rounded-[1.25rem] bg-white py-[.875rem] shadow-home">
         {university ? (
           <BoxList text={data} />
         ) : (
