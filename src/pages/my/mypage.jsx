@@ -21,7 +21,7 @@ export const MyPage = () => {
           <MyMainData />
         </ErrorWrapper>
         {/* 마이페이지 항목들 */}
-        <div className="mt-[1.25rem] flex h-full w-full flex-col gap-[1.875rem] leading-tight">
+        <div className="mt-[2.5rem] flex h-fit w-full flex-col gap-[1.875rem] leading-tight">
           <div className="flex h-full w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Service Settings</div>
             <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-[.625rem]">
@@ -69,7 +69,7 @@ export const MyPage = () => {
                   )
                 }
               >
-                Market
+                Secondhand
               </button>
             </div>
           </div>

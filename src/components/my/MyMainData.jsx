@@ -33,7 +33,7 @@ export const MyMainData = () => {
     <>
       {/* 마이페이지 메인 버튼 */}
       <div
-        className="flex h-full w-full cursor-pointer items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
+        className="flex h-fit w-full cursor-pointer items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
         onClick={() => navigate(path.mypage.settings.info)}
       >
         {isUserDetailsLoading && isSchoolStatusLoading ? (
