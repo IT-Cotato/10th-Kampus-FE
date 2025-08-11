@@ -103,12 +103,13 @@ export const CardnewsList = () => {
                 </span>
               </div>
             ))}
-          <Plus
-            role="button"
-            aria-label="카드뉴스 생성"
+          <button
             className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
             onClick={() => navigate(path.admin.cardnews.create)}
-          />
+            aria-label="카드뉴스 생성"
+          >
+            <img src={Plus} />
+          </button>
         </div>
       </div>
       <Toast />

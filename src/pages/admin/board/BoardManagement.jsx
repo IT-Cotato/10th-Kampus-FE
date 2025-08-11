@@ -219,12 +219,14 @@ export const BoardManagement = () => {
                 )}
             </li>
           ))}
-        <Plus
-          role="button"
-          aria-label="게시판 생성"
-          className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-full lg:text-[10rem]"
+
+        <button
+          className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
           onClick={() => navigate(path.admin.boardManagement.create)}
-        />
+          aria-label="게시판 생성"
+        >
+          <img src={Plus} />
+        </button>
       </ul>
       <Toast />
     </div>
