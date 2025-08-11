@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { MainButton } from '@/components/common/MainButton';
 import { UserNameInput } from '@/components/join/usernameInput';
 import { SearchDropdown } from '@/components/join/searchDropdown';
@@ -27,7 +27,7 @@ export const ProfileSettings = () => {
 
   useEffect(() => {
     if (term === undefined) {
-      navigate(`${path.signup.base}/${path.signup.terms}`);
+      navigate(`${PATH.SIGNUP.BASE}/${PATH.SIGNUP.TERMS}`);
     }
   }, [term]);
 
@@ -87,7 +87,7 @@ export const ProfileSettings = () => {
     const { success } = await patchSignup(returnSignupData());
     if (success) {
       // 우선은 userId를 쓰는 곳이 없어서 저장안해뒀는데 필요하면 추가시키겠습니다!
-      navigate(`${path.signup.base}/${path.signup.welcome}`);
+      navigate(`${PATH.SIGNUP.BASE}/${PATH.SIGNUP.WELCOME}`);
     } else {
       alert('Something wrong. Please try again.');
     }

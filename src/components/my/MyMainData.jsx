@@ -2,8 +2,8 @@ import { Loading } from '@/components/common/Loading';
 import { ERR_MSG } from '@/constants/errorMessage';
 import { UNIV_STATUS } from '@/constants/universityStatus';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
-import { path } from '@/routes/path';
 import arrow from '@/assets/imgs/icon/right-arrow.svg';
+import { PATH } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
@@ -34,7 +34,7 @@ export const MyMainData = () => {
       {/* 마이페이지 메인 버튼 */}
       <div
         className="flex h-full w-full cursor-pointer items-center rounded-[.625rem] bg-primary-base px-[.75rem] py-[1.625rem]"
-        onClick={() => navigate(path.mypage.settings.info)}
+        onClick={() => navigate(PATH.MYPAGE.SETTINGS.INFO)}
       >
         {isUserDetailsLoading && isSchoolStatusLoading ? (
           <Loading />
@@ -62,7 +62,7 @@ export const MyMainData = () => {
       {status === UNIV_STATUS.REJECT && (
         <button
           onClick={() =>
-            navigate(`${path.mypage.base}/${path.mypage.verify.fail}`)
+            navigate(`${PATH.MYPAGE.BASE}/${PATH.MYPAGE.VERIFY.FAIL}`)
           }
           className="w-full rounded-[.625rem] border border-primary-red px-[1.125rem] py-[1.25rem] text-base leading-none text-primary-red"
         >

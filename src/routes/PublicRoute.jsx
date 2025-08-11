@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { Loading } from '@/components/common/Loading';
 
 export default function PublicRoute() {
@@ -18,7 +18,7 @@ export default function PublicRoute() {
 
   // 토큰 갱신이 완료된 후 토큰이 있으면 홈 페이지로 리다이렉트
   if (!isInitializing && accessToken) {
-    return <Navigate to={path.home} replace />;
+    return <Navigate to={PATH.HOME} replace />;
   }
 
   return <Outlet />;

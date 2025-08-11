@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import { API_DOMAINS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 
 // 여러 요청이 동시에 실패 했을 때 용도
 let isRefreshing = false;
@@ -89,7 +89,7 @@ export const onError = async (error, api) => {
       // 토큰 갱신 자체가 실패하면, 로그아웃 후 로그인 창으로 리다이렉트
       clearAccessToken();
       processQueue(refreshError, null);
-      window.location.replace(path.login.base);
+      window.location.replace(PATH.LOGIN.BASE);
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
@@ -105,7 +105,7 @@ export const onError = async (error, api) => {
     alert('세션이 만료되었습니다.');
     clearAccessToken();
     setInitializing(false);
-    window.location.replace(path.login.base);
+    window.location.replace(PATH.LOGIN.BASE);
     return Promise.reject(error);
   }
 
@@ -119,7 +119,7 @@ export const onError = async (error, api) => {
     clearAccessToken();
     setInitializing(false);
 
-    window.location.replace(path.login.base);
+    window.location.replace(PATH.LOGIN.BASE);
 
     return Promise.reject(error);
   }

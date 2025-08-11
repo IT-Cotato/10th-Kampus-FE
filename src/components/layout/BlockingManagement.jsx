@@ -1,5 +1,5 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TitleHeader } from '../common/titleHeader';
 
@@ -10,8 +10,8 @@ export const BlockingManagement = ({ children }) => {
   const navigate = useNavigate();
 
   const menu = [
-    { id: 0, text: 'Chat', path: path.mypage.block.chat },
-    { id: 1, text: 'Market', path: path.mypage.block.market },
+    { id: 0, text: 'Chat', path: PATH.MYPAGE.BLOCK.CHAT },
+    { id: 1, text: 'Market', path: PATH.MYPAGE.BLOCK.MARKET },
   ];
 
   return (

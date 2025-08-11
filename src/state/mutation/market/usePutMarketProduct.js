@@ -1,6 +1,6 @@
 import { putMarketProduct } from '@/apis/market/putMarketProduct.api';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export const usePutMarketProduct = () => {
         queryKey: [QUERY_KEYS.POST_MARKET_PRODUCT],
       });
       const { productId } = variables;
-      navigate(`${path.market.base}/${productId}`, {
+      navigate(`${PATH.MARKET.BASE}/${productId}`, {
         replace: true,
       });
     },

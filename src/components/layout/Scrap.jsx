@@ -1,5 +1,5 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TitleHeader } from '../common/titleHeader';
 
@@ -10,8 +10,8 @@ export const Scrap = ({ children }) => {
   const navigate = useNavigate();
 
   const menu = [
-    { id: 0, text: 'Community', path: path.mypage.community.scrap.community },
-    { id: 1, text: 'Market', path: path.mypage.community.scrap.market },
+    { id: 0, text: 'Community', path: PATH.MYPAGE.COMMUNITY.SCRAP.COMMUNITY },
+    { id: 1, text: 'Market', path: PATH.MYPAGE.COMMUNITY.SCRAP.MARKET },
   ];
 
   return (

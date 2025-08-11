@@ -1,5 +1,5 @@
 import UNIVERSITY from '@/constants/university';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
@@ -25,7 +25,7 @@ export const SchoolSearch = () => {
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
-      navigate(path.home, { replace: true });
+      navigate(PATH.HOME, { replace: true });
     }
   }, [status]);
 
@@ -52,7 +52,7 @@ export const SchoolSearch = () => {
           </div>
           <MainButton
             onClick={() =>
-              navigate(`../${path.signup.verify.base}`, {
+              navigate(`../${PATH.SIGNUP.VERIFY.BASE}`, {
                 state: { university, isInitialAuthFlow },
               })
             }

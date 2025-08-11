@@ -1,7 +1,7 @@
 import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import search from '@/assets/imgs/icon/search.svg';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { BoardBox } from '@/components/home/BoardBox.jsx';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
@@ -41,7 +41,7 @@ export const Home = () => {
         <button
           type="button"
           className="cursor-pointer"
-          onClick={() => navigate(path.search)}
+          onClick={() => navigate(PATH.SEARCH)}
         >
           <img src={search} alt="search button" className="h-6 w-6" />
         </button>

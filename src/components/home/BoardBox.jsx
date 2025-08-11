@@ -1,6 +1,7 @@
 import { BoxList } from './BoxList';
 import { BoardHeader } from './BoardHeader';
 import { CardPost } from './BoxList';
+
 export const BoardBox = ({
   boardTitle,
   data,

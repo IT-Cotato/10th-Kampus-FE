@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import menubar from '@/assets/imgs/icon/menubar.svg';
 import { MenuBar } from '@/components/admin/MenuBar';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 import Plus from '@/assets/imgs/icon/plus.svg?react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -105,7 +105,7 @@ export const CardnewsList = () => {
             ))}
           <button
             className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
-            onClick={() => navigate(path.admin.cardnews.create)}
+            onClick={() => navigate(PATH.ADMIN.CARDNEWS.CREATE)}
             aria-label="카드뉴스 생성"
           >
             <img src={Plus} />

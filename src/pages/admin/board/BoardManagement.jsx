@@ -1,7 +1,7 @@
 import { Dropdown } from '@/components/admin/Dropdown';
 import menubar from '@/assets/imgs/icon/menubar.svg';
 import { MenuBar } from '@/components/admin/MenuBar';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Plus from '@/assets/imgs/icon/plus.svg?react';
@@ -26,7 +26,7 @@ export const BoardManagement = () => {
   const [selectedBoardMenu, setSelectedBoardMenu] = useState(null);
 
   const handleClickEdit = (boardId) => {
-    navigate(`./${boardId}/${path.admin.boardManagement.edit}`);
+    navigate(`./${boardId}/${PATH.ADMIN.BOARD_MANAGEMENT.EDIT}`);
   };
 
   const { mutate: inactivateBoard } = useMutation({
@@ -222,8 +222,9 @@ export const BoardManagement = () => {
 
         <button
           className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
-          onClick={() => navigate(path.admin.boardManagement.create)}
+          onClick={() => navigate(PATH.ADMIN.BOARD_MANAGEMENT.CREATE)}
           aria-label="게시판 생성"
+          type="button"
         >
           <img src={Plus} />
         </button>

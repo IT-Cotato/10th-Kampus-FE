@@ -1,5 +1,5 @@
 import { Modal } from '@/components/common/Modal';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 
 export const LeaveModal = ({ isOpen, onClose }) => {
@@ -14,7 +14,7 @@ export const LeaveModal = ({ isOpen, onClose }) => {
       leftButton="Cancel"
       onClickLeft={onClose}
       rightButton="Leave"
-      onClickRight={() => navigate(path.chatList.base)}
+      onClickRight={() => navigate(PATH.CHAT_LIST.BASE)}
     ></Modal>
   );
 };

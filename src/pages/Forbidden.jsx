@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { ButtonRound, BUTTON_THEMES } from '@/components/common/ButtonRound';
 
 export const Forbidden = () => {
@@ -18,7 +18,7 @@ export const Forbidden = () => {
         <div className="flex justify-center gap-4">
           <ButtonRound
             text="Go to Home"
-            onClick={() => navigate(path.home, { replace: true })}
+            onClick={() => navigate(PATH.HOME, { replace: true })}
             theme={BUTTON_THEMES.BASE}
           />
           <ButtonRound

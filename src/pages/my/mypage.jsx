@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { removeTokens } from '@/utils/authUtils';
 import OfficialMail from '@/constants/officialMail.json';
 import { MyMainData } from '@/components/my/MyMainData';
@@ -10,7 +10,7 @@ export const MyPage = () => {
 
   const handleLogout = async () => {
     await removeTokens();
-    navigate(path.login.base, { replace: true });
+    navigate(PATH.LOGIN.BASE, { replace: true });
   };
 
   return (
@@ -28,7 +28,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate(path.mypage.settings.info)}
+                onClick={() => navigate(PATH.MYPAGE.SETTINGS.INFO)}
               >
                 My Information
               </button>
@@ -36,7 +36,7 @@ export const MyPage = () => {
                 type="button"
                 className="text-left"
                 onClick={() =>
-                  navigate(`../${path.signup.base}/${path.signup.school}`)
+                  navigate(`${PATH.SIGNUP.BASE}/${PATH.SIGNUP.SCHOOL}`)
                 }
               >
                 School Verification
@@ -49,14 +49,14 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate(path.mypage.community.scrap.base)}
+                onClick={() => navigate(PATH.MYPAGE.COMMUNITY.SCRAP.BASE)}
               >
                 Scrap
               </button>
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate(path.mypage.community.article.base)}
+                onClick={() => navigate(PATH.MYPAGE.COMMUNITY.ARTICLE.BASE)}
               >
                 My Article
               </button>
@@ -65,7 +65,7 @@ export const MyPage = () => {
                 className="text-left"
                 onClick={() =>
                   navigate(
-                    `${path.mypage.community.article.base}/${path.mypage.community.article.market}`,
+                    `${PATH.MYPAGE.COMMUNITY.ARTICLE.BASE}/${PATH.MYPAGE.COMMUNITY.ARTICLE.MARKET}`,
                   )
                 }
               >
@@ -81,7 +81,7 @@ export const MyPage = () => {
                 className="text-left"
                 onClick={() =>
                   navigate(
-                    `${path.mypage.service.base}/${path.mypage.service.faq}`,
+                    `${PATH.MYPAGE.SERVICE.BASE}/${PATH.MYPAGE.SERVICE.FAQ}`,
                   )
                 }
               >
@@ -99,7 +99,7 @@ export const MyPage = () => {
                 className="text-left"
                 onClick={() =>
                   navigate(
-                    `${path.mypage.service.base}/${path.mypage.service.notice}`,
+                    `${PATH.MYPAGE.SERVICE.BASE}/${PATH.MYPAGE.SERVICE.NOTICE}`,
                   )
                 }
               >
@@ -113,7 +113,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate(path.mypage.block.base)}
+                onClick={() => navigate(PATH.MYPAGE.BLOCK.BASE)}
               >
                 Blocking Management
               </button>
@@ -127,7 +127,7 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left text-neutral-border-50"
-                onClick={() => navigate(path.mypage.delete)}
+                onClick={() => navigate(PATH.MYPAGE.DELETE)}
               >
                 Delete Account
               </button>

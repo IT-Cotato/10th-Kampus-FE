@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { Loading } from '@/components/common/Loading';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { getUserDetail } from '@/apis/auth/login.api';
 
 export const KakaoLoginHandler = () => {
@@ -16,16 +16,16 @@ export const KakaoLoginHandler = () => {
       const { data, success } = await getUserDetail();
       if (data === undefined) {
         alert('Login Failed!');
-        navigate(path.login.base, { replace: true });
+        navigate(PATH.LOGIN.BASE, { replace: true });
         return;
       }
       if (success && data.needSetup) {
-        navigate(path.signup.base, { replace: true });
+        navigate(PATH.SIGNUP.BASE, { replace: true });
       } else if (success && !data.needSetup) {
-        navigate(path.home, { replace: true });
+        navigate(PATH.HOME, { replace: true });
       } else {
         alert('Login Failed!');
-        navigate(path.login.base, { replace: true });
+        navigate(PATH.LOGIN.BASE, { replace: true });
       }
     };
 
@@ -40,7 +40,7 @@ export const KakaoLoginHandler = () => {
       // 토큰이 없는 경우, alert 창 이후 로그인 창으로 리다이렉트
       console.error('카카오 로그인 처리 중 에러: Access Token이 없습니다.');
       alert('Kakao Login Failed!');
-      navigate(path.login.base, { replace: true });
+      navigate(PATH.LOGIN.BASE, { replace: true });
     }
   }, [location]);
 

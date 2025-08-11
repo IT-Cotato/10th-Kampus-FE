@@ -1,7 +1,7 @@
 import ImgIcon from '@/assets/imgs/icon/image.svg';
 import XIcon from '@/assets/imgs/icon/x.svg?react';
 import { MainButton } from '@/components/common/MainButton';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
@@ -30,10 +30,10 @@ export const SchoolPhoto = () => {
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
-      navigate(path.home, { replace: true });
+      navigate(PATH.HOME, { replace: true });
     }
     if (university === undefined) {
-      navigate(`${path.signup.base}/${path.signup.school}`, { replace: true });
+      navigate(`${PATH.SIGNUP.BASE}/${PATH.SIGNUP.SCHOOL}`, { replace: true });
     }
   }, [status, university]);
 
@@ -123,7 +123,7 @@ export const SchoolPhoto = () => {
             <Modal
               title="School verification may take 3-5 business days"
               rightButton="Save"
-              onClickRight={() => navigate(`../../../${path.home}`)}
+              onClickRight={() => navigate(`../../../${PATH.HOME}`)}
             ></Modal>
           )}
         </div>

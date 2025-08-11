@@ -1,6 +1,6 @@
 import { postSchoolEmailCodeVerify } from '@/apis/auth/postSchoolEmailCode.api';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { cn } from '@/utils/cn';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
@@ -87,7 +87,7 @@ export const VerificationCodeModal = (props) => {
     mutationFn: (data) => postSchoolEmailCodeVerify({ data: data }),
     mutationKey: [QUERY_KEYS.GET_SCHOOL_EMAIL_CODE_CONFIRM],
     onSuccess: () => {
-      navigate(`../../${path.home}`);
+      navigate(`../../${PATH.HOME}`);
     },
     onError: () => setVerify({ verify: false, change: false }),
   });

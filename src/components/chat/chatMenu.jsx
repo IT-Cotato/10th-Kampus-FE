@@ -3,7 +3,7 @@ import blockIcon from '@/assets/imgs/icon/post-block.svg';
 import muteIcon from '@/assets/imgs/icon/mute.svg';
 import deleteIcon from '@/assets/imgs/icon/delete.svg';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { startAnimation } from '@/components/common/StateChangeAnimate';
 
 export const ChatMenu = ({
@@ -25,7 +25,7 @@ export const ChatMenu = ({
     <div className="absolute right-4 top-12 w-[12.25rem] space-y-2 rounded-[.625rem] bg-white px-4 py-3 text-neutral-title shadow-navbar">
       <div
         className="flex items-center justify-between"
-        onClick={() => navigate(path.chatList.report)}
+        onClick={() => navigate(PATH.CHAT_LIST.REPORT)}
       >
         <p>Report</p>
         <img src={reportIcon} alt="report" />
