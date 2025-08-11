@@ -15,7 +15,7 @@ const Calendar = () => {
         </div>
       </div>
       <div className="text-[.875rem] font-semibold text-primary-red">
-        Children's Day
+        {/* Children&apos;s Day */}
       </div>
     </article>
   );
