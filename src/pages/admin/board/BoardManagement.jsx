@@ -1,7 +1,7 @@
 import { Dropdown } from '@/components/admin/Dropdown';
 import menubar from '@/assets/imgs/menubar.svg';
 import { MenuBar } from '@/components/admin/MenuBar';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Plus from '@/assets/imgs/admin/Plus.svg';
@@ -26,7 +26,7 @@ export const BoardManagement = () => {
   const [selectedBoardMenu, setSelectedBoardMenu] = useState(null);
 
   const handleClickEdit = (boardId) => {
-    navigate(`./${boardId}/${path.admin.boardManagement.edit}`);
+    navigate(`./${boardId}/${PATH.ADMIN.BOARD_MANAGEMENT.EDIT}`);
   };
 
   const { mutate: inactivateBoard } = useMutation({
@@ -222,7 +222,7 @@ export const BoardManagement = () => {
         <button
           type="button"
           className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-full lg:text-[10rem]"
-          onClick={() => navigate(path.admin.boardManagement.create)}
+          onClick={() => navigate(PATH.ADMIN.BOARD_MANAGEMENT.CREATE)}
         >
           <img src={Plus} />
         </button>

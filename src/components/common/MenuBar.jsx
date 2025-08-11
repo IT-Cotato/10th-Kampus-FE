@@ -12,7 +12,7 @@ import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import {
   addBoardFavorite,
   deleteBoardFavorite,
@@ -151,8 +151,8 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   };
 
   const handleEdit = () => {
-    if (postId) navigate(path.board.specific.edit);
-    if (productId) navigate(path.market.edit);
+    if (postId) navigate(PATH.BOARD.SPECIFIC.EDIT);
+    if (productId) navigate(PATH.MARKET.EDIT);
   };
 
   useEffect(() => {
@@ -221,7 +221,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
             <div
               className="flex items-center justify-between rounded-sm px-3 py-1 hover:bg-primary-5"
               onClick={() =>
-                navigate(path.board.specific.report, {
+                navigate(PATH.BOARD.SPECIFIC.REPORT, {
                   state: { postId: postId },
                 })
               } // 신고 페이지로 이동

@@ -5,7 +5,7 @@ import ChatIcon from '@/assets/imgs/navIcon/chat.svg?react';
 import MyIcon from '@/assets/imgs/navIcon/my.svg?react';
 import { cn } from '@/utils/cn';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -14,31 +14,31 @@ export const Navbar = () => {
   const navItems = [
     {
       id: 0,
-      path: path.home,
+      path: PATH.HOME,
       icon: HomeIcon,
       label: 'Home',
     },
     {
       id: 1,
-      path: path.board.base,
+      path: PATH.BOARD.BASE,
       icon: BoardIcon,
       label: 'Board',
     },
     {
       id: 2,
-      path: path.market.base,
+      path: PATH.MARKET.BASE,
       icon: MarketIcon,
       label: 'Market',
     },
     {
       id: 3,
-      path: path.chatList.base,
+      path: PATH.CHAT_LIST.BASE,
       icon: ChatIcon,
       label: 'Chat',
     },
     {
       id: 4,
-      path: path.mypage.base,
+      path: PATH.MYPAGE.BASE,
       icon: MyIcon,
       label: 'My',
     },

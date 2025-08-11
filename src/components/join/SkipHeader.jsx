@@ -1,7 +1,8 @@
 import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
 import { SkipButton } from '@/components/join/skipButton.jsx';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
+
 export const SkipHeader = ({ isInitialAuthFlow = false }) => {
   const navigate = useNavigate();
   return (
@@ -12,7 +13,7 @@ export const SkipHeader = ({ isInitialAuthFlow = false }) => {
         onClick={() => navigate(-1)}
         className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
-      {isInitialAuthFlow && <SkipButton navigateTo={`../../${path.home}`} />}
+      {isInitialAuthFlow && <SkipButton navigateTo={`../../${PATH.HOME}`} />}
     </div>
   );
 };

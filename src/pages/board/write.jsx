@@ -13,7 +13,7 @@ import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
 import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
 import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import { ReloadModal } from '@/components/board/draft/ReloadModal';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useGetDraftCount } from '@/state/query/post/useGetDraftCount';
 import { useGetDraft } from '@/state/query/post/useGetDraft';
 import {
@@ -239,15 +239,15 @@ export const Write = () => {
   // 임시저장 목록 페이지로 이동
   const handleClickSavedDrafts = () => {
     if (postId !== undefined) {
-      navigate(`${path.board.base}/${path.board.specific.draft}`, {
+      navigate(`${PATH.BOARD.BASE}/${PATH.BOARD.SPECIFIC.DRAFT}`, {
         replace: true,
       });
     } else if (boardId !== undefined) {
-      navigate(`${path.board.base}/${path.board.specific.draft}`, {
+      navigate(`${PATH.BOARD.BASE}/${PATH.BOARD.SPECIFIC.DRAFT}`, {
         replace: true,
       });
     } else {
-      navigate(`${path.board.base}/${path.board.specific.draft}`, {
+      navigate(`${PATH.BOARD.BASE}/${PATH.BOARD.SPECIFIC.DRAFT}`, {
         replace: true,
       });
     }

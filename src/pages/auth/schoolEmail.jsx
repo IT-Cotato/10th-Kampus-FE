@@ -5,7 +5,7 @@ import { VerificationCodeModal } from '@/components/join/VerificationCodeModal';
 import { QUERY_KEYS } from '@/constants/api';
 import { UNIV_STATUS } from '@/constants/universityStatus';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -58,10 +58,10 @@ export const SchoolEmail = () => {
 
   useEffect(() => {
     if (status === UNIV_STATUS.APPROVE || status === UNIV_STATUS.PENDING) {
-      navigate(path.home, { replace: true });
+      navigate(PATH.HOME, { replace: true });
     }
     if (university === undefined) {
-      navigate(`${path.signup.base}/${path.signup.school}`, { replace: true });
+      navigate(`${PATH.SIGNUP.BASE}/${PATH.SIGNUP.SCHOOL}`, { replace: true });
     }
   }, [status, university]);
 

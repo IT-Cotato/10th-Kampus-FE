@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getSearcMarketResult } from '@/apis/search/searchMarket.api';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 
 export const MarketSearch = () => {
   const [isSearch, setIsSearch] = useState(true);
@@ -39,7 +39,7 @@ export const MarketSearch = () => {
   };
 
   const handleNavigate = (data) => {
-    navigate(`${path.market.base}/${data.productId}`);
+    navigate(`${PATH.MARKET.BASE}/${data.productId}`);
   };
 
   return (

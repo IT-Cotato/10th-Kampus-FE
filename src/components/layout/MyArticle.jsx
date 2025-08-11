@@ -1,5 +1,5 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TitleHeader } from '../common/titleHeader';
 
@@ -13,17 +13,17 @@ export const MyArticle = ({ children }) => {
     {
       id: 0,
       text: 'My Articles',
-      path: path.mypage.community.article.articles,
+      path: PATH.MYPAGE.COMMUNITY.ARTICLE.ARTICLES,
     },
     {
       id: 1,
       text: 'My Comments',
-      path: path.mypage.community.article.comments,
+      path: PATH.MYPAGE.COMMUNITY.ARTICLE.COMMENTS,
     },
     {
       id: 2,
       text: 'Market',
-      path: path.mypage.community.article.market,
+      path: PATH.MYPAGE.COMMUNITY.ARTICLE.MARKET,
     },
   ];
 

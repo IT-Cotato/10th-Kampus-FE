@@ -1,7 +1,7 @@
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useGetMyMarketList } from '@/state/query/my/useGetMyMarketList';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export const MyMarkets = () => {
   } = useGetMyMarketList();
 
   const handleNavigate = (data) => {
-    navigate(`${path.market.base}/${data.productId}`);
+    navigate(`${PATH.MARKET.BASE}/${data.productId}`);
   };
 
   return (

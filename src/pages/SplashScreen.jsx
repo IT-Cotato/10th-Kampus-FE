@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import Logo from '@/assets/imgs/kampusLogo.svg?react';
 
 export const SplashScreen = () => {
@@ -14,9 +14,9 @@ export const SplashScreen = () => {
       if (!isInitializing) {
         // 로그인 상태일 경우 홈페이지로, 아닐 경우 로그인 페이지로 이동
         if (accessToken) {
-          navigate(path.home);
+          navigate(PATH.HOME);
         } else {
-          navigate(path.login.base);
+          navigate(PATH.LOGIN.BASE);
         }
       }
     }, 2000);

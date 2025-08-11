@@ -3,7 +3,7 @@ import { getNoticeList } from '@/apis/mypage/getNoticeList.api';
 import { ButtonRound } from '@/components/common/ButtonRound';
 import { Toast } from '@/components/common/toast';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -39,7 +39,7 @@ export const NoticeManagement = () => {
         <h1 className="text-pageTitle">공지사항 작성</h1>
         <ButtonRound
           text="공지사항 작성하러 가기"
-          onClick={() => navigate(path.admin.notice.create)}
+          onClick={() => navigate(PATH.ADMIN.NOTICE.CREATE)}
         />
       </div>
       <div className="relative flex h-full w-full flex-col gap-5 rounded-2xl bg-white p-8 text-base text-neutral-title">
@@ -72,7 +72,7 @@ export const NoticeManagement = () => {
                       text="수정하기"
                       size="short"
                       onClick={() =>
-                        navigate(`./${notice.id}/${path.admin.notice.edit}`)
+                        navigate(`./${notice.id}/${PATH.ADMIN.NOTICE.EDIT}`)
                       }
                     />
                   </td>

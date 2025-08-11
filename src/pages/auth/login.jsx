@@ -2,7 +2,7 @@ import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { KakaoLogin } from '@/components/common/kakaoLogin';
 import { GoogleLogin } from '@/components/common/googleLogin';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { Bubble } from '@/components/common/Bubble';
 
 export const Login = () => {
@@ -12,7 +12,7 @@ export const Login = () => {
     <div className="relative flex flex-1 items-center">
       <button
         onClick={() =>
-          navigate(`${path.mypage.base}/${path.mypage.service.base}`)
+          navigate(`${PATH.MYPAGE.BASE}/${PATH.MYPAGE.SERVICE.BASE}`)
         }
         className="absolute right-4 top-4 px-4 py-2 text-base text-neutral-base"
       >

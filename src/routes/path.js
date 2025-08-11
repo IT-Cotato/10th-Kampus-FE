@@ -1,117 +1,117 @@
-export const path = {
-  root: '/',
-  accountPermanentSuspended: '/account-permanent-suspended',
-  login: {
-    base: '/login',
-    kakao: 'kakao',
+export const PATH = {
+  ROOT: '/',
+  ACCOUNT_PERMANENT_SUSPENDED: '/account-permanent-suspended',
+  LOGIN: {
+    BASE: '/login',
+    KAKAO: 'kakao',
   },
-  signup: {
-    base: '/signup',
-    terms: 'terms',
-    welcome: 'welcome',
-    profile: 'profile',
-    school: 'school',
-    verify: {
-      base: 'verify',
-      email: 'email',
-      file: 'file',
-    },
-  },
-  board: {
-    base: '/board',
-    specific: {
-      base: ':boardId',
-      write: 'write',
-      edit: 'edit',
-      post: ':postId',
-      report: 'report',
-      draft: 'draft',
-      search: 'search',
+  SIGNUP: {
+    BASE: '/signup',
+    TERMS: 'terms',
+    WELCOME: 'welcome',
+    PROFILE: 'profile',
+    SCHOOL: 'school',
+    VERIFY: {
+      BASE: 'verify',
+      EMAIL: 'email',
+      FILE: 'file',
     },
   },
-  home: '/home',
-  search: '/search',
-  boardGuide: '/boardGuide',
-  mypage: {
-    base: '/my',
-    verify: {
-      fail: 'verify/fail',
+  BOARD: {
+    BASE: '/board',
+    SPECIFIC: {
+      BASE: ':boardId',
+      WRITE: 'write',
+      EDIT: 'edit',
+      POST: ':postId',
+      REPORT: 'report',
+      DRAFT: 'draft',
+      SEARCH: 'search',
     },
-    settings: {
-      info: 'settings/info',
-      verification: 'settings/verification',
+  },
+  HOME: '/home',
+  SEARCH: '/search',
+  BOARD_GUIDE: '/boardGuide',
+  MYPAGE: {
+    BASE: '/my',
+    VERIFY: {
+      FAIL: 'verify/fail',
     },
-    community: {
-      base: 'community',
-      scrap: {
-        base: 'scrap',
-        community: 'community',
-        market: 'market',
+    SETTINGS: {
+      INFO: 'settings/info',
+      VERIFICATION: 'settings/verification',
+    },
+    COMMUNITY: {
+      BASE: 'community',
+      SCRAP: {
+        BASE: 'scrap',
+        COMMUNITY: 'community',
+        MARKET: 'market',
       },
-      article: {
-        base: 'article',
-        articles: 'articles',
-        comments: 'comments',
-        market: 'markets',
+      ARTICLE: {
+        BASE: 'article',
+        ARTICLES: 'articles',
+        COMMENTS: 'comments',
+        MARKET: 'markets',
       },
-      market: 'market',
+      MARKET: 'market',
     },
-    service: {
-      base: 'contactUs',
-      faq: 'faq',
-      inquiry: 'inquiry',
-      inquiryDetails: ':inquiryId',
-      writeInquiry: 'write',
-      notice: 'notice',
-      noticeDetails: ':noticeId',
+    SERVICE: {
+      BASE: 'contactUs',
+      FAQ: 'faq',
+      INQUIRY: 'inquiry',
+      INQUIRY_DETAILS: ':inquiryId',
+      WRITE_INQUIRY: 'write',
+      NOTICE: 'notice',
+      NOTICE_DETAILS: ':noticeId',
     },
-    block: {
-      base: 'block',
-      chat: 'chat',
-      market: 'market',
+    BLOCK: {
+      BASE: 'block',
+      CHAT: 'chat',
+      MARKET: 'market',
     },
-    delete: 'leave',
+    DELETE: 'leave',
   },
-  market: {
-    base: '/market',
-    write: 'write',
-    edit: 'edit',
-    product: ':productId',
+  MARKET: {
+    BASE: '/market',
+    WRITE: 'write',
+    EDIT: 'edit',
+    PRODUCT: ':productId',
     search: 'search',
   },
-  chatList: {
-    base: '/chat',
-    report: 'report',
+  CHAT_LIST: {
+    BASE: '/chat',
+    REPORT: 'report',
   },
-  admin: {
-    base: '/admin',
-    login: 'login',
-    dashboard: 'dashboard',
-    userManagement: 'userManagement',
-    category: 'category',
-    signupManagement: {
-      base: 'signupManagement',
-      studentVertifications: ':verificationRecordId',
+  ADMIN: {
+    BASE: '/admin',
+    LOGIN: 'login',
+    DASHBOARD: 'dashboard',
+    USER_MANAGEMENT: 'userManagement',
+    CATEGORY: 'category',
+    SIGNUP_MANAGEMENT: {
+      BASE: 'signupManagement',
+      STUDENT_VERIFICATIONS: ':verificationRecordId',
     },
-    boardManagement: {
-      base: 'boardManagement',
-      create: 'create',
-      boardId: ':boardId',
-      edit: 'edit',
+    BOARD_MANAGEMENT: {
+      BASE: 'boardManagement',
+      CREATE: 'create',
+      BOARD_ID: ':boardId',
+      EDIT: 'edit',
     },
-    cardnews: {
-      base: 'cardnews',
-      create: 'create',
-      cardnewsId: ':cardnewsId',
-      edit: 'edit',
+    CARDNEWS: {
+      BASE: 'cardnews',
+      CREATE: 'create',
+      CARDNEWS_ID: ':cardnewsId',
+      EDIT: 'edit',
     },
-    reportMangement: 'reportMangement',
-    statistics: 'statistics',
-    notice: {
-      base: 'notice',
-      create: 'create',
-      noticeId: ':noticeId',
-      edit: 'edit',
+    REPORT_MANAGEMENT: 'reportMangement',
+    STATISTICS: 'statistics',
+    NOTICE: {
+      BASE: 'notice',
+      CREATE: 'create',
+      NOTICE_ID: ':noticeId',
+      EDIT: 'edit',
     },
   },
 };

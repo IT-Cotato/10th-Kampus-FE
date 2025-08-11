@@ -1,4 +1,3 @@
-// @ts-ignore
 import { useGetCategory } from '@/state/query/admin/useGetCategory';
 import { usePostCategory } from '@/state/mutation/admin/usePostCategory';
 import { useState } from 'react';

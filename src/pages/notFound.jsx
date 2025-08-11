@@ -2,7 +2,7 @@ import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import bgErrorAnimation from '@/assets/lottie/bgError.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 
 export const NotFound = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const NotFound = () => {
         </p>
         <ButtonRound
           text="Go to Home"
-          onClick={() => navigate(path.home)}
+          onClick={() => navigate(PATH.HOME)}
           theme={BUTTON_THEMES.BASE}
         />
       </div>

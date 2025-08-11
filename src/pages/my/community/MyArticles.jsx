@@ -3,7 +3,7 @@ import Logo from '@/assets/imgs/kampusLogo.svg?react';
 import { PostList } from '@/components/board/PostList';
 import { Loading } from '@/components/common/Loading';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export const MyArticles = () => {
   });
 
   const handleNavigate = (data) => {
-    navigate(`../../../${path.board.base}/${data.boardId}/${data.id}`);
+    navigate(`../../../${PATH.BOARD.BASE}/${data.boardId}/${data.id}`);
   };
 
   return (

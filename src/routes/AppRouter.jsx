@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { Layout } from '@/components/layout/layout';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import {
   AllBoard,
   Login,
@@ -89,7 +89,7 @@ const createAuthRouter = (routeType, children) => {
 
 const AppRouter = createBrowserRouter([
   {
-    path: path.root,
+    path: PATH.ROOT,
     element: (
       <Layout>
         <ApiErrorBoundary fallbackRender={UnknownFallback}>
@@ -111,11 +111,11 @@ const AppRouter = createBrowserRouter([
       },
       ...createAuthRouter('PUBLIC', [
         {
-          path: path.accountPermanentSuspended,
+          path: PATH.ACCOUNT_PERMANENT_SUSPENDED,
           element: <AccountPermanentSuspendedNotice />,
         },
         {
-          path: path.login.base,
+          path: PATH.LOGIN.BASE,
           element: <Outlet />,
           children: [
             {
@@ -123,37 +123,37 @@ const AppRouter = createBrowserRouter([
               element: <Login />,
             },
             {
-              path: path.login.kakao,
+              path: PATH.LOGIN.KAKAO,
               element: <KakaoLoginHandler />,
             },
           ],
         },
         {
-          path: path.signup.base,
+          path: PATH.SIGNUP.BASE,
           element: <Outlet />,
           children: [
             {
               path: '',
-              element: <Navigate to={path.signup.terms} replace />,
+              element: <Navigate to={PATH.SIGNUP.TERMS} replace />,
             },
             {
-              path: path.signup.terms,
+              path: PATH.SIGNUP.TERMS,
               element: <Terms />,
             },
             {
-              path: path.signup.profile,
+              path: PATH.SIGNUP.PROFILE,
               element: <ProfileSettings />,
             },
             {
-              path: path.signup.welcome,
+              path: PATH.SIGNUP.WELCOME,
               element: <Welcome />,
             },
             {
-              path: path.signup.school,
+              path: PATH.SIGNUP.SCHOOL,
               element: <SchoolSearch />,
             },
             {
-              path: path.signup.verify.base,
+              path: PATH.SIGNUP.VERIFY.BASE,
               element: <Outlet />,
               children: [
                 {
@@ -161,11 +161,11 @@ const AppRouter = createBrowserRouter([
                   element: <SchoolVerification />,
                 },
                 {
-                  path: path.signup.verify.email,
+                  path: PATH.SIGNUP.VERIFY.EMAIL,
                   element: <SchoolEmail />,
                 },
                 {
-                  path: path.signup.verify.file,
+                  path: PATH.SIGNUP.VERIFY.FILE,
                   element: <SchoolPhoto />,
                 },
               ],
@@ -175,7 +175,7 @@ const AppRouter = createBrowserRouter([
       ]),
       ...createAuthRouter('PRIVATE', [
         {
-          path: path.home,
+          path: PATH.HOME,
           element: <Outlet />,
           children: [
             {
@@ -185,7 +185,7 @@ const AppRouter = createBrowserRouter([
           ],
         },
         {
-          path: path.search,
+          path: PATH.SEARCH,
           element: <Outlet />,
           children: [
             {
@@ -195,7 +195,7 @@ const AppRouter = createBrowserRouter([
           ],
         },
         {
-          path: path.boardGuide,
+          path: PATH.BOARD_GUIDE,
           element: <Outlet />,
           children: [
             {
@@ -205,7 +205,7 @@ const AppRouter = createBrowserRouter([
           ],
         },
         {
-          path: path.board.base,
+          path: PATH.BOARD.BASE,
           element: <Outlet />,
           children: [
             {
@@ -213,7 +213,7 @@ const AppRouter = createBrowserRouter([
               element: <AllBoard />,
             },
             {
-              path: path.board.specific.base, // title에 따라 동적 할당
+              path: PATH.BOARD.SPECIFIC.BASE, // title에 따라 동적 할당
               element: <Outlet />,
               children: [
                 {
@@ -221,15 +221,15 @@ const AppRouter = createBrowserRouter([
                   element: <Board />,
                 },
                 {
-                  path: path.board.specific.search,
+                  path: PATH.BOARD.SPECIFIC.SEARCH,
                   element: <Search />,
                 },
                 {
-                  path: path.board.specific.write,
+                  path: PATH.BOARD.SPECIFIC.WRITE,
                   element: <Write />,
                 },
                 {
-                  path: path.board.specific.post,
+                  path: PATH.BOARD.SPECIFIC.POST,
                   element: <Outlet />,
                   children: [
                     {
@@ -237,11 +237,11 @@ const AppRouter = createBrowserRouter([
                       element: <Post />,
                     },
                     {
-                      path: path.board.specific.edit,
+                      path: PATH.BOARD.SPECIFIC.EDIT,
                       element: <Write />,
                     },
                     {
-                      path: path.board.specific.report,
+                      path: PATH.BOARD.SPECIFIC.REPORT,
                       element: <PostReport />,
                     },
                   ],
@@ -249,13 +249,13 @@ const AppRouter = createBrowserRouter([
               ],
             },
             {
-              path: path.board.specific.draft,
+              path: PATH.BOARD.SPECIFIC.DRAFT,
               element: <Draft />,
             },
           ],
         },
         {
-          path: path.market.base,
+          path: PATH.MARKET.BASE,
           element: <Outlet />,
           children: [
             {
@@ -263,25 +263,25 @@ const AppRouter = createBrowserRouter([
               element: <Market />,
             },
             {
-              path: path.market.search,
+              path: PATH.MARKET.SEARCH,
               element: <MarketSearch />,
             },
             {
-              path: path.market.product,
+              path: PATH.MARKET.PRODUCT,
               element: <MarketPost />,
             },
             {
-              path: path.market.write,
+              path: PATH.MARKET.WRITE,
               element: <MarketWrite />,
             },
             {
-              path: `${path.market.product}/${path.market.edit}`,
+              path: `${PATH.MARKET.PRODUCT}/${PATH.MARKET.EDIT}`,
               element: <MarketWrite />,
             },
           ],
         },
         {
-          path: path.chatList.base,
+          path: PATH.CHAT_LIST.BASE,
           element: <Outlet />,
           children: [
             {
@@ -289,13 +289,13 @@ const AppRouter = createBrowserRouter([
               element: <ChatPage />,
             },
             {
-              path: path.chatList.report,
+              path: PATH.CHAT_LIST.REPORT,
               element: <ChatReport />,
             },
           ],
         },
         {
-          path: path.mypage.base,
+          path: PATH.MYPAGE.BASE,
           element: <Outlet />,
           children: [
             {
@@ -303,24 +303,24 @@ const AppRouter = createBrowserRouter([
               element: <MyPage />,
             },
             {
-              path: path.mypage.verify.fail,
+              path: PATH.MYPAGE.VERIFY.FAIL,
               element: <FailedVerify />,
             },
             {
-              path: path.mypage.settings.info,
+              path: PATH.MYPAGE.SETTINGS.INFO,
               element: <MyInfo />,
             },
 
             {
-              path: path.mypage.delete,
+              path: PATH.MYPAGE.DELETE,
               element: <DeleteAccount />,
             },
             {
-              path: path.mypage.community.market,
+              path: PATH.MYPAGE.COMMUNITY.MARKET,
               element: <Home />,
             },
             {
-              path: path.mypage.service.base,
+              path: PATH.MYPAGE.SERVICE.BASE,
               element: (
                 <ContactUs>
                   <Outlet />
@@ -329,20 +329,20 @@ const AppRouter = createBrowserRouter([
               children: [
                 {
                   path: '',
-                  element: <Navigate to={path.mypage.service.faq} replace />,
+                  element: <Navigate to={PATH.MYPAGE.SERVICE.FAQ} replace />,
                 },
                 {
-                  path: path.mypage.service.faq,
+                  path: PATH.MYPAGE.SERVICE.FAQ,
                   element: <FAQ />,
                 },
                 {
-                  path: path.mypage.service.notice,
+                  path: PATH.MYPAGE.SERVICE.NOTICE,
                   element: <Notice />,
                 },
               ],
             },
             {
-              path: path.mypage.community.scrap.base,
+              path: PATH.MYPAGE.COMMUNITY.SCRAP.BASE,
               element: (
                 <Scrap>
                   <Outlet />
@@ -353,23 +353,23 @@ const AppRouter = createBrowserRouter([
                   path: '',
                   element: (
                     <Navigate
-                      to={path.mypage.community.scrap.community}
+                      to={PATH.MYPAGE.COMMUNITY.SCRAP.COMMUNITY}
                       replace
                     />
                   ),
                 },
                 {
-                  path: path.mypage.community.scrap.community,
+                  path: PATH.MYPAGE.COMMUNITY.SCRAP.COMMUNITY,
                   element: <CommunityScrap />,
                 },
                 {
-                  path: path.mypage.community.scrap.market,
+                  path: PATH.MYPAGE.COMMUNITY.SCRAP.MARKET,
                   element: <MarketScrap />,
                 },
               ],
             },
             {
-              path: path.mypage.community.article.base,
+              path: PATH.MYPAGE.COMMUNITY.ARTICLE.BASE,
               element: (
                 <MyArticle>
                   <Outlet />
@@ -380,27 +380,27 @@ const AppRouter = createBrowserRouter([
                   path: '',
                   element: (
                     <Navigate
-                      to={path.mypage.community.article.articles}
+                      to={PATH.MYPAGE.COMMUNITY.ARTICLE.ARTICLES}
                       replace
                     />
                   ),
                 },
                 {
-                  path: path.mypage.community.article.articles,
+                  path: PATH.MYPAGE.COMMUNITY.ARTICLE.ARTICLES,
                   element: <MyArticles />,
                 },
                 {
-                  path: path.mypage.community.article.comments,
+                  path: PATH.MYPAGE.COMMUNITY.ARTICLE.COMMENTS,
                   element: <MyComments />,
                 },
                 {
-                  path: path.mypage.community.article.market,
+                  path: PATH.MYPAGE.COMMUNITY.ARTICLE.MARKET,
                   element: <MyMarkets />,
                 },
               ],
             },
             {
-              path: path.mypage.block.base,
+              path: PATH.MYPAGE.BLOCK.BASE,
               element: (
                 <BlockingManagement>
                   <Outlet />
@@ -409,24 +409,24 @@ const AppRouter = createBrowserRouter([
               children: [
                 {
                   path: '',
-                  element: <Navigate to={path.mypage.block.chat} replace />,
+                  element: <Navigate to={PATH.MYPAGE.BLOCK.CHAT} replace />,
                 },
                 {
-                  path: path.mypage.block.chat,
+                  path: PATH.MYPAGE.BLOCK.CHAT,
                   element: <BlockChat />,
                 },
                 {
-                  path: path.mypage.block.market,
+                  path: PATH.MYPAGE.BLOCK.MARKET,
                   element: <BlockMarket />,
                 },
               ],
             },
             {
-              path: path.mypage.service.base,
+              path: PATH.MYPAGE.SERVICE.BASE,
               element: <Outlet />,
               children: [
                 {
-                  path: `${path.mypage.service.notice}/${path.mypage.service.noticeDetails}`,
+                  path: `${PATH.MYPAGE.SERVICE.NOTICE}/${PATH.MYPAGE.SERVICE.NOTICE_DETAILS}`,
                   element: <NoticeDetail />,
                 },
               ],
@@ -436,31 +436,31 @@ const AppRouter = createBrowserRouter([
       ]),
       ...createAuthRouter('ADMIN', [
         {
-          path: path.admin.base,
+          path: PATH.ADMIN.BASE,
           element: <Outlet />,
           children: [
             {
-              path: path.admin.login,
+              path: PATH.ADMIN.LOGIN,
               element: <AdminLogin />,
             },
             {
               path: '',
-              element: <Navigate to={path.admin.dashboard} replace />,
+              element: <Navigate to={PATH.ADMIN.DASHBOARD} replace />,
             },
             {
-              path: path.admin.dashboard,
+              path: PATH.ADMIN.DASHBOARD,
               element: <Dashboard />,
             },
             {
-              path: path.admin.category,
+              path: PATH.ADMIN.CATEGORY,
               element: <ManageCategory />,
             },
             {
-              path: path.admin.userManagement,
+              path: PATH.ADMIN.USER_MANAGEMENT,
               element: <UserManagement />,
             },
             {
-              path: path.admin.signupManagement.base,
+              path: PATH.ADMIN.SIGNUP_MANAGEMENT.BASE,
               element: <Outlet />,
               children: [
                 {
@@ -468,13 +468,13 @@ const AppRouter = createBrowserRouter([
                   element: <SignupManagement />,
                 },
                 {
-                  path: path.admin.signupManagement.studentVertifications,
+                  path: PATH.ADMIN.SIGNUP_MANAGEMENT.STUDENT_VERIFICATIONS,
                   element: <StudentVerifications />,
                 },
               ],
             },
             {
-              path: path.admin.boardManagement.base,
+              path: PATH.ADMIN.BOARD_MANAGEMENT.BASE,
               element: <Outlet />,
               children: [
                 {
@@ -482,17 +482,17 @@ const AppRouter = createBrowserRouter([
                   element: <BoardManagement />,
                 },
                 {
-                  path: path.admin.boardManagement.create,
+                  path: PATH.ADMIN.BOARD_MANAGEMENT.CREATE,
                   element: <CreateBoard />,
                 },
                 {
-                  path: `${path.admin.boardManagement.boardId}/${path.admin.boardManagement.edit}`,
+                  path: `${PATH.ADMIN.BOARD_MANAGEMENT.BOARD_ID}/${PATH.ADMIN.BOARD_MANAGEMENT.EDIT}`,
                   element: <CreateBoard />,
                 },
               ],
             },
             {
-              path: path.admin.cardnews.base,
+              path: PATH.ADMIN.CARDNEWS.BASE,
               element: <Outlet />,
               children: [
                 {
@@ -500,21 +500,21 @@ const AppRouter = createBrowserRouter([
                   element: <CardnewsList />,
                 },
                 {
-                  path: path.admin.cardnews.create,
+                  path: PATH.ADMIN.CARDNEWS.CREATE,
                   element: <CreateCardnews />,
                 },
               ],
             },
             {
-              path: path.admin.reportMangement,
+              path: PATH.ADMIN.REPORT_MANAGEMENT,
               element: <ReportManagement />,
             },
             {
-              path: path.admin.statistics,
+              path: PATH.ADMIN.STATISTICS,
               element: <Statistics />,
             },
             {
-              path: path.admin.notice.base,
+              path: PATH.ADMIN.NOTICE.BASE,
               element: <Outlet />,
               children: [
                 {
@@ -522,11 +522,11 @@ const AppRouter = createBrowserRouter([
                   element: <NoticeManagement />,
                 },
                 {
-                  path: path.admin.cardnews.create,
+                  path: PATH.ADMIN.CARDNEWS.CREATE,
                   element: <CreateNotice />,
                 },
                 {
-                  path: `${path.admin.notice.noticeId}/${path.admin.notice.edit}`,
+                  path: `${PATH.ADMIN.NOTICE.NOTICE_ID}/${PATH.ADMIN.NOTICE.EDIT}`,
                   element: <CreateNotice />,
                 },
               ],

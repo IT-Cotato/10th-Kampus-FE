@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import More from '@/assets/imgs/icon-more.svg?react';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
+
 export const BoardHeader = ({ title, boardId }) => {
   const navigate = useNavigate();
   const handleMoreClick = () => {
     if (boardId === undefined) {
-      navigate(path.board.base);
+      navigate(PATH.BOARD.BASE);
     } else {
-      navigate(path.board.base + '/' + boardId);
+      navigate(PATH.BOARD.BASE + '/' + boardId);
     }
   };
   return (

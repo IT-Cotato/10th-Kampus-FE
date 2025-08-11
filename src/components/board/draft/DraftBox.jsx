@@ -2,7 +2,7 @@ import { BoardName } from '../BoardName';
 import { formatISO } from '@/utils/formatTime';
 import Check from '@/assets/imgs/check.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { cn } from '@/utils/cn';
 
 export const DraftBox = ({
@@ -34,7 +34,7 @@ export const DraftBox = ({
       return;
     }
     navigate(
-      `../${draft.boardId}/${path.board.specific.write}?draftId=${draft.tempPostId}`,
+      `../${draft.boardId}/${PATH.BOARD.SPECIFIC.WRITE}?draftId=${draft.tempPostId}`,
     );
   };
 

@@ -1,4 +1,4 @@
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -31,35 +31,40 @@ export const Admin = ({ children }) => {
   });
 
   const menu = [
-    { id: 0, text: '대시보드', path: path.admin.dashboard, img: Home },
-    { id: 1, text: '사용자 관리', path: path.admin.userManagement, img: User },
+    { id: 0, text: '대시보드', path: PATH.ADMIN.DASHBOARD, img: Home },
+    { id: 1, text: '사용자 관리', path: PATH.ADMIN.USER_MANAGEMENT, img: User },
     {
       id: 2,
       text: '가입 관리',
-      path: path.admin.signupManagement.base,
+      path: PATH.ADMIN.SIGNUP_MANAGEMENT.BASE,
       img: Setting,
     },
     {
       id: 3,
       text: '카테고리 관리',
-      path: path.admin.category,
+      path: PATH.ADMIN.CATEGORY,
       img: Edit,
     },
     {
       id: 4,
       text: '게시판 관리',
-      path: path.admin.boardManagement.base,
+      path: PATH.ADMIN.BOARD_MANAGEMENT.BASE,
       img: Board,
     },
     {
       id: 5,
       text: '카드뉴스 제작',
-      path: path.admin.cardnews.base,
+      path: PATH.ADMIN.CARDNEWS.BASE,
       img: Cardnews,
     },
-    { id: 6, text: '신고 관리', path: path.admin.reportMangement, img: Report },
-    { id: 7, text: '통계 관리', path: path.admin.statistics, img: Graph },
-    { id: 8, text: '공지 작성', path: path.admin.notice.base, img: Volume },
+    {
+      id: 6,
+      text: '신고 관리',
+      path: PATH.ADMIN.REPORT_MANAGEMENT,
+      img: Report,
+    },
+    { id: 7, text: '통계 관리', path: PATH.ADMIN.STATISTICS, img: Graph },
+    { id: 8, text: '공지 작성', path: PATH.ADMIN.NOTICE.BASE, img: Volume },
   ];
 
   return (

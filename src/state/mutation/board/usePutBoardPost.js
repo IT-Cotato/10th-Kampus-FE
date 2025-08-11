@@ -1,6 +1,6 @@
 import { putBoardPost } from '@/apis/board/putBoardPost';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export const usePutBoardPost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_DETAIL, postId],
       });
-      navigate(`${path.board.base}/${boardId}/${postId}`, {
+      navigate(`${PATH.BOARD.BASE}/${boardId}/${postId}`, {
         replace: true,
       });
     },

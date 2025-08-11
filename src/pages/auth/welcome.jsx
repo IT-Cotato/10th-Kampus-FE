@@ -1,6 +1,6 @@
 import { MainButton } from '@/components/common/MainButton';
 import { SkipButton } from '@/components/join/skipButton.jsx';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 
 export const Welcome = () => {
@@ -16,7 +16,7 @@ export const Welcome = () => {
       <div className="flex w-full flex-col items-center gap-5 pb-10">
         <MainButton
           onClick={() =>
-            navigate(`../${path.signup.school}`, {
+            navigate(`../${PATH.SIGNUP.SCHOOL}`, {
               state: { isInitialAuthFlow: true },
             })
           }
@@ -27,7 +27,7 @@ export const Welcome = () => {
           If you skip this, you can not enter to school community
           <span className="text-primary-red">*</span>
         </div>
-        <SkipButton navigateTo={`../../${path.home}`} />
+        <SkipButton navigateTo={`../../${PATH.HOME}`} />
       </div>
     </div>
   );

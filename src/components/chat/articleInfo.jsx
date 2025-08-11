@@ -1,4 +1,4 @@
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 
 export const ArticleInfo = ({
@@ -17,7 +17,7 @@ export const ArticleInfo = ({
         className="h-10 w-full rounded-lg border border-neutral-border-30 bg-white text-small"
         onClick={() => {
           !dataDelete
-            ? navigate(`${path.board.base}/${boardId}/${postId}`)
+            ? navigate(`${PATH.BOARD.BASE}/${boardId}/${postId}`)
             : alert('삭제된 게시글 입니다.');
         }}
       >

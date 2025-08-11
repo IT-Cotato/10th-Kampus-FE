@@ -2,6 +2,7 @@ import { Loading } from '@/components/common/Loading';
 import { ModalPortal } from '@/components/common/Modal';
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { formatPrice } from '@/utils/formatPrice';
+
 export const TranslateModal = (props) => {
   return (
     <ModalPortal>

@@ -1,5 +1,6 @@
 import TranslateImg from '@/assets/imgs/translate.svg?react';
 import { cn } from '@/utils/cn';
+
 /** 번역 컴포넌트
  * @param {Object} props - 컴포넌트의 props
  * @param {function} props.handleTranslate
@@ -7,6 +8,7 @@ import { cn } from '@/utils/cn';
  * @param {function} props.setState - 해당 함수로 번역된 텍스트 전달
  * @param {undefined | 'small'} props.size - 크기
  */
+
 export const TranslateButton = ({ handleTranslate, state, setState, size }) => {
   return (
     <button

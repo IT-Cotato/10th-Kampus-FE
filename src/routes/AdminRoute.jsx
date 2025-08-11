@@ -1,4 +1,4 @@
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useGetAdminUserData } from '@/state/query/admin/useGetAdminUserData';
@@ -23,7 +23,7 @@ export default function AdminRoute() {
 
   // 토큰 갱신이 완료된 후 토큰이 없으면 로그인 페이지로 리다이렉트
   if (!isInitializing && !accessToken) {
-    return <Navigate to={path.login.base} replace />;
+    return <Navigate to={PATH.LOGIN.BASE} replace />;
   }
 
   // 로딩 중일 때
