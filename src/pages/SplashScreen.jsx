@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { path } from '@/routes/path';
-import Logo from '@/assets/imgs/kampusLogo.svg?react';
+import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 
 export const SplashScreen = () => {
   const navigate = useNavigate();

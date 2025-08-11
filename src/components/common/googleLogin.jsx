@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React, { useEffect } from 'react';
-import GoogleLogo from '@/assets/imgs/GoogleLogo.svg';
+import GoogleLogo from '/google-logo.svg';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 const ANDROID_CLIENT_ID = import.meta.env.VITE_GOOGLE_ANDROID_CLIENT_ID;

@@ -1,5 +1,5 @@
 import { getMyCommentsList } from '@/apis/mypage/getMyArticle.api';
-import Logo from '@/assets/imgs/kampusLogo.svg?react';
+import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { PostList } from '@/components/board/PostList';
 import { Loading } from '@/components/common/Loading';
 import { QUERY_KEYS } from '@/constants/api';

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect } from 'react';
-import KakaoLogo from '@/assets/imgs/KakaoLogo.svg';
+import KakaoLogo from '/kakao-logo.svg';
 
 export const KakaoLogin = () => {
   const kakaoKey = import.meta.env.VITE_KAKAO_JS_KEY;

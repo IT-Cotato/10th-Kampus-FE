@@ -1,4 +1,4 @@
-import Logo from '@/assets/imgs/kampusLogo.svg?react';
+import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { KakaoLogin } from '@/components/common/kakaoLogin';
 import { GoogleLogin } from '@/components/common/googleLogin';
 import { useNavigate } from 'react-router-dom';

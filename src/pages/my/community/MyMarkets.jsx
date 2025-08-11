@@ -1,4 +1,4 @@
-import Logo from '@/assets/imgs/kampusLogo.svg?react';
+import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
 import { path } from '@/routes/path';
