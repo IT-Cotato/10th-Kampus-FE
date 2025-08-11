@@ -2,7 +2,7 @@ import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import lockIcon from '@/assets/imgs/lock.svg';
 import unlockIcon from '@/assets/imgs/unlock.svg';
 import checkIcon from '@/assets/imgs/check.svg?react';
-import OfficialMail from '@/constants/OfficialMail.json';
+import OfficialMail from '@/constants/officialMail.json';
 
 export const AccountTemporarilySuspendedModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;

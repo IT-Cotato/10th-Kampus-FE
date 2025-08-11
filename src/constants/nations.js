@@ -1,4 +1,4 @@
-const Nations = [
+const NATIONS = [
   { name: 'Saudi Arabia', code: 'SA' },
   { name: 'Bulgaria', code: 'BG' },
   { name: 'Czech Republic', code: 'CZ' },
@@ -33,4 +33,4 @@ const Nations = [
   { name: 'China', code: 'CN' },
 ];
 
-export default Nations;
+export default NATIONS;

@@ -1,6 +1,6 @@
 import { path } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
-import postCardIcon from '@/assets/imgs/postCardIcon.svg';
+import articleIcon from '@/assets/imgs/icon/article.svg';
 
 export const BoxList = ({ text }) => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export const CardPost = ({ data }) => {
           className="aspect-square h-[9.5rem] w-[9.5rem] rounded-lg bg-neutral-bg-10 object-cover"
         />
         <img
-          src={postCardIcon}
+          src={articleIcon}
           alt="Post Card Icon"
           className="absolute bottom-2 left-2"
         />

@@ -1,4 +1,4 @@
-import Close from '@/assets/imgs/x.svg?react';
+import Close from '@/assets/imgs/icon/x.svg?react';
 export const RecentSearch = ({ startSearch, data, deleteKeyword, error }) => {
   const RecordBox = ({ data }) => {
     return (

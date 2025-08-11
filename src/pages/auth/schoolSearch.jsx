@@ -1,4 +1,4 @@
-import University from '@/constants/university';
+import UNIVERSITY from '@/constants/university';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,7 +10,6 @@ import { useGetUserData } from '@/state/query/common/useGetUserData';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 
 export const SchoolSearch = () => {
-  const UniversityList = University;
   const [university, setUniversity] = useState('');
   const [isUniversitySelected, setIsUniversitySelected] = useState(false);
 
@@ -46,7 +45,7 @@ export const SchoolSearch = () => {
               onChange={(value) => setUniversity(value)}
               setIsSelected={setIsUniversitySelected}
               selected={isUniversitySelected}
-              list={UniversityList}
+              list={UNIVERSITY}
               warn={`No school found.\nKampus supports 408 universities in Korea.`}
               label={false}
             />

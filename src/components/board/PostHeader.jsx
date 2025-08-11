@@ -1,19 +1,19 @@
-import Prev from '@/assets/imgs/previous.svg?react';
-import Search from '@/assets/imgs/search.svg?react';
-import Intro from '@/assets/imgs/boardIntro.svg';
+import Prev from '@/assets/imgs/icon/previous.svg?react';
+import Search from '@/assets/imgs/icon/search.svg?react';
+import Intro from '@/assets/imgs/icon/board-intro.svg';
 import { AnimatePresence } from 'motion/react';
-import { BoardMenuBar } from '../common/MenuBar';
+import { BoardMenuBar } from '@/components/common/MenuBar';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { path } from '@/routes/path';
-import { Loading } from '../common/Loading';
+import { Loading } from '@/components/common/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
 import { useFloating, offset, shift, flip } from '@floating-ui/react-dom';
-import { FloatingBubble } from '../common/FloatingBubble';
-import { MARKET_DESCRIPTION } from '@/constants/MarketConstant';
+import { FloatingBubble } from '@/components/common/FloatingBubble';
+import { MARKET_DESCRIPTION } from '@/constants/marketConstant';
 
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();

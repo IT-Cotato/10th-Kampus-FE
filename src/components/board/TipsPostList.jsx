@@ -1,5 +1,5 @@
-import Like from '../../assets/imgs/like.svg?react';
-import Comment from '../../assets/imgs/comment.svg?react';
+import Like from '@/assets/imgs/icon/like.svg?react';
+import Comment from '@/assets/imgs/icon/comment.svg?react';
 import { ScrapComponent } from '../common/ScrapComponent';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';

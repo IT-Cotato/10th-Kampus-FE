@@ -2,7 +2,7 @@ import { DraftDeleteModal } from '@/components/board/draft/DraftDeleteModal';
 import { DraftBox } from '@/components/board/draft/DraftBox';
 import { DraftHeader } from '@/components/board/draft/DraftHeader';
 import { Loading } from '@/components/common/Loading';
-import KampusLogo from '@/assets/imgs/kampusLogo.svg?react';
+import KampusLogo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { useState } from 'react';
 import { useGetDraftList } from '@/state/query/post/useGetDraftList';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';

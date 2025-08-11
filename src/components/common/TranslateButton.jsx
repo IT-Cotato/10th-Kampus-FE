@@ -1,4 +1,4 @@
-import TranslateImg from '@/assets/imgs/translate.svg?react';
+import TranslateImg from '@/assets/imgs/icon/translate.svg?react';
 import { cn } from '@/utils/cn';
 /** 번역 컴포넌트
  * @param {Object} props - 컴포넌트의 props

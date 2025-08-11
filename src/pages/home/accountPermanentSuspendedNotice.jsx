@@ -1,4 +1,4 @@
-import ReportIcon from '@/assets/imgs/reportIcon.svg?react';
+import ReportIcon from '@/assets/imgs/icon/report.svg?react';
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 
 export const AccountPermanentSuspendedNotice = () => {

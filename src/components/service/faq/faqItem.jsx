@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import arrow from '@/assets/imgs/arrowLine.svg';
+import arrow from '@/assets/imgs/icon/arrow-line.svg';
 import { cn } from '@/utils/cn';
 
 export const FAQItem = ({ question, answer }) => {

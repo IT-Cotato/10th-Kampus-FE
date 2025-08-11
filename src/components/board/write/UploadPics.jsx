@@ -1,5 +1,5 @@
-import Camera from '@/assets/imgs/camera.svg';
-import ImgX from '@/assets/imgs/ImgX.svg?react';
+import Camera from '@/assets/imgs/icon/camera.svg';
+import ImgX from '@/assets/imgs/icon/circle-x.svg?react';
 import { InputWarningText } from '@/components/common/InputWarningText';
 import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import { useEffect, useState } from 'react';

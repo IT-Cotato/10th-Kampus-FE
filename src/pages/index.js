@@ -53,7 +53,7 @@ export { MarketPost } from './market/MarketPost';
 export { MarketWrite } from './market/MarketWrite';
 export { MarketSearch } from './market/MarketSearch';
 
-export { Admin } from '../components/layout/Admin';
+export { AdminLayout } from '../components/layout/Admin';
 export { AdminLogin } from './admin/AdminLogin';
 export { BoardManagement } from './admin/board/BoardManagement';
 export { CreateBoard } from './admin/board/CreateBoard';

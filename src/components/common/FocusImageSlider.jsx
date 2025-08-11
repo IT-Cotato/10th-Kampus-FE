@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import Close from '@/assets/imgs/x.svg?react';
+import Close from '@/assets/imgs/icon/x.svg?react';
 import { ModalPortal } from './Modal';
 
 export const FocusImageSlider = ({

@@ -1,5 +1,5 @@
-import Bookmark from '@/assets/imgs/scrap.svg?react';
-import Chatting from '@/assets/imgs/ChattingIcon.svg?react';
+import Bookmark from '@/assets/imgs/icon/scrap.svg?react';
+import Chatting from '@/assets/imgs/icon/chatting.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
 import { ScrapComponent } from '@/components/common/ScrapComponent';

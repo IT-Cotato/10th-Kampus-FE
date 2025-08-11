@@ -1,10 +1,10 @@
-import arrowLeft from '@/assets/imgs/navIcon/arrowLeft.svg';
-import menubar from '@/assets/imgs/menubar.svg';
+import menubar from '@/assets/imgs/icon/menubar.svg';
 import { useState } from 'react';
 import { BlockModal } from '@/components/chat/blockModal';
 import { LeaveModal } from '@/components/chat/leaveModal';
 import { ChatMenu } from '@/components/chat/chatMenu';
 import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
+import BackButton from '../common/BackButton';
 
 export const RoomHeader = ({ text, setChatroomId, setMessages }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -14,14 +14,11 @@ export const RoomHeader = ({ text, setChatroomId, setMessages }) => {
 
   return (
     <div className="flex h-16 flex-row items-center justify-between border-b-[.0313rem] border-neutral-border-30 p-4">
-      <img
-        src={arrowLeft}
-        alt="back button"
+      <BackButton
         onClick={() => {
           setChatroomId(null);
           setMessages([]);
         }}
-        className="h-[1.25rem] w-[1.25rem] cursor-pointer"
       />
       <span className="mx-auto text-pageTitle text-neutral-title">{text}</span>
       <button onClick={() => setIsOpenMenu(!isOpenMenu)}>

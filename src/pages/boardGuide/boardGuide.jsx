@@ -1,5 +1,5 @@
 import { TitleHeader } from '@/components/common/titleHeader';
-import { kampusGuide } from '@/constants/kampusGuide';
+import KAMPUS_GUIDE from '@/constants/kampusGuide';
 
 export const BoardGuide = () => {
   const emojiList = [
@@ -19,7 +19,7 @@ export const BoardGuide = () => {
     <div className="flex h-full w-full flex-col">
       <TitleHeader text="Board guide" />
       <div className="h-full w-full px-4 pb-20 text-base leading-normal text-neutral-80">
-        {kampusGuide.split('\n').map((line, index) => {
+        {KAMPUS_GUIDE.split('\n').map((line, index) => {
           const isEmojiLine = emojiList.some((emoji) => line.startsWith(emoji));
           if (line.trim() === '') return <br key={index} />;
           if (isEmojiLine) {

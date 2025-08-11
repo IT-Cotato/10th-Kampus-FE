@@ -1,4 +1,4 @@
-import X from '@/assets/imgs/x.svg?react';
+import X from '@/assets/imgs/icon/x.svg?react';
 import { WriteTitle } from '@/components/board/write/WriteTitle';
 import { WriteContent } from '@/components/board/write/WriteContent';
 import { UploadPics } from '@/components/board/write/UploadPics';

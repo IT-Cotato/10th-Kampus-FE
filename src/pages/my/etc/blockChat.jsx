@@ -1,5 +1,5 @@
 import { ChatBlockedList } from '@/components/block/ChatBlockedList';
-import Logo from '@/assets/imgs/kampusLogo.svg?react';
+import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 
 export const BlockChat = () => {
   const list = [

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import X from '@/assets/imgs/x.svg';
+import X from '@/assets/imgs/icon/x.svg';
 import { MainButton } from '../common/MainButton';
 
 export const TermsModal = (props) => {

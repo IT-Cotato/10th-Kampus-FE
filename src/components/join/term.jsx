@@ -1,4 +1,4 @@
-import Check from '@/assets/imgs/check.svg?react';
+import Check from '@/assets/imgs/icon/check.svg?react';
 import { TermsModal } from '../join/TermsModal';
 import { cn } from '@/utils/cn';
 

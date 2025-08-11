@@ -2,21 +2,21 @@ import { path } from '@/routes/path';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import HamburgerIcon from '@/assets/imgs/admin/HamburgerIcon.png';
-import Board from '@/assets/imgs/admin/Board.svg?react';
-import Cardnews from '@/assets/imgs/admin/Cardnews.svg?react';
-import Graph from '@/assets/imgs/admin/Graph.svg?react';
-import Home from '@/assets/imgs/admin/Home.svg?react';
-import Report from '@/assets/imgs/admin/Report.svg?react';
-import Setting from '@/assets/imgs/admin/Setting.svg?react';
-import User from '@/assets/imgs/admin/User.svg?react';
-import Volume from '@/assets/imgs/admin/Volume.svg?react';
-import Edit from '@/assets/imgs/admin/Edit.svg?react';
+import HamburgerBar from '@/assets/imgs/icon/hamburger-bar.svg';
+import Board from '@/assets/imgs/icon/board.svg?react';
+import Cardnews from '@/assets/imgs/icon/cardnews.svg?react';
+import Graph from '@/assets/imgs/icon/graph.svg?react';
+import Home from '@/assets/imgs/icon/home.svg?react';
+import Report from '@/assets/imgs/icon/report.svg?react';
+import Setting from '@/assets/imgs/icon/setting.svg?react';
+import User from '@/assets/imgs/icon/user.svg?react';
+import Volume from '@/assets/imgs/icon/volume.svg?react';
+import Edit from '@/assets/imgs/icon/edit.svg?react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminUser } from '@/apis/user/adminUserDetail.api';
 
-export const Admin = ({ children }) => {
+export const AdminLayout = ({ children }) => {
   const location = useLocation();
   const { pathname } = location;
 
@@ -68,7 +68,7 @@ export const Admin = ({ children }) => {
         <span className="absolute left-2 top-2 flex flex-row items-center gap-2">
           <button
             className="h-10 w-10 rounded-lg bg-white bg-cover"
-            style={{ backgroundImage: `url(${HamburgerIcon})` }}
+            style={{ backgroundImage: `url(${HamburgerBar})` }}
             onClick={() => setShowMenu(!showMenu)}
           ></button>
           {showMenu && (
@@ -92,7 +92,7 @@ export const Admin = ({ children }) => {
                         pathname.includes(item.path),
                     },
                   )}
-                  onClick={() => navigate(`./${item.path}`, { replace: true })}
+                  onClick={() => navigate(`${path.admin.base}/${item.path}`)}
                 >
                   <item.img className="flex h-auto w-6" />
                   <span className="flex">{item.text}</span>

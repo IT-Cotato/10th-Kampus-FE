@@ -1,7 +1,7 @@
-import reportIcon from '@/assets/imgs/reportIcon.svg';
-import blockIcon from '@/assets/imgs/postBlock.svg';
-import muteIcon from '@/assets/imgs/muteIcon.svg';
-import deleteIcon from '@/assets/imgs/delete.svg';
+import reportIcon from '@/assets/imgs/icon/report.svg';
+import blockIcon from '@/assets/imgs/icon/post-block.svg';
+import muteIcon from '@/assets/imgs/icon/mute.svg';
+import deleteIcon from '@/assets/imgs/icon/delete.svg';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { startAnimation } from '@/components/common/StateChangeAnimate';

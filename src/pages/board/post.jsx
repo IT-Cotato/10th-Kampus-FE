@@ -1,11 +1,11 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { useState } from 'react';
-import anonymous from '@/assets/imgs/anonymous.svg';
-import kampus from '@/assets/imgs/kampusPost.svg';
-import Like from '@/assets/imgs/like.svg?react';
-import FillLike from '@/assets/imgs/fillLike.svg?react';
-import Comment from '@/assets/imgs/comment.svg?react';
+import anonymous from '@/assets/imgs/icon/anonymous.svg';
+import kampus from '@/assets/imgs/icon/kampus-post.svg';
+import Like from '@/assets/imgs/icon/like.svg?react';
+import FillLike from '@/assets/imgs/icon/active-heart.svg?react';
+import Comment from '@/assets/imgs/icon/comment.svg?react';
 import { ImageSlider } from '@/components/common/ImageSlider';
 import { UserInput } from '@/components/common/userInput';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
@@ -143,7 +143,7 @@ export const Post = () => {
                     {postData?.isLiked ? (
                       <FillLike
                         aria-label="likes"
-                        className="h-[.75rem] w-[.75rem] text-neutral-border-50"
+                        className="h-[.75rem] w-[.75rem] text-primary-red"
                       />
                     ) : (
                       <Like

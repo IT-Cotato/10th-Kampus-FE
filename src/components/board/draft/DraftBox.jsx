@@ -1,6 +1,6 @@
 import { BoardName } from '../BoardName';
 import { formatISO } from '@/utils/formatTime';
-import Check from '@/assets/imgs/check.svg?react';
+import Check from '@/assets/imgs/icon/check.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
 import { cn } from '@/utils/cn';
