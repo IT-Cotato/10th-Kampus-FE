@@ -4,7 +4,7 @@ import { MenuBar } from '@/components/admin/MenuBar';
 import { path } from '@/routes/path';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Plus from '@/assets/imgs/admin/Plus.svg';
+import Plus from '@/assets/imgs/icon/plus.svg?react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getAdminBoardList } from '@/apis/admin/getAdminBoardList.api';
@@ -219,13 +219,12 @@ export const BoardManagement = () => {
                 )}
             </li>
           ))}
-        <button
-          type="button"
+        <Plus
+          role="button"
+          aria-label="게시판 생성"
           className="relative flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-white p-8 text-[5rem] text-neutral-border-50 lg:h-[12.5rem] lg:w-full lg:text-[10rem]"
           onClick={() => navigate(path.admin.boardManagement.create)}
-        >
-          <img src={Plus} />
-        </button>
+        />
       </ul>
       <Toast />
     </div>

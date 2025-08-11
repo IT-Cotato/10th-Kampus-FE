@@ -1,8 +1,8 @@
-import HomeIcon from '@/assets/imgs/navIcon/home.svg?react';
-import BoardIcon from '@/assets/imgs/navIcon/board.svg?react';
-import MarketIcon from '@/assets/imgs/navIcon/market.svg?react';
-import ChatIcon from '@/assets/imgs/navIcon/chat.svg?react';
-import MyIcon from '@/assets/imgs/navIcon/my.svg?react';
+import HomeIcon from '@/assets/imgs/icon/home.svg?react';
+import BoardIcon from '@/assets/imgs/icon/board.svg?react';
+import MarketIcon from '@/assets/imgs/icon/market.svg?react';
+import ChatIcon from '@/assets/imgs/icon/chat.svg?react';
+import UserIcon from '@/assets/imgs/icon/user.svg?react';
 import { cn } from '@/utils/cn';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { path } from '@/routes/path';
@@ -39,7 +39,7 @@ export const Navbar = () => {
     {
       id: 4,
       path: path.mypage.base,
-      icon: MyIcon,
+      icon: UserIcon,
       label: 'My',
     },
   ];

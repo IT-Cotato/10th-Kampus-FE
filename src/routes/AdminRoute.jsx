@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useGetAdminUserData } from '@/state/query/admin/useGetAdminUserData';
 import { Forbidden } from '@/pages/Forbidden';
 import { Loading } from '@/components/common/Loading';
+import { AdminLayout } from '@/pages';
 
 export default function AdminRoute() {
   const { accessToken, isInitializing } = useAuthStore();
@@ -43,7 +44,11 @@ export default function AdminRoute() {
 
   // 관리자 권한이 확인된 경우
   if (userData) {
-    return <Outlet />;
+    return (
+      <AdminLayout>
+        <Outlet />
+      </AdminLayout>
+    );
   }
 
   // 기본적으로 권한이 없는 경우
