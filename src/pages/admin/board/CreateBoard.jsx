@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SearchDropdown } from '@/components/join/searchDropdown';
+import { SearchDropdown } from '@/components/join/SearchDropdown';
 import University from '@/constants/university';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MainButton } from '@/components/common/MainButton';
@@ -14,7 +14,7 @@ import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useGetCategory } from '@/state/query/admin/useGetCategory';
 import { cn } from '@/utils/cn';
 import { toast } from 'react-toastify';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 
 export const CreateBoard = () => {
   const navigate = useNavigate();

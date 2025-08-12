@@ -1,4 +1,4 @@
-import { SkipButton } from '@/components/join/skipButton.jsx';
+import { SkipButton } from '@/components/join/SkipButton.jsx';
 import BackButton from '@/components/common/BackButton';
 import { PATH } from '@/routes/path';
 

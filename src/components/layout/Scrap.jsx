@@ -1,7 +1,7 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { PATH } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { TitleHeader } from '../common/titleHeader';
+import { TitleHeader } from '../common/TitleHeader';
 
 export const Scrap = ({ children }) => {
   const location = useLocation();

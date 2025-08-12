@@ -1,4 +1,4 @@
-import { KakaoLogin } from '@/components/common/kakaoLogin';
+import { KakaoLogin } from '@/components/common/KakaoLogin';
 
 export const AdminLogin = () => {
   return (

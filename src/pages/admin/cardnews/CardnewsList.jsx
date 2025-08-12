@@ -9,7 +9,7 @@ import { getAdminCardnewsList } from '@/apis/admin/getAdminCardnewsList.api';
 import { QUERY_KEYS } from '@/constants/api';
 import { deleteCardnews } from '@/apis/admin/deleteCardnews.api';
 import { toast } from 'react-toastify';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 
 export const CardnewsList = () => {
   const navigate = useNavigate();

@@ -6,6 +6,7 @@ import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { BoardName } from './BoardName';
+
 export const PostList = ({ data, isTrendingBoard, ...props }) => {
   const navigate = useNavigate();
 

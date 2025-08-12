@@ -1,5 +1,5 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
-import { TitleHeader } from '@/components/common/titleHeader';
+import { TitleHeader } from '@/components/common/TitleHeader';
 import { PATH } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 

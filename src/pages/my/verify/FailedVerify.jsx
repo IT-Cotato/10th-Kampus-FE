@@ -2,6 +2,7 @@ import { MainButton } from '@/components/common/MainButton';
 import { SkipHeader } from '@/components/join/SkipHeader';
 import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
+
 export const FailedVerify = () => {
   const navigate = useNavigate();
   return (

@@ -1,7 +1,7 @@
 import { deleteAdminNotice } from '@/apis/admin/deleteAdminNotice.api';
 import { getNoticeList } from '@/apis/mypage/getNoticeList.api';
 import { ButtonRound } from '@/components/common/ButtonRound';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 import { QUERY_KEYS } from '@/constants/api';
 import { PATH } from '@/routes/path';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';

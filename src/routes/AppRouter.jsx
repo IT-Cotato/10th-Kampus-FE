@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import { Layout } from '@/components/layout/layout';
+import { Layout } from '@/components/layout/Layout';
 import { PATH } from '@/routes/path';
 import {
   AllBoard,

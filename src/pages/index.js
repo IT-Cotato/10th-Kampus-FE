@@ -1,37 +1,37 @@
-export { NotFound } from './notFound';
+export { NotFound } from './NotFound';
 export { Forbidden } from './Forbidden';
-export { AccountPermanentSuspendedNotice } from './home/accountPermanentSuspendedNotice';
+export { AccountPermanentSuspendedNotice } from './home/AccountPermanentSuspendedNotice';
 export { Home } from './home/Home';
 export { SplashScreen } from './SplashScreen';
 
-export { Login } from './auth/login';
+export { Login } from './auth/Login';
 export { KakaoLoginHandler } from './auth/handler/KakaoLoginHandler';
-export { Terms } from './auth/terms';
-export { ProfileSettings } from './auth/profileSettings';
-export { Welcome } from './auth/welcome';
-export { SchoolSearch } from './auth/schoolSearch';
-export { SchoolVerification } from './auth/schoolVerification';
-export { SchoolEmail } from './auth/schoolEmail';
-export { SchoolPhoto } from './auth/schoolPhoto';
+export { Terms } from './auth/Terms';
+export { ProfileSettings } from './auth/ProfileSettings';
+export { Welcome } from './auth/Welcome';
+export { SchoolSearch } from './auth/SchoolSearch';
+export { SchoolVerification } from './auth/SchoolVerification';
+export { SchoolEmail } from './auth/SchoolEmail';
+export { SchoolPhoto } from './auth/SchoolPhoto';
 
-export { ChatPage } from './chat/chat';
-export { ChatReport } from './chat/chatReport';
+export { ChatPage } from './chat/ChatPage';
+export { ChatReport } from './chat/ChatReport';
 
-export { AllBoard } from './board/allboard';
-export { Board } from './board/board';
-export { Write } from './board/write';
-export { Post } from './board/post';
-export { PostReport } from './board/postReport';
+export { AllBoard } from './board/Allboard';
+export { Board } from './board/Board';
+export { Write } from './board/Write';
+export { Post } from './board/Post';
+export { PostReport } from './board/PostReport';
 export { Draft } from './board/Draft';
 
-export { Inquiry } from './my/service/inquiry/inquiry';
-export { FAQ } from './my/service/faq';
-export { Notice } from './my/service/notice/notice';
-export { NoticeDetail } from './my/service/notice/noticeDetail';
-export { InquiryDetail } from './my/service/inquiry/inquiryDetail';
-export { WriteInquiry } from './my/service/inquiry/writeInquiry';
+export { Inquiry } from './my/service/inquiry/Inquiry';
+export { FAQ } from './my/service/Faq';
+export { Notice } from './my/service/notice/Notice';
+export { NoticeDetail } from './my/service/notice/NoticeDetail';
+export { InquiryDetail } from './my/service/inquiry/InquiryDetail';
+export { WriteInquiry } from './my/service/inquiry/WriteInquiry';
 
-export { MyPage } from './my/mypage';
+export { MyPage } from './my/Mypage';
 export { Scrap } from '../components/layout/Scrap';
 export { MarketScrap } from './my/community/MarketScrap';
 export { CommunityScrap } from './my/community/CommunityScrap';
@@ -41,14 +41,14 @@ export { MyArticles } from './my/community/MyArticles';
 export { MyMarkets } from './my/community/MyMarkets';
 export { FailedVerify } from './my/verify/FailedVerify';
 
-export { BlockChat } from './my/etc/blockChat';
-export { BlockMarket } from './my/etc/blockMarket';
-export { DeleteAccount } from './my/etc/deleteAccount';
+export { BlockChat } from './my/etc/BlockChat';
+export { BlockMarket } from './my/etc/BlockMarket';
+export { DeleteAccount } from './my/etc/DeleteAccount';
 
 export { MyInfo } from './my/settings/MyInfo';
 export { Search } from './search/Search';
-export { BoardGuide } from './boardGuide/boardGuide';
-export { Market } from './market/market';
+export { BoardGuide } from './boardGuide/BoardGuide';
+export { Market } from './market/Market';
 export { MarketPost } from './market/MarketPost';
 export { MarketWrite } from './market/MarketWrite';
 export { MarketSearch } from './market/MarketSearch';

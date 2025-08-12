@@ -1,4 +1,3 @@
-import React from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import loadingAnimation from '@/assets/lottie/loading.json'; // 로컬 JSON 파일 가져오기
 

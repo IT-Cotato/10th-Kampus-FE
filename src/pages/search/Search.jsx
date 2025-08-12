@@ -18,6 +18,7 @@ import {
   deleteSearchKeyword,
 } from '@/apis/search/searchDeleteKeyword.api';
 import { getSearcBoardResult } from '@/apis/search/searchBoard.api';
+
 export const Search = () => {
   const { boardId } = useParams();
   const [isSearch, setIsSearch] = useState(true);

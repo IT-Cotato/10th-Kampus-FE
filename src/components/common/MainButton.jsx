@@ -1,10 +1,10 @@
 import { cn } from '@/utils/cn';
 
 /**
- * @param {'primary' | 'white'} [variant='primary'] - 버튼의 스타일 종류
- * @param {boolean} [disabled=false] - 버튼의 비활성화 여부
- * @param {function} onClick - 버튼 클릭 시 실행될 함수
- * @param {React.ReactNode} children - 버튼 내부에 표시될 내용
+ * @param {'primary' | 'white'} [variant='primary'] 버튼의 스타일 종류
+ * @param {boolean} [disabled=false] 버튼의 비활성화 여부
+ * @param {function} onClick 버튼 클릭 시 실행될 함수
+ * @param {React.ReactNode} children 버튼 내부에 표시될 내용
  */
 
 const VARIANT_MAP = {

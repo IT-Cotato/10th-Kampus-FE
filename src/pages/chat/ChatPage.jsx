@@ -1,8 +1,8 @@
-import { ChatList } from '@/components/chat/chatListPage';
-import { ChatRoom } from '@/components/chat/chatRoomPage';
+import { ChatList } from '@/components/chat/ChatListPage';
+import { ChatRoom } from '@/components/chat/ChatRoomPage';
 import { useWebsocket } from '@/hooks/useWebsocket';
 import { useEffect, useState } from 'react';
-import { ChatLayout } from '@/components/layout/chatLayout';
+import { ChatLayout } from '@/components/layout/ChatLayout';
 import { Loading } from '@/components/common/Loading';
 import { CHAT_TYPE } from '@/constants/chatType';
 import { useGetChatList } from '@/state/query/chat/useGetChatList';

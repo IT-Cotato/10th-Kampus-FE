@@ -1,6 +1,6 @@
-import { InputRadio } from '@/components/common/inputRadio';
+import { InputRadio } from '@/components/common/InputRadio';
 import { MainButton } from '@/components/common/MainButton';
-import { TitleHeader } from '@/components/common/titleHeader';
+import { TitleHeader } from '@/components/common/TitleHeader';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { Modal } from './Modal';

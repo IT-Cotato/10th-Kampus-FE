@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn';
 import DropdownArrow from '@/assets/imgs/icon/dropdown.svg?react';
 import { useEffect, useRef, useState } from 'react';
+
 export const FilterBox = ({ content, dropList, select, selected }) => {
   const [isOpen, setIsOpen] = useState(false);
   const nothingSelected = selected === 'All'; // 기본 상태는 아무것도 선택되지 않은 상태

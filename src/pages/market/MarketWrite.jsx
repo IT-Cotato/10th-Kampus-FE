@@ -15,6 +15,7 @@ import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutMarketProduct } from '@/state/mutation/market/usePutMarketProduct';
 import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
+
 export const MarketWrite = () => {
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);

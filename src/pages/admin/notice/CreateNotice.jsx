@@ -8,7 +8,7 @@ import { postCreateNotice } from '@/apis/admin/postCreateNotice.api';
 import { getNoticeDetail } from '@/apis/mypage/getNoticeDetail.api';
 import { patchAdminNotice } from '@/apis/admin/patchAdminNotice.api';
 import { toast } from 'react-toastify';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 
 export const CreateNotice = () => {
   const navigate = useNavigate();

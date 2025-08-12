@@ -13,7 +13,7 @@ import { postActivateBoard } from '@/apis/admin/postActivateBoard.api';
 import { postInactivateBoard } from '@/apis/admin/postInactivateBoard.api';
 import { BOARD_STATE } from '@/constants/boardConstant';
 import { toast } from 'react-toastify';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 
 export const BoardManagement = () => {
   const navigate = useNavigate();

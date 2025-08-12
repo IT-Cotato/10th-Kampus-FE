@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { postCreateCardnews } from '@/apis/admin/postCreateCardnews.api';
 import { toast } from 'react-toastify';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 
 export const CreateCardnews = () => {
   const navigate = useNavigate();

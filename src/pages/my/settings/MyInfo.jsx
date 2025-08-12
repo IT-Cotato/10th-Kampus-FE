@@ -1,9 +1,9 @@
 import { DisabledInput } from '@/components/common/DisabledInput';
 import { MainButton } from '@/components/common/MainButton';
 import { Modal } from '@/components/common/Modal';
-import { TitleHeader } from '@/components/common/titleHeader';
-import { SearchDropdown } from '@/components/join/searchDropdown';
-import { UserNameInput } from '@/components/join/usernameInput';
+import { TitleHeader } from '@/components/common/TitleHeader';
+import { SearchDropdown } from '@/components/join/SearchDropdown';
+import { UserNameInput } from '@/components/join/UsernameInput';
 import LANGUAGES from '@/constants/languages';
 import useDebounce from '@/hooks/useDebounce';
 import useDuplicateCheck from '@/hooks/useDuplicateCheck';
