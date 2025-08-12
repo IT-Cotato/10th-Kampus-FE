@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { PATH } from '@/routes/path';
+import { Navbar } from '@/components/layout/navbar';
 
 export const Layout = ({ children }) => {
   const location = useLocation();
@@ -34,6 +35,7 @@ export const Layout = ({ children }) => {
     <div className="layout">
       <div id="modal-root" className="relative flex flex-1 overflow-x-hidden">
         {children}
+        <Navbar />
       </div>
     </div>
   );
