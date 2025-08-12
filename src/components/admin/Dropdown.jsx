@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { cn } from '@/utils/cn';
 
 /**
@@ -24,7 +22,7 @@ export const Dropdown = ({
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
-        className="inline-flex w-fit items-center rounded-lg border border-primary-base px-5 py-2.5 text-center font-medium focus:outline-none focus:ring-4 focus:ring-primary-20"
+        className="inline-flex w-fit items-center rounded-lg border border-primary-base px-5 py-2.5 text-center text-base focus:outline-none focus:ring-4 focus:ring-primary-20"
         type="button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >

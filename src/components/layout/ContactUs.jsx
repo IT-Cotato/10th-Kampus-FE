@@ -1,6 +1,6 @@
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
-import { TitleHeader } from '@/components/common/titleHeader';
-import { path } from '@/routes/path';
+import { TitleHeader } from '@/components/common/TitleHeader';
+import { PATH } from '@/routes/path';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const ContactUs = ({ children }) => {
@@ -10,8 +10,8 @@ export const ContactUs = ({ children }) => {
   const navigate = useNavigate();
 
   const menu = [
-    { id: 0, text: 'FAQ', path: path.mypage.service.faq },
-    { id: 1, text: 'Notice', path: path.mypage.service.notice },
+    { id: 0, text: 'FAQ', path: PATH.MYPAGE.SERVICE.FAQ },
+    { id: 1, text: 'Notice', path: PATH.MYPAGE.SERVICE.NOTICE },
   ];
 
   return (

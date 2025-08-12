@@ -5,7 +5,7 @@ import {
 } from '@/apis/admin/postStudentVerifications.api';
 import { BUTTON_THEMES, ButtonRound } from '@/components/common/ButtonRound';
 import { Loading } from '@/components/common/Loading';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 import { QUERY_KEYS } from '@/constants/api';
 import { cn } from '@/utils/cn';
 import { useMutation, useQuery } from '@tanstack/react-query';

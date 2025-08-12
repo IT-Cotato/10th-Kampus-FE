@@ -1,8 +1,7 @@
-// @ts-ignore
 import { useGetCategory } from '@/state/query/admin/useGetCategory';
 import { usePostCategory } from '@/state/mutation/admin/usePostCategory';
 import { useState } from 'react';
-import { Toast } from '@/components/common/toast';
+import { Toast } from '@/components/common/Toast';
 
 export const ManageCategory = () => {
   const [categoryValue, setCategoryValue] = useState('');

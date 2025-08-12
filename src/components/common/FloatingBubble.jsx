@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+
 export const FloatingBubble = ({
   description,
   floatingStyles,

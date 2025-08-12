@@ -3,6 +3,7 @@ import Comment from '@/assets/imgs/icon/comment.svg?react';
 import { ScrapComponent } from '../common/ScrapComponent';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
+
 export const TipsPostList = ({ data, boardId }) => {
   // 카드 뉴스 부분 데이터 요청 시, 스크랩 여부도 같이 가져와야 함
   const navigate = useNavigate();

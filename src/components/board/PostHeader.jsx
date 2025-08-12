@@ -4,8 +4,8 @@ import Intro from '@/assets/imgs/icon/board-intro.svg';
 import { AnimatePresence } from 'motion/react';
 import { BoardMenuBar } from '@/components/common/MenuBar';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { path } from '@/routes/path';
 import { Loading } from '@/components/common/Loading';
+import { PATH } from '@/routes/path';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
@@ -20,8 +20,7 @@ export const PostHeader = ({ isAuthor = false }) => {
   const { pathname } = useLocation();
   const { boardId, postId, productId } = useParams();
 
-  const MARKET = path.market.base;
-  const isMarket = pathname.startsWith(MARKET);
+  const isMarket = pathname.startsWith(PATH.MARKET.BASE);
 
   const modalRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
@@ -44,9 +43,9 @@ export const PostHeader = ({ isAuthor = false }) => {
 
   const handleSearch = () => {
     if (isMarket) {
-      navigate(`${path.market.base}/${path.market.search}`);
+      navigate(`${PATH.MARKET.BASE}/${PATH.MARKET.SEARCH}`);
     } else {
-      navigate(`${path.board.base}/${boardId}/${path.board.specific.search}`);
+      navigate(`${PATH.BOARD.BASE}/${boardId}/${PATH.BOARD.SPECIFIC.SEARCH}`);
     }
   };
 

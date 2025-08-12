@@ -1,10 +1,9 @@
 import { DisabledInput } from '@/components/common/DisabledInput';
 import { MainButton } from '@/components/common/MainButton';
-import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { Modal } from '@/components/common/Modal';
-import { TitleHeader } from '@/components/common/titleHeader';
-import { SearchDropdown } from '@/components/join/searchDropdown';
-import { UserNameInput } from '@/components/join/usernameInput';
+import { TitleHeader } from '@/components/common/TitleHeader';
+import { SearchDropdown } from '@/components/join/SearchDropdown';
+import { UserNameInput } from '@/components/join/UsernameInput';
 import LANGUAGES from '@/constants/languages';
 import useDebounce from '@/hooks/useDebounce';
 import useDuplicateCheck from '@/hooks/useDuplicateCheck';
@@ -12,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { postDuplicateCheck } from '@/apis/auth/duplicateCheck.api';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useCheckSchoolStatus } from '@/hooks/useCheckSchoolStatus';
 import { patchUserDetail } from '@/apis/user/patchUserDetail.api';
 import { ERR_MSG } from '@/constants/errorMessage';
@@ -144,13 +143,14 @@ export const MyInfo = () => {
               <span className="text-primary-base">
                 Verify your school to access the school board!
               </span>
-              <MainWhiteButton
+              <MainButton
+                color="white"
                 onClick={() =>
-                  navigate(`../../../${path.signup.base}/${path.signup.school}`)
+                  navigate(`../../../${PATH.SIGNUP.BASE}/${PATH.SIGNUP.SCHOOL}`)
                 }
               >
                 Search your school
-              </MainWhiteButton>
+              </MainButton>
             </div>
           )}
           <div className="flex flex-col">

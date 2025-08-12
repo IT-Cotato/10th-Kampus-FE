@@ -1,4 +1,5 @@
 import { ModalPortal } from './Modal';
+
 export const StateChangeAnimate = ({
   state,
   changeToTrueText,

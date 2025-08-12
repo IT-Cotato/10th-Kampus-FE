@@ -1,5 +1,6 @@
 import User from '@/assets/imgs/icon/user.svg?react';
 import { useGetAdminUserData } from '@/state/query/admin/useGetAdminUserData';
+
 export const Dashboard = () => {
   const { data: userData } = useGetAdminUserData();
 

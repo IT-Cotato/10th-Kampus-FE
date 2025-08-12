@@ -12,12 +12,13 @@ import { QUERY_KEYS } from '@/constants/api';
 import { getSearcTotalResult } from '@/apis/search/searchTotal.api';
 import { getSearchKeywords } from '@/apis/search/searchKeywords.api';
 import { useNavigate, useParams } from 'react-router-dom';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import {
   deleteAllSearchKeyword,
   deleteSearchKeyword,
 } from '@/apis/search/searchDeleteKeyword.api';
 import { getSearcBoardResult } from '@/apis/search/searchBoard.api';
+
 export const Search = () => {
   const { boardId } = useParams();
   const [isSearch, setIsSearch] = useState(true);
@@ -78,7 +79,7 @@ export const Search = () => {
   };
 
   const handleNavigate = (data) => {
-    navigate(`${path.board.base}/${data.boardId}/${data.id}`);
+    navigate(`${PATH.BOARD.BASE}/${data.boardId}/${data.id}`);
   };
 
   return (

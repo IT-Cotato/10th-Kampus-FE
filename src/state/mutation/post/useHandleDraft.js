@@ -1,7 +1,7 @@
 import { patchSaveDraft } from '@/apis/board/handleSaveDraft.api';
 import { postWriteDraft } from '@/apis/board/postWritePost.api';
 import { QUERY_KEYS } from '@/constants/api';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ export const usePostDraft = ({ boardId, postDraftId }) => {
       const createdPostId = response.postId;
       console.log(createdPostId);
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
-      navigate(`${path.board.base}/${boardId}/${createdPostId}`, {
+      navigate(`${PATH.BOARD.BASE}/${boardId}/${createdPostId}`, {
         replace: true,
       });
     },

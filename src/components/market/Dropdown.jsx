@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { cn } from '@/utils/cn';
 import DropdownArrow from '@/assets/imgs/icon/dropdown.svg?react';
 import { useEffect, useRef } from 'react';

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { cn } from '@/utils/cn';
+
 export const ImageSlider = ({
   images,
   currentImgIndex,

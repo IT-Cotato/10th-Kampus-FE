@@ -1,8 +1,8 @@
 import { MainButton } from '@/components/common/MainButton';
-import { MainWhiteButton } from '@/components/common/MainWhiteButton';
 import { SkipHeader } from '@/components/join/SkipHeader';
-import { path } from '@/routes/path';
+import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
+
 export const FailedVerify = () => {
   const navigate = useNavigate();
   return (
@@ -18,23 +18,24 @@ export const FailedVerify = () => {
           <MainButton
             onClick={() =>
               navigate(
-                path.signup.base +
+                PATH.SIGNUP.BASE +
                   '/' +
-                  path.signup.verify.base +
+                  PATH.SIGNUP.VERIFY.BASE +
                   '/' +
-                  path.signup.verify.file,
+                  PATH.SIGNUP.VERIFY.FILE,
               )
             }
           >
             New file Upload
           </MainButton>
-          <MainWhiteButton
+          <MainButton
+            color="white"
             onClick={() =>
-              navigate(path.signup.base + '/' + path.signup.school)
+              navigate(PATH.SIGNUP.BASE + '/' + PATH.SIGNUP.SCHOOL)
             }
           >
             Restart Verification
-          </MainWhiteButton>
+          </MainButton>
         </div>
       </div>
     </div>
