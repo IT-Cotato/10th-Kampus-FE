@@ -165,7 +165,7 @@ export const MarketPost = () => {
                       </span>
                     ))}
                   </span>
-                  <div className="flex gap-2 text-center">
+                  <div className="flex items-center gap-2 text-center">
                     {/* 상품 상태 */}
                     {!productData?.isAuthor &&
                       productData?.productStatus !==
