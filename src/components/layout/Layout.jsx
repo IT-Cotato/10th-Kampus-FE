@@ -33,7 +33,10 @@ export const Layout = ({ children }) => {
 
   return (
     <div className="layout">
-      <div id="modal-root" className="relative flex flex-1 overflow-x-hidden">
+      <div
+        id="modal-root"
+        className="relative flex flex-1 overflow-x-hidden pb-16"
+      >
         {children}
         <Navbar />
       </div>
