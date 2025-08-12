@@ -14,7 +14,7 @@ export const Layout = ({ children }) => {
   ];
 
   const renderNav = validPaths.includes(pathname);
-  const isAdminPath = pathname.includes(path.admin.base);
+  const isAdminPath = pathname.includes(PATH.ADMIN.BASE);
 
   if (isAdminPath) {
     return <>{children}</>;

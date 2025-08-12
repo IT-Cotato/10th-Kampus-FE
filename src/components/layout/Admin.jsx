@@ -97,7 +97,7 @@ export const AdminLayout = ({ children }) => {
                         pathname.includes(item.path),
                     },
                   )}
-                  onClick={() => navigate(`${path.admin.base}/${item.path}`)}
+                  onClick={() => navigate(`${PATH.ADMIN.BASE}/${item.path}`)}
                 >
                   <item.img className="flex h-auto w-6" />
                   <span className="flex">{item.text}</span>
