@@ -7,7 +7,7 @@ import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { BoardName } from './BoardName';
 
-export const PostList = ({ data, isTrendingBoard, ...props }) => {
+export const PostList = ({ data, hasBoardName = false, ...props }) => {
   const navigate = useNavigate();
 
   const {
@@ -30,7 +30,7 @@ export const PostList = ({ data, isTrendingBoard, ...props }) => {
       className="flex w-full cursor-pointer flex-col gap-3 pb-3 pt-4"
       onClick={() => handleOnClick(data)}
     >
-      {isTrendingBoard /** 인기 게시판 혹은 마이페이지 게시물들 레이아웃 */ && (
+      {hasBoardName /** 인기 게시판 혹은 마이페이지 게시물들 레이아웃 */ && (
         <BoardName>{data?.boardName}</BoardName>
       )}
       <div className="relative flex w-full justify-between">

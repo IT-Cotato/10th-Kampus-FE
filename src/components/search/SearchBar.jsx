@@ -7,12 +7,13 @@ import { useNavigate } from 'react-router-dom';
 export const SearchBar = ({
   value,
   setValue,
-  isSearch,
-  setIsSearch,
+  showRecentSearches,
+  setShowRecentSearches,
   startSearch,
 }) => {
   const navigate = useNavigate();
   const queryclient = useQueryClient();
+
   return (
     <div className="flex w-full items-center justify-center gap-4">
       <PreviousIcon
@@ -22,16 +23,16 @@ export const SearchBar = ({
       <div className="relative flex flex-1 items-center">
         <input
           type="text"
-          className="flex flex-1 rounded-[0.625rem] bg-primary-10 py-[0.6875rem] pl-[3.375rem] text-base text-neutral-title placeholder-neutral-border-50"
+          className="flex flex-1 rounded-[0.625rem] bg-primary-10 py-[0.6875rem] pl-[3.375rem] pr-3 text-base text-neutral-title placeholder-neutral-border-50"
           placeholder="Search"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {
-            if (isSearch === false) {
+            if (showRecentSearches === false) {
               queryclient.refetchQueries({
                 queryKey: [QUERY_KEYS.GET_SEARCH_KEYWORD],
               });
-              setIsSearch(true);
+              setShowRecentSearches(true);
             }
           }}
           onKeyDown={(e) => {
