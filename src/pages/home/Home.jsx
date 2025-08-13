@@ -3,35 +3,23 @@ import SearchIcon from '@/assets/imgs/icon/search.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/routes/path';
 import { BoardBox, CardPostBox } from '@/components/home/BoardBox.jsx';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getFavorite } from '@/apis/home/getFavorite.api';
-import { getTrend } from '@/apis/home/getTrend.api';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
 import Calendar from '@/components/home/Calendar';
-import { getUniversity } from '@/apis/home/getUniversity.api';
 import { useGetSimpleBoardPostList } from '@/state/query/board/useGetBoardPostList';
+import {
+  useGetHomeFavoriteList,
+  useGetHomeTrendingList,
+  useGetHomeUniversityList,
+} from '@/state/query/home/useGetHomeList';
 
 export const Home = () => {
   const navigate = useNavigate();
 
   const { data: userDetail } = useGetUserData();
-  const { data: univeristyList, error: universityError } = useQuery({
-    queryKey: [QUERY_KEYS.GET_HOME_UNIVERISTY],
-    queryFn: getUniversity,
-    throwOnError: true,
-  });
-
-  const { data: favoriteList } = useQuery({
-    queryKey: [QUERY_KEYS.GET_HOME_FAVORITE],
-    queryFn: getFavorite,
-  });
-
-  const { data: trendingList } = useQuery({
-    queryKey: [QUERY_KEYS.GET_HOME_TRENDING],
-    queryFn: getTrend,
-  });
-
+  const { data: univeristyList, error: universityError } =
+    useGetHomeUniversityList();
+  const { data: favoriteList } = useGetHomeFavoriteList();
+  const { data: trendingList } = useGetHomeTrendingList();
   const { data: cardNewsData } = useGetSimpleBoardPostList({ boardId: 1 });
 
   const cardNewsList = cardNewsData?.pages?.flatMap((p) => p.items) || [];
