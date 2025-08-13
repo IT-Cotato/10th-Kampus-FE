@@ -7,10 +7,15 @@ export const BoardBox = ({
   data,
   university = false,
   boardId = undefined,
+  isTrending = false,
 }) => {
   return (
     <div className="flex flex-col gap-3">
-      <BoardHeader title={boardTitle} boardId={boardId} />
+      <BoardHeader
+        title={boardTitle}
+        boardId={boardId}
+        isTrending={isTrending}
+      />
       <div className="flex h-fit w-full flex-col rounded-[1.25rem] bg-white py-[.875rem] shadow-home">
         {university ? (
           <BoxList text={data} />

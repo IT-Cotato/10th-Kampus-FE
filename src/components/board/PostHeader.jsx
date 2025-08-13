@@ -1,6 +1,6 @@
 import Prev from '@/assets/imgs/icon/previous.svg?react';
 import Search from '@/assets/imgs/icon/search.svg?react';
-import Intro from '@/assets/imgs/icon/board-intro.svg';
+import Intro from '@/assets/imgs/icon/board-intro.svg?react';
 import { AnimatePresence } from 'motion/react';
 import { BoardMenuBar } from '@/components/common/MenuBar';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -13,13 +13,17 @@ import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
 import { useFloating, offset, shift, flip } from '@floating-ui/react-dom';
 import { FloatingBubble } from '@/components/common/FloatingBubble';
-import { MARKET_DESCRIPTION } from '@/constants/marketConstant';
+import {
+  MARKET_DESCRIPTION,
+  TRENDING_DESCRIPTION,
+} from '@/constants/BoardDescription';
 
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { boardId, postId, productId } = useParams();
 
+  const isTrending = boardId === PATH.BOARD.SPECIFIC.TRENDING;
   const isMarket = pathname.startsWith(PATH.MARKET.BASE);
 
   const modalRef = useRef(null);
@@ -36,9 +40,8 @@ export const PostHeader = ({ isAuthor = false }) => {
   } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
     queryFn: () => getBoardDetail({ boardId: boardId }),
-    staleTime: 5 * 60 * 1000, // 5분
-    gcTime: 10 * 60 * 1000, // 10분
-    enabled: !isMarket,
+    staleTime: 1 * 60 * 1000, // 1분
+    enabled: !isMarket && !isTrending,
   });
 
   const handleSearch = () => {
@@ -65,8 +68,17 @@ export const PostHeader = ({ isAuthor = false }) => {
     };
   }, [openModal]);
 
+  let boardDescription = '';
+  if (isMarket) {
+    boardDescription = MARKET_DESCRIPTION;
+  } else if (isTrending) {
+    boardDescription = TRENDING_DESCRIPTION;
+  } else {
+    boardDescription = boardDetail?.boardWithFavoriteStatus?.description;
+  }
+
   return (
-    <div
+    <header
       className={cn(
         'fixed z-20 flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4',
         { 'justify-end': isMarket && !productId },
@@ -79,6 +91,7 @@ export const PostHeader = ({ isAuthor = false }) => {
       {!isMarket && isBoardLoading && <Loading />}
       {!isMarket && isBoardError && <p>Error</p>}
       {(isMarket ||
+        isTrending ||
         (!isBoardLoading &&
           !isBoardError &&
           boardDetail?.boardWithFavoriteStatus?.boardName)) && (
@@ -86,9 +99,11 @@ export const PostHeader = ({ isAuthor = false }) => {
           <h1
             className={`line-clamp-1 flex-1 text-center font-semibold text-neutral-title ${boardDetail?.boardName?.length < 12 ? 'text-pageTitle' : 'text-subTitle'}`}
           >
-            {isMarket
-              ? 'Market'
-              : boardDetail?.boardWithFavoriteStatus?.boardName}
+            {isMarket && 'Market'}
+            {isTrending && 'Trending'}
+            {!isMarket &&
+              !isTrending &&
+              boardDetail?.boardWithFavoriteStatus?.boardName}
           </h1>
           {postId === undefined && (
             <div ref={modalRef} className="relative flex">
@@ -97,18 +112,14 @@ export const PostHeader = ({ isAuthor = false }) => {
                 type="button"
                 onClick={() => setOpenModal(!openModal)}
               >
-                <img src={Intro} className="h-[1.625rem] w-[1.625rem]" />
+                <Intro className="h-[1.625rem] w-[1.625rem]" />
               </button>
               <AnimatePresence>
                 {openModal && (
                   <FloatingBubble
                     floatingStyles={floatingStyles}
                     setFloatingRef={refs.setFloating}
-                    description={
-                      isMarket
-                        ? MARKET_DESCRIPTION
-                        : boardDetail?.boardWithFavoriteStatus?.description
-                    }
+                    description={boardDescription}
                   />
                 )}
               </AnimatePresence>
@@ -123,7 +134,9 @@ export const PostHeader = ({ isAuthor = false }) => {
             <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
           </button>
         )}
-        {(!isMarket || productId) && (
+        {(boardDetail?.boardType === 'NORMAL' ||
+          boardDetail?.boardType === 'TRENDING' ||
+          productId) && (
           <BoardMenuBar
             isAuthor={isAuthor}
             data={boardDetail}
@@ -131,6 +144,6 @@ export const PostHeader = ({ isAuthor = false }) => {
           />
         )}
       </div>
-    </div>
+    </header>
   );
 };

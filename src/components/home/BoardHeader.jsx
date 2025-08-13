@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import More from '@/assets/imgs/icon/more.svg?react';
 import { PATH } from '@/routes/path';
 
-export const BoardHeader = ({ title, boardId }) => {
+export const BoardHeader = ({ title, boardId, isTrending }) => {
   const navigate = useNavigate();
   const handleMoreClick = () => {
-    if (boardId === undefined) {
+    if (isTrending) {
+      navigate(`${PATH.BOARD.BASE}/${PATH.BOARD.SPECIFIC.TRENDING}`);
+    } else if (boardId === undefined) {
       navigate(PATH.BOARD.BASE);
     } else {
       navigate(PATH.BOARD.BASE + '/' + boardId);

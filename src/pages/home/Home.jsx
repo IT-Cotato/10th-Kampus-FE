@@ -70,7 +70,7 @@ export const Home = () => {
           <BoardBox
             data={trendingList?.homePostThumbnailList}
             boardTitle="Trending"
-            boardId={trendingList.homePostThumbnailList.boardId}
+            isTrending={true}
           />
         )}
         {/* <CardPostBox data={cardNewsList?.posts} /> */}

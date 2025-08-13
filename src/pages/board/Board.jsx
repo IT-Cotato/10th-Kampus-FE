@@ -12,9 +12,11 @@ import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useInView } from 'react-intersection-observer';
 import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
+import { PATH } from '@/routes/path';
 
 export const Board = () => {
   const { boardId } = useParams();
+  const isTrending = boardId === PATH.BOARD.SPECIFIC.TRENDING;
   const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
   const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
   const [category, setCategory] = useState('All'); // 선택된 카테고리 값
@@ -22,45 +24,19 @@ export const Board = () => {
 
   const { data: boardDetail } = useQuery({
     queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
-    queryFn: () => getBoardDetail({ boardId: boardId }),
+    queryFn: () => getBoardDetail({ boardId }),
+    enabled: !!boardId && !isTrending,
   });
 
-  // enable 속성으로 카테고리를 사용하지 않으면 쿼리가 실행되지 않음
+  // 카테고리는 boardDetail이 있을 때만 호출
   const { data: categoryData } = useGetBoardCategory(
     boardDetail?.boardWithFavoriteStatus?.usesCategories === true,
   );
 
-  const {
-    data: postList,
-    fetchNextPage: fetchNextPostList,
-    hasNextPage: hasNextPostList,
-  } = useInfiniteQuery({
-    queryKey: [QUERY_KEYS.GET_POST_LIST, boardId, sortOrder, category],
-    queryFn: ({ pageParam = 1 }) => {
-      if (
-        boardDetail.boardWithFavoriteStatus.boardType === BOARD_TYPE.TRENDING
-      ) {
-        return getTrendingList({ page: pageParam });
-      } else {
-        return getPostList({
-          boardId: boardId,
-          page: pageParam,
-          sort: getSortKey(sortOrder),
-          category: category === 'All' ? '' : category,
-        });
-      }
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.hasNext ? allPages.length + 1 : undefined;
-    },
-    enabled: boardDetail !== undefined,
-  });
-
   const getSortKey = (option) => {
     switch (option) {
-      case 'All':
       case 'Newest':
+      case 'All':
         return 'recent';
       case 'Registered':
         return 'old';
@@ -71,51 +47,77 @@ export const Board = () => {
     }
   };
 
-  useEffect(() => {
-    if (inView && hasNextPostList) {
-      fetchNextPostList();
-    }
-  }, [inView, hasNextPostList, fetchNextPostList]);
+  const {
+    data: postList,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: [
+      QUERY_KEYS.GET_POST_LIST,
+      isTrending ? 'trending' : boardId,
+      sortOrder,
+      category,
+    ],
+    queryFn: ({ pageParam = 1 }) => {
+      if (isTrending) {
+        return getTrendingList({ page: pageParam });
+      }
+      return getPostList({
+        boardId,
+        page: pageParam,
+        sort: getSortKey(sortOrder),
+        category: category === 'All' ? '' : category,
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.hasNext ? allPages.length + 1 : undefined,
+  });
 
-  const posts = postList?.pages?.map((page) => page.items).flat() || [];
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  const posts = postList?.pages?.flatMap((p) => p.items) || [];
+
   return (
     <div className="flex flex-1">
       <PostHeader />
       <div className="flex h-fit w-full flex-col pt-14">
         <div className="fixed z-10 flex w-full max-w-lg gap-[0.875rem] bg-white px-[1.125rem] pb-4 pt-[.875rem]">
-          {boardDetail?.boardWithFavoriteStatus?.usesCategories === true && (
+          {boardDetail?.boardWithFavoriteStatus?.usesCategories && (
             <FilterBox
-              content={'Category'}
+              content="Category"
               dropList={categoryData}
-              select={(selected) => setCategory(selected)}
+              select={setCategory}
               selected={category}
             />
           )}
           <FilterBox
-            content={'Sort by'}
+            content="Sort by"
             dropList={sortOptions}
-            select={(selected) => setSortOrder(selected)}
+            select={setSortOrder}
             selected={sortOrder}
           />
         </div>
         <div className="flex w-full flex-1 flex-col divide-y overflow-y-auto bg-white px-4 pt-[3.25rem]">
           {/* 카드 뉴스 리스트 뷰, 일반 게시판 리스트 뷰의 UI가 다름 */}
-          {posts &&
-            posts.length > 0 &&
-            posts.map((item, index) =>
-              boardDetail?.boardWithFavoriteStatus?.boardType ===
+          {posts.map((item, index) =>
+            !isTrending &&
+            boardDetail?.boardWithFavoriteStatus?.boardType ===
               BOARD_TYPE.CARD ? (
-                <TipsPostList key={index} data={item} boardId={boardId} />
-              ) : (
-                <PostList key={index} data={item} isActive={false} />
-              ),
-            )}
+              <TipsPostList key={index} data={item} boardId={boardId} />
+            ) : (
+              <PostList key={index} data={item} isActive={false} />
+            ),
+          )}
         </div>
-        {boardDetail &&
-          boardDetail.boardWithFavoriteStatus.boardType !== BOARD_TYPE.CARD &&
-          boardDetail.boardWithFavoriteStatus.boardType !==
-            BOARD_TYPE.TRENDING && (
-            <WriteButton boardName={boardDetail.boardName} />
+        {!isTrending &&
+          boardDetail?.boardWithFavoriteStatus?.boardType !==
+            BOARD_TYPE.CARD && (
+            <WriteButton boardName={boardDetail?.boardName} />
           )}
       </div>
     </div>
