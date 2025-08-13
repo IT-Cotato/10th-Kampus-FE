@@ -30,3 +30,20 @@ export const useGetBoardPostList = ({
     enabled: !!boardId,
   });
 };
+
+// 게시판 간단 조회(홈화면)
+export const useGetSimpleBoardPostList = ({ boardId }) => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_POST_LIST, { boardId }],
+    queryFn: ({ pageParam = 1 }) => {
+      return getPostList({
+        boardId,
+        page: pageParam,
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.hasNext ? allPages.length + 1 : undefined,
+    enabled: !!boardId,
+  });
+};

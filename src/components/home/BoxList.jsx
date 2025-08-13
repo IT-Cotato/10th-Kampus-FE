@@ -1,6 +1,6 @@
 import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
-import articleIcon from '@/assets/imgs/icon/article.svg';
+import ArticleIcon from '@/assets/imgs/icon/article.svg?react';
 
 export const BoxList = ({ text }) => {
   const navigate = useNavigate();
@@ -16,24 +16,21 @@ export const BoxList = ({ text }) => {
     </div>
   );
 };
+
 export const CardPost = ({ data }) => {
   const navigate = useNavigate();
   return (
     <div
       className="flex min-w-[9.5rem] flex-col gap-[.625rem] whitespace-nowrap"
-      onClick={() => navigate(`${PATH.BOARD.BASE}/5/${data.postId}`)}
+      onClick={() => navigate(`${PATH.BOARD.BASE}/1/${data.postId}`)}
     >
       <div className="relative">
         <img
           src={data?.thumbnailUrl}
-          alt="Post Img"
-          className="aspect-square h-[9.5rem] w-[9.5rem] rounded-lg bg-neutral-bg-10 object-cover"
+          alt={data?.title + ' thumbnail'}
+          className="flex aspect-square h-[9.5rem] w-[9.5rem] rounded-lg bg-neutral-bg-10 object-cover"
         />
-        <img
-          src={articleIcon}
-          alt="Post Card Icon"
-          className="absolute bottom-2 left-2"
-        />
+        <ArticleIcon className="absolute bottom-2 left-2" aria-hidden="true" />
       </div>
       <h1 className="max-w-[9.5rem] truncate text-subTitle text-neutral-title">
         {data?.title}

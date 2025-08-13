@@ -26,10 +26,11 @@ export const BoardBox = ({
     </div>
   );
 };
+
 export const CardPostBox = ({ data }) => {
   return (
-    <div className="flex w-full flex-col gap-[1.875rem] overflow-hidden">
-      <BoardHeader title="How to live in Korea" />
+    <div className="flex w-full flex-col gap-6 overflow-hidden">
+      <BoardHeader title="How to live in Korea" boardId={1} />
       <div className="grid shrink-0 cursor-pointer grid-flow-col gap-4 overflow-x-auto scroll-smooth scrollbar-hide">
         {data?.map((item, index) => (
           <CardPost key={index} data={item} />
