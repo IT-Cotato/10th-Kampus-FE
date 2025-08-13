@@ -5,14 +5,12 @@ import { FilterBox } from '@/components/board/FilterBox';
 import { TipsPostList } from '@/components/board/TipsPostList';
 import { PostHeader } from '@/components/board/PostHeader';
 import { WriteButton } from '@/components/board/write/WriteButton';
-import { getPostList, getTrendingList } from '@/apis/board/getPostList.api';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getBoardDetail } from '@/apis/board/getBoardDetail.api';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useInView } from 'react-intersection-observer';
 import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
 import { PATH } from '@/routes/path';
+import { useBoardDetail } from '@/state/query/board/useGetBoardDetail';
+import { useGetBoardPostList } from '@/state/query/board/useGetBoardPostList';
 
 export const Board = () => {
   const { boardId } = useParams();
@@ -21,17 +19,6 @@ export const Board = () => {
   const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
   const [category, setCategory] = useState('All'); // 선택된 카테고리 값
   const { _ref, inView } = useInView();
-
-  const { data: boardDetail } = useQuery({
-    queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
-    queryFn: () => getBoardDetail({ boardId }),
-    enabled: !!boardId && !isTrending,
-  });
-
-  // 카테고리는 boardDetail이 있을 때만 호출
-  const { data: categoryData } = useGetBoardCategory(
-    boardDetail?.boardWithFavoriteStatus?.usesCategories === true,
-  );
 
   const getSortKey = (option) => {
     switch (option) {
@@ -51,28 +38,18 @@ export const Board = () => {
     data: postList,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: [
-      QUERY_KEYS.GET_POST_LIST,
-      isTrending ? 'trending' : boardId,
-      sortOrder,
-      category,
-    ],
-    queryFn: ({ pageParam = 1 }) => {
-      if (isTrending) {
-        return getTrendingList({ page: pageParam });
-      }
-      return getPostList({
-        boardId,
-        page: pageParam,
-        sort: getSortKey(sortOrder),
-        category: category === 'All' ? '' : category,
-      });
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.hasNext ? allPages.length + 1 : undefined,
+  } = useGetBoardPostList({
+    boardId,
+    sortOrder,
+    category,
+    getSortKey,
   });
+  const { data: boardDetail } = useBoardDetail(boardId);
+
+  // 카테고리는 boardDetail이 있을 때만 호출
+  const { data: categoryData } = useGetBoardCategory(
+    boardDetail?.boardWithFavoriteStatus?.usesCategories === true,
+  );
 
   useEffect(() => {
     if (inView && hasNextPage) {
