@@ -10,39 +10,35 @@ export const TipsPostList = ({ data, boardId }) => {
 
   return (
     <div
-      className="flex justify-between gap-4 pb-3 pt-5"
+      className="flex cursor-pointer justify-between gap-4 pb-3 pt-5"
       onClick={() => navigate(`${data.postId}`)}
     >
       <div className="flex flex-col justify-between">
         <p className="text-subTitle text-neutral-title">{data.title}</p>
         <div className="flex gap-[0.375rem]">
           <div className="flex items-center gap-1 text-small text-primary-red">
-            <Like />
-            <p>{data.likes}</p>
+            <Like aria-hidden="true" />
+            <span>{data.likeCount}</span>
           </div>
           <div className="flex items-center gap-1 text-small text-primary-30">
-            <Comment />
-            <p>{data.comments}</p>
+            <Comment aria-hidden="true" />
+            <span>{data.commentCount}</span>
           </div>
-          <p className="text-small text-neutral-border-50">
+          <div className="text-small text-neutral-border-50">
             {formatTime(data.createdTime)}
-          </p>
+          </div>
         </div>
       </div>
-      <div className="flex items-center gap-6">
-        <div className="min-h-[5.75rem] min-w-[5.75rem]">
-          {data.thumbnailUrl && (
-            <img
-              src={data.thumbnailUrl}
-              alt="post image"
-              className="mx-auto my-auto h-[5.75rem] w-[5.75rem] border-none bg-neutral-bg-10"
-            />
-          )}
-        </div>
+      <div className="flex items-center gap-3">
+        <img
+          src={data.thumbnailUrl ?? undefined}
+          alt={data.title + ' thumbnail'}
+          className="h-[5.75rem] w-[5.75rem] shrink-0 border-none bg-neutral-bg-10 object-cover"
+        />
         <ScrapComponent
           state={data.isScrapped}
           id={data.postId}
-          className="h-[1.875rem] w-[1.875rem]"
+          className="h-[1.875rem] w-[1.875rem] shrink-0"
           boardId={boardId}
         />
       </div>
