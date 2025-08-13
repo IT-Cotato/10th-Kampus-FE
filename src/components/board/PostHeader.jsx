@@ -80,7 +80,7 @@ export const PostHeader = ({ isAuthor = false }) => {
   return (
     <header
       className={cn(
-        'fixed z-20 flex h-14 w-full max-w-[512px] items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4',
+        'fixed z-20 flex h-14 w-full items-center justify-between border-b-[0.5px] border-[#D8D8D8] bg-white px-4 py-4 width-fixed',
         { 'justify-end': isMarket && !productId },
       )}
     >
@@ -111,8 +111,9 @@ export const PostHeader = ({ isAuthor = false }) => {
                 ref={refs.setReference}
                 type="button"
                 onClick={() => setOpenModal(!openModal)}
+                aria-label="Board Info"
               >
-                <Intro className="h-[1.625rem] w-[1.625rem]" />
+                <Intro className="h-[1.625rem] w-[1.625rem] cursor-pointer" />
               </button>
               <AnimatePresence>
                 {openModal && (

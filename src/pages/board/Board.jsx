@@ -11,6 +11,7 @@ import { useGetBoardCategory } from '@/state/query/board/useGetBoardCategory';
 import { PATH } from '@/routes/path';
 import { useBoardDetail } from '@/state/query/board/useGetBoardDetail';
 import { useGetBoardPostList } from '@/state/query/board/useGetBoardPostList';
+import { Loading } from '@/components/common/Loading';
 
 export const Board = () => {
   const { boardId } = useParams();
@@ -18,7 +19,7 @@ export const Board = () => {
   const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
   const [sortOrder, setSortOrder] = useState('All'); // 선택된 정렬 기준 값
   const [category, setCategory] = useState('All'); // 선택된 카테고리 값
-  const { _ref, inView } = useInView();
+  const { ref, inView } = useInView();
 
   const getSortKey = (option) => {
     switch (option) {
@@ -36,6 +37,7 @@ export const Board = () => {
 
   const {
     data: postList,
+    isPending: isPostPending,
     fetchNextPage,
     hasNextPage,
   } = useGetBoardPostList({
@@ -63,7 +65,7 @@ export const Board = () => {
     <div className="flex flex-1">
       <PostHeader />
       <div className="flex h-fit w-full flex-col pt-14">
-        <div className="fixed z-10 flex w-full max-w-lg gap-[0.875rem] bg-white px-[1.125rem] pb-4 pt-[.875rem]">
+        <div className="fixed z-10 flex w-full gap-[0.875rem] bg-white px-[1.125rem] pb-4 pt-[.875rem] width-fixed">
           {boardDetail?.boardWithFavoriteStatus?.usesCategories && (
             <FilterBox
               content="Category"
@@ -90,6 +92,7 @@ export const Board = () => {
               <PostList key={index} data={item} isActive={false} />
             ),
           )}
+          {isPostPending && hasNextPage ? <Loading /> : <div ref={ref} />}
         </div>
         {!isTrending &&
           boardDetail?.boardWithFavoriteStatus?.boardType !==
