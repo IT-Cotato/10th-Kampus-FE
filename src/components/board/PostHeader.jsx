@@ -16,7 +16,7 @@ import { FloatingBubble } from '@/components/common/FloatingBubble';
 import {
   MARKET_DESCRIPTION,
   TRENDING_DESCRIPTION,
-} from '@/constants/BoardDescription';
+} from '@/constants/boardDescription';
 
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();
