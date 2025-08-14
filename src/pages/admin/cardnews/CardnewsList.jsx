@@ -104,11 +104,12 @@ export const CardnewsList = () => {
               </div>
             ))}
           <button
-            className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
+            type="button"
+            className="flex h-60 w-60 items-center justify-center border border-neutral-border-30 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
             onClick={() => navigate(PATH.ADMIN.CARDNEWS.CREATE)}
             aria-label="카드뉴스 생성"
           >
-            <img src={Plus} />
+            <Plus className="aspect-square h-24 text-neutral-border-40" />
           </button>
         </div>
       </div>

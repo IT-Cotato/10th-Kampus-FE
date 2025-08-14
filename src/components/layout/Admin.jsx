@@ -2,7 +2,7 @@ import { PATH } from '@/routes/path';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import HamburgerBar from '@/assets/imgs/icon/hamburger-bar.svg';
+import HamburgerBar from '@/assets/imgs/icon/hamburger-bar.svg?react';
 import Board from '@/assets/imgs/icon/board.svg?react';
 import Cardnews from '@/assets/imgs/icon/cardnews.svg?react';
 import Graph from '@/assets/imgs/icon/graph.svg?react';
@@ -71,11 +71,11 @@ export const AdminLayout = ({ children }) => {
     <div className="admin-layout">
       <div className="relative flex min-w-[64rem] flex-1 lg:w-dvw">
         <span className="absolute left-2 top-2 flex flex-row items-center gap-2">
-          <button
-            className="h-10 w-10 rounded-lg bg-white bg-cover"
-            style={{ backgroundImage: `url(${HamburgerBar})` }}
+          <HamburgerBar
+            role="button"
+            className="h-10 w-10 rounded-lg bg-white bg-cover p-2 text-black"
             onClick={() => setShowMenu(!showMenu)}
-          ></button>
+          />
           {showMenu && (
             <span className="text-pageTitle text-primary-90">Kampus</span>
           )}
