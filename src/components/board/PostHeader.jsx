@@ -17,6 +17,7 @@ import {
   MARKET_DESCRIPTION,
   TRENDING_DESCRIPTION,
 } from '@/constants/boardDescription';
+import { BOARD_TYPE } from '@/constants/boardConstant';
 
 export const PostHeader = ({ isAuthor = false }) => {
   const navigate = useNavigate();
@@ -135,9 +136,7 @@ export const PostHeader = ({ isAuthor = false }) => {
             <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
           </button>
         )}
-        {(boardDetail?.boardType === 'NORMAL' ||
-          boardDetail?.boardType === 'TRENDING' ||
-          productId) && (
+        {(boardDetail?.boardType === BOARD_TYPE.NORMAL || productId) && (
           <BoardMenuBar
             isAuthor={isAuthor}
             data={boardDetail}
