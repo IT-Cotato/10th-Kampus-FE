@@ -16,7 +16,7 @@ export const ProductState = ({ children }) => {
   };
 
   return (
-    <div className="w-fit rounded-[.3125rem] bg-primary-10 px-2 py-1 text-small text-neutral-80">
+    <div className="h-fit w-fit rounded-[.3125rem] bg-primary-10 px-2 py-1 text-small text-neutral-80">
       {formatProductState(children)}
     </div>
   );

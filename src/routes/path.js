@@ -21,6 +21,7 @@ export const PATH = {
     BASE: '/board',
     SPECIFIC: {
       BASE: ':boardId',
+      TRENDING: 'trending',
       WRITE: 'write',
       EDIT: 'edit',
       POST: ':postId',
@@ -77,7 +78,7 @@ export const PATH = {
     WRITE: 'write',
     EDIT: 'edit',
     PRODUCT: ':productId',
-    search: 'search',
+    SEARCH: 'search',
   },
   CHAT_LIST: {
     BASE: '/chat',

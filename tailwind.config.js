@@ -157,6 +157,9 @@ export default {
         '.animate-bottom-sheet-down': {
           animation: 'bottom-sheet-down 0.2s ease-in-out',
         },
+        '.width-fixed': {
+          '@apply max-w-lg mx-auto': '',
+        },
       }),
     ),
     scrollbarHide,

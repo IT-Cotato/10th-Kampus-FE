@@ -19,7 +19,7 @@ export const CardnewsList = () => {
   const handleClickEdit = (_cardId) => {
     // 수정
     setSelectedCardNewsMenu(null);
-    toast.success('게시판이 수정되었습니다.');
+    toast.error('카드뉴스 수정 기능이 준비 중입니다.');
   };
 
   const queryClient = useQueryClient();
@@ -82,8 +82,9 @@ export const CardnewsList = () => {
                   {cardnews.title}
                 </h2>
                 <img
+                  alt={cardnews.title + ' 썸네일'}
                   src={cardnews.thumbnailUrl}
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-cover"
                 />
                 <button onClick={() => handleMenuBarClick(cardnews.postId)}>
                   <img
@@ -91,24 +92,25 @@ export const CardnewsList = () => {
                     alt="menu"
                     className="absolute right-1 top-3 px-2"
                   />
-                  {selectedCardNewsMenu === cardnews.postId && (
-                    <MenuBar
-                      menuOptions={menuOptions(cardnews.postId)}
-                      onClose={() => setSelectedCardNewsMenu(null)}
-                    />
-                  )}
                 </button>
+                {selectedCardNewsMenu === cardnews.postId && (
+                  <MenuBar
+                    menuOptions={menuOptions(cardnews.postId)}
+                    onClose={() => setSelectedCardNewsMenu(null)}
+                  />
+                )}
                 <span className="absolute bottom-2 right-2 rounded-lg bg-white px-1 text-small text-neutral-base opacity-70">
                   {cardnews.createdTime}
                 </span>
               </div>
             ))}
           <button
-            className="flex h-60 w-60 items-center justify-center border border-neutral-border-40 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
+            type="button"
+            className="flex h-60 w-60 items-center justify-center border border-neutral-border-30 text-[5rem] text-neutral-border-50 lg:h-[18.75rem] lg:w-[18.75rem] lg:text-[10rem]"
             onClick={() => navigate(PATH.ADMIN.CARDNEWS.CREATE)}
             aria-label="카드뉴스 생성"
           >
-            <img src={Plus} />
+            <Plus className="aspect-square h-24 text-neutral-border-40" />
           </button>
         </div>
       </div>

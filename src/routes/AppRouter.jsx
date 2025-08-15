@@ -221,6 +221,10 @@ const AppRouter = createBrowserRouter([
                   element: <Board />,
                 },
                 {
+                  path: PATH.BOARD.SPECIFIC.TRENDING, // trending board는 boardId가 없음
+                  element: <Board />,
+                },
+                {
                   path: PATH.BOARD.SPECIFIC.SEARCH,
                   element: <Search />,
                 },

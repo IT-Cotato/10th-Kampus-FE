@@ -15,7 +15,7 @@ export const FloatingBubble = ({
       animate="visible"
       exit="hidden"
       transition={{
-        visualDuration: 0.3,
+        visualDuration: 0.1,
       }}
       className="absolute left-1/2 top-full border-b-[1.5rem] border-l-[1rem] border-r-[1rem] border-b-primary-base border-l-transparent border-r-transparent"
     >
