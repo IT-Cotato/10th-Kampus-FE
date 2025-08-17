@@ -11,7 +11,9 @@ export const usePostPost = () => {
     mutationFn: (newPost) => postWritePost({ data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_LIST, { postId: response.postId }],
+      });
       navigate(`../${createdPostId}`, {
         replace: true,
       });

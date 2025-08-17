@@ -1,25 +1,29 @@
 import Pin from '@/assets/imgs/icon/pin.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/utils/cn';
+import { BOARD_TYPE } from '@/constants/boardConstant';
+import { PATH } from '@/routes/path';
 
-export const BoardList = ({
-  data,
-  listKey,
-  index,
-  togglePin,
-  isPinnable = false,
-}) => {
+export const BoardList = ({ data, listKey, index, togglePin, boardType }) => {
   const navigate = useNavigate();
   const handlePinClick = (e) => {
     e.stopPropagation();
-    if (!isPinnable) return; // 핀 고정이 불가능한 경우 클릭 이벤트 무시
+    if (boardType !== BOARD_TYPE.NORMAL) return; // 핀 고정이 불가능한 경우 클릭 이벤트 무시
     togglePin(listKey, index, data.order);
+  };
+
+  const handleBoardClick = () => {
+    if (boardType === BOARD_TYPE.TRENDING) {
+      navigate(PATH.BOARD.SPECIFIC.TRENDING);
+    } else {
+      navigate(`${data.order}`);
+    }
   };
 
   return (
     <div
       className="flex w-full cursor-pointer items-start gap-4 p-4"
-      onClick={() => navigate(`${data.order}`)}
+      onClick={handleBoardClick}
     >
       <Pin
         className={cn('h-6 w-6 shrink-0 cursor-pointer', {

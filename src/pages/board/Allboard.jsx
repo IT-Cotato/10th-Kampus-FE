@@ -125,7 +125,7 @@ export const AllBoard = () => {
                 listKey={key}
                 index={index}
                 togglePin={togglePin}
-                isPinnable={data.boardType === BOARD_TYPE.NORMAL}
+                boardType={data.boardType}
               />
             ))}
           </div>

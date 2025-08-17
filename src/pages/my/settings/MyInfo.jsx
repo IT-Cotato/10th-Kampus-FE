@@ -144,7 +144,7 @@ export const MyInfo = () => {
                 Verify your school to access the school board!
               </span>
               <MainButton
-                color="white"
+                variant="white"
                 onClick={() =>
                   navigate(`../../../${PATH.SIGNUP.BASE}/${PATH.SIGNUP.SCHOOL}`)
                 }

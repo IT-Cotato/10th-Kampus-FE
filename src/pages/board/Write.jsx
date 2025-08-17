@@ -329,7 +329,7 @@ export const Write = () => {
           ) : (
             <>
               <MainButton
-                color="white"
+                variant="white"
                 onClick={handleUploadWithoutTranslation}
               >
                 Upload

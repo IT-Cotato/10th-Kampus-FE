@@ -228,7 +228,10 @@ export const MarketWrite = () => {
           <MainButton onClick={handleUploadWithoutTranslation}>Edit</MainButton>
         ) : (
           <>
-            <MainButton onClick={handleUploadWithoutTranslation} color="white">
+            <MainButton
+              onClick={handleUploadWithoutTranslation}
+              variant="white"
+            >
               Upload
             </MainButton>
             <MainButton onClick={handleTranslateAndUpload}>
