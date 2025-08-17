@@ -41,7 +41,7 @@ export const Home = () => {
       </header>
       <div className="flex w-full flex-col gap-6 bg-[#FCFCFC] px-4 pb-3 pt-20">
         {/* 대학 정보 */}
-        {userDetail.userId !== -1 && (
+        {userDetail?.userId !== -1 && (
           <h1 className="text-pageTitle text-neutral-title">
             {userDetail?.universityCode}
           </h1>
