@@ -113,13 +113,6 @@ export const MyPage = () => {
               <button
                 type="button"
                 className="text-left"
-                onClick={() => navigate(PATH.MYPAGE.BLOCK.BASE)}
-              >
-                Blocking Management
-              </button>
-              <button
-                type="button"
-                className="text-left"
                 onClick={() => handleLogout()}
               >
                 Log Out

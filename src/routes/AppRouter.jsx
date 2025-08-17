@@ -22,8 +22,6 @@ import {
   NoticeDetail,
   Post,
   PostReport,
-  BlockChat,
-  BlockMarket,
   Welcome,
   SchoolSearch,
   SchoolEmail,
@@ -61,7 +59,6 @@ import {
   MarketSearch,
 } from '@/pages';
 import { ContactUs } from '@/components/layout/ContactUs';
-import { BlockingManagement } from '@/components/layout/BlockingManagement';
 import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
 import { Suspense } from 'react';
 import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
@@ -403,28 +400,28 @@ const AppRouter = createBrowserRouter([
                 },
               ],
             },
-            {
-              path: PATH.MYPAGE.BLOCK.BASE,
-              element: (
-                <BlockingManagement>
-                  <Outlet />
-                </BlockingManagement>
-              ),
-              children: [
-                {
-                  path: '',
-                  element: <Navigate to={PATH.MYPAGE.BLOCK.CHAT} replace />,
-                },
-                {
-                  path: PATH.MYPAGE.BLOCK.CHAT,
-                  element: <BlockChat />,
-                },
-                {
-                  path: PATH.MYPAGE.BLOCK.MARKET,
-                  element: <BlockMarket />,
-                },
-              ],
-            },
+            // {
+            //   path: PATH.MYPAGE.BLOCK.BASE,
+            //   element: (
+            //     <BlockingManagement>
+            //       <Outlet />
+            //     </BlockingManagement>
+            //   ),
+            //   children: [
+            //     {
+            //       path: '',
+            //       element: <Navigate to={PATH.MYPAGE.BLOCK.CHAT} replace />,
+            //     },
+            //     {
+            //       path: PATH.MYPAGE.BLOCK.CHAT,
+            //       element: <BlockChat />,
+            //     },
+            //     {
+            //       path: PATH.MYPAGE.BLOCK.MARKET,
+            //       element: <BlockMarket />,
+            //     },
+            //   ],
+            // },
             {
               path: PATH.MYPAGE.SERVICE.BASE,
               element: <Outlet />,
