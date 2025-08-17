@@ -28,7 +28,9 @@ export const CardnewsList = () => {
     mutationFn: (postId) => deleteCardnews({ postId: postId }),
     onSuccess: () => {
       toast.success('카드뉴스가 삭제되었습니다.');
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] }); // 삭제 후 리스트 다시 불러오기
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN_GET_CARDNEW_LIST],
+      }); // 삭제 후 리스트 다시 불러오기
     },
     onError: () => {
       toast.error('카드뉴스 삭제를 실패하였습니다.');
@@ -57,7 +59,7 @@ export const CardnewsList = () => {
   };
 
   const { data: cardnewsListData } = useQuery({
-    queryKey: [QUERY_KEYS.GET_POST_LIST],
+    queryKey: [QUERY_KEYS.ADMIN_GET_CARDNEW_LIST],
     queryFn: () => getAdminCardnewsList({ page: 1 }),
   });
 

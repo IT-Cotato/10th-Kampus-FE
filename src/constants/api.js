@@ -170,4 +170,5 @@ export const QUERY_KEYS = {
   ADMIN_GET_VERIFICATION: 'getVerficationList',
   ADMIN_POST_VERIFICATION: 'postVerficationList',
   ADMIN_GET_CATEGORY: 'getCategory',
+  ADMIN_GET_CARDNEW_LIST: 'cardnewsList',
 };
