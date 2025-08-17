@@ -54,7 +54,6 @@ import {
   ManageCategory,
   KakaoLoginHandler,
   MyMarkets,
-  AccountPermanentSuspendedNotice,
   SplashScreen,
   MarketSearch,
 } from '@/pages';
@@ -106,70 +105,70 @@ const AppRouter = createBrowserRouter([
         path: '',
         element: <SplashScreen />,
       },
-      ...createAuthRouter('PUBLIC', [
-        {
-          path: PATH.ACCOUNT_PERMANENT_SUSPENDED,
-          element: <AccountPermanentSuspendedNotice />,
-        },
-        {
-          path: PATH.LOGIN.BASE,
-          element: <Outlet />,
-          children: [
-            {
-              path: '',
-              element: <Login />,
-            },
-            {
-              path: PATH.LOGIN.KAKAO,
-              element: <KakaoLoginHandler />,
-            },
-          ],
-        },
-        {
-          path: PATH.SIGNUP.BASE,
-          element: <Outlet />,
-          children: [
-            {
-              path: '',
-              element: <Navigate to={PATH.SIGNUP.TERMS} replace />,
-            },
-            {
-              path: PATH.SIGNUP.TERMS,
-              element: <Terms />,
-            },
-            {
-              path: PATH.SIGNUP.PROFILE,
-              element: <ProfileSettings />,
-            },
-            {
-              path: PATH.SIGNUP.WELCOME,
-              element: <Welcome />,
-            },
-            {
-              path: PATH.SIGNUP.SCHOOL,
-              element: <SchoolSearch />,
-            },
-            {
-              path: PATH.SIGNUP.VERIFY.BASE,
-              element: <Outlet />,
-              children: [
-                {
-                  path: '',
-                  element: <SchoolVerification />,
-                },
-                {
-                  path: PATH.SIGNUP.VERIFY.EMAIL,
-                  element: <SchoolEmail />,
-                },
-                {
-                  path: PATH.SIGNUP.VERIFY.FILE,
-                  element: <SchoolPhoto />,
-                },
-              ],
-            },
-          ],
-        },
-      ]),
+      // ...createAuthRouter('PUBLIC', [
+      //   {
+      //     path: PATH.ACCOUNT_PERMANENT_SUSPENDED,
+      //     element: <AccountPermanentSuspendedNotice />,
+      //   },
+      {
+        path: PATH.LOGIN.BASE,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <Login />,
+          },
+          {
+            path: PATH.LOGIN.KAKAO,
+            element: <KakaoLoginHandler />,
+          },
+        ],
+      },
+      {
+        path: PATH.SIGNUP.BASE,
+        element: <Outlet />,
+        children: [
+          {
+            path: '',
+            element: <Navigate to={PATH.SIGNUP.TERMS} replace />,
+          },
+          {
+            path: PATH.SIGNUP.TERMS,
+            element: <Terms />,
+          },
+          {
+            path: PATH.SIGNUP.PROFILE,
+            element: <ProfileSettings />,
+          },
+          {
+            path: PATH.SIGNUP.WELCOME,
+            element: <Welcome />,
+          },
+          {
+            path: PATH.SIGNUP.SCHOOL,
+            element: <SchoolSearch />,
+          },
+          {
+            path: PATH.SIGNUP.VERIFY.BASE,
+            element: <Outlet />,
+            children: [
+              {
+                path: '',
+                element: <SchoolVerification />,
+              },
+              {
+                path: PATH.SIGNUP.VERIFY.EMAIL,
+                element: <SchoolEmail />,
+              },
+              {
+                path: PATH.SIGNUP.VERIFY.FILE,
+                element: <SchoolPhoto />,
+              },
+            ],
+          },
+        ],
+      },
+      // ]),
       ...createAuthRouter('PRIVATE', [
         {
           path: PATH.HOME,
