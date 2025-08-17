@@ -22,7 +22,7 @@ export const CommunityScrap = () => {
     <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
-      ) : !postList.post ? (
+      ) : !postList.items ? (
         <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
@@ -33,7 +33,7 @@ export const CommunityScrap = () => {
         </div>
       ) : (
         <div className="flex w-full flex-1 flex-col divide-y bg-white">
-          {postList.posts.map((item, index) => (
+          {postList.items.map((item, index) => (
             <PostList
               key={index}
               data={item}
