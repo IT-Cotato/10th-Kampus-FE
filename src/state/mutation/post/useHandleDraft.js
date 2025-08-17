@@ -28,8 +28,9 @@ export const usePostDraft = ({ boardId, postDraftId }) => {
     mutationFn: (newPost) => postWriteDraft({ postDraftId, data: newPost }),
     onSuccess: (response) => {
       const createdPostId = response.postId;
-      console.log(createdPostId);
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POST_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_LIST, { postId: createdPostId }],
+      });
       navigate(`${PATH.BOARD.BASE}/${boardId}/${createdPostId}`, {
         replace: true,
       });
