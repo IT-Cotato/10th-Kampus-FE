@@ -9,7 +9,7 @@ export const useGetHomeUniversityList = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_HOME_UNIVERISTY],
     queryFn: getUniversity,
-    throwOnError: true,
+    throwOnError: false,
   });
 };
 
