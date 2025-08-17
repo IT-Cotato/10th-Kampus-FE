@@ -6,8 +6,7 @@ export const useGetUnivBoard = (state) => {
   const query = useQuery({
     queryKey: [QUERY_KEYS.GET_UNIV_BOARD],
     queryFn: () => getUnivBoard(),
-    staleTime: 60 * 60 * 1000, // 60분
-    gcTime: 65 * 60 * 1000, // 65분
+    staleTime: 20 * 1000, // 20초
     enabled: state,
   });
   return query;

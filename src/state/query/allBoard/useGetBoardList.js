@@ -6,8 +6,7 @@ export const useGetBoardList = () => {
   const query = useQuery({
     queryKey: [QUERY_KEYS.GET_PUBLIC_BOARD_LIST],
     queryFn: () => getBoardList(),
-    staleTime: 5 * 60 * 1000, // 5분
-    gcTime: 10 * 60 * 1000, // 10분
+    staleTime: 20 * 1000, // 20초
   });
   return query;
 };
