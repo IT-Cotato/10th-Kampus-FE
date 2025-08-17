@@ -22,16 +22,18 @@ export const MyArticles = () => {
     <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
-      ) : !postList.posts ? (
+      ) : !postList.items ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 pb-10">
           <Logo className="w-32 text-neutral-disabled" />
-          <span className="text-neutral-border-40">
-            You haven&apos;t written anything yet! Share your story:)
+          <span className="text-center text-neutral-border-40">
+            You haven&apos;t written anything yet!
+            <br />
+            Share your story:)
           </span>
         </div>
       ) : (
         <div className="flex w-full flex-1 flex-col divide-y bg-white">
-          {postList.posts.map((item, index) => (
+          {postList.items.map((item, index) => (
             <PostList
               key={index}
               data={item}

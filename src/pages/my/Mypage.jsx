@@ -22,9 +22,9 @@ export const MyPage = () => {
         </ErrorWrapper>
         {/* 마이페이지 항목들 */}
         <div className="mt-[1.25rem] flex h-full w-full flex-col gap-[1.875rem] leading-tight">
-          <div className="flex h-full w-full flex-col gap-[.625rem]">
+          <div className="flex h-fit w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Service Settings</div>
-            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-[.625rem]">
+            <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-[.625rem]">
               <button
                 type="button"
                 className="text-left"
@@ -43,9 +43,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex h-full w-full flex-col gap-[.625rem]">
+          <div className="flex h-fit w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Community</div>
-            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
+            <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -73,9 +73,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex h-full w-full flex-col gap-[.625rem]">
+          <div className="flex h-fit w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">Contact Us</div>
-            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
+            <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"
@@ -107,16 +107,9 @@ export const MyPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex h-full w-full flex-col gap-[.625rem]">
+          <div className="flex h-fit w-full flex-col gap-[.625rem]">
             <div className="text-neutral-border-50">etc.</div>
-            <div className="flex h-full w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
-              <button
-                type="button"
-                className="text-left"
-                onClick={() => navigate(PATH.MYPAGE.BLOCK.BASE)}
-              >
-                Blocking Management
-              </button>
+            <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
                 className="text-left"

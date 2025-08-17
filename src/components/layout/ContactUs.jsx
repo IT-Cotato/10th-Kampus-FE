@@ -17,7 +17,7 @@ export const ContactUs = ({ children }) => {
   return (
     <div className="flex w-full flex-col">
       <TitleHeader text="Contact Us" />
-      <div className="flex w-full flex-col px-4 pb-3 pt-12">
+      <div className="flex w-full flex-col px-4 py-6">
         <div className="flex justify-center gap-[0.625rem]">
           {menu.map((item) => (
             <ButtonRound

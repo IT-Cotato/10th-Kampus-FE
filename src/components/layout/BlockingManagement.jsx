@@ -17,7 +17,7 @@ export const BlockingManagement = ({ children }) => {
   return (
     <div className="flex w-full flex-col">
       <TitleHeader text="Blocking Management" />
-      <div className="flex w-full flex-row justify-start gap-[0.625rem] px-4 pb-6 pt-12">
+      <div className="flex w-full flex-row justify-start gap-[0.625rem] px-4 py-6">
         {menu.map((item) => (
           <ButtonRound
             key={item.id}
