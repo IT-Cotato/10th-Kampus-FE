@@ -136,7 +136,9 @@ export const PostHeader = ({ isAuthor = false }) => {
             <Search className="h-6 w-6 cursor-pointer text-neutral-title" />
           </button>
         )}
-        {(boardDetail?.boardType === BOARD_TYPE.NORMAL || productId) && (
+        {(boardDetail?.boardType === BOARD_TYPE.NORMAL ||
+          postId ||
+          productId) && (
           <BoardMenuBar
             isAuthor={isAuthor}
             data={boardDetail}
