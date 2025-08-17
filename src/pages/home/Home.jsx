@@ -54,7 +54,7 @@ export const Home = () => {
             data={univeristyList?.homePostThumbnailList}
             boardTitle="My univ"
             university={true}
-            boardId={univeristyList?.boardId}
+            boardId={univeristyList?.homePostThumbnailList[0]?.boardId}
           />
         )}
         {/* 즐겨찾기한 게시판 */}
