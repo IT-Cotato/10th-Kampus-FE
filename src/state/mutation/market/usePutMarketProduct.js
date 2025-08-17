@@ -11,10 +11,10 @@ export const usePutMarketProduct = () => {
   const mutate = useMutation({
     mutationFn: ({ productId, data }) => putMarketProduct({ productId, data }),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.POST_MARKET_PRODUCT],
-      });
       const { productId } = variables;
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POST_MARKET_PRODUCT, productId],
+      });
       navigate(`${PATH.MARKET.BASE}/${productId}`, {
         replace: true,
       });
