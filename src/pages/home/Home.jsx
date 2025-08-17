@@ -15,8 +15,8 @@ import {
 export const Home = () => {
   const navigate = useNavigate();
 
-  const { data: userDetail } = useGetUserData();
-  const { data: univeristyList, error: universityError } =
+  const { data: userDetail, error: universityError } = useGetUserData();
+  const { data: univeristyList, error: universityBoardError } =
     useGetHomeUniversityList();
   const { data: favoriteList } = useGetHomeFavoriteList();
   const { data: trendingList } = useGetHomeTrendingList();
@@ -41,7 +41,7 @@ export const Home = () => {
       </header>
       <div className="flex w-full flex-col gap-6 bg-[#FCFCFC] px-4 pb-3 pt-20">
         {/* 대학 정보 */}
-        {userDetail?.universityId !== -1 && (
+        {userDetail?.universityId !== -1 && !universityError && (
           <h1 className="text-pageTitle text-neutral-title">
             {userDetail?.universityCode}
           </h1>
@@ -49,9 +49,9 @@ export const Home = () => {
         {/* 오늘 날짜 */}
         <Calendar />
         {/* 대학 게시판 */}
-        {userDetail?.universityId !== -1 && !universityError && (
+        {userDetail?.universityId !== -1 && !universityBoardError && (
           <BoardBox
-            data={univeristyList}
+            data={univeristyList?.homePostThumbnailList}
             boardTitle="My univ"
             university={true}
             boardId={univeristyList?.boardId}

@@ -17,11 +17,9 @@ export const BoardBox = ({
         isTrending={isTrending}
       />
       <div className="flex h-fit w-full flex-col rounded-[1.25rem] bg-white py-[.875rem] shadow-home">
-        {university ? (
-          <BoxList text={data} />
-        ) : (
-          data?.map((text, index) => <BoxList key={index} text={text} />)
-        )}
+        {data?.map((text, index) => (
+          <BoxList key={index} text={text} />
+        ))}
       </div>
     </div>
   );
