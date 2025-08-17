@@ -37,7 +37,7 @@ export const SchoolVerification = () => {
           </div>
           <div className="flex flex-col gap-[1.875rem]">
             <MainButton
-              color="white"
+              variant="white"
               onClick={() =>
                 navigate(PATH.SIGNUP.VERIFY.EMAIL, {
                   state: { university, isInitialAuthFlow },
@@ -49,7 +49,7 @@ export const SchoolVerification = () => {
             {/** 
              * 사진 인증 관리자 페이지 미완성으로 우선 보류 
             <MainButton
-              color="white"
+              variant="white"
               onClick={() =>
                 navigate(path.signup.verify.file, {
                   state: { university, isInitialAuthFlow },

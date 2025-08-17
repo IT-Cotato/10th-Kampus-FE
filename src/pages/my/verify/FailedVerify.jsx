@@ -29,7 +29,7 @@ export const FailedVerify = () => {
             New file Upload
           </MainButton>
           <MainButton
-            color="white"
+            variant="white"
             onClick={() =>
               navigate(PATH.SIGNUP.BASE + '/' + PATH.SIGNUP.SCHOOL)
             }
