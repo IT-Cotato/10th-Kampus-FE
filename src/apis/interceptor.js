@@ -45,8 +45,7 @@ export const onRequestError = (error) => {
 export const onError = async (error, api) => {
   const originalRequest = error.config;
   const { status } = error.response || {};
-  const { setInitializing, clearAccessToken, setAccessToken } =
-    useAuthStore.getState();
+  const { clearAccessToken, setAccessToken } = useAuthStore.getState();
 
   const currentRetryCount = originalRequest._retryCount || 0; // 재시도 횟수 확인
 
@@ -66,7 +65,7 @@ export const onError = async (error, api) => {
     }
 
     isRefreshing = true;
-    setInitializing(true);
+    useAuthStore.getState().setInitializing(true);
 
     try {
       const response = await api.post(
@@ -93,7 +92,7 @@ export const onError = async (error, api) => {
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
-      setInitializing(false);
+      useAuthStore.getState().setInitializing(false);
     }
   }
 
@@ -104,7 +103,7 @@ export const onError = async (error, api) => {
     );
     alert('세션이 만료되었습니다.');
     clearAccessToken();
-    setInitializing(false);
+    useAuthStore.getState().setInitializing(false);
     window.location.replace(PATH.LOGIN.BASE);
     return Promise.reject(error);
   }
@@ -113,7 +112,7 @@ export const onError = async (error, api) => {
   if (status === 403) {
     console.error('🚫 403 Forbidden 에러. 접근 권한이 없습니다.');
     alert('요청에 대한 접근 권한이 없습니다.');
-    setInitializing(false);
+    useAuthStore.getState().setInitializing(false);
 
     return Promise.reject(error);
   }
