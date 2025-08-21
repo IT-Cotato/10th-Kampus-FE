@@ -1,44 +1,24 @@
-import { PATH } from '@/routes/path';
-import { useAuthStore } from '@/stores/useAuthStore';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useGetAdminUserData } from '@/state/query/admin/useGetAdminUserData';
 import { Forbidden } from '@/pages/Forbidden';
 import { Loading } from '@/components/common/Loading';
 import { AdminLayout } from '@/pages';
 
 export default function AdminRoute() {
-  const { accessToken, isInitializing } = useAuthStore();
-
   // 관리자 사용자 정보를 가져와서 권한 확인
-  const { data: userData, isLoading, error } = useGetAdminUserData();
-
-  // 토큰 갱신 중일 때는 로딩 화면 표시
-  if (isInitializing) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <Loading />
-        <p className="text-sm mt-2 text-gray-600">인증 확인 중...</p>
-      </div>
-    );
-  }
-
-  // 토큰 갱신이 완료된 후 토큰이 없으면 로그인 페이지로 리다이렉트
-  if (!isInitializing && !accessToken) {
-    return <Navigate to={PATH.LOGIN.BASE} replace />;
-  }
+  const { data: userData, isLoading, isError, error } = useGetAdminUserData();
 
   // 로딩 중일 때
   if (isLoading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center">
+      <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
         <Loading />
-        <p className="text-sm mt-2 text-gray-600">권한 확인 중...</p>
+        <p className="text-sm text-gray-600">권한 확인 중...</p>
       </div>
     );
   }
 
-  // 에러가 발생한 경우 (관리자 권한이 없는 경우)
-  if (error) {
+  if (isError && error instanceof Error && error.message === 'FORBIDDEN') {
     return <Forbidden />;
   }
 
@@ -51,6 +31,5 @@ export default function AdminRoute() {
     );
   }
 
-  // 기본적으로 권한이 없는 경우
-  return <Forbidden />;
+  return null;
 }
