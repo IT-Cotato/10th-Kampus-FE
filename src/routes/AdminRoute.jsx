@@ -6,7 +6,7 @@ import { AdminLayout } from '@/pages';
 
 export default function AdminRoute() {
   // 관리자 사용자 정보를 가져와서 권한 확인
-  const { data: userData, isLoading } = useGetAdminUserData();
+  const { data: userData, isLoading, isError, error } = useGetAdminUserData();
 
   // 로딩 중일 때
   if (isLoading) {
@@ -18,6 +18,10 @@ export default function AdminRoute() {
     );
   }
 
+  if (isError && error instanceof Error && error.message === 'FORBIDDEN') {
+    return <Forbidden />;
+  }
+
   // 관리자 권한이 확인된 경우
   if (userData) {
     return (
@@ -27,6 +31,5 @@ export default function AdminRoute() {
     );
   }
 
-  // 기본적으로 권한이 없는 경우
-  return <Forbidden />;
+  return null;
 }
