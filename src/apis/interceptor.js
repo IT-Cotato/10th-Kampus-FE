@@ -111,15 +111,9 @@ export const onError = async (error, api) => {
 
   // 403 Forbidden 에러 처리
   if (status === 403) {
-    console.error(
-      '🚫 403 Forbidden 에러. 접근 권한이 없습니다. 로그아웃 처리합니다.',
-    );
-    alert('요청에 대한 접근 권한이 없습니다. 다시 로그인해 주세요.');
-
-    clearAccessToken();
+    console.error('🚫 403 Forbidden 에러. 접근 권한이 없습니다.');
+    alert('요청에 대한 접근 권한이 없습니다.');
     setInitializing(false);
-
-    window.location.replace(PATH.LOGIN.BASE);
 
     return Promise.reject(error);
   }
