@@ -3,8 +3,6 @@ import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useGetBoardList } from '@/state/query/allBoard/useGetBoardList';
 import { useToggleFavorite } from '@/state/mutation/allBoard/useToggleFavorite';
-import { useGetUserData } from '@/state/query/common/useGetUserData';
-import { useGetUnivBoard } from '@/state/query/allBoard/useGetUnivBoard';
 import { BoardList } from '@/components/board/BoardList';
 
 export const AllBoard = () => {
@@ -12,11 +10,7 @@ export const AllBoard = () => {
   const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
 
-  const { data: userInfo } = useGetUserData();
   const { data: listData } = useGetBoardList();
-  const { data: univBoardData } = useGetUnivBoard(
-    !!userInfo && userInfo.universityId !== -1,
-  );
 
   const { mutate: toggleFavorite } = useToggleFavorite({
     setPrev: setPrevState,
@@ -90,15 +84,12 @@ export const AllBoard = () => {
   useEffect(() => {
     if (!listData || !listData.boards) return;
 
-    const mergedBoards = [
-      ...listData.boards,
-      ...(univBoardData ? [univBoardData] : []),
-    ];
+    const mergedBoards = [...listData.boards];
 
     const parsedData = parseBoardData(mergedBoards);
     const sortedData = sortList(parsedData);
     setListArray(sortedData);
-  }, [listData, univBoardData]);
+  }, [listData]);
 
   return (
     <div className="relative flex h-full w-full flex-col gap-4 bg-[#FCFCFC] p-4">
