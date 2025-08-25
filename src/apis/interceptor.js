@@ -1,6 +1,7 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import { API_DOMAINS } from '@/constants/api';
 import { PATH } from '@/routes/path';
+import { removeTokens } from '@/utils/authUtils';
 
 // 여러 요청이 동시에 실패 했을 때 용도
 let isRefreshing = false;
@@ -49,6 +50,11 @@ export const onError = async (error, api) => {
 
   const currentRetryCount = originalRequest._retryCount || 0; // 재시도 횟수 확인
 
+  const isAdminApiRequest = originalRequest.url.includes('/admin');
+  if (isAdminApiRequest && (status === 401 || status === 403)) {
+    return Promise.reject(new Error('FORBIDDEN'));
+  }
+
   // 401 에러 처리 및 재발급 로직 포함
   if (status === 401 && currentRetryCount < MAX_RETRIES) {
     originalRequest._retryCount = currentRetryCount + 1;
@@ -86,7 +92,7 @@ export const onError = async (error, api) => {
       return api(originalRequest);
     } catch (refreshError) {
       // 토큰 갱신 자체가 실패하면, 로그아웃 후 로그인 창으로 리다이렉트
-      clearAccessToken();
+      await removeTokens();
       processQueue(refreshError, null);
       window.location.replace(PATH.LOGIN.BASE);
       return Promise.reject(refreshError);
@@ -110,11 +116,7 @@ export const onError = async (error, api) => {
 
   // 403 Forbidden 에러 처리
   if (status === 403) {
-    console.error('🚫 403 Forbidden 에러. 접근 권한이 없습니다.');
-    alert('요청에 대한 접근 권한이 없습니다.');
-    useAuthStore.getState().setInitializing(false);
-
-    return Promise.reject(error);
+    throw new Error('FORBIDDEN');
   }
 
   return Promise.reject(error);

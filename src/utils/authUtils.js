@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/constants/api';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { Capacitor } from '@capacitor/core';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
@@ -44,6 +45,7 @@ export const setTokens = async ({ accessToken, refreshToken }) => {
   }
 };
 export const removeTokens = async () => {
+  useAuthStore.getState().clearAccessToken();
   if (Capacitor.isNativePlatform()) {
     // 네이티브 환경 -> SecureStorage 삭제
     await SecureStoragePlugin.remove({ key: ACCESS_TOKEN_KEY });
