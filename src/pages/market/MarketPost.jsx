@@ -19,11 +19,14 @@ import {
 } from '@/constants/productState';
 import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 import { usePatchMarketProductStatus } from '@/state/mutation/market/usePatchMarketProductStatus';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
+import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
+import { CHAT_TYPE } from '@/constants/chatType';
 
 export const MarketPost = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   // 백 <-> 프론트 매핑 객체
   const stateMapClientToServer = {
@@ -38,12 +41,15 @@ export const MarketPost = () => {
   };
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedDropdown, setSelectedDropdown] = useState();
 
   const { data: productData, isLoading: isProductLoading } =
     useGetMarketProduct();
   const { mutate: changeStatus } = usePatchMarketProductStatus();
-
-  const [selectedDropdown, setSelectedDropdown] = useState();
+  const { mutate: createChatRoom } = usePostChatroom({
+    type: CHAT_TYPE.PRODUCT,
+    referenceId: Number(productId),
+  });
 
   // 프론트 -> 백 통신 전 사용
   const changeStateToUpperCase = (state) =>
@@ -78,7 +84,15 @@ export const MarketPost = () => {
   };
 
   // 채팅 걸기
-  const handleChat = () => {};
+  const handleChat = () => {
+    if (productData?.isAuthor)
+      navigate(`/chat`, { state: { isProductAuthor: true } });
+    //author 인경우, 백엔드 필터링 필요
+    else {
+      createChatRoom();
+      navigate(`/chat`, { state: { isProductAuthor: false } });
+    }
+  };
 
   const {
     translateState,
@@ -244,7 +258,7 @@ export const MarketPost = () => {
           className="rounded-[.625rem] bg-primary-base px-8 py-5 text-title-bold-16 text-white"
           onClick={handleChat}
         >
-          Chat ({productData?.isAuthor && productData?.chatCount})
+          Chat
         </button>
       </div>
     </div>
