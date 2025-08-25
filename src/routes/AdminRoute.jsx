@@ -6,7 +6,7 @@ import { AdminLayout } from '@/pages';
 
 export default function AdminRoute() {
   // 관리자 사용자 정보를 가져와서 권한 확인
-  const { data: userData, isLoading, isError, error } = useGetAdminUserData();
+  const { data: userData, isLoading, isError } = useGetAdminUserData();
 
   // 로딩 중일 때
   if (isLoading) {
@@ -18,18 +18,15 @@ export default function AdminRoute() {
     );
   }
 
-  if (isError && error instanceof Error && error.message === 'FORBIDDEN') {
+  // 에러가 발생했거나, 로딩이 끝났는데도 사용자 데이터가 없는 경우
+  if (isError || !userData) {
     return <Forbidden />;
   }
 
   // 관리자 권한이 확인된 경우
-  if (userData) {
-    return (
-      <AdminLayout>
-        <Outlet />
-      </AdminLayout>
-    );
-  }
-
-  return null;
+  return (
+    <AdminLayout>
+      <Outlet />
+    </AdminLayout>
+  );
 }
