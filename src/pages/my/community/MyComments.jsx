@@ -22,7 +22,7 @@ export const MyComments = () => {
     <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
-      ) : !postList.items ? (
+      ) : postList?.items?.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 pb-10">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">

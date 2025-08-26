@@ -15,7 +15,7 @@ export const MyArticles = () => {
   });
 
   const handleNavigate = (data) => {
-    navigate(`../../../${PATH.BOARD.BASE}/${data.boardId}/${data.id}`);
+    navigate(`../../../${PATH.BOARD.BASE}/${data.boardId}/${data.postId}`);
   };
 
   return (
