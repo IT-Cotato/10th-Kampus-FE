@@ -51,14 +51,14 @@ export const MyPage = () => {
                 className="text-left"
                 onClick={() => navigate(PATH.MYPAGE.COMMUNITY.SCRAP.BASE)}
               >
-                Scrap
+                Saved Articles
               </button>
               <button
                 type="button"
                 className="text-left"
                 onClick={() => navigate(PATH.MYPAGE.COMMUNITY.ARTICLE.BASE)}
               >
-                My Article
+                My Articles
               </button>
               <button
                 type="button"

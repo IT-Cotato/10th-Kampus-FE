@@ -16,7 +16,7 @@ export const Scrap = ({ children }) => {
 
   return (
     <div className="flex w-full flex-col">
-      <TitleHeader text="Scrap" />
+      <TitleHeader text="Saved Articles" />
       <div className="flex w-full flex-row justify-start gap-[0.625rem] px-4 py-6">
         {menu.map((item) => (
           <ButtonRound
