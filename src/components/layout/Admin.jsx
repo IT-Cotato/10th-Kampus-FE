@@ -5,18 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import HamburgerBar from '@/assets/imgs/icon/hamburger-bar.svg?react';
 import Board from '@/assets/imgs/icon/board.svg?react';
 import Cardnews from '@/assets/imgs/icon/cardnews.svg?react';
-import Graph from '@/assets/imgs/icon/graph.svg?react';
 import Home from '@/assets/imgs/icon/home.svg?react';
-import Report from '@/assets/imgs/icon/report.svg?react';
 import Setting from '@/assets/imgs/icon/setting.svg?react';
-import User from '@/assets/imgs/icon/user.svg?react';
 import Volume from '@/assets/imgs/icon/volume.svg?react';
 import Edit from '@/assets/imgs/icon/edit.svg?react';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { getAdminUser } from '@/apis/user/adminUserDetail.api';
 
-export const AdminLayout = ({ children }) => {
+export const AdminLayout = ({ userData, children }) => {
   const location = useLocation();
   const { pathname } = location;
 
@@ -24,15 +18,8 @@ export const AdminLayout = ({ children }) => {
 
   const [showMenu, setShowMenu] = useState(true);
 
-  const { data: userData } = useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_ME],
-    queryFn: () => getAdminUser(),
-    staleTime: 1000 * 60 * 5,
-  });
-
   const menu = [
     { id: 0, text: '대시보드', path: PATH.ADMIN.DASHBOARD, img: Home },
-    { id: 1, text: '사용자 관리', path: PATH.ADMIN.USER_MANAGEMENT, img: User },
     {
       id: 2,
       text: '가입 관리',
@@ -57,13 +44,6 @@ export const AdminLayout = ({ children }) => {
       path: PATH.ADMIN.CARDNEWS.BASE,
       img: Cardnews,
     },
-    {
-      id: 6,
-      text: '신고 관리',
-      path: PATH.ADMIN.REPORT_MANAGEMENT,
-      img: Report,
-    },
-    { id: 7, text: '통계 관리', path: PATH.ADMIN.STATISTICS, img: Graph },
     { id: 8, text: '공지 작성', path: PATH.ADMIN.NOTICE.BASE, img: Volume },
   ];
 
