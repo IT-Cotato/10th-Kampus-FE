@@ -27,14 +27,14 @@ export const MyPage = () => {
             <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-[.625rem]">
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() => navigate(PATH.MYPAGE.SETTINGS.INFO)}
               >
                 My Information
               </button>
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() =>
                   navigate(`${PATH.SIGNUP.BASE}/${PATH.SIGNUP.SCHOOL}`)
                 }
@@ -48,21 +48,21 @@ export const MyPage = () => {
             <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() => navigate(PATH.MYPAGE.COMMUNITY.SCRAP.BASE)}
               >
                 Saved Articles
               </button>
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() => navigate(PATH.MYPAGE.COMMUNITY.ARTICLE.BASE)}
               >
                 My Articles
               </button>
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() =>
                   navigate(
                     `${PATH.MYPAGE.COMMUNITY.ARTICLE.BASE}/${PATH.MYPAGE.COMMUNITY.ARTICLE.MARKET}`,
@@ -78,7 +78,7 @@ export const MyPage = () => {
             <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() =>
                   navigate(
                     `${PATH.MYPAGE.SERVICE.BASE}/${PATH.MYPAGE.SERVICE.FAQ}`,
@@ -96,7 +96,7 @@ export const MyPage = () => {
               </a>
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() =>
                   navigate(
                     `${PATH.MYPAGE.SERVICE.BASE}/${PATH.MYPAGE.SERVICE.NOTICE}`,
@@ -112,14 +112,14 @@ export const MyPage = () => {
             <div className="flex h-fit w-full flex-col gap-[.625rem] border-t border-primary-base pt-2">
               <button
                 type="button"
-                className="text-left"
+                className="cursor-pointer text-left"
                 onClick={() => handleLogout()}
               >
                 Log Out
               </button>
               <button
                 type="button"
-                className="text-left text-neutral-border-50"
+                className="cursor-pointer text-left text-neutral-border-50"
                 onClick={() => navigate(PATH.MYPAGE.DELETE)}
               >
                 Delete Account
