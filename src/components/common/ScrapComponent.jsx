@@ -46,7 +46,10 @@ export const ScrapComponent = ({
           addFn: addProductScrap,
           deleteFn: deleteProductScrap,
           detailQueryKey: QUERY_KEYS.GET_MARKET_PRODUCT,
-          listQueryKey: QUERY_KEYS.GET_MARKET_PRODUCT_LIST,
+          listQueryKey: [
+            QUERY_KEYS.GET_MARKET_PRODUCT_LIST,
+            QUERY_KEYS.MY_SCRAPED_PRODUCT_LIST,
+          ],
           idKey: 'productId',
         }
       : {
@@ -80,8 +83,8 @@ export const ScrapComponent = ({
     const detailKey = [scrapConfig.detailQueryKey, actualId];
     const listKey =
       postType === 'MARKET' || postType === 'CARDNEWS'
-        ? [scrapConfig.listQueryKey]
-        : [scrapConfig.listQueryKey, boardId];
+        ? [...scrapConfig.listQueryKey]
+        : [...scrapConfig.listQueryKey, boardId];
 
     return { detailKey, listKey };
   };
