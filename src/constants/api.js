@@ -16,6 +16,7 @@ export const API_DOMAINS = {
   GET_MY_COMMENTED_POST: '/my/commented-post',
   GET_MY_MARKETS: '/products/my',
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
+  GET_MY_SCRAPED_PRODUCT: '/products/scraps',
 
   POST_INQUIRY: '/support/inquiry',
 
@@ -157,6 +158,7 @@ export const QUERY_KEYS = {
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_MARKET_LIST: 'myMarketList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
+  MY_SCRAPED_PRODUCT_LIST: 'scrapedProductList',
   USER_INFO: 'userInfo',
 
   GET_MARKET_CATEGORIES: 'marketCategories',
