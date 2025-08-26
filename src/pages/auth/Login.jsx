@@ -1,6 +1,5 @@
 import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { KakaoLogin } from '@/components/common/KakaoLogin';
-import { GoogleLogin } from '@/components/common/GoogleLogin';
 import { Bubble } from '@/components/common/Bubble';
 import OfficialMail from '@/constants/officialMail.json';
 
@@ -24,7 +23,6 @@ export const Login = () => {
             className="mx-auto"
           />
           <KakaoLogin />
-          <GoogleLogin />
         </div>
       </div>
     </div>
