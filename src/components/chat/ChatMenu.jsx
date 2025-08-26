@@ -1,4 +1,4 @@
-import reportIcon from '@/assets/imgs/icon/report.svg';
+import reportIcon from '@/assets/imgs/icon/report2.svg';
 import blockIcon from '@/assets/imgs/icon/post-block.svg';
 import muteIcon from '@/assets/imgs/icon/mute.svg';
 import deleteIcon from '@/assets/imgs/icon/delete.svg';
