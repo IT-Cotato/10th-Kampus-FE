@@ -1,4 +1,4 @@
-import { authApi } from '../axios-instance';
+import { authApi } from '@/apis/axios-instance';
 import { API_DOMAINS } from '@/constants/api';
 
 export const getMyScrapedPosts = async ({ page }) => {

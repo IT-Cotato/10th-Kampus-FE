@@ -1,18 +1,13 @@
-import { getMyScrapedProducts } from '@/apis/mypage/getMyScraps.api';
 import Logo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
-import { QUERY_KEYS } from '@/constants/api';
 import { PATH } from '@/routes/path';
-import { useQuery } from '@tanstack/react-query';
+import { useGetMarketScrapList } from '@/state/query/my/useGetMarketScrapList';
 import { useNavigate } from 'react-router-dom';
 
 export const MarketScrap = () => {
   const navigate = useNavigate();
-  const { data: marketList, isLoading } = useQuery({
-    queryFn: () => getMyScrapedProducts({ page: 1, size: 10 }),
-    queryKey: [QUERY_KEYS.MY_SCRAPED_PRODUCT_LIST],
-  });
+  const { data: marketList, isLoading } = useGetMarketScrapList();
 
   const handleNavigate = (data) => {
     navigate(`${PATH.MARKET.BASE}/${data.postId}`);
