@@ -74,8 +74,8 @@ export const Write = () => {
     if (draftData) {
       setTitle(draftData.title);
       setContent(draftData.content);
-      if (draftData?.categories) {
-        setSelectedCategory(draftData?.categories);
+      if (draftData?.categoryNames) {
+        setSelectedCategory(draftData?.categoryNames);
       }
       loadPrevPhotos();
     }
