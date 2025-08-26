@@ -72,6 +72,7 @@ export const API_DOMAINS = {
   MARKET_POST_PRODUCT: '/products',
   MARKET_HANDLE_PRODUCT: '/products/:productId',
   MARKET_PATCH_PRODUCT_STATUS: '/products/:productId/status',
+  PRODUCT_SCRAP_TOGGLE: '/products/:productId/scraps',
 
   ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',

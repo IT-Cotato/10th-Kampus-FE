@@ -93,13 +93,13 @@ export const Post = () => {
             <div className="flex items-center justify-between px-4">
               <div className="flex gap-2">
                 <img
-                  src={boardId === '5' ? kampus : anonymous}
+                  src={boardId === '1' ? kampus : anonymous}
                   alt="Profile Image"
                   className="h-10 w-10"
                 />
                 <div className="flex flex-col gap-[.125rem] leading-tight">
                   <h1 className="text-base text-neutral-title">
-                    {boardId === '5' ? 'Kampus' : 'Anonymity'}
+                    {boardId === '1' ? 'Kampus' : 'Anonymity'}
                   </h1>
                   <h2 className="text-small text-neutral-border-50">
                     {formatTime(postData?.createdTime)}
@@ -108,6 +108,7 @@ export const Post = () => {
               </div>
               <ScrapComponent
                 state={postData?.isScrapped}
+                postType={boardId === '1' ? 'CARDNEWS' : undefined}
                 className="h-[1.75rem] w-[1.75rem]"
               />
             </div>

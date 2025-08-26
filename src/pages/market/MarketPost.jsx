@@ -231,8 +231,7 @@ export const MarketPost = () => {
         <span className="flex h-8 items-center gap-[.625rem] divide-x divide-neutral-disabled">
           <ScrapComponent
             state={productData?.isScrapped}
-            id={productData?.productId}
-            market={true}
+            postType={'MARKET'}
             className="h-[1.75rem] w-[1.75rem]"
           />
           <span className="px-[.625rem] text-title-bold-16 text-neutral-80">
