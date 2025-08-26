@@ -2,12 +2,12 @@ import Bookmark from '@/assets/imgs/icon/scrap.svg?react';
 import Chatting from '@/assets/imgs/icon/chatting.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
-import { ScrapComponent } from '@/components/common/ScrapComponent';
 import { formatPrice } from '@/utils/formatPrice';
 import { ProductState } from '@/components/market/ProductState';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { Translating } from '@/components/common/Translating';
+import { ScrapComponent } from '@/components/common/ScrapComponent';
 
 export const MarketList = ({ data, ...props }) => {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ export const MarketList = ({ data, ...props }) => {
             state={data?.isScrapped}
             id={data?.productId}
             boardId="1"
-            market={true}
+            postType={'MARKET'}
             className="h-[1.875rem] w-[1.875rem]"
           />
         </div>
