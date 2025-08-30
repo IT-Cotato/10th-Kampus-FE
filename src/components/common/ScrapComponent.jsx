@@ -1,7 +1,6 @@
 import ActiveScrap from '@/assets/imgs/icon/active-scrap.svg?react';
 import Scrap from '@/assets/imgs/icon/scrap.svg?react';
-import { useState } from 'react';
-import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -14,6 +13,7 @@ import {
   addProductScrap,
   deleteProductScrap,
 } from '@/apis/market/toggleMarketScrap.api';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 const ANIMATION_MESSAGES = {
   SAVED: 'Saved',
@@ -35,9 +35,17 @@ export const ScrapComponent = ({
 }) => {
   const queryClient = useQueryClient();
   const { postId, productId } = useParams();
-  const [scrapAni, setScrapAni] = useState(false);
+  const { showSnackbar } = useSnackbarStore();
 
-  const actualId = postId || id || productId; // 게시글: postId, 카드뉴스, 마켓: 전달받은 id 혹은 productId
+  // 낙관적 업데이트를 위한 로컬 상태
+  const [optimisticState, setOptimisticState] = useState(state);
+
+  // 실제 상태가 변경되면 낙관적 상태도 동기화
+  useEffect(() => {
+    setOptimisticState(state);
+  }, [state]);
+
+  const actualId = postId || id || productId;
 
   // Market과 Post에 따른 설정 분리
   const scrapConfig =
@@ -46,18 +54,20 @@ export const ScrapComponent = ({
           addFn: addProductScrap,
           deleteFn: deleteProductScrap,
           detailQueryKey: QUERY_KEYS.GET_MARKET_PRODUCT,
-          listQueryKey: [
+          listQueryKeys: [
             QUERY_KEYS.GET_MARKET_PRODUCT_LIST,
             QUERY_KEYS.MY_SCRAPED_PRODUCT_LIST,
           ],
           idKey: 'productId',
+          dataField: 'products',
         }
       : {
           addFn: addPostScrap,
           deleteFn: deletePostScrap,
           detailQueryKey: QUERY_KEYS.GET_POST_DETAIL,
-          listQueryKey: QUERY_KEYS.GET_POST_LIST,
+          listQueryKeys: [QUERY_KEYS.GET_POST_LIST],
           idKey: 'postId',
+          dataField: 'posts',
         };
 
   const updateDetailQuery = (queryKey, newState) => {
@@ -68,12 +78,19 @@ export const ScrapComponent = ({
 
   const updateListQuery = (queryKey, targetId, newState) => {
     queryClient.setQueryData(queryKey, (old) => {
-      if (!old?.posts) return old;
+      if (!old) return old;
+
+      const dataArray = old[scrapConfig.dataField];
+      if (!dataArray) return old;
+
+      const idField = postType === 'MARKET' ? 'productId' : 'postId';
+      const updatedArray = dataArray.map((item) =>
+        item[idField] === targetId ? { ...item, isScrapped: newState } : item,
+      );
+
       return {
         ...old,
-        posts: old.posts.map((post) =>
-          post.postId === targetId ? { ...post, isScrapped: newState } : post,
-        ),
+        [scrapConfig.dataField]: updatedArray,
       };
     });
   };
@@ -81,104 +98,110 @@ export const ScrapComponent = ({
   // 쿼리 키 생성 함수
   const getQueryKeys = () => {
     const detailKey = [scrapConfig.detailQueryKey, actualId];
-    const listKey =
-      postType === 'MARKET' || postType === 'CARDNEWS'
-        ? [...scrapConfig.listQueryKey]
-        : [...scrapConfig.listQueryKey, boardId];
 
-    return { detailKey, listKey };
+    const listKeys = scrapConfig.listQueryKeys.map((key) =>
+      postType === 'MARKET' || postType === 'CARDNEWS' ? [key] : [key, boardId],
+    );
+
+    return { detailKey, listKeys };
   };
 
-  // 통합된 스크랩 mutation
-  const { mutate: handleScrapToggle } = useMutation({
+  // 낙관적 업데이트를 적용하는 함수
+  const applyOptimisticUpdate = (newState) => {
+    const { detailKey, listKeys } = getQueryKeys();
+
+    // 상세 페이지 쿼리 낙관적 업데이트
+    updateDetailQuery(detailKey, newState);
+
+    // 리스트 쿼리들 낙관적 업데이트
+    listKeys.forEach((listKey) => {
+      updateListQuery(listKey, actualId, newState);
+    });
+  };
+
+  // 낙관적 업데이트를 롤백하는 함수
+  const rollbackOptimisticUpdate = (originalState) => {
+    const { detailKey, listKeys } = getQueryKeys();
+
+    // 상세 페이지 쿼리 롤백
+    updateDetailQuery(detailKey, originalState);
+
+    // 리스트 쿼리들 롤백
+    listKeys.forEach((listKey) => {
+      updateListQuery(listKey, actualId, originalState);
+    });
+  };
+
+  const { mutate: handleScrapToggle, isPending } = useMutation({
     mutationFn: async () => {
       const params = { [scrapConfig.idKey]: actualId };
       return state ? scrapConfig.deleteFn(params) : scrapConfig.addFn(params);
     },
 
+    // 낙관적 업데이트
     onMutate: async () => {
-      const newScrapState = !state;
-      const { detailKey, listKey } = getQueryKeys();
-      const previousData = {};
+      const newState = !state;
+      const originalState = state;
 
-      if (postType === 'MARKET' || postType === 'CARDNEWS') {
-        // Market, Cardnews: 항상 detail과 list 모두 업데이트
-        await queryClient.cancelQueries({ queryKey: detailKey });
-        await queryClient.cancelQueries({ queryKey: listKey });
+      setOptimisticState(newState); // 낙관적 상태 업데이트
+      applyOptimisticUpdate(newState); // 쿼리 캐시 낙관적 업데이트
 
-        previousData.detail = queryClient.getQueryData(detailKey);
-        previousData.list = queryClient.getQueryData(listKey);
+      // 스낵바 미리 표시
+      const text = newState
+        ? ANIMATION_MESSAGES.SAVED
+        : ANIMATION_MESSAGES.REMOVED;
+      showSnackbar(text);
 
-        updateDetailQuery(detailKey, newScrapState);
-        updateListQuery(listKey, actualId, newScrapState);
-      } else {
-        // 게시글 상세 뷰
-        await queryClient.cancelQueries({ queryKey: detailKey });
-        previousData.detail = queryClient.getQueryData(detailKey);
-        updateDetailQuery(detailKey, newScrapState);
-      }
-
-      return previousData;
-    },
-
-    onError: (_, __, context) => {
-      const { detailKey, listKey } = getQueryKeys();
-
-      // 이전 상태로 롤백
-      if (context?.detail) {
-        queryClient.setQueryData(detailKey, context.detail);
-      }
-      if (context?.list) {
-        queryClient.setQueryData(listKey, context.list);
-      }
+      // 롤백을 위한 컨텍스트 반환
+      return { originalState };
     },
 
     onSuccess: () => {
-      startAnimation(setScrapAni);
+      // 서버 응답을 기반으로 쿼리 무효화하여 최신 상태 동기화
+      const { detailKey, listKeys } = getQueryKeys();
+
+      queryClient.invalidateQueries({ queryKey: detailKey });
+      listKeys.forEach((listKey) => {
+        queryClient.invalidateQueries({ queryKey: listKey });
+      });
     },
 
-    onSettled: () => {
-      const { detailKey, listKey } = getQueryKeys();
+    onError: (error, _, context) => {
+      console.error('Scrap mutation error:', error);
 
-      // 쿼리 무효화
-      if (postType === 'MARKET' || postType === 'CARDNEWS') {
-        queryClient.invalidateQueries({ queryKey: detailKey });
-        queryClient.invalidateQueries({ queryKey: listKey });
-      } else {
-        queryClient.invalidateQueries({ queryKey: detailKey });
+      // 에러 발생 시 낙관적 업데이트 롤백
+      if (context?.originalState !== undefined) {
+        setOptimisticState(context.originalState);
+        rollbackOptimisticUpdate(context.originalState);
       }
+
+      showSnackbar('작업 중 오류가 발생했습니다.', { type: 'error' });
     },
   });
 
   const handleScrapClick = (e) => {
-    console.log(state);
     e.stopPropagation();
+
+    // 이미 처리 중이면 중복 클릭 방지
+    if (isPending) return;
+
     handleScrapToggle();
   };
 
-  // 렌더링 관련 변수들
-  const isActive = state;
-  const Component = isActive ? ActiveScrap : Scrap;
-  const ariaLabel = isActive ? ARIA_LABELS.UNSCRAP : ARIA_LABELS.SCRAP;
+  // 렌더링에는 낙관적 상태 사용
+  const Component = optimisticState ? ActiveScrap : Scrap;
+  const ariaLabel = optimisticState ? ARIA_LABELS.UNSCRAP : ARIA_LABELS.SCRAP;
 
   return (
-    <>
-      {scrapAni && (
-        <StateChangeAnimate
-          state={!state}
-          changeToTrueText={ANIMATION_MESSAGES.SAVED}
-          changeToFalseText={ANIMATION_MESSAGES.REMOVED}
-        />
-      )}
-      <Component
-        className={cn('cursor-pointer', className, {
-          'text-neutral-border-40': isActive,
-        })}
-        onClick={handleScrapClick}
-        role="button"
-        aria-label={ariaLabel}
-        {...props}
-      />
-    </>
+    <Component
+      className={cn('cursor-pointer transition-opacity', className, {
+        'text-neutral-border-40': optimisticState,
+      })}
+      onClick={handleScrapClick}
+      role="button"
+      aria-label={ariaLabel}
+      aria-disabled={isPending}
+      {...props}
+    />
   );
 };
