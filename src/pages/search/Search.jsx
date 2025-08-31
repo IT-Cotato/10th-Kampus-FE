@@ -5,10 +5,6 @@ import { SearchBar } from '@/components/search/SearchBar';
 import { RecentSearch } from '@/components/search/RecentSearch';
 import { PostList } from '@/components/board/PostList';
 import { Loading } from '@/components/common/Loading';
-import {
-  StateChangeAnimate,
-  startAnimation,
-} from '@/components/common/StateChangeAnimate';
 import { QUERY_KEYS } from '@/constants/api';
 import { PATH } from '@/routes/path';
 import { getSearcTotalResult } from '@/apis/search/searchTotal.api';
@@ -18,6 +14,7 @@ import {
   deleteSearchKeyword,
 } from '@/apis/search/searchDeleteKeyword.api';
 import { getSearcBoardResult } from '@/apis/search/searchBoard.api';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 const MIN_SEARCH_LENGTH = 2;
 
@@ -26,9 +23,9 @@ export const Search = () => {
   const [showRecentSearches, setShowRecentSearches] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
-  const [isAnimate, setIsAnimate] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { showSnackbar } = useSnackbarStore();
 
   /** 검색 결과 요청 */
   const {
@@ -70,7 +67,7 @@ export const Search = () => {
       setShowRecentSearches(false);
       setSearchValue(text);
     } else {
-      startAnimation(setIsAnimate);
+      showSnackbar('Keywords must be at least 2 characters long.');
     }
   };
 
@@ -122,13 +119,6 @@ export const Search = () => {
 
   return (
     <div className="container flex flex-col gap-[0.875rem] px-4 pt-[0.625rem]">
-      {isAnimate && (
-        <StateChangeAnimate
-          state
-          changeToTrueText="Keywords must be at least 2 characters long."
-          changeToFalseText="Keywords must be at least 2 characters long."
-        />
-      )}
       <SearchBar
         value={inputValue}
         setValue={setInputValue}

@@ -8,7 +8,6 @@ import Pencil from '@/assets/imgs/icon/pencil.svg?react';
 import postDelete from '@/assets/imgs/icon/delete.svg';
 import { deletePost } from '@/apis/board/handlePost.api';
 import { useState, useRef, useEffect } from 'react';
-import { StateChangeAnimate, startAnimation } from './StateChangeAnimate';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
@@ -21,6 +20,7 @@ import { Modal } from './Modal';
 import { useDeleteMarketProduct } from '@/state/mutation/market/useDeleteMarketProduct';
 import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
 import { CHAT_TYPE } from '@/constants/chatType';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const navigate = useNavigate();
@@ -28,14 +28,12 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const { boardId, postId, productId } = useParams();
   const modalRef = useRef(null);
   const [openModal, setOpenModal] = useState(false); // 메뉴바 모달 창
-  const [pinAni, setPinAni] = useState(false); // 핀 애니메이션 상태
-  const [urlAni, setUrlAni] = useState(false); // URL 복사 애니메이션 상태
-  const [copyState, setCopyState] = useState(true); // 복사 성공여부
   const [popupState, setPopupState] = useState({
     chat: false,
     block: false,
     delete: false,
   });
+  const { showSnackbar } = useSnackbarStore();
   const popupData = {
     chat: {
       title: 'Chat with this account',
@@ -68,11 +66,15 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
   const { mutate: removeProduct } = useDeleteMarketProduct();
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: async () =>
-      data.isFavorite
+      data.boardWithFavoriteStatus.isFavorite
         ? deleteBoardFavorite({ boardId })
         : addBoardFavorite({ boardId }),
     onMutate: async () => {
-      startMenuAni(setPinAni);
+      if (data.boardWithFavoriteStatus.isFavorite) {
+        showSnackbar('Unpinned from the board');
+      } else {
+        showSnackbar('Pinned to the board');
+      }
       await queryClient.cancelQueries({
         queryKey: [QUERY_KEYS.GET_BOARD_DETAIL, boardId],
       });
@@ -90,7 +92,7 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
       );
       return { previousBoardDetail }; // 에러 시 롤백 값 주기
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       // 에러시 롤백
       if (context?.previousBoardDetail) {
         queryClient.setQueryData(
@@ -114,11 +116,6 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
     referenceId: Number(postId),
   });
 
-  const startMenuAni = (setAni) => {
-    // 애니메이션
-    setOpenModal(false);
-    startAnimation(setAni);
-  };
   const togglePopup = (type) => {
     setOpenModal(false);
     setPopupState((prev) => ({
@@ -140,14 +137,9 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
     const nowUrl = window.location.href;
     await navigator.clipboard
       .writeText(nowUrl)
-      .then(() => {
-        setCopyState(true);
-        startMenuAni(setUrlAni);
-      })
-      .catch(() => {
-        setCopyState(false);
-        startMenuAni(setUrlAni);
-      });
+      .then(() => showSnackbar('URL copied successfully'))
+      .catch(() => showSnackbar('URL copy failed'))
+      .finally(() => setOpenModal(false));
   };
 
   const handleEdit = () => {
@@ -184,18 +176,19 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
       {openModal &&
         !postId &&
         !isMarket && ( // 게시글 리스트 부분
-          <div
-            className="absolute right-4 top-12 flex items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
+          <button
+            type="button"
+            className="absolute right-4 top-12 flex cursor-pointer items-center justify-center gap-3 rounded-[0.625rem] border-[0.5px] border-[#D8D8D8] bg-white px-4 py-3 shadow-md"
             onClick={() => toggleFavorite()}
           >
             <p className="text-base">
-              {data && !data.isFavorite
+              {data && !data?.boardWithFavoriteStatus?.isFavorite
                 ? 'Add to Bookmark'
                 : 'Remove the Bookmark'}
             </p>
             {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
             <img src={pin} className="h-5 w-5 -rotate-90" />
-          </div>
+          </button>
         )}
       {openModal &&
         (postId || productId) &&
@@ -269,23 +262,6 @@ export const BoardMenuBar = ({ isAuthor = false, data, isMarket = false }) => {
             </div>
           </div>
         )}
-      {/** 이후 통신 시, 유저가 보고 있는 보드의 핀 여부에 따라 바꿔야함 */}
-      {pinAni && (
-        <StateChangeAnimate
-          state={!data.isFavorite}
-          changeToTrueText="Pinned to the board"
-          changeToFalseText="Unpinned from the board"
-          onClose={() => setPinAni(false)}
-        />
-      )}
-      {urlAni && (
-        <StateChangeAnimate
-          state={!copyState}
-          changeToTrueText="URL copied successfully"
-          changeToFalseText="URL copy failed"
-          onClose={() => setUrlAni(false)}
-        />
-      )}
       {Object.entries(popupState).map(
         ([key, isOpen]) =>
           isOpen && (

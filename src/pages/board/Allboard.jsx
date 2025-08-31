@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
-import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { BOARD_TYPE } from '@/constants/boardConstant';
 import { useGetBoardList } from '@/state/query/allBoard/useGetBoardList';
 import { useToggleFavorite } from '@/state/mutation/allBoard/useToggleFavorite';
 import { BoardList } from '@/components/board/BoardList';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 export const AllBoard = () => {
-  const [isAni, setIsAni] = useState(false);
-  const [prevState, setPrevState] = useState();
   const [listArray, setListArray] = useState({});
 
   const { data: listData } = useGetBoardList();
+  const { showSnackbar } = useSnackbarStore();
 
   const { mutate: toggleFavorite } = useToggleFavorite({
-    setPrev: setPrevState,
-    setAnimate: setIsAni,
+    showPinSuccessSnackbar: () => showSnackbar('Pinned to the board'),
+    showUnpinSuccessSnackbar: () => showSnackbar('Unpinned from the board'),
   });
 
   const parseBoardData = (dataList) => {
@@ -93,13 +92,6 @@ export const AllBoard = () => {
 
   return (
     <div className="relative flex h-full w-full flex-col gap-4 bg-[#FCFCFC] p-4">
-      {isAni && (
-        <StateChangeAnimate
-          state={prevState}
-          changeToTrueText={'Pinned to the board'}
-          changeToFalseText={'Unpinned from the board'}
-        />
-      )}
       <div className="text-title text-neutral-title">Board</div>
       {Object.entries(listArray).map(([key, list], idx) => {
         if (list.length === 0) return null;

@@ -1,24 +1,28 @@
 import { deleteSelectedDraft } from '@/apis/board/deleteDrafts.api';
-import { startAnimation } from '@/components/common/StateChangeAnimate';
 import { QUERY_KEYS } from '@/constants/api';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useDeleteSelectedDraft = ({
-  setIsDeleteSelectedSuccessAniOpen,
+  showDeleteSuccessSnackbar,
   onSettledCallback,
 }) => {
   const queryClient = useQueryClient();
+  const { showSnackbar } = useSnackbarStore();
+
   const mutate = useMutation({
     mutationFn: (selectedDrafts) =>
       deleteSelectedDraft({ tempPostIds: selectedDrafts }),
     onSuccess: () => {
-      startAnimation(setIsDeleteSelectedSuccessAniOpen);
+      showDeleteSuccessSnackbar();
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_DRAFT_LIST],
       }); // 삭제 후 리스트 다시 불러오기
     },
     onError: (error) => {
-      console.log('삭제 실패: ' + error);
+      showSnackbar(
+        'Error occured while deleting selected draft posts.\n' + error,
+      );
     },
     onSettled: () => onSettledCallback(),
   });
