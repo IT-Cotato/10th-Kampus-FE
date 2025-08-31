@@ -2,15 +2,12 @@ import { SearchBar } from '@/components/search/SearchBar';
 import { useState } from 'react';
 import { MarketList } from '@/components/market/MarketList';
 import { Loading } from '@/components/common/Loading';
-import {
-  StateChangeAnimate,
-  startAnimation,
-} from '@/components/common/StateChangeAnimate';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getSearcMarketResult } from '@/apis/search/searchMarket.api';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/routes/path';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 export const MarketSearch = () => {
   const [isSearch, setIsSearch] = useState(true);
@@ -19,6 +16,7 @@ export const MarketSearch = () => {
   const [isAnimate, setIsAnimate] = useState(false);
   const navigate = useNavigate();
   const searchQueryKey = [QUERY_KEYS.GET_SEARCH_RESULT_MARKET, searchValue];
+  const { showSnackbar } = useSnackbarStore();
 
   const {
     data: searchResult,
@@ -34,7 +32,7 @@ export const MarketSearch = () => {
     if (text.length >= 2) {
       setSearchValue(text);
     } else {
-      startAnimation(setIsAnimate);
+      showSnackbar('Keywords must be at least 2 characters long.');
     }
   };
 
@@ -44,13 +42,6 @@ export const MarketSearch = () => {
 
   return (
     <div className="container flex flex-col gap-[0.875rem] px-4 pt-[0.625rem]">
-      {isAnimate && (
-        <StateChangeAnimate
-          state={true}
-          changeToTrueText={'Keywords must be at least 2 characters long.'}
-          changeToFalseText={'Keywords must be at least 2 characters long.'}
-        />
-      )}
       <SearchBar
         value={inputValue}
         setValue={setInputValue}

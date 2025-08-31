@@ -5,9 +5,9 @@ import { Loading } from '@/components/common/Loading';
 import KampusLogo from '@/assets/imgs/icon/kampus-logo.svg?react';
 import { useState } from 'react';
 import { useGetDraftList } from '@/state/query/post/useGetDraftList';
-import { StateChangeAnimate } from '@/components/common/StateChangeAnimate';
 import { useDeleteAllDraft } from '@/state/mutation/board/useDeleteAllDraft';
 import { useDeleteSelectedDraft } from '@/state/mutation/board/useDeleteSelectedDraft';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 export const Draft = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -15,32 +15,31 @@ export const Draft = () => {
   const [isDeleteAllModalOpen, setIsDeleteAllModalOpen] = useState(false);
   const [isDeleteSelectedModalOpen, setIsDeleteSelectedModalOpen] =
     useState(false);
-  const [isDeleteAllSuccessAniOpen, setIsDeleteAllSuccessAniOpen] =
-    useState(false);
-  const [isDeleteSelectedSuccessAniOpen, setIsDeleteSelectedSuccessAniOpen] =
-    useState(false);
+  const { showSnackbar } = useSnackbarStore();
 
   const { data: getDrafts, isLoading: draftLoading } = useGetDraftList();
 
-  const { mutate: deleteAllDraftMutate, onError: deleteAllError } =
-    useDeleteAllDraft({
-      setIsDeleteAllSuccessAniOpen: setIsDeleteAllSuccessAniOpen,
-      onSettledCallback: () => {
-        setIsEditMode(false);
-        setIsDeleteAllModalOpen(false);
-        setSelectedDrafts([]);
-      },
-    });
+  const { mutate: deleteAllDraftMutate } = useDeleteAllDraft({
+    showDeleteAllSuccessSnackbar: () =>
+      showSnackbar(
+        `All ${getDrafts?.totalCount} draft posts\nhas been successfully deleted.`,
+      ),
+    onSettledCallback: () => {
+      setIsEditMode(false);
+      setIsDeleteAllModalOpen(false);
+      setSelectedDrafts([]);
+    },
+  });
 
-  const { mutate: deleteSelectedDraftMutate, onError: deleteSelectedError } =
-    useDeleteSelectedDraft({
-      setIsDeleteSelectedSuccessAniOpen: setIsDeleteSelectedSuccessAniOpen,
-      onSettledCallback: () => {
-        setIsEditMode(false);
-        setIsDeleteSelectedModalOpen(false);
-        setSelectedDrafts([]);
-      },
-    });
+  const { mutate: deleteSelectedDraftMutate } = useDeleteSelectedDraft({
+    showDeleteSuccessSnackbar: () =>
+      showSnackbar('The selected draft posts\nhas been successfully deleted.'),
+    onSettledCallback: () => {
+      setIsEditMode(false);
+      setIsDeleteSelectedModalOpen(false);
+      setSelectedDrafts([]);
+    },
+  });
 
   return (
     <main className="flex w-full flex-1 flex-col pt-16">
@@ -112,22 +111,6 @@ export const Draft = () => {
           onClose={() => setIsDeleteSelectedModalOpen(false)}
           onConfirm={() => deleteSelectedDraftMutate(selectedDrafts)}
           type="selected"
-        />
-      )}
-      {isDeleteAllSuccessAniOpen && (
-        <StateChangeAnimate
-          state={!!deleteAllError}
-          changeToTrueText={`All ${getDrafts?.totalCount} draft posts\nhas been successfully deleted.`}
-          changeToFalseText="Error occured while deleting all draft posts."
-          onClose={() => setIsDeleteAllSuccessAniOpen(false)}
-        />
-      )}
-      {isDeleteSelectedSuccessAniOpen && (
-        <StateChangeAnimate
-          state={!!deleteSelectedError}
-          changeToTrueText={`The selected draft posts\nhas been successfully deleted.`}
-          changeToFalseText="Error occured while deleting selected draft posts."
-          onClose={() => setIsDeleteSelectedSuccessAniOpen(false)}
         />
       )}
     </main>
