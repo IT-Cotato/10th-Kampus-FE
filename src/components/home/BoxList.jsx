@@ -2,16 +2,24 @@ import { PATH } from '@/routes/path';
 import { useNavigate } from 'react-router-dom';
 import ArticleIcon from '@/assets/imgs/icon/article.svg?react';
 
-export const BoxList = ({ text }) => {
+export const BoxList = ({ list, university }) => {
   const navigate = useNavigate();
   return (
     <div
       className="flex cursor-pointer items-center gap-5 whitespace-nowrap px-5 py-2.5"
-      onClick={() => navigate(`${PATH.BOARD.BASE}/${text.boardId}`)}
+      onClick={() => {
+        if (university) {
+          navigate(`${PATH.BOARD.BASE}/${list.boardId}/${list.postId}`);
+        } else {
+          navigate(`${PATH.BOARD.BASE}/${list.boardId}`);
+        }
+      }}
     >
-      <h1 className="text-subTitle text-neutral-title">{text?.boardName}</h1>
+      {!university && (
+        <h1 className="text-subTitle text-neutral-title">{list?.boardName}</h1>
+      )}
       <h2 className="truncate text-base text-neutral-base">
-        {text?.postTitle}
+        {list?.postTitle}
       </h2>
     </div>
   );
