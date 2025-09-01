@@ -4,6 +4,8 @@ import { Bubble } from '@/components/common/Bubble';
 import OfficialMail from '@/constants/officialMail.json';
 
 export const Login = () => {
+  //token cleanup 기능이 필요할 것 같음
+
   return (
     <div className="relative flex flex-1 items-center">
       <a

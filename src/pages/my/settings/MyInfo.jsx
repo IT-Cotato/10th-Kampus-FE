@@ -56,6 +56,10 @@ export const MyInfo = () => {
   });
 
   const handleClickSave = () => {
+    if (disabled) {
+      return;
+    }
+
     const data = {
       nickname: info.nickname,
       preferredLanguage: info.preferredLanguage,
@@ -101,14 +105,19 @@ export const MyInfo = () => {
   };
 
   useEffect(() => {
-    if (
-      !isUserNameFormatInvalid &&
-      debouncedUserName &&
-      info.nickname !== savedInfo.nickname
-    ) {
+    if (!isUserNameFormatInvalid && debouncedUserName) {
+      if (info.nickname === savedInfo.nickname) {
+        setIsUserNameDuplicated(false);
+        return;
+      }
       handleDuplicateCheck(debouncedUserName);
     }
-  }, [debouncedUserName, isUserNameFormatInvalid]);
+  }, [
+    debouncedUserName,
+    isUserNameFormatInvalid,
+    info.nickname,
+    savedInfo.nickname,
+  ]);
 
   const disabled =
     !info.nickname ||

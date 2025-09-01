@@ -19,11 +19,17 @@ import {
 } from '@/constants/productState';
 import { useGetMarketProduct } from '@/state/query/market/useGetMarketProduct';
 import { usePatchMarketProductStatus } from '@/state/mutation/market/usePatchMarketProductStatus';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
+import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
+import { CHAT_TYPE } from '@/constants/chatType';
+import { PATH } from '@/routes/path';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 export const MarketPost = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
+  const { showSnackbar } = useSnackbarStore();
 
   // 백 <-> 프론트 매핑 객체
   const stateMapClientToServer = {
@@ -38,12 +44,15 @@ export const MarketPost = () => {
   };
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedDropdown, setSelectedDropdown] = useState();
 
   const { data: productData, isLoading: isProductLoading } =
     useGetMarketProduct();
   const { mutate: changeStatus } = usePatchMarketProductStatus();
-
-  const [selectedDropdown, setSelectedDropdown] = useState();
+  const { mutate: createChatRoom } = usePostChatroom({
+    type: CHAT_TYPE.PRODUCT,
+    referenceId: Number(productId),
+  });
 
   // 프론트 -> 백 통신 전 사용
   const changeStateToUpperCase = (state) =>
@@ -78,7 +87,17 @@ export const MarketPost = () => {
   };
 
   // 채팅 걸기
-  const handleChat = () => {};
+  const handleChat = () => {
+    if (productData?.isAuthor) {
+      if (productData.chatCount === 0) {
+        showSnackbar('아직 생성된 채팅방이 없습니다.');
+      } else {
+        navigate(PATH.CHAT_LIST.BASE);
+      }
+    } else {
+      createChatRoom();
+    }
+  };
 
   const {
     translateState,
@@ -243,7 +262,7 @@ export const MarketPost = () => {
           className="rounded-[.625rem] bg-primary-base px-8 py-5 text-title-bold-16 text-white"
           onClick={handleChat}
         >
-          Chat ({productData?.isAuthor && productData?.chatCount})
+          {productData?.isAuthor ? `Chat (${productData?.chatCount})` : 'Chat'}
         </button>
       </div>
     </div>
