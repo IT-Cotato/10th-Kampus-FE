@@ -15,18 +15,18 @@ export const CommunityScrap = () => {
   });
 
   const handleNavigate = (data) => {
-    navigate(`../../../${PATH.BOARD.BASE}/${data.boardId}/${data.id}`);
+    navigate(`../../../${PATH.BOARD.BASE}/${data.boardId}/${data.postId}`);
   };
 
   return (
     <div className="flex h-full w-full flex-col">
       {isLoading ? (
         <Loading />
-      ) : !postList.items ? (
+      ) : postList?.items?.length === 0 ? (
         <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
-            There&apos;s nothing you&apos;ve scraped!
+            There&apos;s nothing you&apos;ve saved!
             <br />
             Try saving your interest:)
           </span>

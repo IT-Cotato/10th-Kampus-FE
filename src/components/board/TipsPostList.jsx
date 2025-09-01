@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { formatTime } from '@/utils/formatTime';
 
 export const TipsPostList = ({ data, boardId }) => {
-  // 카드 뉴스 부분 데이터 요청 시, 스크랩 여부도 같이 가져와야 함
   const navigate = useNavigate();
 
   return (
@@ -38,6 +37,7 @@ export const TipsPostList = ({ data, boardId }) => {
         <ScrapComponent
           state={data.isScrapped}
           id={data.postId}
+          postType={'CARDNEWS'}
           className="h-[1.875rem] w-[1.875rem] shrink-0"
           boardId={boardId}
         />

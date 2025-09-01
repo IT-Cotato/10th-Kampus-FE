@@ -24,9 +24,13 @@ export default function AdminRoute() {
   }
 
   // 관리자 권한이 확인된 경우
-  return (
-    <AdminLayout>
-      <Outlet />
-    </AdminLayout>
-  );
+  if (userData) {
+    return (
+      <AdminLayout userData={userData}>
+        <Outlet />
+      </AdminLayout>
+    );
+  }
+
+  return null;
 }

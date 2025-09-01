@@ -16,6 +16,7 @@ export const API_DOMAINS = {
   GET_MY_COMMENTED_POST: '/my/commented-post',
   GET_MY_MARKETS: '/products/my',
   GET_MY_SCRAPED_POST: '/posts/my/scrap',
+  GET_MY_SCRAPED_PRODUCT: '/products/scraps',
 
   POST_INQUIRY: '/support/inquiry',
 
@@ -71,6 +72,7 @@ export const API_DOMAINS = {
   MARKET_POST_PRODUCT: '/products',
   MARKET_HANDLE_PRODUCT: '/products/:productId',
   MARKET_PATCH_PRODUCT_STATUS: '/products/:productId/status',
+  PRODUCT_SCRAP_TOGGLE: '/products/:productId/scraps',
 
   ADMIN_CATEGORY: '/categories',
   ADMIN_BOARD: '/admin/boards',
@@ -157,6 +159,7 @@ export const QUERY_KEYS = {
   MY_COMMENTED_POST_LIST: 'myCommentedPostList',
   MY_MARKET_LIST: 'myMarketList',
   MY_SCRAPED_POST_LIST: 'scrapedPostList',
+  MY_SCRAPED_PRODUCT_LIST: 'scrapedProductList',
   USER_INFO: 'userInfo',
 
   GET_MARKET_CATEGORIES: 'marketCategories',

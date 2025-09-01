@@ -32,13 +32,9 @@ import {
   MyArticles,
   ChatReport,
   Dashboard,
-  UserManagement,
   BoardManagement,
   SignupManagement,
   CreateCardnews,
-  ReportManagement,
-  Statistics,
-  AdminLogin,
   ChatPage,
   CardnewsList,
   BoardGuide,
@@ -440,10 +436,6 @@ const AppRouter = createBrowserRouter([
           element: <Outlet />,
           children: [
             {
-              path: PATH.ADMIN.LOGIN,
-              element: <AdminLogin />,
-            },
-            {
               path: '',
               element: <Navigate to={PATH.ADMIN.DASHBOARD} replace />,
             },
@@ -454,10 +446,6 @@ const AppRouter = createBrowserRouter([
             {
               path: PATH.ADMIN.CATEGORY,
               element: <ManageCategory />,
-            },
-            {
-              path: PATH.ADMIN.USER_MANAGEMENT,
-              element: <UserManagement />,
             },
             {
               path: PATH.ADMIN.SIGNUP_MANAGEMENT.BASE,
@@ -504,14 +492,6 @@ const AppRouter = createBrowserRouter([
                   element: <CreateCardnews />,
                 },
               ],
-            },
-            {
-              path: PATH.ADMIN.REPORT_MANAGEMENT,
-              element: <ReportManagement />,
-            },
-            {
-              path: PATH.ADMIN.STATISTICS,
-              element: <Statistics />,
             },
             {
               path: PATH.ADMIN.NOTICE.BASE,

@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 export const usePatchDraft = () => {
   const queryClient = useQueryClient();
   const mutate = useMutation({
-    mutationFn: (draft, { postDraftId }) =>
-      patchSaveDraft({ data: draft, postDraftId }),
+    mutationFn: ({ data, postDraftId }) =>
+      patchSaveDraft({ data, postDraftId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_DRAFT_ID],

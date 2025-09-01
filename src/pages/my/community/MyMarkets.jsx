@@ -26,7 +26,7 @@ export const MyMarkets = () => {
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 pb-10">
           <Logo className="w-32 text-neutral-disabled" />
           <span className="text-center text-neutral-border-40">
-            There&apos;s nothing you&apos;ve scrapped!
+            There&apos;s nothing you&apos;ve saved!
             <br />
             Try saving your interest:)
           </span>

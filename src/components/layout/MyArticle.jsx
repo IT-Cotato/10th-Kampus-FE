@@ -29,7 +29,7 @@ export const MyArticle = ({ children }) => {
 
   return (
     <div className="flex w-full flex-col">
-      <TitleHeader text="My Article" />
+      <TitleHeader text="My Articles" />
       <div className="flex w-full flex-row justify-start gap-[0.625rem] p-4">
         {menu.map((item) => (
           <ButtonRound
