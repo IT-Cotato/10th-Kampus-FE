@@ -56,6 +56,10 @@ export const MyInfo = () => {
   });
 
   const handleClickSave = () => {
+    if (disabled) {
+      return;
+    }
+
     const data = {
       nickname: info.nickname,
       preferredLanguage: info.preferredLanguage,

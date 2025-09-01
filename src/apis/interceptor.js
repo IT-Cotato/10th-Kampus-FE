@@ -51,7 +51,7 @@ export const onError = async (error, api) => {
   const currentRetryCount = originalRequest._retryCount || 0; // 재시도 횟수 확인
 
   const isAdminApiRequest = originalRequest.url.includes('/admin');
-  if (isAdminApiRequest && (status === 401 || status === 403)) {
+  if (isAdminApiRequest && status === 403) {
     return Promise.reject(new Error('FORBIDDEN'));
   }
 

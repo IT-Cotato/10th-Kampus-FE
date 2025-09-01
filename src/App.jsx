@@ -4,8 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppRouter from '@/routes/AppRouter';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-import { getTokens } from './utils/authUtils';
+import { removeTokens } from './utils/authUtils';
 import { useAuthStore } from './stores/useAuthStore';
+import { reissueToken } from './apis/auth/reissueToken.api';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,13 +27,13 @@ function App() {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const { accessToken } = await getTokens();
+        const accessToken = await reissueToken();
         if (accessToken) {
-          useAuthStore.getState().setTokens({ accessToken });
+          useAuthStore.getState().setAccessToken(accessToken);
         }
       } catch (error) {
         console.error('Failed to initialize auth:', error);
-        useAuthStore.getState().clearTokens();
+        await removeTokens();
       } finally {
         useAuthStore.getState().setInitializing(false);
       }

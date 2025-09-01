@@ -23,6 +23,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
 import { CHAT_TYPE } from '@/constants/chatType';
+import { toast } from 'react-toastify';
+import { PATH } from '@/routes/path';
 
 export const MarketPost = () => {
   const { productId } = useParams();
@@ -85,12 +87,14 @@ export const MarketPost = () => {
 
   // 채팅 걸기
   const handleChat = () => {
-    if (productData?.isAuthor)
-      navigate(`/chat`, { state: { isProductAuthor: true } });
-    //author 인경우, 백엔드 필터링 필요
-    else {
+    if (productData?.isAuthor) {
+      if (productData.chatCount === 0) {
+        toast.info('아직 생성된 채팅방이 없습니다.');
+      } else {
+        navigate(PATH.CHAT_LIST.BASE);
+      }
+    } else {
       createChatRoom();
-      navigate(`/chat`, { state: { isProductAuthor: false } });
     }
   };
 
@@ -258,7 +262,7 @@ export const MarketPost = () => {
           className="rounded-[.625rem] bg-primary-base px-8 py-5 text-title-bold-16 text-white"
           onClick={handleChat}
         >
-          Chat
+          Chat ({productData?.isAuthor && productData?.chatCount})
         </button>
       </div>
     </div>
