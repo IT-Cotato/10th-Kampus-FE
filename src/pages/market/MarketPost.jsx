@@ -23,12 +23,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
 import { usePostChatroom } from '@/state/mutation/chat/usePostChatroom';
 import { CHAT_TYPE } from '@/constants/chatType';
-import { toast } from 'react-toastify';
 import { PATH } from '@/routes/path';
+import { useSnackbarStore } from '@/stores/useSnackbarStore';
 
 export const MarketPost = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
+  const { showSnackbar } = useSnackbarStore();
 
   // 백 <-> 프론트 매핑 객체
   const stateMapClientToServer = {
@@ -89,7 +90,7 @@ export const MarketPost = () => {
   const handleChat = () => {
     if (productData?.isAuthor) {
       if (productData.chatCount === 0) {
-        toast.info('아직 생성된 채팅방이 없습니다.');
+        showSnackbar('아직 생성된 채팅방이 없습니다.');
       } else {
         navigate(PATH.CHAT_LIST.BASE);
       }
@@ -261,7 +262,7 @@ export const MarketPost = () => {
           className="rounded-[.625rem] bg-primary-base px-8 py-5 text-title-bold-16 text-white"
           onClick={handleChat}
         >
-          Chat ({productData?.isAuthor && productData?.chatCount})
+          {productData?.isAuthor ? `Chat (${productData?.chatCount})` : 'Chat'}
         </button>
       </div>
     </div>
