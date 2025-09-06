@@ -1,13 +1,13 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import anonymous from '@/assets/imgs/icon/anonymous.svg';
 import kampus from '@/assets/imgs/icon/kampus-post.svg';
 import Like from '@/assets/imgs/icon/like.svg?react';
 import FillLike from '@/assets/imgs/icon/active-heart.svg?react';
 import Comment from '@/assets/imgs/icon/comment.svg?react';
 import { ImageSlider } from '@/components/common/ImageSlider';
-import { UserInput } from '@/components/common/UserInput';
+import UserInput from '@/components/common/UserInput';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@/components/common/Loading';
@@ -56,7 +56,7 @@ export const Post = () => {
   const { mutate: handleLike } = useHandlePostLike();
   const { mutate: handleCommentLike } = useHandleCommentLike();
 
-  const submitComment = () => {
+  const submitComment = useCallback(() => {
     if (!input.trim()) return;
     const buildComment = {
       content: input,
@@ -64,7 +64,7 @@ export const Post = () => {
       targetId: focusedComment?.targetId,
     };
     handleComment({ type: true, param: postId, data: buildComment });
-  };
+  }, [input, focusedComment, handleComment, postId]);
   return (
     <div
       className="flex h-full w-full flex-col overflow-scroll pb-20 scrollbar-hide"
@@ -189,6 +189,7 @@ export const Post = () => {
                 focusedComment={focusedComment}
                 setFocusedComment={setFocusedComment}
                 handleCommentLike={handleCommentLike}
+                handleComment={handleComment}
               />
             ))}
           </div>
