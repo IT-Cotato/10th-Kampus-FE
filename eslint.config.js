@@ -6,6 +6,7 @@ import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
 import unusedImports from 'eslint-plugin-unused-imports';
 import pluginPrettier from 'eslint-plugin-prettier';
+import configPrettier from 'eslint-config-prettier';
 
 export default defineConfig([
   {
@@ -35,7 +36,11 @@ export default defineConfig([
       'react-refresh': pluginReactRefresh,
       prettier: pluginPrettier,
     },
-    extends: [js.configs.recommended, pluginReact.configs.flat.recommended],
+    extends: [
+      js.configs.recommended,
+      pluginReact.configs.flat.recommended,
+      configPrettier,
+    ],
     languageOptions: { globals: globals.browser },
     rules: {
       'react/prop-types': 'off',
