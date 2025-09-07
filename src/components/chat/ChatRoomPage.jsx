@@ -1,8 +1,6 @@
 import { ArticleInfo } from '@/components/chat/ArticleInfo';
-import { NoticeBox } from '@/components/common/NoticeBox';
-import { UserInput } from '@/components/common/UserInput';
-import { cn } from '@/utils/cn';
-import { useEffect, useState, useRef, useMemo } from 'react';
+import UserInput from '@/components/common/UserInput';
+import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { RoomHeader } from '@/components/chat/RoomHeader';
 import { MessageModal } from '@/components/chat/MessageModal';
 import { useMutation } from '@tanstack/react-query';
@@ -12,6 +10,7 @@ import { postReadMessage, postChatImage } from '@/apis/chat/messages.api';
 import { useGetChatroom } from '@/state/query/chat/useGetChatroom';
 import { INPUT_TYPE } from '@/constants/inputType';
 import { DELETED_POST_ID } from '@/constants/boardConstant';
+import MessageBubble from './MessageBubble';
 
 export const ChatRoom = ({
   chatroomId,
@@ -24,7 +23,7 @@ export const ChatRoom = ({
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [dataDelete, setDataDelete] = useState(false);
   const [files, setFiles] = useState([]);
-  const messagesEndRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
   //방 정보
   const { data: roomData, isLoading: isRoomLoading } = useGetChatroom({
@@ -68,12 +67,14 @@ export const ChatRoom = ({
     }
   }, [chatroomId, chatsRead, messages.length]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   useEffect(() => {
-    scrollToBottom();
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollTo({
+        top: scrollContainer.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   }, [messages]);
 
   // 메시지 useMemo로 정렬 관리
@@ -82,9 +83,9 @@ export const ChatRoom = ({
   }, [messages]);
 
   // 파일 데이터 변경 핸들러
-  const handleImagesChange = (newFiles) => {
+  const handleImagesChange = useCallback((newFiles) => {
     setFiles(newFiles);
-  };
+  }, []);
 
   //메시지 전송
   const handleSendMessage = () => {
@@ -98,64 +99,52 @@ export const ChatRoom = ({
     }
   };
 
-  const handleClickMessage = (senderId) => {
+  const handleClickMessage = useCallback((senderId) => {
     setSelectedMessage(senderId);
-  };
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedMessage(false);
+  }, []);
 
   if (isRoomLoading) {
     return <Loading />;
   }
 
   return (
-    <div className="flex h-screen w-full flex-col">
-      <RoomHeader
-        text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
-        setChatroomId={setChatroomId}
-        setMessages={setMessages}
-      />
-      <ArticleInfo
-        boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
-        postName={!dataDelete ? roomData.title : '삭제된 게시글입니다.'}
-        postId={!dataDelete ? roomData.referenceId : '삭제된 게시글입니다.'}
-        boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
-        dataDelete={dataDelete}
-      />
-      <div className="flex-1 overflow-y-auto p-4">
-        <NoticeBox />
-        <div className="flex flex-1 flex-col">
+    <div className="flex h-full w-full flex-col">
+      <div>
+        <RoomHeader
+          text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
+          setChatroomId={setChatroomId}
+          setMessages={setMessages}
+        />
+        <ArticleInfo
+          boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
+          postName={!dataDelete ? roomData.title : '삭제된 게시글입니다.'}
+          postId={!dataDelete ? roomData.referenceId : '삭제된 게시글입니다.'}
+          boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
+          dataDelete={dataDelete}
+        />
+      </div>
+      <div
+        className="flex-1 overflow-y-auto p-4 pb-20"
+        ref={scrollContainerRef}
+      >
+        {/* <NoticeBox /> */}
+        <div className="flex flex-col">
           {sortedMessages.length > 0 ? (
-            sortedMessages.map((message, index) => (
-              <div
-                key={index}
-                className={cn('mb-4 flex', {
-                  'justify-end': message.isMine,
-                  'justify-start': !message.isMine,
-                })}
-              >
-                <div
-                  className={cn('max-w-[70%] rounded-lg p-3', {
-                    'bg-primary-30 text-white': message.isMine,
-                    'bg-neutral-bg-5': !message.isMine,
-                  })}
-                  onClick={() => handleClickMessage(message.senderId)}
-                >
-                  {message.isImage ? (
-                    <img
-                      src={message.content}
-                      alt="채팅 이미지"
-                      className="max-w-full rounded-lg"
-                    />
-                  ) : (
-                    message.content
-                  )}
-                </div>
-              </div>
+            sortedMessages.map((message) => (
+              <MessageBubble
+                key={message.id}
+                message={message}
+                onMessageClick={handleClickMessage}
+              />
             ))
           ) : (
             <p className="mx-auto text-neutral-border-40">Empty</p>
           )}
         </div>
-        <div ref={messagesEndRef} />
       </div>
       <UserInput
         type={INPUT_TYPE.CHAT}
@@ -165,9 +154,7 @@ export const ChatRoom = ({
         handleSend={handleSendMessage}
         onImagesChange={handleImagesChange}
       />
-      {selectedMessage && (
-        <MessageModal onClose={() => setSelectedMessage(false)} />
-      )}
+      {selectedMessage && <MessageModal onClose={handleCloseModal} />}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { NoticeBox } from '@/components/common/NoticeBox';
 import { ListItem } from '@/components/chat/ListItem';
 import { useState } from 'react';
 import { ChatType } from '@/components/chat/ChatType';
@@ -21,7 +20,6 @@ export const ChatList = ({
       onClick={handleClickOutside}
     >
       <div className="text-title text-neutral-title">Chats</div>
-      <NoticeBox />
       <ChatType onTypeChange={onTypeChange} />
       {chatList.length === 0 ? (
         <p className="mx-auto text-neutral-border-40">Empty</p>

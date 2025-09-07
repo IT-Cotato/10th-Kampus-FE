@@ -2,10 +2,10 @@ import Send from '@/assets/imgs/icon/send.svg?react';
 import Camera from '@/assets/imgs/icon/camera.svg?react';
 import XIcon from '@/assets/imgs/icon/circle-x.svg?react';
 import { cn } from '@/utils/cn';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { INPUT_TYPE } from '@/constants/inputType';
 
-export const UserInput = ({
+const UserInput = ({
   placeholder,
   input,
   setInput,
@@ -192,3 +192,5 @@ export const UserInput = ({
     </div>
   );
 };
+
+export default memo(UserInput);
