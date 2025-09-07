@@ -15,7 +15,10 @@ export const ChatLayout = ({ children, render }) => {
           <Navbar />
         </div>
       ) : (
-        <div id="modal-root" className="container relative flex">
+        <div
+          id="modal-root"
+          className="container relative flex h-screen flex-col"
+        >
           {children}
         </div>
       )}
