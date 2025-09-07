@@ -184,6 +184,7 @@ export const Post = () => {
             {commentData?.comments?.map((item) => (
               <PostComment
                 data={item}
+                isAuthor={item.isAuthor}
                 key={item.commentId}
                 setInputFocus={setInputFocus}
                 focusedComment={focusedComment}

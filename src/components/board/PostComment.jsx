@@ -12,6 +12,7 @@ import { Modal, MODAL_TYPES } from '@/components/common/Modal';
 
 export const PostComment = ({
   data,
+  isAuthor,
   setInputFocus,
   focusedComment,
   setFocusedComment,
@@ -124,7 +125,7 @@ export const PostComment = ({
               >
                 Reply
               </div>
-              {data.isAuthor && (
+              {isAuthor && (
                 <div
                   className="cursor-pointer text-neutral-border-50"
                   onClick={(e) => {
@@ -154,6 +155,7 @@ export const PostComment = ({
         <ReplyComment
           reply={item.targetAuthor}
           data={item}
+          isAuthor={item.isAuthor}
           key={item.commentId}
           focusedComment={focusedComment}
           handleComment={handleComment}
@@ -178,6 +180,7 @@ export const PostComment = ({
 const ReplyComment = ({
   reply,
   data,
+  isAuthor,
   focusedComment,
   handleReply,
   handleCommentLike,
@@ -274,7 +277,7 @@ const ReplyComment = ({
             >
               Reply
             </div>
-            {data.isAuthor && (
+            {isAuthor && (
               <div
                 className="cursor-pointer text-neutral-border-50"
                 onClick={(e) => {
