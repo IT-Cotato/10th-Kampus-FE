@@ -13,7 +13,6 @@ export const MarketSearch = () => {
   const [isSearch, setIsSearch] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
-  const [isAnimate, setIsAnimate] = useState(false);
   const navigate = useNavigate();
   const searchQueryKey = [QUERY_KEYS.GET_SEARCH_RESULT_MARKET, searchValue];
   const { showSnackbar } = useSnackbarStore();
