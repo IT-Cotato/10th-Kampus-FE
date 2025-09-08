@@ -38,10 +38,13 @@ export const Write = () => {
     boardCategories?.categories.map((item) => item.categoryName) || [];
 
   // 글 올리기
-  const { mutate: addPost } = usePostPost();
+  const { mutate: addPost, isPending: isPostPending } = usePostPost();
 
   // 임시저장글 게시
-  const { mutate: postDraft } = usePostDraft({ boardId, postDraftId: draftId });
+  const { mutate: postDraft, isPending: isPutPending } = usePostDraft({
+    boardId,
+    postDraftId: draftId,
+  });
 
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -133,6 +136,7 @@ export const Write = () => {
   };
 
   const handleUploadWithoutTranslation = () => {
+    if (isPostPending || isPutPending) return;
     if (validateBeforeUpload()) {
       handleUpload();
     }
@@ -175,6 +179,7 @@ export const Write = () => {
   };
 
   const handleTranslateAndUpload = () => {
+    if (isPostPending || isPutPending) return;
     if (validateBeforeUpload()) {
       setIsTranslateModalOpen(true);
       handleTranslate({
