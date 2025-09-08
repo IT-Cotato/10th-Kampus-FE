@@ -1,16 +1,16 @@
-import { ArticleInfo } from '@/components/chat/ArticleInfo';
 import UserInput from '@/components/common/UserInput';
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { RoomHeader } from '@/components/chat/RoomHeader';
 import { MessageModal } from '@/components/chat/MessageModal';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
-import { Loading } from '@/components/common/Loading';
 import { postReadMessage, postChatImage } from '@/apis/chat/messages.api';
-import { useGetChatroom } from '@/state/query/chat/useGetChatroom';
 import { INPUT_TYPE } from '@/constants/inputType';
-import { DELETED_POST_ID } from '@/constants/boardConstant';
 import MessageBubble from './MessageBubble';
+import { ErrorWrapper } from '../common/error/SuspenseFallback';
+import { ApiFallback } from '@/components/common/error/ApiErrorBoundary'; // <-- New import
+import { getErrorPayload } from '@/utils/errorHandler';
+import BackButton from '../common/BackButton';
 
 export const ChatRoom = ({
   chatroomId,
@@ -21,14 +21,36 @@ export const ChatRoom = ({
 }) => {
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
-  const [dataDelete, setDataDelete] = useState(false);
   const [files, setFiles] = useState([]);
   const scrollContainerRef = useRef(null);
 
-  //방 정보
-  const { data: roomData, isLoading: isRoomLoading } = useGetChatroom({
-    chatroomId,
-  });
+  const chatRoomSpecificFallback = ({ error, resetErrorBoundary }) => {
+    const { code = 'UNKNOWN_ERROR' } = getErrorPayload(error);
+
+    if (code === 'PRODUCT-001' || code === 'POST-001') {
+      return (
+        <div>
+          <div className="flex h-14 flex-row items-center justify-between border-b-[.0313rem] border-neutral-border-30 p-4">
+            <BackButton
+              onClick={() => {
+                setChatroomId(null);
+                setMessages([]);
+              }}
+            />
+          </div>
+          <div className="flex flex-col items-center justify-center p-4">
+            <h2 className="text-2xl mb-3 font-extrabold text-primary-red">
+              게시글을 찾을 수 없습니다.
+            </h2>
+            <p className="mb-4 text-base text-neutral-80">
+              삭제되었거나 존재하지 않는 게시글입니다.
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return <ApiFallback resetErrorBoundary={resetErrorBoundary} />;
+  };
 
   //읽음처리
   const { mutate: chatsRead } = useMutation({
@@ -48,17 +70,6 @@ export const ChatRoom = ({
       setFiles([]);
     },
   });
-
-  //게시글 삭제 여부 체크
-  useEffect(() => {
-    if (roomData) {
-      if (roomData.postId === DELETED_POST_ID) {
-        setDataDelete(true);
-      } else {
-        setDataDelete(false);
-      }
-    }
-  }, [roomData]);
 
   //채팅 메시지 읽음 처리
   useEffect(() => {
@@ -107,31 +118,19 @@ export const ChatRoom = ({
     setSelectedMessage(false);
   }, []);
 
-  if (isRoomLoading) {
-    return <Loading />;
-  }
-
   return (
     <div className="flex h-full w-full flex-col">
-      <div>
+      <ErrorWrapper fallbackRender={chatRoomSpecificFallback}>
         <RoomHeader
-          text={!dataDelete ? roomData.postTitle : '삭제된 게시글입니다.'}
+          chatroomId={chatroomId}
           setChatroomId={setChatroomId}
           setMessages={setMessages}
         />
-        <ArticleInfo
-          boardName={!dataDelete ? roomData.boardName : '삭제된 게시글입니다.'}
-          postName={!dataDelete ? roomData.title : '삭제된 게시글입니다.'}
-          postId={!dataDelete ? roomData.referenceId : '삭제된 게시글입니다.'}
-          boardId={!dataDelete ? roomData.boardId : '삭제된 게시글입니다.'}
-          dataDelete={dataDelete}
-        />
-      </div>
+      </ErrorWrapper>
       <div
         className="flex-1 overflow-y-auto p-4 pb-20"
         ref={scrollContainerRef}
       >
-        {/* <NoticeBox /> */}
         <div className="flex flex-col">
           {sortedMessages.length > 0 ? (
             sortedMessages.map((message) => (

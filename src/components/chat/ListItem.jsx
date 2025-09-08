@@ -67,7 +67,7 @@ export const ListItem = ({
             <p className="text-small text-neutral-border-50">{formatTime}</p>
           </div>
           <div className="flex items-center justify-between">
-            <p className="w-[14.375rem] text-base text-neutral-base">
+            <p className="w-[14.375rem] overflow-hidden text-ellipsis whitespace-nowrap text-base text-neutral-base">
               {data.lastMessageContent}
             </p>
             {data.unreadCount > 0 && <NewMsgCnt cnt={data.unreadCount} />}
