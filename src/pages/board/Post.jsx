@@ -16,11 +16,11 @@ import { PostComment } from '@/components/board/PostComment';
 import { Translating } from '@/components/common/Translating';
 import { TranslateButton } from '@/components/common/TranslateButton';
 import { usePostTranslate } from '@/state/mutation/common/usePostTranslate';
-import { useGetPost } from '@/state/query/post/useGetPost';
 import { useGetComment } from '@/state/query/post/useGetComment';
 import { useHandleComment } from '@/state/mutation/post/useHandleComment';
 import { useHandlePostLike } from '@/state/mutation/post/useHandlePostLike';
 import { useHandleCommentLike } from '@/state/mutation/post/useHandleCommentLike';
+import { useGetPost } from '@/state/query/post/useGetPost';
 
 export const Post = () => {
   const { postId, boardId } = useParams();

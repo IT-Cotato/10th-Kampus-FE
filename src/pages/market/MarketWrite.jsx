@@ -48,7 +48,7 @@ export const MarketWrite = () => {
     setCategoryList(categoryData);
   }, [categoryData]);
 
-  const { mutate: addPost } = usePostMarketProduct();
+  const { mutate: addPost, isPending: isPostPending } = usePostMarketProduct();
   const { data: prevPost } = useGetMarketProduct();
   useEffect(() => {
     if (prevPost) {
@@ -59,7 +59,7 @@ export const MarketWrite = () => {
       loadPrevPhotos();
     }
   }, [prevPost]);
-  const { mutate: putPost } = usePutMarketProduct();
+  const { mutate: putPost, isPending: isPutPending } = usePutMarketProduct();
 
   const [prevPhotoLoadErrorMessage, setPrevPhotoLoadErrorMessage] =
     useState('');
@@ -114,6 +114,7 @@ export const MarketWrite = () => {
   };
 
   const handleUploadWithoutTranslation = () => {
+    if (isPostPending || isPutPending) return;
     if (validateBeforeUpload()) {
       handleUpload();
     }
@@ -152,6 +153,7 @@ export const MarketWrite = () => {
   };
 
   const handleTranslateAndUpload = () => {
+    if (isPostPending || isPutPending) return;
     if (validateBeforeUpload()) {
       setIsTranslateModalOpen(true);
       handleTranslate({
