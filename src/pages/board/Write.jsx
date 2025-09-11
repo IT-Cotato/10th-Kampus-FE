@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { SelectCategory } from '@/components/board/write/SelectCategory';
 import { TranslateModal } from '@/components/common/TranslateModal';
-import { useGetBoardPost } from '@/state/query/post/useGetPost';
+import { useGetPost } from '@/state/query/post/useGetPost';
 import { urlToFile } from '@/utils/urlToFile';
 import { usePutBoardPost } from '@/state/mutation/board/usePutBoardPost';
 import { usePostWriteTranslate } from '@/state/mutation/common/usePostWriteTranslate';
@@ -60,7 +60,7 @@ export const Write = () => {
     usePostWriteTranslate(setTranslatedTitle, setTranslatedContent);
 
   // 글 수정하기 위해 조회
-  const { data: prevPost } = useGetBoardPost();
+  const { data: prevPost } = useGetPost();
 
   useEffect(() => {
     if (prevPost) {
