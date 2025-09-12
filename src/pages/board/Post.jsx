@@ -1,6 +1,6 @@
 import { PostHeader } from '@/components/board/PostHeader';
 import { ScrapComponent } from '@/components/common/ScrapComponent';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import anonymous from '@/assets/imgs/icon/anonymous.svg';
 import kampus from '@/assets/imgs/icon/kampus-post.svg';
 import Like from '@/assets/imgs/icon/like.svg?react';
@@ -36,9 +36,6 @@ export const Post = () => {
     transition: `all 0.4s ease-in-out`,
   });
 
-  const scrollAnchorRef = useRef(null);
-  const isInitialMount = useRef(true);
-
   const {
     translateState,
     setTranslateState,
@@ -59,24 +56,6 @@ export const Post = () => {
   const { mutate: handleLike } = useHandlePostLike();
   const { mutate: handleCommentLike } = useHandleCommentLike();
 
-  useEffect(() => {
-    // 첫 렌더링 시에는 스크롤하지 않음
-    if (isInitialMount.current) {
-      if (commentData?.comments?.length > 0) {
-        isInitialMount.current = false;
-      }
-      return;
-    }
-
-    // 새 댓글 추가 후, 앵커(목표 지점)가 존재하면 거기로 스크롤
-    if (scrollAnchorRef.current) {
-      scrollAnchorRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end', // 앵커를 뷰포트 하단 근처로 이동시킴
-      });
-    }
-  }, [commentData?.comments?.length]);
-
   const submitComment = useCallback(() => {
     if (!input.trim()) return;
     const buildComment = {
@@ -89,7 +68,7 @@ export const Post = () => {
   return (
     <>
       <div
-        className="flex h-full w-full flex-col overflow-scroll scrollbar-hide"
+        className="flex h-full w-full flex-col overflow-scroll pb-20 scrollbar-hide"
         onClick={() => {
           setInputFocus(false);
           setFocusedComment(null);
@@ -223,7 +202,6 @@ export const Post = () => {
               Leave the first comment!
             </div>
           )}
-          <div ref={scrollAnchorRef} className="h-20 flex-shrink-0" />
         </div>
       </div>
       {/** 댓글 입력창 */}

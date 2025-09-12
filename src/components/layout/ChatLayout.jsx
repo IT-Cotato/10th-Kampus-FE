@@ -19,7 +19,7 @@ export const ChatLayout = ({ children, render }) => {
           id="modal-root"
           className="container relative flex h-screen flex-col"
         >
-          {children}
+          <div className="flex flex-1 flex-col overflow-hidden">{children}</div>
         </div>
       )}
     </div>
