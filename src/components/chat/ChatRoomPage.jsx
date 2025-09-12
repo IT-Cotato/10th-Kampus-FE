@@ -119,30 +119,32 @@ export const ChatRoom = ({
   }, []);
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <ErrorWrapper fallbackRender={chatRoomSpecificFallback}>
-        <RoomHeader
-          chatroomId={chatroomId}
-          setChatroomId={setChatroomId}
-          setMessages={setMessages}
-        />
-      </ErrorWrapper>
-      <div
-        className="flex-1 overflow-y-auto p-4 pb-20"
-        ref={scrollContainerRef}
-      >
-        <div className="flex flex-col">
-          {sortedMessages.length > 0 ? (
-            sortedMessages.map((message) => (
-              <MessageBubble
-                key={message.id}
-                message={message}
-                onMessageClick={handleClickMessage}
-              />
-            ))
-          ) : (
-            <p className="mx-auto text-neutral-border-40">Empty</p>
-          )}
+    <>
+      <div className="flex h-full w-full flex-col">
+        <ErrorWrapper fallbackRender={chatRoomSpecificFallback}>
+          <RoomHeader
+            chatroomId={chatroomId}
+            setChatroomId={setChatroomId}
+            setMessages={setMessages}
+          />
+        </ErrorWrapper>
+        <div
+          className="flex-1 overflow-y-auto p-4 pb-20"
+          ref={scrollContainerRef}
+        >
+          <div className="flex flex-col">
+            {sortedMessages.length > 0 ? (
+              sortedMessages.map((message) => (
+                <MessageBubble
+                  key={message.id}
+                  message={message}
+                  onMessageClick={handleClickMessage}
+                />
+              ))
+            ) : (
+              <p className="mx-auto text-neutral-border-40">Empty</p>
+            )}
+          </div>
         </div>
       </div>
       <UserInput
@@ -154,6 +156,6 @@ export const ChatRoom = ({
         onImagesChange={handleImagesChange}
       />
       {selectedMessage && <MessageModal onClose={handleCloseModal} />}
-    </div>
+    </>
   );
 };
