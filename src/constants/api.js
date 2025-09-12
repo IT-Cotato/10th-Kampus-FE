@@ -11,6 +11,7 @@ export const API_DOMAINS = {
   PATCH_USER: '/users/info',
   MYPAGE: '/mypage',
   POST_ACCESS_TOKEN: '/auth/reissue',
+  LOGOUT: '/auth/logout',
 
   GET_MY_POSTS: '/posts/my',
   GET_MY_COMMENTED_POST: '/my/commented-post',

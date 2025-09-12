@@ -1,16 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/routes/path';
-import { removeTokens } from '@/utils/authUtils';
 import OfficialMail from '@/constants/officialMail.json';
 import { MyMainData } from '@/components/my/MyMainData';
 import { ErrorWrapper } from '@/components/common/error/SuspenseFallback';
+import { useLogout } from '@/state/mutation/auth/useLogout';
 
 export const MyPage = () => {
   const navigate = useNavigate();
 
+  const { mutate: logout } = useLogout();
+
   const handleLogout = async () => {
-    await removeTokens();
-    navigate(PATH.LOGIN.BASE, { replace: true });
+    logout();
+    // navigate(PATH.LOGIN.BASE, { replace: true });
   };
 
   return (
