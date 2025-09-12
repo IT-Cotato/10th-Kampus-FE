@@ -12,7 +12,7 @@ export const usePostPost = () => {
     onSuccess: (response) => {
       const createdPostId = response.postId;
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_LIST, { postId: response.postId }],
+        queryKey: [QUERY_KEYS.GET_POST_LIST, { postId: createdPostId }],
       });
       navigate(`../${createdPostId}`, {
         replace: true,

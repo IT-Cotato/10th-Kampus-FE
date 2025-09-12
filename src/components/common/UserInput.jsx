@@ -2,10 +2,11 @@ import Send from '@/assets/imgs/icon/send.svg?react';
 import Camera from '@/assets/imgs/icon/camera.svg?react';
 import XIcon from '@/assets/imgs/icon/circle-x.svg?react';
 import { cn } from '@/utils/cn';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
+import { createPortal } from 'react-dom';
 import { INPUT_TYPE } from '@/constants/inputType';
 
-export const UserInput = ({
+const UserInput = ({
   placeholder,
   input,
   setInput,
@@ -16,6 +17,7 @@ export const UserInput = ({
 }) => {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
+  const inputRoot = document.getElementById('input-root');
   const maxHeight = 4 * 26;
   const [previewImages, setPreviewImages] = useState([]);
   const [showImagePreview, setShowImagePreview] = useState(false);
@@ -107,8 +109,10 @@ export const UserInput = ({
     }
   };
 
-  return (
-    <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-lg bg-white px-4 py-4">
+  if (!inputRoot) return null;
+
+  return createPortal(
+    <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-lg bg-white px-4 py-4">
       {/* 이미지파일 미리보기 */}
       {showImagePreview && (
         <div className="mb-2 flex flex-row gap-2 overflow-x-auto pb-2">
@@ -189,6 +193,9 @@ export const UserInput = ({
           <Send className="h-full w-full" />
         </button>
       </div>
-    </div>
+    </div>,
+    inputRoot,
   );
 };
+
+export default memo(UserInput);

@@ -26,6 +26,7 @@ const queryClient = new QueryClient({
 function App() {
   useEffect(() => {
     const initAuth = async () => {
+      useAuthStore.getState().setInitializing(true);
       try {
         const accessToken = await reissueToken();
         if (accessToken) {

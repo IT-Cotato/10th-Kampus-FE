@@ -1,6 +1,9 @@
 import { Loading } from '@/components/common/Loading';
 import { Suspense } from 'react';
-import { ApiErrorBoundary } from '@/components/common/error/ApiErrorBoundary';
+import {
+  ApiErrorBoundary,
+  ApiFallback,
+} from '@/components/common/error/ApiErrorBoundary';
 
 export function SuspenseFallback() {
   return (
@@ -13,9 +16,9 @@ export function SuspenseFallback() {
   );
 }
 
-export function ErrorWrapper({ children }) {
+export function ErrorWrapper({ children, fallbackRender = ApiFallback }) {
   return (
-    <ApiErrorBoundary>
+    <ApiErrorBoundary fallbackRender={fallbackRender}>
       <Suspense fallback={<SuspenseFallback />}>{children}</Suspense>
     </ApiErrorBoundary>
   );

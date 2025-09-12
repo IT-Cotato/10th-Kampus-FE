@@ -11,7 +11,6 @@ export const Layout = ({ children }) => {
     PATH.HOME,
     PATH.BOARD.BASE,
     PATH.MARKET.BASE,
-    PATH.CHAT_LIST.BASE,
     PATH.MYPAGE.BASE,
   ];
 

@@ -48,6 +48,10 @@ export const onError = async (error, api) => {
   const { status } = error.response || {};
   const { clearAccessToken, setAccessToken } = useAuthStore.getState();
 
+  if (originalRequest.url === API_DOMAINS.POST_ACCESS_TOKEN) {
+    return Promise.reject(error);
+  }
+
   const currentRetryCount = originalRequest._retryCount || 0; // 재시도 횟수 확인
 
   const isAdminApiRequest = originalRequest.url.includes('/admin');

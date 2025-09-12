@@ -37,7 +37,7 @@ export const ListItem = ({
       <div
         ref={itemRef}
         className={cn(
-          'flex h-full w-full justify-between gap-[1.25rem] transition-transform duration-300',
+          'flex h-full w-full justify-between gap-4 transition-transform duration-300',
           {
             '-translate-x-[110px]': isSlide,
             'translate-x-0': !isSlide,
@@ -61,13 +61,13 @@ export const ListItem = ({
         <img src={data.profile || DefaultProfile} alt="user profile" />
         <div className="flex w-full flex-col justify-between">
           <div className="flex items-center justify-between">
-            <p className="w-[14.375rem] text-subTitle text-neutral-title">
+            <p className="w-[14.375rem] overflow-hidden text-ellipsis whitespace-nowrap pr-2 text-subTitle text-neutral-title">
               {data.title}
             </p>
             <p className="text-small text-neutral-border-50">{formatTime}</p>
           </div>
           <div className="flex items-center justify-between">
-            <p className="w-[14.375rem] text-base text-neutral-base">
+            <p className="w-[14.375rem] overflow-hidden text-ellipsis whitespace-nowrap text-base text-neutral-base">
               {data.lastMessageContent}
             </p>
             {data.unreadCount > 0 && <NewMsgCnt cnt={data.unreadCount} />}

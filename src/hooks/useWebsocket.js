@@ -1,7 +1,7 @@
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { getChatMessages } from '@/apis/chat/messages.api';
 import { useGetUserData } from '@/state/query/common/useGetUserData';
@@ -10,9 +10,15 @@ const BASE_URL = import.meta.env.VITE_API_SOCKET_URL;
 const SOCKET_URL = `${BASE_URL}/websocket`;
 
 export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
+  const queryClient = useQueryClient();
   const stompClientRef = useRef(null);
   const subscriptionRef = useRef(null);
   const notificationSubscriptionRef = useRef(null);
+  const chatroomIdRef = useRef(chatroomId);
+
+  useEffect(() => {
+    chatroomIdRef.current = chatroomId;
+  }, [chatroomId]);
 
   const [connected, setConnected] = useState(false);
 
@@ -28,7 +34,13 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
 
   useEffect(() => {
     if (messageData?.messages) {
-      setMessages(messageData.messages); // 초기 메시지 설정
+      setMessages((prevMessages) => {
+        const existingIds = new Set(prevMessages.map((m) => m.id));
+        const newMessages = messageData.messages.filter(
+          (m) => !existingIds.has(m.id),
+        );
+        return [...prevMessages, ...newMessages].sort((a, b) => a.id - b.id);
+      });
     }
   }, [messageData, setMessages]);
 
@@ -61,8 +73,9 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
         console.log('✅ WebSocket 연결 성공');
         stompClientRef.current = stompClient;
         setConnected(true);
-        if (chatroomId) {
-          subscribeToChatRoom(chatroomId);
+        const currentChatroomId = chatroomIdRef.current;
+        if (currentChatroomId) {
+          subscribeToChatRoom(currentChatroomId);
         } else {
           subscribeToNotifications();
         }
@@ -150,6 +163,7 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
 
         await handleNotification(newNotification);
         console.log('✅ 알림 처리 성공:', newNotification);
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHAT_LIST] });
       },
     );
   };
@@ -191,13 +205,14 @@ export const useWebsocket = (setChatList, chatroomId, setMessages, page) => {
           id: newMessage.id,
           chatroomId: newMessage.chatroomId,
           senderId: newMessage.senderId,
-          content: newMessage.content, // 메시지가 글시 또는 이미지 URL 로 반환됨
+          content: newMessage.content,
           createdTime: newMessage.createdTime,
           isMine: Number(newMessage.senderId) === Number(userDetail?.id),
-          isImage: newMessage.isImage, //contents 가 이미지인지 확인
+          isImage: newMessage.isImage,
         };
 
         setMessages((prevMessages) => [...prevMessages, enrichedMessage]);
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHAT_LIST] });
       },
     );
     console.log('✅ 채팅방 구독 성공:', chatroomId);
