@@ -9,7 +9,6 @@ export const useGetMarketProduct = () => {
     queryKey: [QUERY_KEYS.GET_MARKET_PRODUCT, productId],
     queryFn: () => getMarketProduct({ productId }),
     enabled: !!productId,
-    select: (data) => data.productDetails,
   });
   return query;
 };
