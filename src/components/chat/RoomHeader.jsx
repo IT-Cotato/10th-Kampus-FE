@@ -38,8 +38,8 @@ export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
             setMessages([]);
           }}
         />
-        <span className="mx-auto text-pageTitle text-neutral-title">
-          {roomData.postTitle}
+        <span className="mx-auto overflow-hidden text-ellipsis whitespace-nowrap px-2 text-pageTitle text-neutral-title">
+          {roomData.title}
         </span>
         <button onClick={() => setIsOpenMenu(!isOpenMenu)}>
           <img src={menubar} alt="chat menu" />
@@ -69,14 +69,20 @@ export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
         )}
       </div>
       <div className="flex w-full flex-col items-start justify-center bg-neutral-bg-5 p-4 text-neutral-base">
-        <p className="text-base">{roomData.boardName}</p>
-        <p className="text-pageTitle text-neutral-title">{roomData.postName}</p>
+        <p className="text-base">{roomData.boardName || 'market'}</p>
+        <p className="pb-2 text-pageTitle text-neutral-title">
+          {roomData.title}
+        </p>
         <button
           className="h-10 w-full rounded-lg border border-neutral-border-30 bg-white text-small"
           onClick={() => {
-            navigate(
-              `${PATH.BOARD.BASE}/${roomData.boardId}/${roomData.postId}`,
-            );
+            if (roomData.boardId === -1) {
+              navigate(`${PATH.MARKET.BASE}/${roomData.referenceId}`);
+            } else {
+              navigate(
+                `${PATH.BOARD.BASE}/${roomData.boardId}/${roomData.referenceId}`,
+              );
+            }
           }}
         >
           Go to the article
