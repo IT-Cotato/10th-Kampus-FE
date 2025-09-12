@@ -59,7 +59,6 @@ import { Suspense } from 'react';
 import { SuspenseFallback } from '@/components/common/error/SuspenseFallback';
 import { UnknownFallback } from '@/components/common/error/UnknownErrorBoundary';
 import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
 import AdminRoute from './AdminRoute';
 
 const createAuthRouter = (routeType, children) => {
@@ -67,8 +66,6 @@ const createAuthRouter = (routeType, children) => {
     element:
       routeType === 'PRIVATE' ? (
         <PrivateRoute />
-      ) : routeType === 'PUBLIC' ? (
-        <PublicRoute />
       ) : routeType === 'ADMIN' ? (
         <AdminRoute />
       ) : (
@@ -101,11 +98,6 @@ const AppRouter = createBrowserRouter([
         path: '',
         element: <SplashScreen />,
       },
-      // ...createAuthRouter('PUBLIC', [
-      //   {
-      //     path: PATH.ACCOUNT_PERMANENT_SUSPENDED,
-      //     element: <AccountPermanentSuspendedNotice />,
-      //   },
       {
         path: PATH.LOGIN.BASE,
         element: <Outlet />,
