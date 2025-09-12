@@ -5,7 +5,7 @@ import { CardPost } from './BoxList';
 export const BoardBox = ({
   boardTitle,
   data,
-  university = false,
+  isUniversity = false,
   boardId = undefined,
   isTrending = false,
 }) => {
@@ -18,7 +18,7 @@ export const BoardBox = ({
       />
       <div className="flex h-fit w-full flex-col rounded-[1.25rem] bg-white py-[.875rem] shadow-home">
         {data?.map((list, index) => (
-          <BoxList key={index} list={list} university={university} />
+          <BoxList key={index} list={list} isUniversity={isUniversity} />
         ))}
       </div>
     </div>

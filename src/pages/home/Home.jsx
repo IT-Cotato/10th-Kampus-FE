@@ -53,7 +53,7 @@ export const Home = () => {
           <BoardBox
             data={univeristyList?.homePostThumbnailList}
             boardTitle="My univ"
-            university={true}
+            isUniversity={true}
             boardId={univeristyList?.homePostThumbnailList[0]?.boardId}
           />
         )}
