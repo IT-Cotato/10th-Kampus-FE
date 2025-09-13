@@ -6,7 +6,7 @@ import { Loading } from '@/components/common/Loading';
 import { MarketList } from '@/components/market/MarketList';
 import { useGetMarketCategory } from '@/state/query/market/useGetMarketCategory';
 import { useGetMarketProductList } from '@/state/query/market/useGetMarketProductList';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 export const Market = () => {
   const sortOptions = ['All', 'Newest', 'Registered', 'Popularity']; // 정렬 기준은 고정
@@ -33,9 +33,76 @@ export const Market = () => {
     setSortKey(getSortKey(sortOrder));
   }, [sortOrder]);
 
+  const observerRef = useRef();
+  const isObserving = useRef(false); // 관찰 상태 추적
+
   const { data: categoryData } = useGetMarketCategory();
-  const { data: productList, isPending: isPostLoading } =
-    useGetMarketProductList({ pageParam: 1, sortKey, category });
+  const {
+    data,
+    isPending: isPostLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetMarketProductList({ sortKey, category });
+
+  const productList = data?.pages?.flatMap((page) => page.items) || [];
+
+  // useCallback으로 함수 최적화 및 중복 호출 방지
+  const lastProductRef = useCallback(
+    (node) => {
+      // 로딩 중이거나 이미 관찰 중이면 리턴
+      if (isPostLoading || isFetchingNextPage || isObserving.current) return;
+
+      // 기존 observer 정리
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        isObserving.current = false;
+      }
+
+      // 노드가 존재할 때만 새 observer 생성
+      if (node) {
+        observerRef.current = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0];
+            // 교차 상태이고, 다음 페이지가 있고, 현재 로딩 중이 아닐 때만 실행
+            if (
+              entry.isIntersecting &&
+              hasNextPage &&
+              !isFetchingNextPage &&
+              !isPostLoading
+            ) {
+              fetchNextPage();
+            }
+          },
+          {
+            threshold: 0.1,
+            rootMargin: '100px', // rootMargin을 늘려서 조금 더 일찍 로드
+          },
+        );
+
+        observerRef.current.observe(node);
+        isObserving.current = true;
+      }
+    },
+    [hasNextPage, isFetchingNextPage, isPostLoading, fetchNextPage],
+  );
+
+  // 컴포넌트 언마운트 시 observer 정리
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  // 필터 변경 시 observer 리셋
+  useEffect(() => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      isObserving.current = false;
+    }
+  }, [sortKey, category]);
 
   return (
     <div className="flex flex-1">
@@ -62,7 +129,7 @@ export const Market = () => {
             <Loading />
           </div>
         )}
-        {!isPostLoading && productList?.items.length === 0 && (
+        {!isPostLoading && productList.length === 0 && (
           <div className="flex h-full w-full -translate-y-10 flex-col items-center justify-center gap-2">
             <Logo className="w-32 text-neutral-disabled" />
             <span className="text-center text-neutral-border-40">
@@ -72,10 +139,22 @@ export const Market = () => {
         )}
         {!isPostLoading && (
           <div className="flex w-full flex-1 flex-col divide-y overflow-y-auto bg-white px-4 pt-[3.25rem]">
-            {productList?.items?.length > 0 &&
-              productList?.items.map((item) => (
-                <MarketList key={item.productId} data={item} />
-              ))}
+            {productList.length > 0 &&
+              productList.map((item, index) => {
+                if (index === productList.length - 1) {
+                  return (
+                    <div key={item.productId} ref={lastProductRef}>
+                      <MarketList data={item} />
+                    </div>
+                  );
+                }
+                return <MarketList key={item.productId} data={item} />;
+              })}
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-4">
+                <Loading />
+              </div>
+            )}
           </div>
         )}
         <WriteButton />
