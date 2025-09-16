@@ -20,7 +20,13 @@ export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
 
   const activeChatId = useChatStore((state) => state.activeChatId);
   const setActiveChatId = useChatStore((state) => state.setActiveChatId);
-  const { mutate: leaveChatroom } = useDeleteChatroom(activeChatId);
+  const { mutate: leaveChatroom } = useDeleteChatroom({
+    chatroomId: activeChatId,
+    onSuccess: () => {
+      setActiveChatId(null);
+      setIsLeaveModal(false);
+    },
+  });
 
   //방 정보
   const { data: roomData, isLoading } = useGetChatroom({
@@ -28,15 +34,7 @@ export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
   });
 
   const handleLeaveConfirm = () => {
-    leaveChatroom(
-      { chatroomId },
-      {
-        onSuccess: () => {
-          setActiveChatId(null);
-          setIsLeaveModal(false);
-        },
-      },
-    );
+    leaveChatroom({ chatroomId: activeChatId });
   };
 
   if (isLoading) {
