@@ -118,6 +118,7 @@ export const QUERY_KEYS = {
   CHAT_LIST: 'chatList',
   POST_CHAT_ROOM: 'postChatroom',
   GET_CHAT_ROOM: 'getChatroom',
+  DELETE_CHAT_ROOM: 'deleteChatroom',
   POST_CHAT_READ: 'postChatRead',
 
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
