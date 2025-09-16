@@ -8,6 +8,8 @@ import BackButton from '../common/BackButton';
 import { useGetChatroom } from '@/state/query/chat/useGetChatroom';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/routes/path';
+import { useDeleteChatroom } from '@/state/mutation/chat/useDeleteChatroom';
+import { useChatStore } from '@/stores/useChatStore';
 
 export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -16,10 +18,24 @@ export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
   const [isMuteModal, setIsMuteModal] = useState(false);
   const navigate = useNavigate();
 
+  const activeChatId = useChatStore((state) => state.activeChatId);
+  const setActiveChatId = useChatStore((state) => state.setActiveChatId);
+  const { mutate: leaveChatroom } = useDeleteChatroom({
+    chatroomId: activeChatId,
+    onSuccess: () => {
+      setActiveChatId(null);
+      setIsLeaveModal(false);
+    },
+  });
+
   //방 정보
   const { data: roomData, isLoading } = useGetChatroom({
     chatroomId,
   });
+
+  const handleLeaveConfirm = () => {
+    leaveChatroom({ chatroomId: activeChatId });
+  };
 
   if (isLoading) {
     return (
@@ -59,6 +75,7 @@ export const RoomHeader = ({ chatroomId, setChatroomId, setMessages }) => {
         <LeaveModal
           isOpen={isLeaveModal}
           onClose={() => setIsLeaveModal(false)}
+          onConfirm={handleLeaveConfirm}
         />
         {isMuteModal && (
           <StateChangeAnimate

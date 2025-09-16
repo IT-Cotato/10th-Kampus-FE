@@ -6,9 +6,7 @@ import blockIcon from '@/assets/imgs/icon/block.svg';
 import leaveIcon from '@/assets/imgs/icon/leave.svg';
 import { touchDrag } from '@/utils/touchDrag';
 import { parseToDate, formatChatTime } from '@/utils/utcToKst';
-import { useMutation } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/constants/api';
-import { deleteChatroom } from '@/apis/chat/chatRoom.api';
+import { useDeleteChatroom } from '@/state/mutation/chat/useDeleteChatroom';
 
 export const ListItem = ({
   data,
@@ -20,9 +18,8 @@ export const ListItem = ({
   const [startX, setStartX] = useState(0);
   const itemRef = useRef(null);
 
-  const { mutate: deleteChatroomId } = useMutation({
-    mutationKey: [QUERY_KEYS.CHAT_LIST],
-    mutationFn: (chatroomId) => deleteChatroom({ chatroomId }),
+  const { mutate: deleteChatroomId } = useDeleteChatroom({
+    chatroomId: data.chatroomId,
     onSuccess: () => {
       onChatRoomLeave(data.chatroomId);
     },
@@ -91,7 +88,7 @@ export const ListItem = ({
         <div
           className="flex h-[3.875rem] w-[55px] flex-col items-center justify-center bg-primary-red p-4"
           onClick={() => {
-            deleteChatroomId(data.chatroomId);
+            deleteChatroomId({ chatroomId: data.chatroomId });
           }}
         >
           <img src={leaveIcon} alt="leave" />
