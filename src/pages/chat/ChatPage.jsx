@@ -7,19 +7,21 @@ import { Loading } from '@/components/common/Loading';
 import { CHAT_TYPE } from '@/constants/chatType';
 import { useGetChatList } from '@/state/query/chat/useGetChatList';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { useChatStore } from '@/stores/useChatStore';
 
 export const ChatPage = () => {
-  const [chatroomId, setChatroomId] = useState(null);
   const [chatList, setChatList] = useState([]);
   const [messages, setMessages] = useState([]);
 
   const [selectedType, setSelectedType] = useState(CHAT_TYPE.ALL);
   const [page, _setPage] = useState(1);
 
+  const { activeChatId, setActiveChatId } = useChatStore();
+
   const { accessToken } = useAuthStore();
   const { connectSocket, sendMessage } = useWebsocket(
     setChatList,
-    chatroomId,
+    activeChatId,
     setMessages,
     page,
   );
@@ -59,18 +61,18 @@ export const ChatPage = () => {
 
   return (
     <div className="h-full w-full">
-      <ChatLayout render={!chatroomId ? 'chatList' : null}>
-        {!chatroomId ? (
+      <ChatLayout render={!activeChatId ? 'chatList' : null}>
+        {!activeChatId ? (
           <ChatList
-            onChatRoomSelect={setChatroomId}
+            onChatRoomSelect={setActiveChatId}
             chatList={chatList}
             onChatRoomLeave={handleChatRoomLeave}
             onTypeChange={handleTypeChange}
           />
         ) : (
           <ChatRoom
-            chatroomId={chatroomId}
-            setChatroomId={setChatroomId}
+            chatroomId={activeChatId}
+            setChatroomId={setActiveChatId}
             sendMessage={sendMessage}
             messages={messages}
             setMessages={setMessages}

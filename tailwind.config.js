@@ -148,7 +148,7 @@ export default {
     plugin(({ addUtilities }) =>
       addUtilities({
         '.layout': {
-          '@apply flex max-w-lg mx-auto h-full overflow-x-hidden overflow-y-auto bg-white min-h-dvh':
+          '@apply flex max-w-lg mx-auto h-full overflow-x-hidden  bg-white min-h-dvh':
             '',
         },
         '.modal-layout': {
