@@ -7,7 +7,7 @@ import Like from '@/assets/imgs/icon/like.svg?react';
 import FillLike from '@/assets/imgs/icon/active-heart.svg?react';
 import Comment from '@/assets/imgs/icon/comment.svg?react';
 import { ImageSlider } from '@/components/common/ImageSlider';
-import UserInput from '@/components/common/UserInput';
+import BaseInput from '@/components/common/BaseInput';
 import { FocusImageSlider } from '@/components/common/FocusImageSlider';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@/components/common/Loading';
@@ -52,19 +52,20 @@ export const Post = () => {
 
   const { data: commentData } = useGetComment();
 
-  const { mutate: handleComment } = useHandleComment({ setInput: setInput });
+  const { mutate: handleComment, isPending: isCommentPending } =
+    useHandleComment({ setInput: setInput });
   const { mutate: handleLike } = useHandlePostLike();
   const { mutate: handleCommentLike } = useHandleCommentLike();
 
   const submitComment = useCallback(() => {
-    if (!input.trim()) return;
+    if (!input.trim() || isCommentPending) return;
     const buildComment = {
       content: input,
       parentId: focusedComment?.parentId,
       targetId: focusedComment?.targetId,
     };
     handleComment({ type: true, param: postId, data: buildComment });
-  }, [input, focusedComment, handleComment, postId]);
+  }, [input, focusedComment, handleComment, postId, isCommentPending]);
   return (
     <>
       <div
@@ -205,13 +206,13 @@ export const Post = () => {
         </div>
       </div>
       {/** 댓글 입력창 */}
-      <UserInput
+      <BaseInput
         placeholder="Write a comment."
         input={input}
         setInput={setInput}
         handleSend={() => submitComment()}
-        type="post"
         inputFocus={inputFocus}
+        isButtonDisabled={!input.trim() || isCommentPending}
       />
     </>
   );
