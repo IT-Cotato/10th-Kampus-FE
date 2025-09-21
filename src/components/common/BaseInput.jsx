@@ -51,7 +51,7 @@ const BaseInput = ({
   };
 
   return createPortal(
-    <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-lg bg-white px-4 py-4">
+    <div className="fixed bottom-0 left-0 right-0 z-20 bg-white px-4 py-4 width-fixed">
       {/* Children (이미지 미리보기 등) */}
       {children}
       <div
