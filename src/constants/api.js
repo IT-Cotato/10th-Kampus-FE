@@ -121,6 +121,7 @@ export const QUERY_KEYS = {
   GET_CHAT_ROOM: 'getChatroom',
   DELETE_CHAT_ROOM: 'deleteChatroom',
   POST_CHAT_READ: 'postChatRead',
+  POST_CHAT_IMAGE: 'postChatImage',
 
   GET_PUBLIC_BOARD_LIST: 'publicBoard',
   GET_UNIV_BOARD: 'univBoard',

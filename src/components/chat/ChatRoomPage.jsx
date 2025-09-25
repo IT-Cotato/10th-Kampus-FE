@@ -1,11 +1,11 @@
-import UserInput from '@/components/common/UserInput';
+import BaseInput from '@/components/common/BaseInput';
+import useImageUpload from '@/components/common/ImageUpload';
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { RoomHeader } from '@/components/chat/RoomHeader';
 import { MessageModal } from '@/components/chat/MessageModal';
 import { useMutation } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/constants/api';
 import { postReadMessage, postChatImage } from '@/apis/chat/messages.api';
-import { INPUT_TYPE } from '@/constants/inputType';
 import MessageBubble from './MessageBubble';
 import { ErrorWrapper } from '../common/error/SuspenseFallback';
 import { ApiFallback } from '@/components/common/error/ApiErrorBoundary'; // <-- New import
@@ -22,6 +22,7 @@ export const ChatRoom = ({
   const [input, setInput] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(false);
   const [files, setFiles] = useState([]);
+  const [inputDisabled, setInputDisabled] = useState(false);
   const scrollContainerRef = useRef(null);
 
   const chatRoomSpecificFallback = ({ error, resetErrorBoundary }) => {
@@ -98,6 +99,12 @@ export const ChatRoom = ({
     setFiles(newFiles);
   }, []);
 
+  const imageUpload = useImageUpload({
+    onImagesChange: handleImagesChange,
+    onDisableInput: setInputDisabled,
+    input: input,
+  });
+
   //메시지 전송
   const handleSendMessage = () => {
     if (!input.trim() && files.length === 0) return;
@@ -149,14 +156,17 @@ export const ChatRoom = ({
           </div>
         </div>
       </div>
-      <UserInput
-        type={INPUT_TYPE.CHAT}
-        placeholder="메시지를 입력하세요"
+      <BaseInput
+        placeholder={inputDisabled ? 'Image is attached' : 'Type a message'}
         input={input}
         setInput={setInput}
         handleSend={handleSendMessage}
-        onImagesChange={handleImagesChange}
-      />
+        isInputDisabled={inputDisabled}
+        isButtonDisabled={!input.trim() && !(files.length > 0)}
+        leftSlot={imageUpload.cameraIcon}
+      >
+        {imageUpload.preview}
+      </BaseInput>
       {selectedMessage && <MessageModal onClose={handleCloseModal} />}
     </>
   );
